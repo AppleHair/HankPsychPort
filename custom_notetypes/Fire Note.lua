@@ -11,9 +11,12 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetX', getPropertyFromGroup('unspawnNotes', i, 'offsetX') - 50);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetY', getPropertyFromGroup('unspawnNotes', i, 'offsetY') - 57.44);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', -15 / 360);-- color calibration
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', -15 / 100);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 15 / 100);
+			
+			
+									-- color calibration
+			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);
+			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[/ 100   if you actually want to change it]]);
+			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
 		end
 	end
 	precacheImage('NOTE_fire');
