@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="GFHotdog.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="GFStandingWithHotDog0000" x="0" y="0" width="320" height="442" frameX="0" frameY="-14" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0001" x="0" y="0" width="320" height="442" frameX="0" frameY="-14" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0002" x="320" y="0" width="318" height="440" frameX="0" frameY="-16" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0003" x="320" y="0" width="318" height="440" frameX="0" frameY="-16" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0004" x="638" y="0" width="319" height="443" frameX="0" frameY="-13" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0005" x="957" y="0" width="316" height="443" frameX="-3" frameY="-13" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0006" x="1273" y="0" width="316" height="445" frameX="-3" frameY="-11" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0007" x="1589" y="0" width="326" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0008" x="1589" y="0" width="326" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0009" x="1589" y="0" width="326" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0010" x="0" y="456" width="327" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0011" x="0" y="456" width="327" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0012" x="0" y="456" width="327" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0013" x="327" y="456" width="328" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0014" x="327" y="456" width="328" height="456" frameX="-8" frameY="0" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0015" x="655" y="456" width="327" height="444" frameX="-8" frameY="-12" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0016" x="655" y="456" width="327" height="444" frameX="-8" frameY="-12" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0017" x="982" y="456" width="328" height="444" frameX="-8" frameY="-12" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0018" x="982" y="456" width="328" height="444" frameX="-8" frameY="-12" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0019" x="1310" y="456" width="327" height="445" frameX="-8" frameY="-11" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0020" x="1637" y="456" width="328" height="445" frameX="-7" frameY="-11" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0021" x="0" y="912" width="328" height="446" frameX="-7" frameY="-10" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0022" x="328" y="912" width="333" height="451" frameX="-6" frameY="-5" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0023" x="328" y="912" width="333" height="451" frameX="-6" frameY="-5" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0024" x="328" y="912" width="333" height="451" frameX="-6" frameY="-5" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0025" x="661" y="912" width="332" height="450" frameX="-6" frameY="-6" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0026" x="661" y="912" width="332" height="450" frameX="-6" frameY="-6" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0027" x="661" y="912" width="332" height="450" frameX="-6" frameY="-6" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0028" x="993" y="912" width="332" height="450" frameX="-6" frameY="-6" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDog0029" x="993" y="912" width="332" height="450" frameX="-6" frameY="-6" frameWidth="339" frameHeight="456"/>
+	<SubTexture name="GFStandingWithHotDogWalk0000" x="1325" y="912" width="332" height="411" frameX="-2" frameY="0" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0001" x="1325" y="912" width="332" height="411" frameX="-2" frameY="0" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0002" x="1325" y="912" width="332" height="411" frameX="-2" frameY="0" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0003" x="1325" y="912" width="332" height="411" frameX="-2" frameY="0" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0004" x="1657" y="912" width="332" height="413" frameX="0" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0005" x="1657" y="912" width="332" height="413" frameX="0" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0006" x="1657" y="912" width="332" height="413" frameX="0" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0007" x="0" y="1363" width="331" height="410" frameX="-1" frameY="-6" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0008" x="0" y="1363" width="331" height="410" frameX="-1" frameY="-6" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0009" x="0" y="1363" width="331" height="410" frameX="-1" frameY="-6" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0010" x="0" y="1363" width="331" height="410" frameX="-1" frameY="-6" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0011" x="331" y="1363" width="329" height="408" frameX="-3" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0012" x="331" y="1363" width="329" height="408" frameX="-3" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0013" x="331" y="1363" width="329" height="408" frameX="-3" frameY="-4" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0014" x="660" y="1363" width="328" height="427" frameX="-6" frameY="-5" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0015" x="660" y="1363" width="328" height="427" frameX="-6" frameY="-5" frameWidth="334" frameHeight="432"/>
+	<SubTexture name="GFStandingWithHotDogWalk0016" x="660" y="1363" width="328" height="427" frameX="-6" frameY="-5" frameWidth="334" frameHeight="432"/>
+</TextureAtlas>

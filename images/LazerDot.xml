@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="LazerDot.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="LazerDot Boop0000" x="0" y="0" width="70" height="70" frameX="0" frameY="-17" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0001" x="70" y="0" width="70" height="70" frameX="0" frameY="-17" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0002" x="140" y="0" width="70" height="70" frameX="0" frameY="-15" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0003" x="210" y="0" width="70" height="70" frameX="0" frameY="-15" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0004" x="280" y="0" width="70" height="70" frameX="0" frameY="-9" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0005" x="350" y="0" width="70" height="70" frameX="0" frameY="-9" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0006" x="420" y="0" width="70" height="70" frameX="0" frameY="-7" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0007" x="0" y="70" width="70" height="70" frameX="0" frameY="-7" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0008" x="70" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0009" x="140" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0010" x="210" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0011" x="280" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0012" x="350" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Boop0013" x="420" y="70" width="70" height="70" frameX="0" frameY="0" frameWidth="70" frameHeight="87"/>
+	<SubTexture name="LazerDot Flash0000" x="0" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0001" x="70" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0002" x="140" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0003" x="210" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0004" x="280" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0005" x="350" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0006" x="420" y="140" width="70" height="70"/>
+	<SubTexture name="LazerDot Flash0007" x="0" y="210" width="70" height="70"/>
+</TextureAtlas>

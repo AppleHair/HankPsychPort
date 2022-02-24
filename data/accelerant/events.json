@@ -1,0 +1,149 @@
+{
+	"song": {
+		"speed": 3,
+		"stage": "Nevada",
+		"player1": "bf-clone",
+		"player2": "hank",
+		"player3": null,
+		"events": [
+			[
+				2103.65853658537,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hank-cutscene-man"
+					],
+					[
+						"Camera Tween Zoom",
+						"0.8, 0.8",
+						"quadOut"
+					],
+					[
+						"Play Sound",
+						"hankreadyupsond",
+						"0.5"
+					],
+					[
+						"Play Animation",
+						"getReady",
+						"dad"
+					]
+				]
+			],
+			[
+				2926.82926829268,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hank"
+					],
+					[
+						"Camera Tween Zoom",
+						"0.69, 0.1",
+						"linear"
+					]
+				]
+			],
+			[
+				26432.9268292683,
+				[
+					[
+						"Demios&Sanford Appear",
+						"",
+						""
+					],
+					[
+						"Camera Follow Pos",
+						"540",
+						"120"
+					],
+					[
+						"Change Character",
+						"dad",
+						"hank2"
+					],
+					[
+						"Change Character",
+						"bf",
+						"bf-clone2"
+					]
+				]
+			],
+			[
+				27621.9512195122,
+				[
+					[
+						"Camera Follow Pos",
+						"",
+						""
+					]
+				]
+			],
+			[
+				61463.4146341464,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hank-scared"
+					]
+				]
+			],
+			[
+				84878.0487804877,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hank-cutscene-man"
+					],
+					[
+						"Play Animation",
+						"scaredIdle",
+						"dad"
+					]
+				]
+			],
+			[
+				85518.2926829268,
+				[
+					[
+						"Play Animation",
+						"scaredShoot",
+						"dad"
+					]
+				]
+			],
+			[
+				86341.4634146341,
+				[
+					[
+						"Change Character",
+						"dad",
+						"hank2"
+					]
+				]
+			],
+			[
+				121463.414634146,
+				[
+					[
+						"Play Animation",
+						"scream",
+						"dad"
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gf",
+		"bpm": 164,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "accelerant"
+	}
+}

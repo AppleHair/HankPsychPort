@@ -1,0 +1,6 @@
+{
+	"name": "VS Hank Challenge",
+	"description": "Hank Challenge from VS Online fully ported to psych engine.",
+	"restart":false,
+	"color": [191, 46, 46]
+}

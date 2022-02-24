@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="Sanford.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Sanford Appear0000" x="0" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0001" x="442" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0002" x="884" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0003" x="1326" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0004" x="1768" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0005" x="2210" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0006" x="2652" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0007" x="3094" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Appear0008" x="3536" y="0" width="442" height="627"/>
+	<SubTexture name="Sanford Boop0000" x="0" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0001" x="389" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0002" x="778" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0003" x="1167" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0004" x="1556" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0005" x="1945" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0006" x="2334" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0007" x="2723" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0008" x="3112" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0009" x="3501" y="627" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0010" x="0" y="856" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0011" x="389" y="856" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0012" x="778" y="856" width="389" height="229"/>
+	<SubTexture name="Sanford Boop0013" x="1167" y="856" width="389" height="229"/>
+	<SubTexture name="Sanford Shoot0000" x="1556" y="856" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0001" x="2143" y="856" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0002" x="2730" y="856" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0003" x="3317" y="856" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0004" x="0" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0005" x="587" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0006" x="1174" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0007" x="1761" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0008" x="2348" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0009" x="2935" y="1151" width="587" height="295"/>
+	<SubTexture name="Sanford Shoot0010" x="0" y="1446" width="587" height="295"/>
+</TextureAtlas>
