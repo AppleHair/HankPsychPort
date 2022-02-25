@@ -79,7 +79,7 @@ function onEvent(name, value1, value2)
 		Appear = true;
 		luaSpritePlayAnimation('Demios', 'Appear', false);
 		setProperty('Demios.y', -670);
-		setProperty('Demios.x', -480);
+		setProperty('Demios.x', -475);
 		setProperty('Demios.visible', true);
 		luaSpritePlayAnimation('Sanford', 'Appear', false);
 		setProperty('Sanford.y', -630);
