@@ -25,13 +25,13 @@ function onCreate()
 	setProperty('helicopter.velocity.x', 300);
 	
 	
-	makeAnimatedLuaSprite('Demios','Demios', -390, -230);
-	setLuaSpriteScrollFactor('Demios', 0.5, 0.6);
-	addAnimationByPrefix('Demios', 'Appear', 'Demios appear', 24, false);
-	addAnimationByPrefix('Demios', 'Shoot', 'Demios Shoot', 24, false);
-	addAnimationByPrefix('Demios', 'Boop', 'Demios Boop', 24, false);
-	setProperty('Demios.visible', false);
-	precacheImage('Demios');
+	makeAnimatedLuaSprite('Deimos','Deimos', -390, -230);
+	setLuaSpriteScrollFactor('Deimos', 0.5, 0.6);
+	addAnimationByPrefix('Deimos', 'Appear', 'Deimos appear', 24, false);
+	addAnimationByPrefix('Deimos', 'Shoot', 'Deimos Shoot', 24, false);
+	addAnimationByPrefix('Deimos', 'Boop', 'Deimos Boop', 24, false);
+	setProperty('Deimos.visible', false);
+	precacheImage('Deimos');
 	
 	
 	makeAnimatedLuaSprite('Sanford','Sanford', 1215, -245);
@@ -54,7 +54,7 @@ function onCreate()
 	addLuaSprite('Sky',false);
 	addLuaSprite('helicopter',false);
 	addLuaSprite('Dwaynes',false);
-	addLuaSprite('Demios',false);
+	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
 	addLuaSprite('Ground',false);
 	addLuaSprite('HotdogStation',true);
@@ -75,12 +75,12 @@ local Appear = false;
 local Flash = false;
 -- Event notes hooks
 function onEvent(name, value1, value2)
-	if name == 'Demios&Sanford Appear' then
+	if name == 'Deimos&Sanford Appear' then
 		Appear = true;
-		luaSpritePlayAnimation('Demios', 'Appear', false);
-		setProperty('Demios.y', -670);
-		setProperty('Demios.x', -475);
-		setProperty('Demios.visible', true);
+		luaSpritePlayAnimation('Deimos', 'Appear', false);
+		setProperty('Deimos.y', -670);
+		setProperty('Deimos.x', -475);
+		setProperty('Deimos.visible', true);
 		luaSpritePlayAnimation('Sanford', 'Appear', false);
 		setProperty('Sanford.y', -630);
 		setProperty('Sanford.x', 1215);
@@ -110,9 +110,9 @@ end
 
 function onBeatHit()
 	if not Appear then
-		luaSpritePlayAnimation('Demios', 'Boop', true);
-		setProperty('Demios.y', -230);
-		setProperty('Demios.x', -390);
+		luaSpritePlayAnimation('Deimos', 'Boop', true);
+		setProperty('Deimos.y', -230);
+		setProperty('Deimos.x', -390);
 		luaSpritePlayAnimation('Sanford', 'Boop', true);
 		setProperty('Sanford.y', -245);
 		setProperty('Sanford.x', 1215);

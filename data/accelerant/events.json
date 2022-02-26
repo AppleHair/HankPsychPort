@@ -50,7 +50,7 @@
 				26432.9268292683,
 				[
 					[
-						"Demios&Sanford Appear",
+						"Deimos&Sanford Appear",
 						"",
 						""
 					],
@@ -72,7 +72,7 @@
 				]
 			],
 			[
-				27621.9512195122,
+				27589.9390243902,
 				[
 					[
 						"Camera Follow Pos",
@@ -88,6 +88,11 @@
 						"Change Character",
 						"dad",
 						"hank-scared"
+					],
+					[
+						"Change Character",
+						"gf",
+						"gf"
 					]
 				]
 			],
@@ -140,7 +145,7 @@
 		"notes": [],
 		"splashSkin": null,
 		"validScore": false,
-		"gfVersion": "gf",
+		"gfVersion": "gf-hank",
 		"bpm": 164,
 		"arrowSkin": null,
 		"needsVoices": true,
