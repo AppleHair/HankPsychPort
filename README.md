@@ -10,8 +10,12 @@ A Psych Engine Port of ONLINE VS' Hank Challenge.
 * Banbuds - Additional Assets & Extra Vocals
 * TheBlueHatted - Programmer & Additional Assets
 
-## Psych Engine Key Authors:
+## Psych Engine Team:
 
 * Shadow Mario - Engine Developer
 * RiverOaken - Arts and Animations
 * bbpanzu - Assistant Programmer
+
+## Additional Creadits:
+
+* Kevin Kuntz - VS. Ready script

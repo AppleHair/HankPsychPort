@@ -22,7 +22,6 @@ function onCreate()
 	addAnimationByPrefix('helicopter', 'Fly', 'Fly', 24, true);
 	setScrollFactor('helicopter', 0.4, 0.3);
 	scaleObject('helicopter', 1.2, 1.2);
-	setProperty('helicopter.velocity.x', 300);
 	
 	
 	makeAnimatedLuaSprite('Deimos','Deimos', -390, -230);
@@ -62,10 +61,9 @@ function onCreate()
 	setProperty('gf.alpha', 0.5);
 end
 
-function onUpdate(elapsed)
-	-- we need to destroy the heli after it gets out of the scene, so yea..
-	if getproperty('helicopter.x') >= 0 then
-		removeLuaSprite('helicopter');
+function onCountdownTick(counter)
+	if (counter == 0) then
+		setProperty('helicopter.velocity.x', 300);
 	end
 end
 
