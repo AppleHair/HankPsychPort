@@ -1,109 +1,113 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				102,
-				194
-			],
 			"loop": false,
-			"fps": 36,
+			"offsets": [
+				114,
+				184
+			],
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "Hank Left Note"
+			"fps": 36,
+			"name": "Hank Left Note",
+			"indices": []
 		},
 		{
-			"offsets": [
-				-152,
-				191
-			],
 			"loop": false,
-			"fps": 36,
+			"offsets": [
+				-181,
+				171
+			],
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "Hank Down Note"
-		},
-		{
-			"offsets": [
-				-210,
-				180
-			],
-			"loop": false,
 			"fps": 36,
-			"anim": "singUP",
-			"indices": [],
-			"name": "Hank Up note"
+			"name": "Hank Down Note",
+			"indices": []
 		},
 		{
+			"loop": false,
+			"offsets": [
+				-203,
+				174
+			],
+			"anim": "singUP",
+			"fps": 36,
+			"name": "Hank Up note",
+			"indices": []
+		},
+		{
+			"loop": false,
 			"offsets": [
 				-120,
-				181
-			],
-			"loop": false,
-			"fps": 36,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "Hank right note"
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-160,
-				183
-			],
-			"anim": "shootLEFT",
-			"fps": 36,
-			"name": "Hank Left Shoot",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-226,
 				180
 			],
-			"anim": "shootRIGHT",
+			"anim": "singRIGHT",
 			"fps": 36,
-			"name": "Hank right shoot",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-160,
-				183
-			],
-			"anim": "shootDOWN",
-			"fps": 36,
-			"name": "Hank Down Shoot",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-206,
-				170
-			],
-			"anim": "shootUP",
-			"fps": 36,
-			"name": "Hank Up shoot",
+			"name": "Hank right note",
 			"indices": []
 		},
 		{
 			"offsets": [
-				-215,
-				171
+				-163,
+				184
 			],
 			"loop": false,
 			"fps": 36,
-			"anim": "idle",
+			"anim": "shootLEFT",
 			"indices": [],
-			"name": "Hank Idle"
+			"name": "Hank Left Shoot"
 		},
 		{
+			"offsets": [
+				-236,
+				180
+			],
+			"loop": false,
+			"fps": 36,
+			"anim": "shootRIGHT",
+			"indices": [],
+			"name": "Hank right shoot"
+		},
+		{
+			"offsets": [
+				-180,
+				173
+			],
+			"loop": false,
+			"fps": 36,
+			"anim": "shootDOWN",
+			"indices": [],
+			"name": "Hank Down Shoot"
+		},
+		{
+			"offsets": [
+				-203,
+				173
+			],
+			"loop": false,
+			"fps": 36,
+			"anim": "shootUP",
+			"indices": [],
+			"name": "Hank Up shoot"
+		},
+		{
+			"loop": false,
 			"offsets": [
 				-215,
 				171
 			],
+			"anim": "idle",
+			"fps": 36,
+			"name": "Hank Idle",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-215,
+				171
+			],
+			"anim": "idle-loop",
+			"fps": 36,
+			"name": "Hank Idle",
 			"indices": [
 				9,
 				10,
@@ -111,11 +115,7 @@
 				12,
 				13,
 				14
-			],
-			"fps": 36,
-			"anim": "idle-loop",
-			"loop": true,
-			"name": "Hank Idle"
+			]
 		}
 	],
 	"no_antialiasing": false,

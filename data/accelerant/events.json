@@ -85,9 +85,9 @@
 				61463.4146341464,
 				[
 					[
-						"Change Character",
+						"Alt Idle Animation",
 						"dad",
-						"hank-scared"
+						"-scared"
 					],
 					[
 						"Change Character",
@@ -128,6 +128,11 @@
 						"Change Character",
 						"dad",
 						"hank2"
+					],
+					[
+						"Alt Idle Animation",
+						"dad",
+						""
 					]
 				]
 			],
