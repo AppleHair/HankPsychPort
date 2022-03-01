@@ -28,6 +28,11 @@
 						"Play Animation",
 						"getReady",
 						"dad"
+					],
+					[
+						"Camera Tween Pos",
+						"300, 360, 0.8",
+						"quadOut"
 					]
 				]
 			],
@@ -43,6 +48,21 @@
 						"Camera Tween Zoom",
 						"0.69, 0.1",
 						"linear"
+					],
+					[
+						"Camera Tween Pos",
+						"420, 360, 0.1",
+						"linear"
+					]
+				]
+			],
+			[
+				3109.75609756098,
+				[
+					[
+						"Camera Follow Pos",
+						"",
+						""
 					]
 				]
 			],

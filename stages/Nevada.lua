@@ -1,7 +1,7 @@
 function onCreate()
     --static--
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', -980, -465);
+	makeLuaSprite('HotdogStation','NevadaHotdog', -980, -455);
 	setLuaSpriteScrollFactor('HotdogStation', 2.2, 1.7);
 	scaleObject('HotdogStation', 1.24, 1.24);
 	
