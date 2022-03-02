@@ -1,47 +1,46 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				-202,
 				166
 			],
-			"anim": "scaredIdle",
+			"loop": false,
 			"fps": 36,
-			"name": "HankScaredIdle",
-			"indices": []
+			"anim": "scaredIdle",
+			"indices": [],
+			"name": "HankScaredIdle"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-208,
 				84
 			],
-			"anim": "getReady",
+			"loop": false,
 			"fps": 36,
-			"name": "HankGetReady",
-			"indices": []
+			"anim": "getReady",
+			"indices": [],
+			"name": "HankGetReady"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-111,
 				491
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "scaredShoot",
-			"indices": [],
-			"name": "HankScaredShootsTiky"
+			"fps": 24,
+			"name": "HankScaredShootsTiky",
+			"indices": []
 		},
 		{
-			"loop": true,
 			"offsets": [
 				-202,
 				166
 			],
-			"anim": "scaredIdle-loop",
+			"loop": true,
 			"fps": 36,
-			"name": "HankScaredIdle",
+			"anim": "scaredIdle-loop",
 			"indices": [
 				9,
 				10,
@@ -49,17 +48,17 @@
 				12,
 				13,
 				14
-			]
+			],
+			"name": "HankScaredIdle"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				-208,
 				84
 			],
-			"anim": "getReady-loop",
+			"loop": true,
 			"fps": 36,
-			"name": "HankGetReady",
+			"anim": "getReady-loop",
 			"indices": [
 				16,
 				17,
@@ -70,23 +69,24 @@
 				22,
 				23,
 				24
-			]
+			],
+			"name": "HankGetReady"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				-111,
 				491
 			],
-			"anim": "scaredShoot-loop",
+			"loop": true,
 			"fps": 24,
-			"name": "HankScaredShootsTiky",
+			"anim": "scaredShoot-loop",
 			"indices": [
 				9,
 				10,
 				11,
 				12
-			]
+			],
+			"name": "HankScaredShootsTiky"
 		}
 	],
 	"no_antialiasing": false,
@@ -98,9 +98,9 @@
 	"healthicon": "hank",
 	"flip_x": false,
 	"healthbar_colors": [
-		28,
-		28,
-		67
+		22,
+		22,
+		44
 	],
 	"camera_position": [
 		330,

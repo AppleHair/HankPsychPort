@@ -1,0 +1,141 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "trickyidle"
+		},
+		{
+			"offsets": [
+				-13,
+				60
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "trickyup"
+		},
+		{
+			"offsets": [
+				104,
+				30
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "trickyileft"
+		},
+		{
+			"offsets": [
+				137,
+				-27
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "trickyright"
+		},
+		{
+			"offsets": [
+				85,
+				15
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "trickydwon"
+		},
+		{
+			"offsets": [
+				268,
+				585
+			],
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7
+			],
+			"fps": 24,
+			"anim": "Enter",
+			"loop": false,
+			"name": "trickyentrance"
+		},
+		{
+			"offsets": [
+				276,
+				583
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25,
+				26,
+				27,
+				28,
+				29,
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36,
+				37,
+				38
+			],
+			"fps": 24,
+			"anim": "Scream",
+			"loop": false,
+			"name": "trickyentrance"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/TrickyAssets",
+	"position": [
+		-20,
+		-215
+	],
+	"healthicon": "hank",
+	"flip_x": false,
+	"healthbar_colors": [
+		22,
+		22,
+		44
+	],
+	"camera_position": [
+		0,
+		400
+	],
+	"sing_duration": 4,
+	"scale": 0.8
+}
