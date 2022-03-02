@@ -1,7 +1,7 @@
 function onCreate()
     --static--
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', -980, -455);
+	makeLuaSprite('HotdogStation','NevadaHotdog', -1000, -455);
 	setLuaSpriteScrollFactor('HotdogStation', 2.2, 1.7);
 	scaleObject('HotdogStation', 1.24, 1.24);
 	
@@ -47,6 +47,16 @@ function onCreate()
 	scaleObject('Lazer', 1.5, 1.5);
 	setProperty('Lazer.visible', false);
 	precacheImage('LazerDot');
+
+	makeAnimatedLuaSprite('Speakers','dumb_speakers', 210, 200);
+	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
+	setProperty('Speakers.visible', true);
+	precacheImage('dumb_speakers');
+
+	makeAnimatedLuaSprite('She friking flyy','GF_go_bye_bye', 170, -90);
+	addAnimationByPrefix('She friking flyy', 'AAA', 'She covered her self in oil', 24, true);
+	setProperty('She friking flyy.visible', false);
+	precacheImage('GF_go_bye_bye');
 	
 	--layers--
 	
@@ -56,9 +66,10 @@ function onCreate()
 	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
 	addLuaSprite('Ground',false);
+	addLuaSprite('Speakers',false);
+	addLuaSprite('She friking flyy',true);
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Lazer',true);
-	setProperty('gf.alpha', 0.5);
 end
 
 function onCountdownTick(counter)
@@ -69,12 +80,13 @@ end
 
      --Animations and events--
 
-local Appear = false;
-local Flash = false;
--- Event notes hooks
+local StopDMiandSAN = false;
+local StopLazer = false;
+local clownAndLazer = false;
+
 function onEvent(name, value1, value2)
 	if name == 'Deimos&Sanford Appear' then
-		Appear = true;
+		StopDMiandSAN = true;
 		luaSpritePlayAnimation('Deimos', 'Appear', false);
 		setProperty('Deimos.y', -670);
 		setProperty('Deimos.x', -475);
@@ -85,29 +97,46 @@ function onEvent(name, value1, value2)
 		setProperty('Sanford.visible', true);
 		runTimer('AppearTimer', 0.3, 1);
 	end
+	if name == 'Tricky Kicks GF' then
+		setProperty('Lazer.visible', false);
+		clownAndLazer = true;
+	end
 end
+
+     --The lazer and the clown--
+
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if noteType == 'GF Sing' and clownAndLazer then
+		setProperty('Lazer.visible', false);
+	end
+end
+
+     --Timers--
 
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'AppearTimer' then
-		Appear = false;
+		StopDMiandSAN = false;
 		triggerEvent('Play Animation', 'Raise', 'gf');
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
 		luaSpritePlayAnimation('Lazer', 'Flash', false);
 		setProperty('Lazer.y', -59);
 		setProperty('Lazer.x', 504);
 		setProperty('Lazer.visible', true);
-		Flash = true;
+		StopLazer = true;
 		runTimer('FlashTimer', 0.5, 1);
 	end
 	if tag == 'FlashTimer' then
-		Flash = false;
+		StopLazer = false;
 	end
 end
 
       --Boops--
 
 function onBeatHit()
-	if not Appear then
+	if (getProperty('gf.animation.curAnim.name') == 'danceLeft' or getProperty('gf.animation.curAnim.name') == 'danceRight') and clownAndLazer then
+		setProperty('Lazer.visible', true);
+	end
+	if not StopDMiandSAN then
 		luaSpritePlayAnimation('Deimos', 'Boop', true);
 		setProperty('Deimos.y', -230);
 		setProperty('Deimos.x', -390);
@@ -115,9 +144,15 @@ function onBeatHit()
 		setProperty('Sanford.y', -245);
 		setProperty('Sanford.x', 1215);
 	end
-	if not Flash then
+	if not StopLazer then
 		luaSpritePlayAnimation('Lazer', 'Boop', true);
-		setProperty('Lazer.y', -70);
-		setProperty('Lazer.x', 500);
+		if clownAndLazer then
+			setProperty('Lazer.y', -30);
+			setProperty('Lazer.x', 670);
+		else
+			setProperty('Lazer.y', -70);
+			setProperty('Lazer.x', 500);
+		end
 	end
+	luaSpritePlayAnimation('Speakers', 'Boop', true);
 end

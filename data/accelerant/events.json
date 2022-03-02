@@ -102,16 +102,36 @@
 				]
 			],
 			[
+				60596.7987804878,
+				[
+					[
+						"Change Character",
+						"gf",
+						"tricky"
+					],
+					[
+						"Tricky Kicks GF",
+						"",
+						""
+					]
+				]
+			],
+			[
 				61463.4146341464,
 				[
 					[
 						"Alt Idle Animation",
 						"dad",
 						"-scared"
-					],
+					]
+				]
+			],
+			[
+				67317.0731707317,
+				[
 					[
-						"Change Character",
-						"gf",
+						"Play Animation",
+						"Scream",
 						"gf"
 					]
 				]

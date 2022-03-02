@@ -1,65 +1,58 @@
 {
 	"animations": [
 		{
-			"offsets": [
-				0,
-				0
-			],
 			"loop": false,
-			"fps": 24,
-			"anim": "idle",
-			"indices": [],
-			"name": "trickyidle"
-		},
-		{
 			"offsets": [
-				-13,
+				-7,
 				60
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singUP",
-			"loop": false,
-			"name": "trickyup"
+			"fps": 24,
+			"name": "trickyup",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				104,
 				30
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singLEFT",
-			"loop": false,
-			"name": "trickyileft"
+			"fps": 24,
+			"name": "trickyileft",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				137,
 				-27
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singRIGHT",
-			"loop": false,
-			"name": "trickyright"
+			"fps": 24,
+			"name": "trickyright",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				85,
 				15
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "singDOWN",
-			"loop": false,
-			"name": "trickydwon"
+			"fps": 24,
+			"name": "trickydwon",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
 				268,
 				585
 			],
+			"anim": "Enter",
+			"fps": 24,
+			"name": "trickyentrance",
 			"indices": [
 				0,
 				1,
@@ -69,17 +62,17 @@
 				5,
 				6,
 				7
-			],
-			"fps": 24,
-			"anim": "Enter",
-			"loop": false,
-			"name": "trickyentrance"
+			]
 		},
 		{
+			"loop": false,
 			"offsets": [
 				276,
 				583
 			],
+			"anim": "Scream",
+			"fps": 24,
+			"name": "trickyentrance",
 			"indices": [
 				8,
 				9,
@@ -112,17 +105,35 @@
 				36,
 				37,
 				38
+			]
+		},
+		{
+			"offsets": [
+				0,
+				0
 			],
-			"fps": 24,
-			"anim": "Scream",
 			"loop": false,
-			"name": "trickyentrance"
+			"fps": 24,
+			"anim": "danceRight",
+			"indices": [],
+			"name": "trickyidle"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "danceLeft",
+			"fps": 24,
+			"name": "trickyidle",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/TrickyAssets",
 	"position": [
-		-20,
+		-15,
 		-215
 	],
 	"healthicon": "hank",

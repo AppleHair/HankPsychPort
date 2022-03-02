@@ -2,8 +2,8 @@
 <TextureAtlas imagePath="GF_go_bye_bye.png">
 	<!-- Created with Adobe Animate version 21.0.6.41649 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="GF Dancing Beat Hair blowing0000" x="0" y="0" width="486" height="409" frameX="-45" frameY="0" frameWidth="531" frameHeight="409"/>
-	<SubTexture name="GF Dancing Beat Hair blowing0001" x="0" y="0" width="486" height="409" frameX="-45" frameY="0" frameWidth="531" frameHeight="409"/>
-	<SubTexture name="GF Dancing Beat Hair blowing0002" x="486" y="0" width="531" height="401" frameX="0" frameY="-8" frameWidth="531" frameHeight="409"/>
-	<SubTexture name="GF Dancing Beat Hair blowing0003" x="0" y="409" width="478" height="400" frameX="-53" frameY="-9" frameWidth="531" frameHeight="409"/>
+	<SubTexture name="She covered her self in oil0000" x="0" y="0" width="486" height="409" frameX="-45" frameY="0" frameWidth="531" frameHeight="409"/>
+	<SubTexture name="She covered her self in oil0001" x="0" y="0" width="486" height="409" frameX="-45" frameY="0" frameWidth="531" frameHeight="409"/>
+	<SubTexture name="She covered her self in oil0002" x="486" y="0" width="531" height="401" frameX="0" frameY="-8" frameWidth="531" frameHeight="409"/>
+	<SubTexture name="She covered her self in oil0003" x="0" y="409" width="478" height="400" frameX="-53" frameY="-9" frameWidth="531" frameHeight="409"/>
 </TextureAtlas>
