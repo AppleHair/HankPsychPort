@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TrickyCutsceneClownAssets.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="tikygetsshot0000" x="0" y="0" width="799" height="1048" frameX="-57" frameY="-32" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0001" x="0" y="0" width="799" height="1048" frameX="-57" frameY="-32" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0002" x="799" y="0" width="805" height="980" frameX="-22" frameY="-50" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0003" x="799" y="0" width="805" height="980" frameX="-22" frameY="-50" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0004" x="1604" y="0" width="792" height="1064" frameX="-57" frameY="-19" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0005" x="1604" y="0" width="792" height="1064" frameX="-57" frameY="-19" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0006" x="2396" y="0" width="787" height="1107" frameX="-59" frameY="0" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="tikygetsshot0007" x="0" y="1107" width="1038" height="987" frameX="0" frameY="-58" frameWidth="1038" frameHeight="1107"/>
+	<SubTexture name="trickyturning0000" x="1038" y="1107" width="916" height="769" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0001" x="1954" y="1107" width="916" height="710" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0002" x="2870" y="1107" width="886" height="732" frameX="-3" frameY="-26" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0003" x="2870" y="1107" width="886" height="732" frameX="-3" frameY="-26" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0004" x="2870" y="1107" width="886" height="732" frameX="-3" frameY="-26" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0005" x="0" y="2094" width="899" height="766" frameX="-15" frameY="0" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0006" x="0" y="2094" width="899" height="766" frameX="-15" frameY="0" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0007" x="0" y="2094" width="899" height="766" frameX="-15" frameY="0" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0008" x="899" y="2094" width="916" height="719" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0009" x="899" y="2094" width="916" height="719" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0010" x="1815" y="2094" width="916" height="718" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0011" x="1815" y="2094" width="916" height="718" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0012" x="2731" y="2094" width="916" height="718" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+	<SubTexture name="trickyturning0013" x="0" y="2860" width="916" height="718" frameX="0" frameY="-27" frameWidth="916" frameHeight="796"/>
+</TextureAtlas>

@@ -113,6 +113,16 @@
 						"Tricky Kicks GF",
 						"",
 						""
+					],
+					[
+						"Camera Tween Pos",
+						"540, 120, 0.1",
+						"linear"
+					],
+					[
+						"Camera Tween Zoom",
+						"0.8, 0.1",
+						"linear"
 					]
 				]
 			],
@@ -127,12 +137,42 @@
 				]
 			],
 			[
+				62012.1951219512,
+				[
+					[
+						"Camera Tween Pos",
+						"540, 210, 2",
+						"sineInOut"
+					]
+				]
+			],
+			[
 				67317.0731707317,
 				[
 					[
 						"Play Animation",
 						"Scream",
 						"gf"
+					],
+					[
+						"Camera Follow Pos",
+						"",
+						""
+					],
+					[
+						"Camera Tween Zoom",
+						"0.69, 1",
+						"linear"
+					]
+				]
+			],
+			[
+				84786.5853658536,
+				[
+					[
+						"Camera Tween Pos",
+						"420, 260, 0.3",
+						"linear"
 					]
 				]
 			],
@@ -148,6 +188,11 @@
 						"Play Animation",
 						"scaredIdle",
 						"dad"
+					],
+					[
+						"Tricky Lookin",
+						"",
+						""
 					]
 				]
 			],
@@ -158,6 +203,31 @@
 						"Play Animation",
 						"scaredShoot",
 						"dad"
+					]
+				]
+			],
+			[
+				85609.7560975609,
+				[
+					[
+						"Tricky Fallin",
+						"",
+						""
+					],
+					[
+						"Camera Follow Pos",
+						"",
+						""
+					]
+				]
+			],
+			[
+				85792.6829268292,
+				[
+					[
+						"Play Sound",
+						"Screamfade",
+						"0.7"
 					]
 				]
 			],

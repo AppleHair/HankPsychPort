@@ -1,78 +1,57 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				-7,
 				60
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "trickyup",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "trickyup"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				104,
 				30
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "trickyileft",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "trickyileft"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				137,
 				-27
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "trickyright",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "trickyright"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				85,
 				15
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "singDOWN",
-			"fps": 24,
-			"name": "trickydwon",
-			"indices": []
+			"indices": [],
+			"name": "trickydwon"
 		},
 		{
-			"loop": false,
-			"offsets": [
-				268,
-				585
-			],
-			"anim": "Enter",
-			"fps": 24,
-			"name": "trickyentrance",
-			"indices": [
-				0,
-				1,
-				2,
-				3,
-				4,
-				5,
-				6,
-				7
-			]
-		},
-		{
-			"loop": false,
 			"offsets": [
 				276,
 				583
 			],
-			"anim": "Scream",
+			"loop": false,
 			"fps": 24,
-			"name": "trickyentrance",
+			"anim": "Scream",
 			"indices": [
 				8,
 				9,
@@ -105,7 +84,19 @@
 				36,
 				37,
 				38
-			]
+			],
+			"name": "trickyentrance"
+		},
+		{
+			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "danceRight",
+			"fps": 24,
+			"name": "trickyidle",
+			"indices": []
 		},
 		{
 			"offsets": [
@@ -114,20 +105,28 @@
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "danceRight",
+			"anim": "danceLeft",
 			"indices": [],
 			"name": "trickyidle"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				0,
-				0
+				268,
+				585
 			],
-			"anim": "danceLeft",
+			"indices": [
+				0,
+				1,
+				2,
+				35,
+				36,
+				37,
+				38
+			],
 			"fps": 24,
-			"name": "trickyidle",
-			"indices": []
+			"anim": "Enter",
+			"loop": false,
+			"name": "trickyentrance"
 		}
 	],
 	"no_antialiasing": false,

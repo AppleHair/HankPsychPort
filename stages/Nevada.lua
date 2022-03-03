@@ -57,6 +57,13 @@ function onCreate()
 	addAnimationByPrefix('She friking flyy', 'AAA', 'She covered her self in oil', 24, true);
 	setProperty('She friking flyy.visible', false);
 	precacheImage('GF_go_bye_bye');
+
+	makeAnimatedLuaSprite('cutsceneClown','TrickyCutsceneClownAssets', 300, -270);
+	addAnimationByPrefix('cutsceneClown', 'Turn', 'trickyturning', 24, false);
+	addAnimationByPrefix('cutsceneClown', 'Fall', 'tikygetsshot', 24, true);
+	scaleObject('cutsceneClown', 0.8, 0.8);
+	setProperty('cutsceneClown.visible', false);
+	precacheImage('TrickyCutsceneClown');
 	
 	--layers--
 	
@@ -67,7 +74,8 @@ function onCreate()
 	addLuaSprite('Sanford',false);
 	addLuaSprite('Ground',false);
 	addLuaSprite('Speakers',false);
-	addLuaSprite('She friking flyy',true);
+	addLuaSprite('cutsceneClown',false);
+	addLuaSprite('She friking flyy',true);	
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Lazer',true);
 end
@@ -101,6 +109,27 @@ function onEvent(name, value1, value2)
 		setProperty('Lazer.visible', false);
 		clownAndLazer = true;
 	end
+	if name == 'Tricky Lookin' then
+		clownAndLazer = false;
+		setProperty('Lazer.visible', false);
+		setProperty('gf.visible', false);
+		setProperty('cutsceneClown.visible', true);
+		luaSpritePlayAnimation('cutsceneClown', 'Turn', true);
+	end
+	if name == 'Tricky Fallin' then
+		luaSpritePlayAnimation('cutsceneClown', 'Fall', true);
+		setProperty('cutsceneClown.y', -500);
+		doTweenY('ClownGoUp', 'cutsceneClown', -1000, 0.4, 'sineInOut');
+	end
+end
+
+function onTweenCompleted(tag)
+	if tag == 'ClownGoUp' then
+		setObjectOrder('cutsceneClown', getObjectOrder('cutsceneClown') - 2);
+		setObjectOrder('Ground', getObjectOrder('Ground') + 1);
+		setObjectOrder('Speakers', getObjectOrder('Speakers') + 1);
+		doTweenY('ClownGoDown', 'cutsceneClown', 500, 0.7, 'sineInOut');
+	end
 end
 
      --The lazer and the clown--
@@ -120,7 +149,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
 		luaSpritePlayAnimation('Lazer', 'Flash', false);
 		setProperty('Lazer.y', -59);
-		setProperty('Lazer.x', 504);
+		setProperty('Lazer.x', 514);
 		setProperty('Lazer.visible', true);
 		StopLazer = true;
 		runTimer('FlashTimer', 0.5, 1);
@@ -148,10 +177,10 @@ function onBeatHit()
 		luaSpritePlayAnimation('Lazer', 'Boop', true);
 		if clownAndLazer then
 			setProperty('Lazer.y', -30);
-			setProperty('Lazer.x', 670);
+			setProperty('Lazer.x', 700);
 		else
 			setProperty('Lazer.y', -70);
-			setProperty('Lazer.x', 500);
+			setProperty('Lazer.x', 510);
 		end
 	end
 	luaSpritePlayAnimation('Speakers', 'Boop', true);
