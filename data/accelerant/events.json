@@ -171,7 +171,7 @@
 				[
 					[
 						"Camera Tween Pos",
-						"420, 260, 0.3",
+						"470, 200, 0.3",
 						"linear"
 					]
 				]
@@ -203,6 +203,11 @@
 						"Play Animation",
 						"scaredShoot",
 						"dad"
+					],
+					[
+						"Camera Follow Pos",
+						"420",
+						"280"
 					]
 				]
 			],
@@ -211,11 +216,6 @@
 				[
 					[
 						"Tricky Fallin",
-						"",
-						""
-					],
-					[
-						"Camera Follow Pos",
 						"",
 						""
 					]
@@ -242,6 +242,11 @@
 					[
 						"Alt Idle Animation",
 						"dad",
+						""
+					],
+					[
+						"Camera Follow Pos",
+						"",
 						""
 					]
 				]
