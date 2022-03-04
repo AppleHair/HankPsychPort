@@ -36,7 +36,7 @@ end
 function goodNoteHit(id, noteData, noteType, isSustainNote)
 	if noteType == 'Bullet Note' then
 		-- BF anim
-		cameraShake('game', 0.006, 0.07);
+		cameraShake('game', 0.0075, 0.07);
 		triggerEvent('Play Animation', 'dodge', 'bf');
 
 		-- Hank anim
@@ -61,7 +61,7 @@ local healthDrain = 0; --- helps in the health Drain prosses
 function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Bullet Note' then
 		-- BF anim + sound and blood
-		cameraShake('game', 0.006, 0.07);
+		cameraShake('game', 0.0075, 0.07);
 		triggerEvent('Play Animation', 'hurt', 'bf');
 		setProperty('bloodEffect.visible', true);
 		luaSpritePlayAnimation('bloodEffect', 'splat', true);
