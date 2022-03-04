@@ -14,8 +14,10 @@ A Psych Engine Port of ONLINE VS' Hank Challenge.
 
 * Shadow Mario - Engine Developer
 * RiverOaken - Arts and Animations
-* bbpanzu - Assistant Programmer
+* shubs - Assistant Programmer
+* bb-panzu - Former Assistant Programmer
 
 ## Additional Creadits:
 
 * Kevin Kuntz - VS. Ready script
+* Shadow Mario - Bullet note health drain script
