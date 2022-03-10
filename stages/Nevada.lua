@@ -1,3 +1,6 @@
+local HotGFMovementAmount = 350; --Start X = 1530--    --Future X: 1180--    --Difference: 350--
+local DanceDir = false; -- true = left  false = right
+
 function onCreate()
     --static--
 	
@@ -64,6 +67,13 @@ function onCreate()
 	scaleObject('cutsceneClown', 0.8, 0.8);
 	setProperty('cutsceneClown.visible', false);
 	precacheImage('TrickyCutsceneClown');
+
+	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 160);
+	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
+	addAnimationByIndices('gf-hot', 'Boop-right', 'GFStandingWithHotDog', '15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29', 24);
+	addAnimationByPrefix('gf-hot', 'Walk', 'GFStandingWithHotDogWalk', 24, true);
+	scaleObject('gf-hot', 1, 1);
+	precacheImage('GFHotdog');
 	
 	--layers--
 	
@@ -75,7 +85,8 @@ function onCreate()
 	addLuaSprite('Ground',false);
 	addLuaSprite('Speakers',false);
 	addLuaSprite('cutsceneClown',false);
-	addLuaSprite('She friking flyy',true);	
+	addLuaSprite('gf-hot', false);
+	addLuaSprite('She friking flyy',true);
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Lazer',true);
 end
@@ -91,6 +102,7 @@ end
 local StopDMiandSAN = false;
 local StopLazer = false;
 local clownAndLazer = false;
+local WalkingHotDogGF = false;
 
 function onEvent(name, value1, value2)
 	if name == 'Deimos&Sanford Appear' then
@@ -121,6 +133,12 @@ function onEvent(name, value1, value2)
 		setProperty('cutsceneClown.y', -500);
 		doTweenY('ClownGoUp', 'cutsceneClown', -1000, 0.4, 'sineInOut');
 	end
+
+	if name == 'HotDogGF Appears' then
+		WalkingHotDogGF = true;
+		luaSpritePlayAnimation('gf-hot', 'Walk', false);
+		doTweenX('HotGFWalksIn', 'gf-hot', getProperty('gf-hot.x') - HotGFMovementAmount, 0.8, 'linear');
+	end
 end
 
 function onTweenCompleted(tag)
@@ -129,6 +147,9 @@ function onTweenCompleted(tag)
 		setObjectOrder('Ground', getObjectOrder('Ground') + 1);
 		setObjectOrder('Speakers', getObjectOrder('Speakers') + 1);
 		doTweenY('ClownGoDown', 'cutsceneClown', 500, 0.7, 'sineInOut');
+	end
+	if tag == 'HotGFWalksIn' then
+		WalkingHotDogGF = false;
 	end
 end
 
@@ -181,6 +202,15 @@ function onBeatHit()
 		else
 			setProperty('Lazer.y', -70);
 			setProperty('Lazer.x', 510);
+		end
+	end
+	if not WalkingHotDogGF then
+		if DanceDir then
+			luaSpritePlayAnimation('gf-hot', 'Boop-left', true);
+			DanceDir = false;
+		else
+			luaSpritePlayAnimation('gf-hot', 'Boop-right', true);
+			DanceDir = true;
 		end
 	end
 	luaSpritePlayAnimation('Speakers', 'Boop', true);
