@@ -2,7 +2,7 @@
 	"song": {
 		"speed": 3,
 		"stage": "Nevada",
-		"player1": "bf-clone",
+		"player1": "bf",
 		"player2": "hank",
 		"player3": null,
 		"events": [
@@ -87,7 +87,7 @@
 					[
 						"Change Character",
 						"bf",
-						"bf-clone2"
+						"bf-clone"
 					]
 				]
 			],
