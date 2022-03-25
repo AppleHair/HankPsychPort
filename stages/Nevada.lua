@@ -109,29 +109,39 @@ function onCreate()
 	addLuaSprite('Static', false);
 end
 
+
+--[[
+used to make a object/lua sprite play an animation with
+an different x and y position to make it fit.
+
+(warning: this doesn't work like it does with charater position.
+ It's not In relation to the center of the object. it's literally a position on the stage)
+]]
+function PlayOffsetedAnim(objName, animName, x, y, forced) 
+	objectPlayAnimation(objName, animName, forced);
+	setProperty(objName ..'.x', x);
+	setProperty(objName ..'.y', y);
+end
+
 function onCountdownTick(counter)
 	if (counter == 0) then
-		setProperty('helicopter.velocity.x', 300);
+		setProperty('helicopter.velocity.x', 300); -- helicopter helicopter
 	end
 end
 
      --Animations and events--
 
-local StopDMiandSAN = false;
-local StopLazer = false;
-local clownAndLazer = false;
-local WalkingHotDogGF = false;
+local StopDMiandSAN = false; -- used to make Deimos and sanford stop their idle animation
+local StopLazer = false; -- used to make the lazer stop his idle animation
+local clownAndLazer = false; -- used to check if tricky entered the stage. helps for executing clown-lazer behavior
+local WalkingHotDogGF = false; -- used for checking if gf is walking to stop her idle animation
 
 function onEvent(name, value1, value2)
 	if name == 'Deimos&Sanford Appear' then
 		StopDMiandSAN = true;
-		luaSpritePlayAnimation('Deimos', 'Appear', false);
-		setProperty('Deimos.y', -670);
-		setProperty('Deimos.x', -490);
+		PlayOffsetedAnim('Deimos', 'Appear', -490, -670, false);
 		setProperty('Deimos.visible', true);
-		luaSpritePlayAnimation('Sanford', 'Appear', false);
-		setProperty('Sanford.y', -610);
-		setProperty('Sanford.x', 1225);
+		PlayOffsetedAnim('Sanford', 'Appear', 1225, -610, false);
 		setProperty('Sanford.visible', true);
 		runTimer('AppearTimer', 0.3, 1);
 	end
@@ -186,9 +196,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		StopDMiandSAN = false;
 		triggerEvent('Play Animation', 'Raise', 'gf');
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
-		luaSpritePlayAnimation('Lazer', 'Flash', false);
-		setProperty('Lazer.y', -19);
-		setProperty('Lazer.x', 494);
+		PlayOffsetedAnim('Lazer', 'Flash', 494, -19, false);
 		setProperty('Lazer.visible', true);
 		StopLazer = true;
 		runTimer('FlashTimer', 0.5, 1);
@@ -205,12 +213,8 @@ function onBeatHit()
 		setProperty('Lazer.visible', true);
 	end
 	if not StopDMiandSAN then
-		luaSpritePlayAnimation('Deimos', 'Boop', true);
-		setProperty('Deimos.y', -230);
-		setProperty('Deimos.x', -405);
-		luaSpritePlayAnimation('Sanford', 'Boop', true);
-		setProperty('Sanford.y', -225);
-		setProperty('Sanford.x', 1225);
+		PlayOffsetedAnim('Deimos', 'Boop', -405, -230, true);
+		PlayOffsetedAnim('Sanford', 'Boop', 1225, -225, true);
 	end
 	if not StopLazer then
 		luaSpritePlayAnimation('Lazer', 'Boop', true);
