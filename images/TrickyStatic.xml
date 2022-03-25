@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="TrickyStatic.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Stat0000" x="0" y="0" width="320" height="270"/>
+	<SubTexture name="Stat0001" x="0" y="270" width="320" height="270"/>
+</TextureAtlas>
