@@ -8,7 +8,7 @@ function onCreate()
 	addLuaSprite('bloodEffect',true);
 	
 	-- The shot ray creation
-	makeLuaSprite('shotRay','shotRay', 170, 300);
+	makeLuaSprite('shotRay','shotRay', 220, 360);
 	setProperty('shotRay.alpha', 0.7);
 	setProperty('shotRay.visible', false);
 	addLuaSprite('shotRay',true);
