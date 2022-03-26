@@ -1,4 +1,4 @@
-local HotGFMovementAmount = 350; --Start X = 1530--    --Future X: 1180--    --Difference: 350--
+local HotGFMovementAmount = 350; 
 local DanceDir = false; -- true = left  false = right
 
 function onCreate()
@@ -61,8 +61,6 @@ function onCreate()
 
 	makeAnimatedLuaSprite('Speakers','dumb_speakers', 205, 240);
 	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
-	setProperty('Speakers.visible', true);
-	precacheImage('dumb_speakers');
 
 	makeAnimatedLuaSprite('She friking flyy','GF_go_bye_bye', 170, -80);
 	addAnimationByPrefix('She friking flyy', 'AAA', 'She covered her self in oil', 24, true);
@@ -80,6 +78,7 @@ function onCreate()
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
 	addAnimationByIndices('gf-hot', 'Boop-right', 'GFStandingWithHotDog', '15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29', 24);
 	addAnimationByPrefix('gf-hot', 'Walk', 'GFStandingWithHotDogWalk', 24, true);
+	setProperty('gf-hot.visible', false);
 	scaleObject('gf-hot', 1, 1);
 	precacheImage('GFHotdog');
 
@@ -164,6 +163,7 @@ function onEvent(name, value1, value2)
 
 	if name == 'HotDogGF Appears' then
 		WalkingHotDogGF = true;
+		setProperty('gf-hot.visible', true);
 		luaSpritePlayAnimation('gf-hot', 'Walk', false);
 		doTweenX('HotGFWalksIn', 'gf-hot', getProperty('gf-hot.x') - HotGFMovementAmount, 0.8, 'linear');
 	end
