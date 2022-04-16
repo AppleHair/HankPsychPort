@@ -2,56 +2,50 @@
 	"animations": [
 		{
 			"offsets": [
-				-7,
-				60
+				0,
+				0
 			],
 			"loop": false,
 			"fps": 24,
-			"anim": "singUP",
+			"anim": "danceRight",
 			"indices": [],
-			"name": "trickyup"
+			"name": "trickyidle"
 		},
 		{
-			"offsets": [
-				104,
-				30
-			],
 			"loop": false,
+			"offsets": [
+				0,
+				0
+			],
+			"anim": "danceLeft",
 			"fps": 24,
-			"anim": "singLEFT",
-			"indices": [],
-			"name": "trickyileft"
+			"name": "trickyidle",
+			"indices": []
 		},
 		{
-			"offsets": [
-				137,
-				-27
-			],
 			"loop": false,
-			"fps": 24,
-			"anim": "singRIGHT",
-			"indices": [],
-			"name": "trickyright"
-		},
-		{
 			"offsets": [
-				85,
-				15
+				268,
+				585
 			],
-			"loop": false,
+			"anim": "Enter",
 			"fps": 24,
-			"anim": "singDOWN",
-			"indices": [],
-			"name": "trickydwon"
+			"name": "trickyentrance",
+			"indices": [
+				0,
+				1,
+				2,
+				35,
+				36,
+				37,
+				38
+			]
 		},
 		{
 			"offsets": [
 				276,
 				583
 			],
-			"loop": false,
-			"fps": 24,
-			"anim": "Scream",
 			"indices": [
 				8,
 				9,
@@ -85,48 +79,54 @@
 				37,
 				38
 			],
+			"fps": 36,
+			"anim": "Scream",
+			"loop": false,
 			"name": "trickyentrance"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				0,
-				0
+				85,
+				15
 			],
-			"anim": "danceRight",
-			"fps": 24,
-			"name": "trickyidle",
-			"indices": []
-		},
-		{
-			"offsets": [
-				0,
-				0
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "danceLeft",
 			"indices": [],
-			"name": "trickyidle"
+			"fps": 36,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "trickydwon"
 		},
 		{
 			"offsets": [
-				268,
-				585
+				-7,
+				60
 			],
-			"indices": [
-				0,
-				1,
-				2,
-				35,
-				36,
-				37,
-				38
-			],
-			"fps": 24,
-			"anim": "Enter",
+			"indices": [],
+			"fps": 36,
+			"anim": "singUP",
 			"loop": false,
-			"name": "trickyentrance"
+			"name": "trickyup"
+		},
+		{
+			"offsets": [
+				104,
+				30
+			],
+			"indices": [],
+			"fps": 36,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "trickyileft"
+		},
+		{
+			"offsets": [
+				137,
+				-27
+			],
+			"indices": [],
+			"fps": 36,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "trickyright"
 		}
 	],
 	"no_antialiasing": false,
