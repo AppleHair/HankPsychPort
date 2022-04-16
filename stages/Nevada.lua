@@ -82,6 +82,40 @@ function onCreate()
 	scaleObject('gf-hot', 1, 1);
 	precacheImage('GFHotdog');
 
+	makeAnimatedLuaSprite('climber1','Climbers', 330, -157);
+	addAnimationByIndices('climber1', 'Climb1', 'gruntclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber1', 'Shoot1', 'gruntclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber1', 'Climb2', 'agentclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber1', 'Shoot2', 'agentclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber1', 'Climb3', 'engclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber1', 'Shoot3', 'engclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	setProperty('climber1.visible', false);
+	scaleObject('climber1', 0.85, 0.85);
+
+	makeAnimatedLuaSprite('climber2','Climbers', -300, 183);
+	addAnimationByIndices('climber2', 'Climb1', 'gruntclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber2', 'Shoot1', 'gruntclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber2', 'Climb2', 'agentclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber2', 'Shoot2', 'agentclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber2', 'Climb3', 'engclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber2', 'Shoot3', 'engclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	setProperty('climber2.angle', -3.5);
+	setProperty('climber2.visible', false);
+	scaleObject('climber2', 0.85, 0.85);
+
+	makeAnimatedLuaSprite('climber3','Climbers', 1170, 210);
+	addAnimationByIndices('climber3', 'Climb1', 'gruntclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber3', 'Shoot1', 'gruntclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber3', 'Climb2', 'agentclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber3', 'Shoot2', 'agentclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	addAnimationByIndices('climber3', 'Climb3', 'engclimbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+	addAnimationByIndices('climber3', 'Shoot3', 'engclimbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+	setProperty('climber3.angle', 5);
+	setProperty('climber3.visible', false);
+	scaleObject('climber3', 0.85, 0.85);
+
+	precacheImage('Climbers');
+
 	makeAnimatedLuaSprite('Static','TrickyStatic', 0, 0);
 	addAnimationByPrefix('Static', 'Stat', 'Stat', 24, true);
 	setGraphicSize('Static',1280,720);
@@ -100,6 +134,9 @@ function onCreate()
 	addLuaSprite('Ground',false);
 	addLuaSprite('Speakers',false);
 	addLuaSprite('cutsceneClown',false);
+	addLuaSprite('climber1',false);
+	addLuaSprite('climber2',false);
+	addLuaSprite('climber3',false);
 	addLuaSprite('gf-hot', false);
 	addLuaSprite('She friking flyy',true);
 	addLuaSprite('HotdogStation',true);
@@ -108,6 +145,9 @@ function onCreate()
 	addLuaSprite('Static', false);
 end
 
+-- function onCreatePost()
+-- 	setProperty('gf.visible', false);
+-- end
 
 --[[
 used to make a object/lua sprite play an animation with
@@ -122,6 +162,14 @@ function PlayOffsetedAnim(objName, animName, x, y, forced)
 	setProperty(objName ..'.y', y);
 end
 
+function ArraySum(arr)
+	local sum = 0;
+	for i=1,table.getn(arr) do
+		sum = sum + arr[i];
+	end
+	return sum;
+end
+
 function onCountdownTick(counter)
 	if (counter == 0) then
 		setProperty('helicopter.velocity.x', 300); -- helicopter helicopter
@@ -134,6 +182,9 @@ local StopDMiandSAN = false; -- used to make Deimos and sanford stop their idle 
 local StopLazer = false; -- used to make the lazer stop his idle animation
 local clownAndLazer = false; -- used to check if tricky entered the stage. helps for executing clown-lazer behavior
 local WalkingHotDogGF = false; -- used for checking if gf is walking to stop her idle animation
+local whatTheyDo = {1,2,3; n=3}; -- used to tell each climer what to be (1 = grunt, 2 = agent, 3 = engineer)
+						  -- (whatTheyDo[1] = middle, whatTheyDo[2] = left, whatTheyDo[3] = right)
+local doYouEvenDo = {1,0,0; n=3}
 
 function onEvent(name, value1, value2)
 	if name == 'Deimos&Sanford Appear' then
@@ -142,7 +193,7 @@ function onEvent(name, value1, value2)
 		setProperty('Deimos.visible', true);
 		PlayOffsetedAnim('Sanford', 'Appear', 1225, -610, false);
 		setProperty('Sanford.visible', true);
-		runTimer('AppearTimer', 0.3, 1);
+		runTimer('HandsUpTimer', 0.3, 1);
 	end
 	if name == 'Tricky Kicks GF' then
 		setProperty('Lazer.visible', false);
@@ -166,6 +217,21 @@ function onEvent(name, value1, value2)
 		setProperty('gf-hot.visible', true);
 		luaSpritePlayAnimation('gf-hot', 'Walk', false);
 		doTweenX('HotGFWalksIn', 'gf-hot', getProperty('gf-hot.x') - HotGFMovementAmount, 0.8, 'linear');
+	end
+	
+	if name == 'They climb and get shot at' then
+		math.randomseed(curStep);
+		for i=1,table.getn(whatTheyDo) do
+			whatTheyDo[i] = math.random(1,3);
+			doYouEvenDo[i] = math.random(0,1);
+			if doYouEvenDo[i] == 1 then
+				objectPlayAnimation('climber' .. i, 'Climb' .. whatTheyDo[i], true);
+				setProperty('climber' .. i .. '.visible', true);
+			end
+		end
+		if not (ArraySum(doYouEvenDo) == 0) then
+			runTimer('ShootTimer', 0.6, 1);
+		end
 	end
 end
 
@@ -192,17 +258,24 @@ end
      --Timers--
 
 function onTimerCompleted(tag, loops, loopsLeft)
-	if tag == 'AppearTimer' then
-		StopDMiandSAN = false;
+	if tag == 'HandsUpTimer' then
 		triggerEvent('Play Animation', 'Raise', 'gf');
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
 		PlayOffsetedAnim('Lazer', 'Flash', 494, -19, false);
 		setProperty('Lazer.visible', true);
 		StopLazer = true;
-		runTimer('FlashTimer', 0.5, 1);
 	end
-	if tag == 'FlashTimer' then
-		StopLazer = false;
+	if tag == 'ShootTimer' then
+		playSound('death sound', 0.4);
+		StopDMiandSAN = true;
+		PlayOffsetedAnim('Deimos', 'Shoot', -407, -232, false);
+		PlayOffsetedAnim('Sanford', 'Shoot', 1025, -237, false);
+		for i=1,table.getn(whatTheyDo) do
+			if doYouEvenDo[i] == 1 then
+				objectPlayAnimation('climber' .. i, 'Shoot' .. whatTheyDo[i], true);
+				setProperty('climber' .. i .. '.visible', true);
+			end
+		end
 	end
 end
 
@@ -236,4 +309,18 @@ function onBeatHit()
 		end
 	end
 	luaSpritePlayAnimation('Speakers', 'Boop', true);
+end
+
+function onUpdate(elapsed)
+	for i=1,table.getn(whatTheyDo) do
+		if getProperty('climber' .. i .. '.animation.curAnim.finished') then
+			setProperty('climber' .. i .. '.visible', false);
+		end
+	end
+	if getProperty('Deimos.animation.curAnim.finished') and getProperty('Sanford.animation.curAnim.finished') and StopDMiandSAN then
+		StopDMiandSAN = false;
+	end
+	if getProperty('Lazer.animation.curAnim.finished') and StopLazer then
+		StopLazer = false;
+	end
 end
