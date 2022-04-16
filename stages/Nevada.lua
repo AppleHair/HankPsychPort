@@ -220,7 +220,7 @@ function onEvent(name, value1, value2)
 	end
 	
 	if name == 'They climb and get shot at' then
-		math.randomseed(curStep);
+		math.randomseed(curStep); -- not nearly as good as os.time, but I'm working with what I have
 		for i=1,table.getn(whatTheyDo) do
 			whatTheyDo[i] = math.random(1,3);
 			doYouEvenDo[i] = math.random(0,1);
