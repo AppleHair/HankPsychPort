@@ -230,7 +230,7 @@ function onEvent(name, value1, value2)
 			end
 		end
 		if not (ArraySum(doYouEvenDo) == 0) then
-			runTimer('ShootTimer', 0.6, 1);
+			runTimer('ShootTimer', 0.55, 1);
 		end
 	end
 end
