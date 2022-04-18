@@ -182,7 +182,7 @@ local StopDMiandSAN = false; -- used to make Deimos and sanford stop their idle 
 local StopLazer = false; -- used to make the lazer stop his idle animation
 local clownAndLazer = false; -- used to check if tricky entered the stage. helps for executing clown-lazer behavior
 local WalkingHotDogGF = false; -- used for checking if gf is walking to stop her idle animation
-local whatTheyDo = {1,2,3; n=3}; -- used to tell each climer what to be (1 = grunt, 2 = agent, 3 = engineer)
+local whatTheyDo = {1,2,3; n=3}; -- used to tell each climber what to be (1 = grunt, 2 = agent, 3 = engineer)
 						  -- (whatTheyDo[1] = middle, whatTheyDo[2] = left, whatTheyDo[3] = right)
 local doYouEvenDo = {1,0,0; n=3}
 
