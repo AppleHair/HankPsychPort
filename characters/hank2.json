@@ -138,6 +138,24 @@
 			"fps": 36,
 			"name": "HankScaredIdle",
 			"indices": []
+		},
+		{
+			"offsets": [
+				-201,
+				170
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13
+			],
+			"fps": 36,
+			"anim": "idle-scared-loop",
+			"loop": true,
+			"name": "HankScaredIdle"
 		}
 	],
 	"no_antialiasing": false,
