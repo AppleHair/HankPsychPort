@@ -261,7 +261,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'HandsUpTimer' then
 		triggerEvent('Play Animation', 'Raise', 'gf');
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
-		PlayOffsetedAnim('Lazer', 'Flash', 494, -19, false);
+		PlayOffsetedAnim('Lazer', 'Flash', 504, -24, false);
 		setProperty('Lazer.visible', true);
 		StopLazer = true;
 	end
@@ -295,8 +295,8 @@ function onBeatHit()
 			setProperty('Lazer.y', 0);
 			setProperty('Lazer.x', 680);
 		else
-			setProperty('Lazer.y', -30);
-			setProperty('Lazer.x', 490);
+			setProperty('Lazer.y', -35);
+			setProperty('Lazer.x', 500);
 		end
 	end
 	if not WalkingHotDogGF then
