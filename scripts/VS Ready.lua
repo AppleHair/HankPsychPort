@@ -32,9 +32,8 @@ function onCountdownTick(counter)
 		setProperty('boyfriend.stunned', false)
 		setProperty('gf.stunned', false)
 		setProperty('dad.stunned', false)
-	elseif counter == 4 then
-		allowPause = true
 	end
+	allowPause = counter == 4
 end
 
 local MouseOnReady = false
