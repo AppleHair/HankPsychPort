@@ -8,8 +8,8 @@ end
 
 function onEvent(name, value1, value2)
 	if name == 'Camera Tween Zoom' then
-		tarAndDir = Split(tostring(value1), ', ');
-		doTweenZoom('ZoomEvent', 'camGame', tonumber(tarAndDir[1]), tonumber(tarAndDir[2]), tostring(value2));
-		setProperty('defaultCamZoom', tonumber(tarAndDir[1]));
+		tarAndDur = Split(tostring(value1), ', ');
+		doTweenZoom('ZoomEvent', 'camGame', tonumber(tarAndDur[1]), tonumber(tarAndDur[2]), tostring(value2));
+		setProperty('defaultCamZoom', tonumber(tarAndDur[1]));
 	end
 end
