@@ -1,0 +1,5 @@
+CLOWN ENGAGED
+
+Value 1: Text Scroll Factor
+
+Value 2: Text Min X, Text Max X, Text Min Y, Text Max Y

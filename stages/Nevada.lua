@@ -116,13 +116,6 @@ function onCreate()
 
 	precacheImage('Climbers');
 
-	makeAnimatedLuaSprite('Static','TrickyStatic', 0, 0);
-	addAnimationByPrefix('Static', 'Stat', 'Stat', 24, true);
-	setGraphicSize('Static',1280,720);
-	setObjectCamera('Static','camHud');
-	setProperty('Static.visible', false);
-	precacheImage('TrickyStatic');
-	
 	--layers--
 	
 	addLuaSprite('Sky',false);
@@ -142,7 +135,6 @@ function onCreate()
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
-	addLuaSprite('Static', false);
 end
 
 -- function onCreatePost()
@@ -220,10 +212,10 @@ function onEvent(name, value1, value2)
 	end
 	
 	if name == 'They climb and get shot at' then
-		math.randomseed(curStep + score); -- I'm a fricking genius
+		math.randomseed(curStep + score); -- B)
 		for i=1,table.getn(whatTheyDo) do
-			whatTheyDo[i] = math.random(1,3);
-			doYouEvenDo[i] = math.random(0,1);
+			whatTheyDo[i] = getRandomInt(1,3);
+			doYouEvenDo[i] = math.random(0,1);-- the built-in getRandomInt() and getRandomBool() functions didn't work well for some reason, so I had to use the lua ones.
 			if doYouEvenDo[i] == 1 then
 				objectPlayAnimation('climber' .. i, 'Climb' .. whatTheyDo[i], true);
 				setProperty('climber' .. i .. '.visible', true);
