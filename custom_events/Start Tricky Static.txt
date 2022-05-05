@@ -1,5 +1,3 @@
 CLOWN ENGAGED
 
-Value 1: Text Scroll Factor
-
-Value 2: Text Min X, Text Max X, Text Min Y, Text Max Y
+Value1: Do "CLOWN ENGAGED" at the start? (true/false)

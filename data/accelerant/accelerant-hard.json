@@ -9020,6 +9020,96 @@
 				"bpm": 164
 			},
 			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 164
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"lengthInSteps": 16,
 				"altAnim": false,
@@ -9073,13 +9163,13 @@
 					],
 					[
 						"Camera Tween Zoom",
-						"0.69, 0.1",
-						"linear"
+						"0.69, 0.07",
+						"quadIn"
 					],
 					[
 						"Camera Tween Pos",
-						"420, 400, 0.1",
-						"linear"
+						"420, 400, 0.07",
+						"quadIn"
 					]
 				]
 			],
@@ -9150,6 +9240,11 @@
 						"Camera Tween Zoom",
 						"0.8, 0.1",
 						"linear"
+					],
+					[
+						"Start Tricky Static",
+						"true",
+						""
 					]
 				]
 			],
@@ -9220,6 +9315,11 @@
 						"Tricky Lookin",
 						"",
 						""
+					],
+					[
+						"Stop Tricky Static",
+						"",
+						""
 					]
 				]
 			],
@@ -9255,6 +9355,11 @@
 						"Play Sound",
 						"Screamfade",
 						"0.7"
+					],
+					[
+						"Do a HAY!!! static",
+						"",
+						""
 					]
 				]
 			],

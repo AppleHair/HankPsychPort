@@ -46,13 +46,13 @@
 					],
 					[
 						"Camera Tween Zoom",
-						"0.69, 0.1",
-						"linear"
+						"0.69, 0.07",
+						"quadIn"
 					],
 					[
 						"Camera Tween Pos",
-						"420, 400, 0.1",
-						"linear"
+						"420, 400, 0.07",
+						"quadIn"
 					]
 				]
 			],
@@ -123,6 +123,11 @@
 						"Camera Tween Zoom",
 						"0.8, 0.1",
 						"linear"
+					],
+					[
+						"Start Tricky Static",
+						"true",
+						""
 					]
 				]
 			],
@@ -193,6 +198,11 @@
 						"Tricky Lookin",
 						"",
 						""
+					],
+					[
+						"Stop Tricky Static",
+						"",
+						""
 					]
 				]
 			],
@@ -228,6 +238,11 @@
 						"Play Sound",
 						"Screamfade",
 						"0.7"
+					],
+					[
+						"Do a HAY!!! static",
+						"",
+						""
 					]
 				]
 			],
