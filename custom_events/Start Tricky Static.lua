@@ -43,7 +43,7 @@ end
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
 		if tostring(value1) == 'true' then
-        	DoTheStaticTrickyThing('CLOWN ENGAGED!', 50, 375);
+        	DoTheStaticTrickyThing('CLOWN ENGAGED!', 50, 425);
 			runTimer('StartStatic');
 			return;
 		end
