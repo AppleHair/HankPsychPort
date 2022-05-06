@@ -48,9 +48,6 @@ function onUpdate(elapsed)
 		removeLuaSprite('readyCL', true)
 		setPropertyFromClass('flixel.FlxG', 'mouse.visible', false);
 	end
-	if getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE') and not allowPause then
-		endSong()
-	end
 	local MouseOnReadyX = getMouseX('hud') > getProperty('ready.x') and getMouseX('hud') < getProperty('ready.x') + getProperty('ready.width')
 	local MouseOnReadyY = getMouseY('hud') > getProperty('ready.y') and getMouseY('hud') < getProperty('ready.y') + getProperty('ready.height')
 	MouseOnReady =  MouseOnReadyX and MouseOnReadyY
@@ -59,6 +56,16 @@ function onUpdate(elapsed)
 	if MouseOnReady then
 		setProperty('ready.visible', false)
 		setProperty('readyCL.visible', true)
+	end
+end
+function onUpdatePost(elapsed)
+	if getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE') and not allowPause then
+		-- The FIX-- The FIX
+		setProperty('boyfriendIdled', true);-- The FIX-- The FLX-- The FIX-- The FLX-- The FIX-
+		setProperty('keysPressed', {true,true,true,true,true,true,true,true,true,true,true,true});-- The FIX-- The FIX
+		setProperty('ratingPercent', 0.41);-- The FLX
+		-- The FIX-- The FIX--- The FIX-- The FIX
+		endSong()
 	end
 end
 

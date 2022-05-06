@@ -18,7 +18,7 @@ function onCreate()
 	setObjectCamera('TrickyText','camGame');
 	setProperty('TrickyText.visible', false);
 	addLuaText('TrickyText');
-	doTweenAngle('TextRotRight', 'TrickyText', 2, 0.1, 'quadIn');
+	doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.1, 'quadIn');
 end
 
 
@@ -43,7 +43,7 @@ end
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
 		if tostring(value1) == 'true' then
-        	DoTheStaticTrickyThing('CLOWN ENGAGED!', 50, 425);
+        	DoTheStaticTrickyThing('CLOWN ENGAGED!', 100, 250);
 			runTimer('StartStatic');
 			return;
 		end
@@ -59,7 +59,7 @@ end
 
 -- The thing itself:
 function onStepHit()
-	if doTheThing and getRandomBool(5) then
+	if doTheThing and getRandomBool(7) then
         DoTheStaticTrickyThing(strings[getRandomInt(1, table.getn(strings))], getRandomInt(minX, maxX), getRandomInt(minY, maxY));
     end
 end
@@ -79,9 +79,9 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'TextRotRight' then
-		doTweenAngle('TextRotLeft', 'TrickyText', -2, 0.01, 'quadIn');
+		doTweenAngle('TextRotLeft', 'TrickyText', -2.5, 0.01, 'quadIn');
 	end
 	if tag == 'TextRotLeft' then
-		doTweenAngle('TextRotRight', 'TrickyText', 2, 0.01, 'quadIn');
+		doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.01, 'quadIn');
 	end
 end
