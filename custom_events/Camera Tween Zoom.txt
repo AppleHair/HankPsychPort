@@ -1,5 +1,5 @@
 Tweens the game camera's zoom to a specific value 
 in a specific duration in a specific ease
 
-Value1: TargetZoom, Duration (example:    0.69, 0.1  )
-Value2: ease (example:   quadOut  )
+Value1: TargetZoom, Duration (with a ', ' between the values)
+Value2: ease

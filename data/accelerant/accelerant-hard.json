@@ -121,9 +121,9 @@
 						"linear"
 					],
 					[
-						"Start Tricky Static",
-						"true",
-						""
+						"Do a static",
+						"CLOWN ENGAGED!",
+						"100, 250"
 					]
 				]
 			],
@@ -134,6 +134,11 @@
 						"Alt Idle Animation",
 						"dad",
 						"-scared"
+					],
+					[
+						"Start Tricky Static",
+						"",
+						""
 					]
 				]
 			],
@@ -236,9 +241,9 @@
 						"0.7"
 					],
 					[
-						"Do a HAY!!! static",
-						"",
-						""
+						"Do a static",
+						"HAY!!!",
+						"200, 275"
 					]
 				]
 			],
@@ -3982,16 +3987,6 @@
 						"Fire Note"
 					],
 					[
-						72804.8780487805,
-						2,
-						0
-					],
-					[
-						72530.487804878,
-						2,
-						0
-					],
-					[
 						72439.0243902439,
 						3,
 						0
@@ -4017,14 +4012,24 @@
 						0
 					],
 					[
-						72439.0243902439,
-						0,
+						72530.487804878,
+						1,
+						0
+					],
+					[
+						72804.8780487805,
+						1,
+						0
+					],
+					[
+						72713.4146341463,
+						2,
 						0,
 						"Fire Note"
 					],
 					[
-						72713.4146341463,
-						1,
+						72439.0243902439,
+						0,
 						0,
 						"Fire Note"
 					]
@@ -4045,19 +4050,9 @@
 						0
 					],
 					[
-						74268.2926829268,
-						2,
-						0
-					],
-					[
 						73170.7317073171,
 						6,
 						731.707317073171
-					],
-					[
-						73993.9024390244,
-						2,
-						0
 					],
 					[
 						74542.6829268292,
@@ -4102,6 +4097,16 @@
 					[
 						74451.2195121951,
 						3,
+						0
+					],
+					[
+						73993.9024390244,
+						1,
+						0
+					],
+					[
+						74268.2926829268,
+						1,
 						0
 					]
 				],
@@ -4344,11 +4349,6 @@
 						0
 					],
 					[
-						80121.9512195121,
-						2,
-						0
-					],
-					[
 						79024.3902439024,
 						0,
 						0,
@@ -4377,11 +4377,6 @@
 						7,
 						0,
 						"Fire Note"
-					],
-					[
-						79847.5609756097,
-						2,
-						0
 					],
 					[
 						79573.1707317073,
@@ -4430,14 +4425,24 @@
 						0
 					],
 					[
-						80030.487804878,
-						1,
+						79756.0975609756,
+						0,
 						0,
 						"Fire Note"
 					],
 					[
-						79756.0975609756,
-						0,
+						79847.5609756097,
+						1,
+						0
+					],
+					[
+						80121.9512195121,
+						1,
+						0
+					],
+					[
+						80030.487804878,
+						2,
 						0,
 						"Fire Note"
 					]
@@ -9582,6 +9587,56 @@
 				"mustHitSection": true,
 				"changeBPM": false,
 				"bpm": 164
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 164
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
 			},
 			{
 				"gfSection": false,

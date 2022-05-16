@@ -28,9 +28,7 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
 		end
 	end
-	--debugPrint('Script started!')
 end
-
 
 
 function goodNoteHit(id, noteData, noteType, isSustainNote)
@@ -40,11 +38,11 @@ function goodNoteHit(id, noteData, noteType, isSustainNote)
 		triggerEvent('Play Animation', 'dodge', 'bf');
 
 		-- Hank anim
-		if getProperty('dad.animation.curAnim.name') == 'singLEFT' then
+		if getProperty('dad.animation.curAnim.name') == 'singLEFT' or getProperty('dad.animation.curAnim.name') == 'singLEFT-loop' then
 			triggerEvent('Play Animation', 'shootLEFT', 'dad');
-		elseif getProperty('dad.animation.curAnim.name') == 'singDOWN' then
+		elseif getProperty('dad.animation.curAnim.name') == 'singDOWN' or getProperty('dad.animation.curAnim.name') == 'singDOWN-loop' then
 			triggerEvent('Play Animation', 'shootDOWN', 'dad');
-		elseif getProperty('dad.animation.curAnim.name') == 'singRIGHT' then
+		elseif getProperty('dad.animation.curAnim.name') == 'singRIGHT' or getProperty('dad.animation.curAnim.name') == 'singRIGHT-loop' then
 			triggerEvent('Play Animation', 'shootRIGHT', 'dad');
 		else
 			triggerEvent('Play Animation', 'shootUP', 'dad');
@@ -65,7 +63,6 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 		triggerEvent('Play Animation', 'hurt', 'bf');
 		setProperty('bloodEffect.visible', true);
 		luaSpritePlayAnimation('bloodEffect', 'splat', true);
-		runTimer('bloodSplat', 0.5);
 		playSound('splat');
 		
 		-- Hank anim
@@ -92,12 +89,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'RayFade' then
 		setProperty('shotRay.visible', false);
 	end
-	if tag == 'bloodSplat' then
-		setProperty('bloodEffect.visible', false);
-	end
 end
 
-function onUpdate(elapsed)	
+function onUpdate(elapsed)
 	-- the health Drain itself
 	if healthDrain > 0 then
 		healthDrain = healthDrain - 0.3 * elapsed;
@@ -105,5 +99,8 @@ function onUpdate(elapsed)
 		if healthDrain < 0 then
 			healthDrain = 0;
 		end
+	end
+	if getProperty('bloodEffect.animation.curAnim.finished') then
+		setProperty('bloodEffect.visible', false);
 	end
 end

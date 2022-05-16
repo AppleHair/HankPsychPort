@@ -7,8 +7,7 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true);
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3);
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); --Change texture
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); --Change note splash texture
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false);
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', true);
 			setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetX', getPropertyFromGroup('unspawnNotes', i, 'offsetX') - 50);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetY', getPropertyFromGroup('unspawnNotes', i, 'offsetY') - 57.44);

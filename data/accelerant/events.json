@@ -125,9 +125,9 @@
 						"linear"
 					],
 					[
-						"Start Tricky Static",
-						"true",
-						""
+						"Do a static",
+						"CLOWN ENGAGED!",
+						"100, 250"
 					]
 				]
 			],
@@ -138,6 +138,11 @@
 						"Alt Idle Animation",
 						"dad",
 						"-scared"
+					],
+					[
+						"Start Tricky Static",
+						"",
+						""
 					]
 				]
 			],
@@ -240,9 +245,9 @@
 						"0.7"
 					],
 					[
-						"Do a HAY!!! static",
-						"",
-						""
+						"Do a static",
+						"HAY!!!",
+						"200, 275"
 					]
 				]
 			],
