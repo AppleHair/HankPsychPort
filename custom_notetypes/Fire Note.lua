@@ -19,7 +19,7 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
 		end
 	end
-	precacheImage('NOTE_fire');
+	precacheSound('burnSound');
 end
 
 function noteMiss(id, noteData, noteType, isSustainNote)

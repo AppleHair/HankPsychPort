@@ -37,8 +37,8 @@ function onCreate()
 	
 	makeAnimatedLuaSprite('Deimos','Deimos', -405, -230);
 	setLuaSpriteScrollFactor('Deimos', 0.5, 0.6);
-	addAnimationByPrefix('Deimos', 'Boop', 'Deimos Boop', 24, false);
 	addAnimationByPrefix('Deimos', 'Appear', 'Deimos appear', 24, false);
+	addAnimationByPrefix('Deimos', 'Boop', 'Deimos Boop', 24, false);
 	addAnimationByPrefix('Deimos', 'Shoot', 'Deimos Shoot', 24, false);
 	setProperty('Deimos.visible', false);
 	precacheImage('Deimos');
@@ -46,8 +46,8 @@ function onCreate()
 	
 	makeAnimatedLuaSprite('Sanford','Sanford', 1230, -225);
 	setLuaSpriteScrollFactor('Sanford', 0.5, 0.6);
-	addAnimationByPrefix('Sanford', 'Boop', 'Sanford Boop', 24, false);
 	addAnimationByPrefix('Sanford', 'Appear', 'Sanford Appear', 24, false);
+	addAnimationByPrefix('Sanford', 'Boop', 'Sanford Boop', 24, false);
 	addAnimationByPrefix('Sanford', 'Shoot', 'Sanford Shoot', 24, false);
 	setProperty('Sanford.visible', false);
 	precacheImage('Sanford');
@@ -135,6 +135,9 @@ function onCreate()
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
+
+
+	precacheSound('death sound');
 end
 
 -- function onCreatePost()

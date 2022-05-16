@@ -19,6 +19,8 @@ function onCreate()
 	setProperty('TrickyText.visible', false);
 	addLuaText('TrickyText');
 	doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.1, 'quadIn');
+
+	precacheSound('staticSound');
 end
 
 function DoTheStaticTrickyThing(text, x, y)
