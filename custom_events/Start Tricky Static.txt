@@ -1,1 +1,8 @@
 CLOWN ENGAGED!
+
+
+Value1: tricky text list (with a ', ' between every value) 
+
+example: HANK!!, FUCK YOU!!, SOMETHING DUMB, MADNESS
+
+Value2: Chance of appearing (from 0-100)

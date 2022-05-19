@@ -1,3 +1,11 @@
+function Split(s, delimiter)
+  result = {};
+  for match in (s..delimiter):gmatch('(.-)'..delimiter) do
+      table.insert(result, match);
+  end
+  return result;
+end
+
 local strings = {'IMPROBABLE','HANK!!!','MADNESS',"WHO'S THAT??",'INTERRUPTION','FIGHT ME','INVALID','CORRECTION','CLOWN'};
 local minY = 200;
 local maxY = 400;
@@ -5,12 +13,19 @@ local maxY = 400;
 local minX = -200;
 local maxX = 200;
 
+local chance = 7;
 
 local doTheThing = false;
 
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
+      if value1 ~= '' then
+        strings = Split(value1, ', ');
+      end
+      if value2 ~= '' then
+        chance = tonumber(value2);
+      end
 		doTheThing = true;
     end
     if name == 'Stop Tricky Static' and doTheThing then
@@ -20,7 +35,7 @@ end
 
 -- The randomizer:
 function onStepHit()
-	if doTheThing and getRandomBool(7) then
+	if doTheThing and getRandomBool(chance) then
         triggerEvent('Do a static', strings[getRandomInt(1, table.getn(strings))], 
 		tostring(getRandomInt(minX, maxX)) .. ', ' .. tostring(getRandomInt(minY, maxY)));
     end

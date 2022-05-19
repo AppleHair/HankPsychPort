@@ -4,20 +4,20 @@ function onCreate()
 	setGraphicSize('Static',1280,720);
 	setObjectCamera('Static','camHud');
 	setProperty('Static.visible', false);
-	setProperty('Static.alpha', 0.5);
+	setProperty('Static.alpha', 0.6);
 	precacheImage('TrickyStatic');
     addLuaSprite('Static', false);
 	
 	makeLuaText('TrickyText', 'SUSSY BAKA', 1280, 0, 0);
-	setTextItalic('TrickyText', true);
-	setTextSize('TrickyText', 150);
+	setTextSize('TrickyText', 100);
 	setTextBorder('TrickyText', 0, 0);
 	setTextFont('TrickyText', 'impact.ttf');
 	setTextColor('TrickyText', '0xff0000');
 	setTextAlignment('TrickyText', 'center');
-	setObjectCamera('TrickyText','camGame');
+	setObjectCamera('TrickyText','camHud');
 	setProperty('TrickyText.visible', false);
 	addLuaText('TrickyText');
+	setObjectOrder('TrickyText', getObjectOrder('Static') + 1);
 	doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.1, 'quadIn');
 
 	precacheSound('staticSound');
