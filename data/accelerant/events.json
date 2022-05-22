@@ -72,16 +72,11 @@
 				]
 			],
 			[
-				26432.9268292683,
+				26341.4634146342,
 				[
 					[
-						"Deimos&Sanford Appear",
-						"",
-						""
-					],
-					[
 						"Camera Tween Pos",
-						"555, 130, 0.9",
+						"565, 120, 0.7",
 						"quadOut"
 					],
 					[
@@ -93,6 +88,16 @@
 						"Change Character",
 						"bf",
 						"bf-clone"
+					]
+				]
+			],
+			[
+				26707.3170731707,
+				[
+					[
+						"Deimos&Sanford Appear",
+						"",
+						""
 					]
 				]
 			],
@@ -172,7 +177,7 @@
 					[
 						"Camera Tween Pos",
 						"703.5, 318.5, 1",
-						"sineIn"
+						"linear"
 					],
 					[
 						"Camera Tween Zoom",
