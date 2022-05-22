@@ -4,12 +4,12 @@ local DanceDir = false; -- true = left  false = right
 function onCreate()
     --static--
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', -910, -340);
-	setLuaSpriteScrollFactor('HotdogStation', 2.2, 1.7);
-	scaleObject('HotdogStation', 1.2, 1.2);
+	makeLuaSprite('HotdogStation','NevadaHotdog', -800, -402);
+	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.6);
+	scaleObject('HotdogStation', 1.25, 1.25);
 
-	makeLuaSprite('Rock','The Rock', -1025, -470);
-	setLuaSpriteScrollFactor('Rock', 2.2, 1.7);
+	makeLuaSprite('Rock','The Rock', -840, -472);
+	setLuaSpriteScrollFactor('Rock', 1.36, 1.6);
 	scaleObject('Rock', 1.32, 1.32);
 	
 	makeLuaSprite('Ground','NevadaGround', -795, -595);
@@ -140,9 +140,6 @@ function onCreate()
 	precacheSound('death sound');
 end
 
--- function onCreatePost()
--- 	setProperty('gf.visible', false);
--- end
 
 --[[
 used to make a object/lua sprite play an animation with

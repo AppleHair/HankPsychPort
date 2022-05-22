@@ -16,7 +16,7 @@
 					],
 					[
 						"Camera Tween Zoom",
-						"0.8, 0.8",
+						"0.8, 0.7",
 						"quadOut"
 					],
 					[
@@ -31,8 +31,23 @@
 					],
 					[
 						"Camera Tween Pos",
-						"300, 400, 0.8",
+						"300, 400, 0.7",
 						"quadOut"
+					]
+				]
+			],
+			[
+				2835.36585365854,
+				[
+					[
+						"Camera Tween Pos",
+						"420, 400, 0.1",
+						"quartIn"
+					],
+					[
+						"Camera Tween Zoom",
+						"0.69, 0.1",
+						"quartIn"
 					]
 				]
 			],
@@ -43,16 +58,6 @@
 						"Change Character",
 						"dad",
 						"hank"
-					],
-					[
-						"Camera Tween Zoom",
-						"0.69, 0.1",
-						"quadIn"
-					],
-					[
-						"Camera Tween Pos",
-						"420, 400, 0.1",
-						"quadIn"
 					]
 				]
 			],
@@ -75,9 +80,9 @@
 						""
 					],
 					[
-						"Camera Follow Pos",
-						"570",
-						"120"
+						"Camera Tween Pos",
+						"555, 130, 0.9",
+						"quadOut"
 					],
 					[
 						"Change Character",
@@ -165,14 +170,24 @@
 						"gf"
 					],
 					[
-						"Camera Follow Pos",
-						"",
-						""
+						"Camera Tween Pos",
+						"703.5, 318.5, 1",
+						"sineIn"
 					],
 					[
 						"Camera Tween Zoom",
 						"0.69, 1",
 						"linear"
+					]
+				]
+			],
+			[
+				68780.4878048781,
+				[
+					[
+						"Camera Follow Pos",
+						"",
+						""
 					]
 				]
 			],
