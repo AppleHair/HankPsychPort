@@ -20,13 +20,13 @@ local doTheThing = false;
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
-      if value1 ~= '' then
-        strings = Split(value1, ', ');
-      end
-      if value2 ~= '' then
-        chance = tonumber(value2);
-      end
-		doTheThing = true;
+        if value1 ~= '' then
+            strings = Split(value1, ', ');
+        end
+        if value2 ~= '' then
+            chance = tonumber(value2);
+        end
+        doTheThing = true;
     end
     if name == 'Stop Tricky Static' and doTheThing then
         doTheThing = false;
@@ -35,8 +35,8 @@ end
 
 -- The randomizer:
 function onStepHit()
-	if doTheThing and getRandomBool(chance) then
+	  if doTheThing and getRandomBool(chance) then
         triggerEvent('Do a static', strings[getRandomInt(1, table.getn(strings))], 
-		tostring(getRandomInt(minX, maxX)) .. ', ' .. tostring(getRandomInt(minY, maxY)));
+		    tostring(getRandomInt(minX, maxX)) .. ', ' .. tostring(getRandomInt(minY, maxY)));
     end
 end

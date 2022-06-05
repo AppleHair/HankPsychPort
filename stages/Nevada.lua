@@ -1,6 +1,29 @@
 local HotGFMovementAmount = 350; 
 local DanceDir = false; -- true = left  false = right
 
+--[[
+    Gets a variable from an array on PlayState
+
+    obj - Array variable
+    index - Member ID
+]]
+function getPropertyFromArray(obj, index)
+    local arr = getProperty(tostring(obj));
+    return arr[tonumber(index)+1];
+end
+--[[
+    Sets a variable from an array on PlayState
+
+    obj - Array variable
+    index - Member ID
+    value - New value to set
+]]
+function setPropertyFromArray(obj, index, value)
+    local arr = getProperty(tostring(obj));
+    arr[index] = value;
+    setProperty(tostring(obj), arr);
+end
+
 function onCreate()
     --static--
 	
