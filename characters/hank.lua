@@ -71,10 +71,9 @@ end
 
 function onUpdate(elapsed)
     -- character must be Hank!!
-    if not(dadName == 'hank' or dadName == 'hank2') then
+    if dadName ~= 'hank' then
         return;
     end
-
 
                     -- Hank shoot animation section --
 

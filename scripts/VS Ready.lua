@@ -1,8 +1,8 @@
 function onCreate()
 	makeLuaSprite('ready', 'ready', 0, 0)
 	makeLuaSprite('readyCL', 'readyCL', 0, 0)
-	scaleObject('ready', 0.63, 0.63)
-	scaleObject('readyCL', 0.63, 0.63)
+	scaleObject('ready', 0.64, 0.64)
+	scaleObject('readyCL', 0.64, 0.64)
 	screenCenter('ready', 'xy')
 	screenCenter('readyCL', 'xy')
 	addLuaSprite('ready', true)
@@ -71,8 +71,8 @@ end
 
 function onTweenCompleted(tag)
 	if tag == 'RXS0' then
-		doTweenX('RXS2', 'ready.scale', 0.63, 0.5, 'quadInOut')
-		doTweenY('RYS2', 'ready.scale', 0.63, 0.5, 'quadInOut')
+		doTweenX('RXS2', 'ready.scale', 0.64, 0.5, 'quadInOut')
+		doTweenY('RYS2', 'ready.scale', 0.64, 0.5, 'quadInOut')
 	elseif tag == 'RXS2' then
 		doTweenX('RXS0', 'ready.scale', 0.65, 0.5, 'quadInOut')
 		doTweenY('RYS0', 'ready.scale', 0.65, 0.5, 'quadInOut')
