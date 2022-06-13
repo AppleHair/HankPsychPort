@@ -72,7 +72,7 @@ theOffsetTable = {
 	forced - if true, the animation will be played even if
 			 the sprite is already playing the animation
 ]]
-function PlayOffsetedAnim(objName, animName, forced)
+function playOffsetedAnim(objName, animName, forced)
 	if not getProperty(objName .. '.visible') then
 		return;
 	end
@@ -89,6 +89,7 @@ end
 
 
 function onCreate()
+	addLuaScript('custom_events/Blood Effect', true);
 
     		-- static lua sprites --
 	
@@ -220,8 +221,9 @@ function onCreate()
 	precacheImage('Deimos');
 end
 
-
+----------------------------------------------------------------------------------------------------------------------
 		-- Camera Shit --
+----------------------------------------------------------------------------------------------------------------------
 local dadCamPos = {419.5, 398.5};
 local bfCamPos = {703.5, 398.5};
 
@@ -236,8 +238,9 @@ function onMoveCamera(focus)
 	end
 end
 
-
-     --Events--
+--------------------------------------------------------------------------------------------------------------------
+    	--Events--
+--------------------------------------------------------------------------------------------------------------------
 
 local StopDeimos = false; -- used to make Deimos stop his idle animation
 local StopSanford = false; -- used to make Sanford stop his idle animation
@@ -246,7 +249,7 @@ local clownAndLazer = false; -- used to check if tricky entered the stage. helps
 local WalkingHotDogGF = false; -- used for checking if gf is walking to stop her idle animation
 local whatTheyDo = {1,2,3; n=3}; -- used to tell each climber what to be (1 = grunt, 2 = agent, 3 = engineer)
 						    	 -- (whatTheyDo[1] = middle, whatTheyDo[2] = left, whatTheyDo[3] = right)
-local doYouEvenDo = {1,0,0; n=3}
+local doYouEvenDo = {1,0,0; n=3}-- 0 = don't do it, 1 = do it
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -257,8 +260,8 @@ function onEvent(name, value1, value2)
 		bfCamPos[2] = bfCamPos[2] - 80;
 		setProperty('Deimos.visible', true);
 		setProperty('Sanford.visible', true);
-		PlayOffsetedAnim('Deimos', 'Appear', false);
-		PlayOffsetedAnim('Sanford', 'Appear', false);
+		playOffsetedAnim('Deimos', 'Appear', false);
+		playOffsetedAnim('Sanford', 'Appear', false);
 		StopDeimos = true; 
 		StopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
@@ -267,12 +270,14 @@ function onEvent(name, value1, value2)
 		setProperty('Lazer.visible', false);
 	end
 	if name == 'Tricky Lookin' then
+		triggerEvent('Set Blood Effect Pos', 250, -150);
 		setProperty('Lazer.visible', false);
 		setProperty('gf.visible', false);
 		setProperty('cutsceneClown.visible', true);
 		luaSpritePlayAnimation('cutsceneClown', 'Turn', true);
 	end
 	if name == 'Tricky Fallin' then
+    	triggerEvent('Add Blood Effect', '', '');
 		luaSpritePlayAnimation('cutsceneClown', 'Fall', true);
 		setProperty('cutsceneClown.y', -490);
 		doTweenY('ClownGoUp', 'cutsceneClown', -1000, 0.4, 'sineInOut');
@@ -289,7 +294,8 @@ function onEvent(name, value1, value2)
 		math.randomseed(score + curStep);
 		for i=1,table.getn(whatTheyDo) do
 			whatTheyDo[i] = getRandomInt(1,3);
-			doYouEvenDo[i] = math.random(0,1);
+			doYouEvenDo[i] = math.random(0,1); -- getRandomInt() and getRandomBool() didn't work correctly for some reason,
+											   -- so I'm using math.random() and math.randomseed(score + curStep) to get a random number here
 			if doYouEvenDo[i] == 1 then
 				objectPlayAnimation('climber' .. i, 'Climb' .. whatTheyDo[i], true);
 				setProperty('climber' .. i .. '.visible', true);
@@ -301,8 +307,9 @@ function onEvent(name, value1, value2)
 	end
 end
 
-
+--------------------------------------------------------------------------------------------------------------------
 		--Tween Completions--
+--------------------------------------------------------------------------------------------------------------------
 function onTweenCompleted(tag)
 	if tag == 'ClownGoUp' then
 		setObjectOrder('cutsceneClown', getObjectOrder('cutsceneClown') - 2);
@@ -315,23 +322,25 @@ function onTweenCompleted(tag)
 	end
 end
 
+--------------------------------------------------------------------------------------------------------------------
 		--Timer Completions--
+--------------------------------------------------------------------------------------------------------------------
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'HandsUpTimer' then
 		triggerEvent('Play Animation', 'Raise', 'gf');
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
 		setProperty('Lazer.visible', true);
-		PlayOffsetedAnim('Lazer', 'Flash', false);
+		playOffsetedAnim('Lazer', 'Flash', false);
 		StopLazer = true;
 	end
 	if tag == 'ShootTimer' then
-		playSound('death sound', 0.4);
+		playSound('death sound', 0.6);
 		if doYouEvenDo[1] == 1 or doYouEvenDo[3] == 1 then
-			PlayOffsetedAnim('Deimos', 'Shoot', false);
+			playOffsetedAnim('Deimos', 'Shoot', false);
 			StopDeimos = true;
 		end
 		if doYouEvenDo[1] == 1 or doYouEvenDo[2] == 1 then
-			PlayOffsetedAnim('Sanford', 'Shoot', false);
+			playOffsetedAnim('Sanford', 'Shoot', false);
 			StopSanford = true;
 		end
 		for i=1,table.getn(whatTheyDo) do
@@ -343,24 +352,38 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end
 end
 
-
-        --Boop Control--
-function onBeatHit()
-	if clownAndLazer then
-		if getProperty('gf.animation.curAnim.name') == 'danceLeft' or getProperty('gf.animation.curAnim.name') == 'danceRight' then
-			setProperty('Lazer.visible', true);
-		else
-			setProperty('Lazer.visible', false);
-		end
+---------------------------------------------------
+		--Lazer Visibility--
+---------------------------------------------------
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if not clownAndLazer then
+		return;
 	end
+	if noteType == 'GF Sing' then
+		setProperty('Lazer.visible', false);
+	end
+end
+
+function onBeatHit()
+-----------         -----------
+  --Lazer Visibility Sequel--
+-----------  		-----------
+	if (getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
+	getProperty('gf.animation.curAnim.name') == 'danceRight') and clownAndLazer then
+		setProperty('Lazer.visible', true);
+	end
+
+---------------------------------------------------
+        --Boop Control--
+---------------------------------------------------
 	if not StopDeimos then
-		PlayOffsetedAnim('Deimos', 'Boop', true);
+		playOffsetedAnim('Deimos', 'Boop', true);
 	end
 	if not StopSanford then
-		PlayOffsetedAnim('Sanford', 'Boop', true);
+		playOffsetedAnim('Sanford', 'Boop', true);
 	end
 	if not StopLazer then
-		PlayOffsetedAnim('Lazer', 'Boop', true);
+		playOffsetedAnim('Lazer', 'Boop', true);
 		if getProperty('Lazer.visible') then
 			if clownAndLazer then 
 				if getProperty('Lazer.x') ~= 700 and
@@ -387,6 +410,9 @@ function onBeatHit()
 	luaSpritePlayAnimation('Speakers', 'Boop', true);
 end
 
+---------------------------------------------------
+	--Object Visibility and Animation Controls--
+---------------------------------------------------
 function onUpdate(elapsed)
 	clownAndLazer = gfName == 'tricky' and getProperty('gf.visible');
 	for i=1,3 do

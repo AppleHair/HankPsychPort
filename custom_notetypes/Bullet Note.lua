@@ -21,7 +21,9 @@ function onCreate()
 	end
 end
 
-local healthDrain = 0; --- helps in the health Drain prosses
+-- helps in the health Drain prosses
+local healthDrain = 0;
+
 function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Bullet Note' then
 		-- health Drain trigger
@@ -39,3 +41,8 @@ function onUpdate(elapsed)
 		end
 	end
 end
+
+-----------------------------------------------------------------------
+--  Health Drain code was made by Shadow Mario for Hank Reanimated
+--  https://gamebanana.com/mods/328455
+-----------------------------------------------------------------------

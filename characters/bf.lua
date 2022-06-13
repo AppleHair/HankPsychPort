@@ -1,7 +1,6 @@
 function onCreate()
     addLuaScript('custom_events/Blood Effect', true);
-    triggerEvent('Set Blood Effect Pos', 550, 0);
-    --triggerEvent('Set Shot Ray Pos', 230, 360);
+    
     precacheSound('splat');
 end
 
@@ -22,8 +21,6 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
     end
     if noteType == 'Bullet Note' then
         triggerEvent('Play Animation', 'dodge', 'boyfriend');
-        --triggerEvent('Add Shot Ray', '', '');
-        --cameraShake('game', 0.0075, 0.07);
     end
 end
 
@@ -34,6 +31,7 @@ function noteMiss(id, noteData, noteType, isSustainNote)
         return;
     end
     triggerEvent('Play Animation', 'hurt', 'boyfriend');
+    triggerEvent('Set Blood Effect Pos', 550, 0);
     triggerEvent('Add Blood Effect', '', '');
     playSound('splat');
 end

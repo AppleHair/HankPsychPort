@@ -7,7 +7,7 @@ function Split(s, delimiter)
 end
 
 function onEvent(name, value1, value2)
-	if name == 'Camera Tween Zoom' then
+	if name == 'Camera Tween Zoom' and value1 ~= '' and value2 ~= '' then
 		tarAndDur = Split(tostring(value1), ', ');
 		doTweenZoom('ZoomEvent', 'camGame', tonumber(tarAndDur[1]), tonumber(tarAndDur[2]), tostring(value2));
 		setProperty('defaultCamZoom', tonumber(tarAndDur[1]));
