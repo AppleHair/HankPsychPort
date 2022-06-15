@@ -13,7 +13,7 @@ local sustainArray = {
 
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
-    if not(boyfriendName == 'bf' or boyfriendName == 'bf-clone') or getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
+    if boyfriendName ~= 'bf' or getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
         return;
     end
     if isSustainNote then
@@ -25,7 +25,7 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 end
 
 function noteMiss(id, noteData, noteType, isSustainNote)
-    if not(boyfriendName == 'bf' or boyfriendName == 'bf-clone') or 
+    if boyfriendName ~= 'bf' or 
     getPropertyFromGroup('notes', id, 'gfNote') or
     noteType ~= 'Bullet Note' then
         return;
