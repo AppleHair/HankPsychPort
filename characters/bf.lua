@@ -1,6 +1,6 @@
 function onCreate()
     addLuaScript('custom_events/Blood Effect', true);
-    
+
     precacheSound('splat');
 end
 
@@ -33,5 +33,8 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     triggerEvent('Play Animation', 'hurt', 'boyfriend');
     triggerEvent('Set Blood Effect Pos', 550, 0);
     triggerEvent('Add Blood Effect', '', '');
+    if getProperty('health') <= 0 then
+        setPropertyFromClass('GameOverSubstate', 'characterName', 'bf-hanked');
+    end
     playSound('splat');
 end

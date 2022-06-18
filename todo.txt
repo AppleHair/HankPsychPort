@@ -4,7 +4,7 @@ done stuff are simbolized with a ✔
 
     2) fix fire note splash ✔
 
-    3) add game over shot bf animation
+    3) add game over shot bf animation ✔
 
     4) make story mode menu
 
