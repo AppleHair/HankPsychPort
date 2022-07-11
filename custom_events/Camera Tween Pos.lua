@@ -1,4 +1,4 @@
-function Split(s, delimiter)
+function split(s, delimiter)
     result = {};
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -6,10 +6,14 @@ function Split(s, delimiter)
     return result;
 end
 
+function trim(s)
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
+end
+
 local XYAndDir;
 function onEvent(name, value1, value2)
 	if name == 'Camera Tween Pos' and value1 ~= '' and value2 ~= '' then
-        XYAndDir = Split(tostring(value1), ', ');
+        XYAndDir = split(trim(value1), ',');
         doTweenX('CameraEventX', 'camFollowPos', tonumber(XYAndDir[1]), tonumber(XYAndDir[3]), tostring(value2));
         doTweenY('CameraEventY', 'camFollowPos', tonumber(XYAndDir[2]), tonumber(XYAndDir[3]), tostring(value2));
         setProperty('isCameraOnForcedPos', true);

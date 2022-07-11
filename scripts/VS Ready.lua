@@ -1,15 +1,14 @@
 function onCreate()
 	makeLuaSprite('ready', 'ready', 0, 0)
 	makeLuaSprite('readyCL', 'readyCL', 0, 0)
-	scaleObject('ready', 0.64, 0.64)
-	scaleObject('readyCL', 0.64, 0.64)
+	scaleObject('ready', 0.64, 0.64, true)
+	scaleObject('readyCL', 0.64, 0.64, true)
 	screenCenter('ready', 'xy')
 	screenCenter('readyCL', 'xy')
 	addLuaSprite('ready', true)
 	addLuaSprite('readyCL', true)
 	setObjectCamera('ready', 'hud')
 	setObjectCamera('readyCL', 'hud')
-	setProperty('readyCL.visible', false)
 	doTweenX('RXS0', 'ready.scale', 0.65, 0.5, 'quadInOut')
 	doTweenY('RYS0', 'ready.scale', 0.65, 0.5, 'quadInOut')
 end
@@ -40,7 +39,7 @@ local MouseOnReady = false
 function onUpdate(elapsed)
 	setProperty('readyCL.scale.x', getProperty('ready.scale.x') + 0.1)
 	setProperty('readyCL.scale.y', getProperty('ready.scale.y') + 0.1)
-	if not allowCountdown and (keyReleased('space') or getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER')) or (mouseReleased() and MouseOnReady) and not startedCountdown then
+	if not allowCountdown and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or (mouseReleased('funny') and MouseOnReady)) then
 		allowCountdown = true
 		startCountdown()
 		playSound('clickText')

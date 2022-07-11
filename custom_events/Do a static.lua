@@ -3,8 +3,9 @@ function onCreate()
 	addAnimationByPrefix('Static', 'Stat', 'Stat', 24, true);
 	setGraphicSize('Static',1280,720);
 	setObjectCamera('Static','camHud');
-	setProperty('Static.visible', false);
-	setProperty('Static.alpha', 0.6);
+	-- setProperty('Static.alpha', 0.6);
+	-- setProperty('Static.visible', false);
+	setProperty('Static.alpha', 0.00001);
 	precacheImage('TrickyStatic');
     addLuaSprite('Static', false);
 	
@@ -15,7 +16,8 @@ function onCreate()
 	setTextColor('TrickyText', '0xff0000');
 	setTextAlignment('TrickyText', 'center');
 	setObjectCamera('TrickyText','camHud');
-	setProperty('TrickyText.visible', false);
+	-- setProperty('TrickyText.visible', false);
+	setProperty('TrickyText.alpha', 0.00001);
 	addLuaText('TrickyText');
 	setObjectOrder('TrickyText', getObjectOrder('Static') + 1);
 	doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.1, 'quadIn');
@@ -27,8 +29,10 @@ function DoTheStaticTrickyThing(text, x, y)
 	setTextString('TrickyText', text);
 	setProperty('TrickyText.x', x);
 	setProperty('TrickyText.y', y);
-	setProperty('TrickyText.visible', true);
-    setProperty('Static.visible', true);
+	-- setProperty('Static.visible', true);
+	-- setProperty('TrickyText.visible', true);
+	setProperty('Static.alpha', 0.6);
+	setProperty('TrickyText.alpha', 1);
     playSound('staticSound', 1, 'staticSound');
 end
 
@@ -51,8 +55,10 @@ end
 
 function onSoundFinished(tag)
 	if tag == 'staticSound' then
-        setProperty('Static.visible', false);
-		setProperty('TrickyText.visible', false);
+        -- setProperty('Static.visible', false);
+		-- setProperty('TrickyText.visible', false);
+		setProperty('Static.alpha', 0.00001);
+		setProperty('TrickyText.alpha', 0.00001);
     end
 end
 

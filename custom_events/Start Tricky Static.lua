@@ -1,9 +1,13 @@
-function Split(s, delimiter)
+function split(s, delimiter)
   result = {};
   for match in (s..delimiter):gmatch('(.-)'..delimiter) do
       table.insert(result, match);
   end
   return result;
+end
+
+function trim(s)
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
 end
 
 local strings = {'IMPROBABLE','HANK!!!','MADNESS',"WHO'S THAT??",'INTERRUPTION','FIGHT ME','INVALID','CORRECTION','CLOWN'};
@@ -17,11 +21,15 @@ local chance = 7;
 
 local doTheThing = false;
 
+function onCreate()
+    addLuaScript('custom_events/Do a static', true);
+end
+
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
         if value1 ~= '' then
-            strings = Split(value1, ', ');
+            strings = split(trim(value1), ',');
         end
         if value2 ~= '' then
             chance = tonumber(value2);

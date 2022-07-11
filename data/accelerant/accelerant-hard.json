@@ -9813,8 +9813,18 @@
 				[
 					[
 						"Tricky Kicks GF",
-						"tricky",
-						"Enter"
+						"",
+						""
+					],
+					[
+						"Change Character",
+						"gf",
+						"tricky"
+					],
+					[
+						"Play Animation",
+						"Enter",
+						"gf"
 					],
 					[
 						"Camera Tween Pos",
