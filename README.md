@@ -5,10 +5,10 @@ A Psych Engine Port of ONLINE VS. Hank Challenge.
 
 ## original Hank Challenge Credits:
 
-* ifLeo - Lead Artist
-* philiplol - Musician
+* FifLeo - Lead Artist
+* Philiplol - Musician
 * Banbuds - Additional Assets & Extra Vocals
-* TheBlueHatted - Programmer & Additional Assets
+* TheBlueHatted - Original Programmer & Additional Assets
 
 ## Psych Engine Team:
 
@@ -18,5 +18,5 @@ A Psych Engine Port of ONLINE VS. Hank Challenge.
 
 ## Additional Creadits:
 
-* KevinKuntz255 - VS. Ready script
+* KevinKuntz255 - Original VS. Ready script
 * ShadowMario - Bullet note health drain script
