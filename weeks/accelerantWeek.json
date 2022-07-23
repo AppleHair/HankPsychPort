@@ -1,31 +1,31 @@
 {
-	"storyName": "Accelerant",
+	"storyName": "Hank Challenge",
 	"difficulties": "Hard",
 	"hideFreeplay": false,
-	"weekBackground": "hank",
-	"weekBefore": "accelerantWeek",
+	"weekBackground": "accelerant",
 	"freeplayColor": [
 		191,
 		46,
 		46
 	],
+	"weekBefore": "accelerantWeek",
 	"startUnlocked": true,
-	"weekCharacters": [
-		"hank",
-		"bf",
-		"gf"
-	],
+	"hideStoryMode": false,
 	"songs": [
 		[
 			"accelerant",
 			"hank",
 			[
-				191,
-				46,
-				46
+				235,
+				25,
+				45
 			]
 		]
 	],
-	"hideStoryMode": true,
-	"weekName": "accelerantWeek"
+	"weekCharacters": [
+		"blackthing",
+		"hankmenu",
+		"accelerant"
+	],
+	"weekName": "Hank Challenge Week"
 }

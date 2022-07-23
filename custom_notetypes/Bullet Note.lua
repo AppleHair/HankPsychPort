@@ -1,4 +1,4 @@
-function onCreate()
+function onCreatePost()
 	-- Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
 		-- Check if the note is an Bullet Note
@@ -18,10 +18,12 @@ function onCreate()
 			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
 			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
 		end
+
+		precacheImage('BulletNotes');
 	end
 end
 
--- helps in the health Drain prosses
+-- helps in the health Drain process
 local healthDrain = 0;
 
 function noteMiss(id, noteData, noteType, isSustainNote)

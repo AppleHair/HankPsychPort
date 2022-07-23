@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="BlackThing.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="black thing0000" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0001" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0002" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0003" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0004" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0005" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0006" x="0" y="0" width="782" height="583"/>
+	<SubTexture name="black thing0007" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0008" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0009" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0010" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0011" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0012" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0013" x="783" y="0" width="776" height="579" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0014" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0015" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0016" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0017" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0018" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0019" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+	<SubTexture name="black thing0020" x="0" y="583" width="771" height="578" frameX="-5" frameY="0" frameWidth="783" frameHeight="583"/>
+</TextureAtlas>

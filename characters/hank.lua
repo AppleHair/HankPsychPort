@@ -53,6 +53,8 @@ local bulletNotesArray = {};
 -- stores the x(1) and y(2) positions of the shot ray
 local shotRayPos = {220, 360};
 
+
+
 function onCreatePost()
     -- adding the required script
     addLuaScript('custom_events/Shot Ray Effect', true);
@@ -69,7 +71,7 @@ function onCreatePost()
     end
 end
 
-function onUpdate(elapsed)
+function onUpdatePost(elapsed)
     -- character must be Hank!!
     if dadName ~= 'hank' then
         return;
@@ -109,3 +111,6 @@ function onUpdate(elapsed)
         cameraShake('game', 0.0075, 0.07);
     end
 end
+
+-- TODO: fix hank's shoot animation system not working correctly when 
+-- hank presses a note at the same time with a bullet note.

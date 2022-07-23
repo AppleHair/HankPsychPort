@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="HankMenu.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Hank Idle0000" x="0" y="0" width="448" height="544" frameX="0" frameY="0" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0001" x="0" y="0" width="448" height="544" frameX="0" frameY="0" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0002" x="448" y="0" width="448" height="519" frameX="-2" frameY="-27" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0003" x="448" y="0" width="448" height="519" frameX="-2" frameY="-27" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0004" x="896" y="0" width="442" height="512" frameX="-4" frameY="-35" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0005" x="896" y="0" width="442" height="512" frameX="-4" frameY="-35" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0006" x="1338" y="0" width="432" height="536" frameX="-6" frameY="-10" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0007" x="1338" y="0" width="432" height="536" frameX="-6" frameY="-10" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0008" x="0" y="544" width="439" height="531" frameX="-6" frameY="-15" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0009" x="0" y="544" width="439" height="531" frameX="-6" frameY="-15" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0010" x="439" y="544" width="434" height="519" frameX="-6" frameY="-28" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0011" x="439" y="544" width="434" height="519" frameX="-6" frameY="-28" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0012" x="439" y="544" width="434" height="519" frameX="-6" frameY="-28" frameWidth="450" frameHeight="547"/>
+	<SubTexture name="Hank Idle0013" x="439" y="544" width="434" height="519" frameX="-6" frameY="-28" frameWidth="450" frameHeight="547"/>
+</TextureAtlas>

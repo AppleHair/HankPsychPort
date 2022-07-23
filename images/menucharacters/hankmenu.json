@@ -1,0 +1,11 @@
+{
+	"confirm_anim": "Hank Idle",
+	"idle_anim": "Hank Idle",
+	"position": [
+		510,
+		100
+	],
+	"scale": 0.75,
+	"image": "HankMenu",
+	"flipX": false
+}
