@@ -20,8 +20,23 @@ function onStartCountdown()
 		setProperty('boyfriend.stunned', true)
 		setProperty('gf.stunned', true)
 		setProperty('dad.stunned', true)
+
+		setProperty('skipArrowStartTween', true)
+
+		-- So I make the notes generate early and 
+		-- then I clear the strum line groups (Line 35)
+		runHaxeCode([[
+			game.generateStaticArrows(0);
+			game.generateStaticArrows(1);
+		]])
+
 		return Function_Stop
 	end
+	runHaxeCode([[
+			game.playerStrums.clear();
+			game.opponentStrums.clear();
+			game.strumLineNotes.clear();
+	]])
 	return Function_Continue
 end
 
@@ -35,6 +50,7 @@ function onCountdownTick(counter)
 	allowPause = counter == 4
 end
 
+local playTheSound = true
 local MouseOnReady = false
 function onUpdate(elapsed)
 	setProperty('readyCL.scale.x', getProperty('ready.scale.x') + 0.1)
@@ -55,6 +71,12 @@ function onUpdate(elapsed)
 	if MouseOnReady then
 		setProperty('ready.visible', false)
 		setProperty('readyCL.visible', true)
+		if playTheSound then
+			playSound('scrollMenu')
+			playTheSound = false
+		end
+	else
+		playTheSound = true
 	end
 end
 function onUpdatePost(elapsed)
