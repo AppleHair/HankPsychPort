@@ -30,7 +30,7 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
     end
 end
 
-local Hanked;
+
 function noteMiss(id, noteData, noteType, isSustainNote)
     if boyfriendName ~= 'bf' or 
     getPropertyFromGroup('notes', id, 'gfNote') or
@@ -42,18 +42,12 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     triggerEvent('Add Blood Effect', '', '');
     if getProperty('health') <= 0 then
         setPropertyFromClass('GameOverSubstate', 'characterName', 'bf-hanked');
-        Hanked = true;
     end
     playSound('splat');
 end
 
 
 function onGameOverStart()
-    if not Hanked then
-        return;
-    end
-    -- I wanted to make sure I set these variables exactly when the game over thing starts,
-    -- so I moved these actions to here.
     -- I don't have to use runHaxeCode here, but there is a high chance I will have to in the future.
     runHaxeCode([[
         GameOverSubstate.instance.boyfriend.animation.curAnim.curFrame = 12;
@@ -63,7 +57,7 @@ function onGameOverStart()
 end
 
 --function onUpdatePost(elapsed)
---    if not (Hanked or inGameOver) then
+--    if not inGameOver then
 --        return;
 --    end
 --    runHaxeCode([[

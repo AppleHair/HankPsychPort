@@ -6,6 +6,8 @@ done stuff are simbolized with a ✔
 
     3) add game over shot bf animation ✔
 
-    4) make story mode menu
+    4) make story mode menu ✔
 
-    5) make banner
+    5) change the mod's icon
+
+    6) make banner
