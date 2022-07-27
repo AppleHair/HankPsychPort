@@ -1,3 +1,22 @@
+
+--[[
+	takes ARGB color values
+	and turns them into
+	HEX 0xAARRGGBB format.
+
+	a - alpha value
+
+	r - red value
+
+	g - green value
+
+	b - blue value
+--]]
+local function ARGBtoHEX(a, r, g, b)
+	return string.format("0x%02x%02x%02x%02x", a, r, g, b);
+end
+
+
 function onCreatePost()
 	-- Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
@@ -33,13 +52,38 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 	end
 end
 
+-- I know what a sine is, but I think I
+-- need to know what radians are to fully understand
+-- the way this variable is being used in the code,
+-- but I'm to lazy for that right now so for now I'll just say that
+-- I STOLE THIS FROM THE BOTPLAY TEXT THING FROM THE SOURCE CODE HAHAHAHAHA
+local alphaSine = 0;
 function onUpdate(elapsed)
 	-- the health Drain itself
 	if healthDrain > 0 then
 		healthDrain = healthDrain - elapsed * 0.3;
 		setProperty('health', getProperty('health') - elapsed * 0.3);
+
+
+		-- Here I made the right side of the bar
+		-- flash in the color of the left side of the bar
+
+		local dadColor = getProperty('dad.healthColorArray');
+		local bfColor = getProperty('boyfriend.healthColorArray');
+
+		alphaSine = alphaSine + 180 * elapsed;
+
+		local bfAlpha = math.abs(math.sin((math.pi * alphaSine) / 180)) * 255;
+
+		setHealthBarColors(ARGBtoHEX(255, dadColor[1], dadColor[2], dadColor[3]),
+			ARGBtoHEX(bfAlpha, bfColor[1], bfColor[2], bfColor[3]));
+
 		if healthDrain < 0 then
 			healthDrain = 0;
+			alphaSine = 0;
+			runHaxeCode([[
+				game.reloadHealthBarColors();
+			]]);
 		end
 	end
 end
