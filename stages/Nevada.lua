@@ -123,7 +123,7 @@ function onCreate()
 	-- setProperty('cutsceneClown.visible', false);
 	setProperty('cutsceneClown.alpha', 0.00001);
 
-	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1520, 200);
+	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
 	addAnimationByIndices('gf-hot', 'Boop-right', 'GFStandingWithHotDog', '15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29', 24);
 	addAnimationByPrefix('gf-hot', 'Walk', 'GFStandingWithHotDogWalk', 24, true);
@@ -246,7 +246,7 @@ local doYouEvenDo = {1,0,0; n=3}-- 0 = don't do it, 1 = do it
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
-		setProperty('helicopter.velocity.x', 300);
+		setProperty('helicopter.velocity.x', 450);
 	end
 	if name == 'Deimos&Sanford Appear' then
 		dadCamPos[2] = dadCamPos[2] - 80;
