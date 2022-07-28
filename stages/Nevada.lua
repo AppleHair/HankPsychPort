@@ -336,7 +336,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		StopLazer = true;
 	end
 	if tag == 'ShootTimer' then
-		playSound('death sound', 0.6);
+		playSound('death sound', 0.5);
 		if doYouEvenDo[1] == 1 or doYouEvenDo[3] == 1 then
 			playAnim('Deimos', 'Shoot', false);
 			StopDeimos = true;
