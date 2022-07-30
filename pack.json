@@ -1,6 +1,6 @@
 {
-	"name": "VS Hank Challenge",
-	"description": "Hank Challenge from ONLINE VS. ported to psych engine by AppleHair.",
+	"name": "ONLINE VS. Hank Challenge",
+	"description": "Hank Challenge from ONLINE VS. ported to psych engine by AppleHair. (This Demo Version Only Includes The Hard Difficulty. The Fucked Difficulty Will Only Be Playable In The Full Release)",
 	"restart":false,
-	"color": [191, 46, 46]
+	"color": [235, 25, 45]
 }

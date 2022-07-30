@@ -8,6 +8,6 @@ done stuff are simbolized with a ✔
 
     4) make story mode menu ✔
 
-    5) change the mod's icon
+    5) change the mod's icon ✔
 
     6) make banner
