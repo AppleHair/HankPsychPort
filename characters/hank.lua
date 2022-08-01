@@ -98,8 +98,9 @@ function onCreatePost()
         local gfNote = getPropertyFromGroup('unspawnNotes', i, 'gfNote');
         local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress');
         local inBulletNotesArray = isInArray(bulletNotesArray, getProperty('unspawnNotes', i, 'strumTime'));
+        local noteType = getPropertyFromGroup('unspawnNotes', i, 'noteType');
 
-        if (not mustPress) and inBulletNotesArray then
+        if (not mustPress) and inBulletNotesArray and (not gfNote) and noteType ~= 'Bullet Note' then
             -- makes the note have no animation
             setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true);
             -- adds the strum time to the array
