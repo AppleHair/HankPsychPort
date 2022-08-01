@@ -8,7 +8,7 @@
 		46,
 		46
 	],
-	"weekBefore": "accelerantWeek",
+	"weekBefore": "urmum",
 	"startUnlocked": true,
 	"hideStoryMode": false,
 	"songs": [
@@ -27,5 +27,5 @@
 		"hankmenu",
 		"accelerant"
 	],
-	"weekName": "Hank Challenge Week"
+	"weekName": "Hank Challenge"
 }

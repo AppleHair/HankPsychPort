@@ -18,12 +18,11 @@ end
 
 
 function onCreatePost()
-	-- Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-		-- Check if the note is an Bullet Note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
+
 			-- no sustain bullet notes allowed!
-			if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
+			if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') or (not getPropertyFromGroup('unspawnNotes', i, 'mustPress')) then
 				removeFromGroup('unspawnNotes', i);
 				break;
 			end
@@ -42,21 +41,16 @@ function onCreatePost()
 	end
 end
 
--- helps in the health Drain process
-local healthDrain = 0;
 
+local healthDrain = 0;
 function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Bullet Note' then
-		-- health Drain trigger
+		-- health -= 1 , but with drain
 		healthDrain = healthDrain + 1;
 	end
 end
 
--- I know what a sine is, but I think I
--- need to know what radians are to fully understand
--- the way this variable is being used in the code,
--- but I'm to lazy for that right now so for now I'll just say that
--- I STOLE THIS FROM THE BOTPLAY TEXT THING FROM THE SOURCE CODE HAHAHAHAHA
+
 local alphaSine = 0;
 function onUpdate(elapsed)
 	-- the health Drain itself
@@ -65,16 +59,15 @@ function onUpdate(elapsed)
 		setProperty('health', getProperty('health') - elapsed * 0.3);
 
 
-		-- Here I made the right side of the bar
+		-- this code makes the right side of the bar
 		-- flash in the color of the left side of the bar
-
 		local dadColor = getProperty('dad.healthColorArray');
 		local bfColor = getProperty('boyfriend.healthColorArray');
 
 		alphaSine = alphaSine + 180 * elapsed;
 
 		local bfAlpha = math.abs(math.sin((math.pi * alphaSine) / 180)) * 255;
-
+		
 		setHealthBarColors(ARGBtoHEX(255, dadColor[1], dadColor[2], dadColor[3]),
 			ARGBtoHEX(bfAlpha, bfColor[1], bfColor[2], bfColor[3]));
 

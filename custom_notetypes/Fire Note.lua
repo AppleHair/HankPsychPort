@@ -22,16 +22,14 @@ function onCreatePost()
 	setProperty('Smokey.alpha', 0.00001);
 	addLuaSprite('Smokey', true);
 
-	--Iterate over all notes
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-		--Check if the note is a Fire Note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Fire Note' then
 			setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true);
 			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true);
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3);
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); --Change texture
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); --Enable splash
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); --Change splash texture
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- Change texture
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- Enable splash
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- Change splash texture
 			setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetX', getPropertyFromGroup('unspawnNotes', i, 'offsetX') - 50);
 			setPropertyFromGroup('unspawnNotes', i, 'offsetY', getPropertyFromGroup('unspawnNotes', i, 'offsetY') - 57.44);
@@ -57,6 +55,7 @@ end
 
 function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Fire Note' then
+		-- plays the sound
 		playSound('burnSound');
 	end
 end
