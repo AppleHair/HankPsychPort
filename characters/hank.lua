@@ -1,20 +1,4 @@
 
-
---[[
-    Checks if a curtain value is in a curtain array.
-
-    arr - Array to check
-    value - Value to check
---]]
-local function isInArray(arr, value)
-	for i,v in ipairs(arr) do 
-        if value == v then
-            return true;
-        end
-    end
-	return false;
-end
-
 --[[
     returns the index of the first member
     from a curtain array that is smaller
@@ -35,24 +19,6 @@ local function getSmallerInArray(arr, value)
 end
 
 --[[
-    returns the index of the first value in
-    a curtain array that matches a curtain 
-    value. I no value in the array matches, 
-    the function will return nil.
-
-    arr - Array to check
-    value - Value to check
---]]
-local function indexOf(arr, value)
-    for i,v in ipairs(arr) do 
-        if value == v then
-            return i;
-        end
-    end
-    return nil;
-end
-
---[[
     Checks if a string starts with a curtain
     sequence of characters
 
@@ -66,10 +32,6 @@ end
 -- stores all the Bullet notes' strum time
 -- this is being set later
 local bulletNotesArray = {};
-
--- stores opponent notes that have the same
--- strum time as a bullet note
-local theAnnoyingOnes = {{--[[strum times]]},{--[[note datas]]}};
 
 -- stores the x and y positions of the shot ray
 local shotRayPos = {220, 360};
@@ -88,32 +50,18 @@ function onCreatePost()
         -- Checking if the note is an Bullet Note
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
             -- adding the strum time to the array
-            table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
+            table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime') + 10);
+            -- So for some reason, the opponent always starts playing his sing animation ~2-9 milliseconds (I think)
+            -- after the time he should, which makes the shoot animations get cancelled when they play in "the same time"
+            -- as a sing animation, even though I put the code for the animation on 'onUpdatePost',
+            -- which is being read after the sing animations are being played. I don't know what causes this,
+            -- I don't know if the fix of making shoot animations play 10 milliseconds after they should will
+            -- work for other people, but its not like this issue is too necessary for this demo,
+            -- so I'll rack my brain over this after the demo.
+
+            -- TODO: understand the source of this problem and make sure the solution will work for everyone.
         end
     end
-
-    -- getting strum times and note datas for opponent notes that have the same strum time as a bullet note
-    for i = 0, getProperty('unspawnNotes.length')-1 do
-        -- Checking if the note is an opponent note that has the same strum time as a bullet note
-        local gfNote = getPropertyFromGroup('unspawnNotes', i, 'gfNote');
-        local mustPress = getPropertyFromGroup('unspawnNotes', i, 'mustPress');
-        local inBulletNotesArray = isInArray(bulletNotesArray, getProperty('unspawnNotes', i, 'strumTime'));
-        local noteType = getPropertyFromGroup('unspawnNotes', i, 'noteType');
-
-        if (not mustPress) and inBulletNotesArray and (not gfNote) and noteType ~= 'Bullet Note' then
-            -- makes the note have no animation
-            setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true);
-            -- adds the strum time to the array
-            table.insert(theAnnoyingOnes[1], getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
-            -- adds the note data to the array
-            table.insert(theAnnoyingOnes[2], getPropertyFromGroup('unspawnNotes', i, 'noteData'));
-        end
-    end
-    -- TODO: fix hank's shoot animation not playing correctly when 
-    -- hank presses a note at the same time with a bullet note.
-    -- there is already a system that tries to handle this in the code
-    -- (theAnnoyingOnes table and every way it's used), but it just doen't 
-    -- work consistantly, and I have no idea why.
 end
 
 function onUpdatePost(elapsed)
@@ -139,22 +87,15 @@ function onUpdatePost(elapsed)
         local curAnim;
         local singLEFT;
         local singDOWN;
-        local singUP;
+        -- local singUP;
         local singRIGHT;
-        if isInArray(theAnnoyingOnes[1], theStrumTime) then
-            curAnim = theAnnoyingOnes[2][indexOf(theAnnoyingOnes[1], theStrumTime)];
-            singLEFT = curAnim == 0;
-            singDOWN = curAnim == 1;
-            singUP = curAnim == 2;
-            singRIGHT = curAnim == 3;
-        else
-            curAnim = getProperty('dad.animation.curAnim.name');
+   
+        curAnim = getProperty('dad.animation.curAnim.name');
 
-            singLEFT = curAnim:startswith('singLEFT');
-            singDOWN = curAnim:startswith('singDOWN');
-            singUP = curAnim:startswith('singUP');
-            singRIGHT = curAnim:startswith('singRIGHT');
-        end
+        singLEFT = curAnim:startswith('singLEFT');
+        singDOWN = curAnim:startswith('singDOWN');
+        -- singUP = curAnim:startswith('singUP');
+        singRIGHT = curAnim:startswith('singRIGHT');
 
         -- playing shoot animation
         if singLEFT then
