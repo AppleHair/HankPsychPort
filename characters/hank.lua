@@ -34,7 +34,7 @@ end
 local bulletNotesArray = {};
 
 -- stores the x and y positions of the shot ray
-local shotRayPos = {220, 360};
+local shotRayPos = {260, 360};
 
 
 
@@ -50,16 +50,7 @@ function onCreatePost()
         -- Checking if the note is an Bullet Note
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
             -- adding the strum time to the array
-            table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime') + 10);
-            -- So for some reason, the opponent always starts playing his sing animation ~2-9 milliseconds (I think)
-            -- after the time he should, which makes the shoot animations get cancelled when they play in "the same time"
-            -- as a sing animation, even though I put the code for the animation on 'onUpdatePost',
-            -- which is being read after the sing animations are being played. I don't know what causes this,
-            -- I don't know if the fix of making shoot animations play 10 milliseconds after they should will
-            -- work for other people, but its not like this issue is too necessary for this demo,
-            -- so I'll rack my brain over this after the demo.
-
-            -- TODO: understand the source of this problem and make sure the solution will work for everyone.
+            table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
         end
     end
 end
@@ -72,13 +63,22 @@ function onUpdatePost(elapsed)
 
                     -- Hank shoot animation section --
 
+    local prevSongPosition = getSongPosition() - getPropertyFromClass('flixel.FlxG', 'elapsed') * 1000;
+    -- Ok, so I looked at the source code, and it turns out that because the song position is being updated
+    -- on PlayState's update function, but the notes' update functions, which update thair wasGoodHit value and such
+    -- in relation to the song position, only happen after PlayState's update function, every check for values 
+    -- like wasGoodHit in notes in PlayState's update function are in relation to the previous song position,
+    -- AND THAT'S WHY MY SHOOT ANIMAITIONS WERE GETTING CANCELED BY THE NORMAL SING ANIMATIONS! 
+    -- BECAUSE THEY WERE ONE FUCKING FRAME EARLY!!!
+    -- ...
+    -- psych engine lua is so easy, right?
+
     -- checks if a bullet note passed
-    if getSmallerInArray(bulletNotesArray, getSongPosition()) ~= nil then
-        -- gets the strum time of the current bullet note
-        local theStrumTime = bulletNotesArray[getSmallerInArray(bulletNotesArray, getSongPosition())];
-        while getSmallerInArray(bulletNotesArray, getSongPosition()) ~= nil do
+    if getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil then
+        -- local strumTime = bulletNotesArray[getSmallerInArray(bulletNotesArray, prevSongPosition)];
+        while getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil do
             -- removing the strum time from the array
-            table.remove(bulletNotesArray, getSmallerInArray(bulletNotesArray, getSongPosition()));
+            table.remove(bulletNotesArray, getSmallerInArray(bulletNotesArray, prevSongPosition));
         end
         -- adding shot ray
         triggerEvent('Add Shot Ray', '', '');
