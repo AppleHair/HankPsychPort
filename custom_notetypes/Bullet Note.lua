@@ -89,9 +89,3 @@ function onUpdate(elapsed)
 		end
 	end
 end
-
------------------------------------------------------------------------
---  Health Drain code was made by Shadow Mario for Hank Reanimated.
---  It's not that much, but I'll credit him for this anyway.
---  https://gamebanana.com/mods/328455
------------------------------------------------------------------------

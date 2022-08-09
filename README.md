@@ -3,7 +3,7 @@
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 A Psych Engine Port of ONLINE VS. Hank Challenge.
 
-## original Hank Challenge Credits:
+## Original Hank Challenge Credits:
 
 * FifLeo - Lead Artist
 * Philiplol - Musician
@@ -19,4 +19,3 @@ A Psych Engine Port of ONLINE VS. Hank Challenge.
 ## Additional Creadits:
 
 * KevinKuntz255 - Original VS. Ready script
-* ShadowMario - Bullet note health drain script
