@@ -54,22 +54,22 @@ function onCreate()
 
     		-- static lua sprites --
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', -800, -402);
+	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 451);
 	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.6);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
-	makeLuaSprite('Rock','The Rock', -840, -472);
+	makeLuaSprite('Rock','The Rock', -772, 717);
 	setLuaSpriteScrollFactor('Rock', 1.36, 1.6);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
-	makeLuaSprite('Ground','NevadaGround', -795, -595);
+	makeLuaSprite('Ground','NevadaGround', -795, 458);
 	scaleObject('Ground', 1.45, 1.45, true);
 	
-	makeLuaSprite('RightCliff','NevadaRightCliff', -550, -450);
+	makeLuaSprite('RightCliff','NevadaRightCliff', 1173, -243);
 	setLuaSpriteScrollFactor('RightCliff', 0.5, 0.6);
 	scaleObject('RightCliff', 1.45, 1.45, true);
 
-	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -450);
+	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -210);
 	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.6);
 	scaleObject('LeftCliff', 1.45, 1.45, true);
 	

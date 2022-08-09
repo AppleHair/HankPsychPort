@@ -51,7 +51,11 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 end
 
 
-local alphaSine = 0;
+-- represents the x value of the
+-- mathematical function that we use
+-- to change the alpha value of the right
+-- side of the health bar
+local alphaFuncX = 0;
 function onUpdate(elapsed)
 	-- the health Drain itself
 	if healthDrain > 0 then
@@ -59,21 +63,26 @@ function onUpdate(elapsed)
 		setProperty('health', getProperty('health') - elapsed * 0.3);
 
 
-		-- this code makes the right side of the bar
-		-- flash in the color of the left side of the bar
+		-- getting the color arrays
 		local dadColor = getProperty('dad.healthColorArray');
 		local bfColor = getProperty('boyfriend.healthColorArray');
 
-		alphaSine = alphaSine + 180 * elapsed;
+		-- increasing the x value
+		alphaFuncX = alphaFuncX + elapsed;
 
-		local bfAlpha = math.abs(math.sin((math.pi * alphaSine) / 180)) * 255;
+		-- f(x) = |sin(π∙x)| ∙ 255
+		-- local bfAlpha = f(x)
+		local bfAlpha = math.abs(math.sin(math.pi * alphaFuncX)) * 255;
 		
+		-- Changing the health bar's color.
+		-- The right side of the bar will flash in 
+		-- the color of the left side of the bar
 		setHealthBarColors(ARGBtoHEX(255, dadColor[1], dadColor[2], dadColor[3]),
 			ARGBtoHEX(bfAlpha, bfColor[1], bfColor[2], bfColor[3]));
 
 		if healthDrain < 0 then
 			healthDrain = 0;
-			alphaSine = 0;
+			alphaFuncX = 0;
 			runHaxeCode([[
 				game.reloadHealthBarColors();
 			]]);
@@ -82,6 +91,7 @@ function onUpdate(elapsed)
 end
 
 -----------------------------------------------------------------------
---  Health Drain code was made by Shadow Mario for Hank Reanimated
+--  Health Drain code was made by Shadow Mario for Hank Reanimated.
+--  It's not that much, but I'll credit him for this anyway.
 --  https://gamebanana.com/mods/328455
 -----------------------------------------------------------------------
