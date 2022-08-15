@@ -18,4 +18,4 @@ A Psych Engine Port of ONLINE VS. Hank Challenge.
 
 ## Additional Creadits:
 
-* KevinKuntz255 - Original VS. Ready script
+* KevinKuntz255 - Made The Original VS. Ready script

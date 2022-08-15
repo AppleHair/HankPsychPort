@@ -10,4 +10,18 @@ done stuff are simbolized with a ✔
 
     5) change the mod's icon ✔
 
-    6) make banner
+    6) remove hank cutsene man and add his anims to the normal hank and make them look good
+
+    7) make the story mode assets smaller like you did with tricky
+
+    8) make sanford and deimos better
+
+    9) fix fire note anim on down scroll
+
+    10) try to fix the lag at the start of the first player section
+
+    11) make more comments
+
+    12) think of enything else I can fix in this demo
+
+    13) finish banner

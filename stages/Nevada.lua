@@ -22,31 +22,30 @@ end
 -------------------------------------------------------------------
 			onCreate - Table of contents
 -------------------------------------------------------------------
-	-- Static Lua sprites - line 55
+	-- Static Lua sprites - line 54
 	-----------------------------------
-		HotdogStation - line 57
-		Rock - line 61
-		Ground - line 65
-		RightCliff - line 68
-		LeftCliff - line 72
-		Sky - line 76
+		HotdogStation - line 56
+		Rock - line 60
+		Ground - line 64
+		RightCliff - line 67
+		LeftCliff - line 71
+		Sky - line 75
+		She friking flyy - line 79
 
-	-- Animated Lua sprites - line 80
+	-- Animated Lua sprites - line 83
 	-----------------------------------
-		helicopter - line 82
-		Deimos & Sanford - line 88
-		Lazer - line 105
-		Speakers - line 111
-		She friking flyy - line 114
-		cutsceneClown - line 119
-		gf-hot - line 126
-		Climbers - line 133
+		helicopter - line 85
+		Deimos & Sanford - line 91
+		Lazer - line 108
+		Speakers - line 114
+		gf-hot - line 117
+		Climbers - line 124
 
-	-- Offsets - line 155
+	-- Offsets - line 146
 	-----------------------------------
-	-- Additions - line 167
+	-- Adding to PlayState - line 158
 	-----------------------------------
-	-- Precaches - line 187
+	-- Precaches - line 177
 	-----------------------------------
 ]]
 function onCreate()
@@ -54,28 +53,32 @@ function onCreate()
 
     		-- static lua sprites --
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 451);
-	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.6);
+	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
+	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.35);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
-	makeLuaSprite('Rock','The Rock', -772, 717);
-	setLuaSpriteScrollFactor('Rock', 1.36, 1.6);
+	makeLuaSprite('Rock','The Rock', -772, 707);
+	setLuaSpriteScrollFactor('Rock', 1.36, 1.35);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
 	makeLuaSprite('Ground','NevadaGround', -795, 458);
 	scaleObject('Ground', 1.45, 1.45, true);
 	
-	makeLuaSprite('RightCliff','NevadaRightCliff', 1173, -243);
-	setLuaSpriteScrollFactor('RightCliff', 0.5, 0.6);
+	makeLuaSprite('RightCliff','NevadaRightCliff', 1173, -246);
+	setLuaSpriteScrollFactor('RightCliff', 0.5, 0.5);
 	scaleObject('RightCliff', 1.45, 1.45, true);
 
-	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -210);
-	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.6);
+	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -213);
+	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.5);
 	scaleObject('LeftCliff', 1.45, 1.45, true);
 	
 	makeLuaSprite('Sky','NevadaSky', -366, -425);
 	setLuaSpriteScrollFactor('Sky', 0.2, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
+	
+	makeLuaSprite('She friking flyy','GF go bye bye', 170, -80);
+	-- setProperty('She friking flyy.visible', false);
+	setProperty('She friking flyy.alpha', 0.00001);
 	
 			-- animated lua sprites --
 	
@@ -93,7 +96,7 @@ function onCreate()
 	thing[2] = 'Sanford';
 
 	for i=1,2 do
-		setLuaSpriteScrollFactor(thing[i], 0.5, 0.6);
+		setLuaSpriteScrollFactor(thing[i], 0.5, 0.5);
 		addAnimationByPrefix(thing[i], 'Boop', thing[i] .. ' Boop', 24, false);
 		addAnimationByPrefix(thing[i], 'Appear', thing[i] .. ' Appear', 24, false);
 		addAnimationByPrefix(thing[i], 'Shoot', thing[i] .. ' Shoot', 24, false);
@@ -110,18 +113,6 @@ function onCreate()
 
 	makeAnimatedLuaSprite('Speakers','speakers', 205, 240);
 	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
-
-	makeAnimatedLuaSprite('She friking flyy','GF_go_bye_bye', 170, -80);
-	addAnimationByPrefix('She friking flyy', 'AAA', 'She covered her self in oil', 24, true);
-	-- setProperty('She friking flyy.visible', false);
-	setProperty('She friking flyy.alpha', 0.00001);
-
-	makeAnimatedLuaSprite('cutsceneClown','TrickyCutsceneClownAssets', 300, -240);
-	addAnimationByPrefix('cutsceneClown', 'Turn', 'trickyturning', 24, false);
-	addAnimationByPrefix('cutsceneClown', 'Fall', 'tikygetsshot', 24, true);
-	scaleObject('cutsceneClown', 0.8, 0.8, true);
-	-- setProperty('cutsceneClown.visible', false);
-	setProperty('cutsceneClown.alpha', 0.00001);
 
 	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
@@ -164,7 +155,7 @@ function onCreate()
 	-- Lazer
 	addOffset('Lazer', 'Flash', -11, -15);
 
-			-- additions --
+			-- Adding to PlayState --
 	
 	addLuaSprite('Sky',false);
 	addLuaSprite('helicopter',false);
@@ -174,7 +165,6 @@ function onCreate()
 	addLuaSprite('Sanford',false);
 	addLuaSprite('Ground',false);
 	addLuaSprite('Speakers',false);
-	addLuaSprite('cutsceneClown',false);
 	for i=1,3 do
 		addLuaSprite('climber' .. i,false);
 	end
@@ -190,14 +180,14 @@ function onCreate()
 
 	precacheImage('Climbers');
 	precacheImage('GFHotdog');
-	precacheImage('TrickyCutsceneClown');
-	precacheImage('GF_go_bye_bye');
+	precacheImage('GF go bye bye');
 	precacheImage('LazerDot');
 	precacheImage('helicopter');
 	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
 end
+
 
 
 
@@ -232,7 +222,7 @@ function onMoveCamera(focus)
 end
 
 ----------------------------------------------------------------------------------------------------------------------
-    	--Events--
+    	-- Events --
 ----------------------------------------------------------------------------------------------------------------------
 
 local StopDeimos = false; -- used to make Deimos stop his idle animation
@@ -248,6 +238,7 @@ function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
 		setProperty('helicopter.velocity.x', 450);
 	end
+
 	if name == 'Deimos&Sanford Appear' then
 		dadCamPos[2] = dadCamPos[2] - 80;
 		bfCamPos[2] = bfCamPos[2] - 80;
@@ -261,26 +252,27 @@ function onEvent(name, value1, value2)
 		StopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
 	end
-	if name == 'Tricky Kicks GF' then
-		-- setProperty('Lazer.visible', false);
-		setProperty('Lazer.alpha', 0.00001);
-		-- setProperty('She friking flyy.visible', true);
-		setProperty('She friking flyy.alpha', 1);
-		setProperty('She friking flyy.velocity.x', 15000);
-	end
-	if name == 'Tricky Lookin' then
-		triggerEvent('Set Blood Effect Pos', 250, -150);
-		setProperty('Lazer.visible', false);
-		setProperty('gf.visible', false);
-		-- setProperty('cutsceneClown.visible', true);
-		setProperty('cutsceneClown.alpha', 1);
-		objectPlayAnimation('cutsceneClown', 'Turn', true);
-	end
-	if name == 'Tricky Fallin' then
-    	triggerEvent('Add Blood Effect', '', '');
-		objectPlayAnimation('cutsceneClown', 'Fall', true);
-		setProperty('cutsceneClown.y', -490);
-		doTweenY('ClownGoUp', 'cutsceneClown', -1000, 0.4, 'sineInOut');
+
+	if name == 'Play Animation' then
+		if value2 == 'gf' then
+			if value1 == 'Enter' then
+				-- setProperty('Lazer.visible', false);
+				setProperty('Lazer.alpha', 0.00001);
+				-- setProperty('She friking flyy.visible', true);
+				setProperty('She friking flyy.alpha', 1);
+				setProperty('She friking flyy.velocity.x', 15000);
+			end
+			if value1 == 'Turn' then
+				triggerEvent('Set Blood Effect Pos', 220, -150);
+				setProperty('Lazer.visible', false);
+				setProperty('gf.specialAnim', false);
+				setProperty('gf.stunned', true);
+			end
+			if value1 == 'Fall' then
+				triggerEvent('Add Blood Effect', '', '');
+				doTweenY('ClownGoUp', 'gf', -550, 0.3, 'sineOut');
+			end
+		end
 	end
 
 	if name == 'HotDogGF Appears' then
@@ -292,11 +284,12 @@ function onEvent(name, value1, value2)
 	end
 	
 	if name == 'They climb and get shot at' then
-		math.randomseed(score + curStep);-- B)
+		math.randomseed(os.time());-- os.time() is back baby!!
 		for i=1,table.getn(whatTheyDo) do
-			whatTheyDo[i] = getRandomInt(1,3);
-			doYouEvenDo[i] = math.random(0,1); -- getRandomInt() and getRandomBool() didn't work correctly for some reason,
-											   -- so I'm using math.random() and math.randomseed(score + curStep) to get a random number here
+
+			whatTheyDo[i] = math.random(1,3);
+			doYouEvenDo[i] = math.random(0,1);
+
 			if doYouEvenDo[i] == 1 then
 				objectPlayAnimation('climber' .. i, 'Climb' .. whatTheyDo[i], true);
 				-- setProperty('climber' .. i .. '.visible', true);
@@ -314,10 +307,8 @@ end
 --------------------------------------------------------------------------------------------------------------------
 function onTweenCompleted(tag)
 	if tag == 'ClownGoUp' then
-		setObjectOrder('cutsceneClown', getObjectOrder('cutsceneClown') - 2);
-		setObjectOrder('Ground', getObjectOrder('Ground') + 1);
-		setObjectOrder('Speakers', getObjectOrder('Speakers') + 1);
-		doTweenY('ClownGoDown', 'cutsceneClown', 600, 0.7, 'sineInOut');
+		setObjectOrder('gfGroup', getObjectOrder('Ground'));
+		doTweenY('ClownGoDown', 'gf', 1000, 0.7, 'sineIn');
 	end
 	if tag == 'HotGFWalksIn' then
 		WalkingHotDogGF = false;

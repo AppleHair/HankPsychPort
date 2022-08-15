@@ -23,29 +23,10 @@
 			"name": "trickyidle"
 		},
 		{
+			"loop": false,
 			"offsets": [
-				275,
+				276,
 				584
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "Enter",
-			"indices": [
-				0,
-				1,
-				2,
-				35,
-				36,
-				37,
-				38
-			],
-			"name": "trickyentrance"
-		},
-		{
-			"loop": false,
-			"offsets": [
-				275,
-				586
 			],
 			"anim": "Scream",
 			"fps": 36,
@@ -87,7 +68,7 @@
 		{
 			"loop": false,
 			"offsets": [
-				55,
+				84,
 				15
 			],
 			"anim": "singDOWN",
@@ -98,8 +79,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-12,
-				63
+				-14,
+				64
 			],
 			"anim": "singUP",
 			"fps": 36,
@@ -109,8 +90,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				105,
-				33
+				104,
+				32
 			],
 			"anim": "singLEFT",
 			"fps": 36,
@@ -120,20 +101,63 @@
 		{
 			"loop": false,
 			"offsets": [
-				131,
+				135,
 				-25
 			],
 			"anim": "singRIGHT",
 			"fps": 36,
 			"name": "trickyright",
 			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-11,
+				22
+			],
+			"anim": "Turn",
+			"fps": 24,
+			"name": "trickyturning",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [
+				9,
+				250
+			],
+			"anim": "Fall",
+			"fps": 24,
+			"name": "tikygetsshot",
+			"indices": []
+		},
+		{
+			"offsets": [
+				276,
+				584
+			],
+			"indices": [
+				0,
+				1,
+				2,
+				8,
+				9,
+				35,
+				36,
+				37,
+				38
+			],
+			"fps": 24,
+			"anim": "Enter",
+			"loop": false,
+			"name": "trickyentrance"
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/TrickyAssets",
 	"position": [
-		-15,
-		-215
+		85,
+		-145
 	],
 	"healthicon": "hank",
 	"flip_x": false,
@@ -147,5 +171,5 @@
 		400
 	],
 	"sing_duration": 4,
-	"scale": 0.8
+	"scale": 1
 }
