@@ -225,14 +225,13 @@ end
     	-- Events --
 ----------------------------------------------------------------------------------------------------------------------
 
-local StopDeimos = false; -- used to make Deimos stop his idle animation
-local StopSanford = false; -- used to make Sanford stop his idle animation
-local StopLazer = false; -- used to make the lazer stop his idle animation
-local clownAndLazer = false; -- used to check if tricky entered the stage. helps for executing clown-lazer behavior
-local WalkingHotDogGF = false; -- used for checking if gf is walking to stop her idle animation
-local whatTheyDo = {1,2,3; n=3}; -- used to tell each climber what to be (1 = grunt, 2 = agent, 3 = engineer)
-						    	 -- (whatTheyDo[1] = middle, whatTheyDo[2] = left, whatTheyDo[3] = right)
-local doYouEvenDo = {1,0,0; n=3}-- 0 = don't do it, 1 = do it
+local stopDeimos = false; -- used to make Deimos stop his idle animation
+local stopSanford = false; -- used to make Sanford stop his idle animation
+local stopLazer = false; -- used to make the lazer stop his idle animation
+local stopHotDogGF = false; -- used to make hotdog gf stop her idle animation
+local climberSkin = {1,2,3; n=3}; -- used to tell each climber what skin it should use (1 = grunt, 2 = agent, 3 = engineer)
+						    	 -- (climberSkin[1] = middle, climberSkin[2] = left, climberSkin[3] = right)
+local appearList = {1,0,0; n=3}-- 0 = appear, 1 = don't appear
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -248,8 +247,8 @@ function onEvent(name, value1, value2)
 		setProperty('Sanford.alpha', 1);
 		playAnim('Deimos', 'Appear', false);
 		playAnim('Sanford', 'Appear', false);
-		StopDeimos = true; 
-		StopSanford = true;
+		stopDeimos = true; 
+		stopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
 	end
 
@@ -276,7 +275,7 @@ function onEvent(name, value1, value2)
 	end
 
 	if name == 'HotDogGF Appears' then
-		WalkingHotDogGF = true;
+		stopHotDogGF = true;
 		-- setProperty('gf-hot.visible', true);
 		setProperty('gf-hot.alpha', 1);
 		playAnim('gf-hot', 'Walk', false);
@@ -285,18 +284,18 @@ function onEvent(name, value1, value2)
 	
 	if name == 'They climb and get shot at' then
 		math.randomseed(os.time());-- os.time() is back baby!!
-		for i=1,table.getn(whatTheyDo) do
+		for i=1,table.getn(climberSkin) do
 
-			whatTheyDo[i] = math.random(1,3);
-			doYouEvenDo[i] = math.random(0,1);
+			climberSkin[i] = math.random(1,3);
+			appearList[i] = math.random(0,1);
 
-			if doYouEvenDo[i] == 1 then
-				objectPlayAnimation('climber' .. i, 'Climb' .. whatTheyDo[i], true);
+			if appearList[i] == 1 then
+				objectPlayAnimation('climber' .. i, 'Climb' .. climberSkin[i], true);
 				-- setProperty('climber' .. i .. '.visible', true);
 				setProperty('climber' .. i .. '.alpha', 1);
 			end
 		end
-		if arraySum(doYouEvenDo) ~= 0 then
+		if arraySum(appearList) ~= 0 then
 			runTimer('ShootTimer', 0.55, 1);
 		end
 	end
@@ -311,7 +310,7 @@ function onTweenCompleted(tag)
 		doTweenY('ClownGoDown', 'gf', 1000, 0.7, 'sineIn');
 	end
 	if tag == 'HotGFWalksIn' then
-		WalkingHotDogGF = false;
+		stopHotDogGF = false;
 	end
 end
 
@@ -324,21 +323,21 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		triggerEvent('Alt Idle Animation', 'gf', '-alt');
 		setProperty('Lazer.visible', true);
 		playAnim('Lazer', 'Flash', false);
-		StopLazer = true;
+		stopLazer = true;
 	end
 	if tag == 'ShootTimer' then
 		playSound('death sound', 0.5);
-		if doYouEvenDo[1] == 1 or doYouEvenDo[3] == 1 then
+		if appearList[1] == 1 or appearList[3] == 1 then
 			playAnim('Deimos', 'Shoot', false);
-			StopDeimos = true;
+			stopDeimos = true;
 		end
-		if doYouEvenDo[1] == 1 or doYouEvenDo[2] == 1 then
+		if appearList[1] == 1 or appearList[2] == 1 then
 			playAnim('Sanford', 'Shoot', false);
-			StopSanford = true;
+			stopSanford = true;
 		end
-		for i=1,table.getn(whatTheyDo) do
-			if doYouEvenDo[i] == 1 then
-				objectPlayAnimation('climber' .. i, 'Shoot' .. whatTheyDo[i], true);
+		for i=1,table.getn(climberSkin) do
+			if appearList[i] == 1 then
+				objectPlayAnimation('climber' .. i, 'Shoot' .. climberSkin[i], true);
 				-- setProperty('climber' .. i .. '.visible', true);
 				setProperty('climber' .. i .. '.alpha', 1);
 			end
@@ -350,7 +349,7 @@ end
 		--Lazer Visibility--       Sequel - line 347
 ---------------------------------------------------
 function opponentNoteHit(id, direction, noteType, isSustainNote)
-	if not clownAndLazer then
+	if not gfName == 'tricky' then
 		return;
 	end
 	if noteType == 'GF Sing' then
@@ -364,7 +363,7 @@ function onBeatHit()
   --Lazer Visibility Sequel--
 -----------  		-----------
 	if (getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
-	getProperty('gf.animation.curAnim.name') == 'danceRight') and clownAndLazer then
+	getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' then
 		-- setProperty('Lazer.visible', true);
 		setProperty('Lazer.alpha', 1);
 	end
@@ -372,16 +371,16 @@ function onBeatHit()
 ---------------------------------------------------
         --Boop Control--
 ---------------------------------------------------
-	if not StopDeimos then
+	if not stopDeimos then
 		playAnim('Deimos', 'Boop', true);
 	end
-	if not StopSanford then
+	if not stopSanford then
 		playAnim('Sanford', 'Boop', true);
 	end
-	if not StopLazer then
+	if not stopLazer then
 		playAnim('Lazer', 'Boop', true);
 		if getProperty('Lazer.alpha') == 1 then
-			if clownAndLazer then 
+			if gfName == 'tricky' then 
 				if getProperty('Lazer.x') ~= 700 and
 				getProperty('Lazer.y') ~= 10 then
 					setProperty('Lazer.x', 700);
@@ -394,7 +393,7 @@ function onBeatHit()
 			end 
 		end
 	end
-	if not WalkingHotDogGF then
+	if not stopHotDogGF then
 		if DanceDir then
 			playAnim('gf-hot', 'Boop-left', true);
 			DanceDir = false;
@@ -410,20 +409,19 @@ end
 	--Object Visibility and Animation Controls--
 ---------------------------------------------------
 function onUpdate(elapsed)
-	clownAndLazer = gfName == 'tricky' and getProperty('gf.visible');
 	for i=1,3 do
 		if getProperty('climber' .. i .. '.animation.curAnim.finished') then
 			-- setProperty('climber' .. i .. '.visible', false);
 			setProperty('climber' .. i .. '.alpha', 0.00001);
 		end
 	end
-	if getProperty('Deimos.animation.curAnim.finished') and StopDeimos then
-		StopDeimos = false;
+	if getProperty('Deimos.animation.curAnim.finished') and stopDeimos then
+		stopDeimos = false;
 	end
-	if getProperty('Sanford.animation.curAnim.finished') and StopSanford then
-		StopSanford = false;
+	if getProperty('Sanford.animation.curAnim.finished') and stopSanford then
+		stopSanford = false;
 	end
-	if getProperty('Lazer.animation.curAnim.finished') and StopLazer then
-		StopLazer = false;
+	if getProperty('Lazer.animation.curAnim.finished') and stopLazer then
+		stopLazer = false;
 	end
 end
