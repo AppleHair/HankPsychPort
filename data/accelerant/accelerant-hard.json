@@ -6,11 +6,6 @@
 				2103.65853658537,
 				[
 					[
-						"Change Character",
-						"dad",
-						"hank-cutscene-man"
-					],
-					[
 						"Camera Tween Zoom",
 						"0.8, 0.7",
 						"quadOut"
@@ -44,16 +39,6 @@
 						"Camera Tween Zoom",
 						"0.69, 0.1",
 						"quartIn"
-					]
-				]
-			],
-			[
-				2926.82926829268,
-				[
-					[
-						"Change Character",
-						"dad",
-						"hank"
 					]
 				]
 			],
@@ -216,16 +201,6 @@
 				84878.0487804877,
 				[
 					[
-						"Change Character",
-						"dad",
-						"hank-cutscene-man"
-					],
-					[
-						"Play Animation",
-						"scaredIdle",
-						"dad"
-					],
-					[
 						"Play Animation",
 						"Turn",
 						"gf"
@@ -280,11 +255,6 @@
 			[
 				86341.4634146341,
 				[
-					[
-						"Change Character",
-						"dad",
-						"hank"
-					],
 					[
 						"Alt Idle Animation",
 						"dad",

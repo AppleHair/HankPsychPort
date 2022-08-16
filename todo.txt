@@ -10,7 +10,7 @@ done stuff are simbolized with a ✔
 
     5) change the mod's icon ✔
 
-    6) remove hank cutsene man and add his anims to the normal hank and make them look good
+    6) remove hank cutsene man and add his anims to the normal hank and make them look good ✔
 
     7) make the story mode assets smaller like you did with tricky
 

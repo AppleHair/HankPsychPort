@@ -34,7 +34,7 @@ end
 local bulletNotesArray = {};
 
 -- stores the x and y positions of the shot ray
-local shotRayPos = {260, 360};
+local shotRayPos = {260, 350};
 
 
 
@@ -110,5 +110,21 @@ function onUpdatePost(elapsed)
 
         -- shacking camera
         cameraShake('game', 0.0075, 0.07);
+    end
+end
+
+-------------------------------------------------------------------
+-- Animation Event Related Stuff
+-------------------------------------------------------------------
+function onEvent(name, val1, val2)
+    if name == 'Play Animation' and val2 == 'dad' and (val1 == 'scaredShoot' or val1 == 'getReady') then
+        setProperty('dad.specialAnim', false);
+		setProperty('dad.stunned', true);
+    end
+end
+
+function opponentNoteHit(id, direction, noteType, isSustainNote)
+	if getProperty('dad.stunned') then
+        setProperty('dad.stunned', false);
     end
 end

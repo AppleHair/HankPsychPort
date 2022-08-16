@@ -233,6 +233,96 @@
 				7,
 				8
 			]
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-207,
+				86
+			],
+			"anim": "getReady",
+			"fps": 36,
+			"name": "HankGetReady",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-207,
+				86
+			],
+			"loop": true,
+			"fps": 36,
+			"anim": "getReady-loop",
+			"indices": [
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24
+			],
+			"name": "HankGetReady"
+		},
+		{
+			"offsets": [
+				-50,
+				138
+			],
+			"loop": false,
+			"fps": 36,
+			"anim": "hey",
+			"indices": [],
+			"name": "hanktaunt"
+		},
+		{
+			"offsets": [
+				-110,
+				494
+			],
+			"loop": false,
+			"fps": 24,
+			"anim": "scaredShoot",
+			"indices": [],
+			"name": "HankScaredShootsTiky"
+		},
+		{
+			"loop": true,
+			"offsets": [
+				-110,
+				494
+			],
+			"anim": "scaredShoot-loop",
+			"fps": 24,
+			"name": "HankScaredShootsTiky",
+			"indices": [
+				9,
+				10,
+				11,
+				12
+			]
+		},
+		{
+			"offsets": [
+				-50,
+				138
+			],
+			"indices": [
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15
+			],
+			"fps": 36,
+			"anim": "hey-loop",
+			"loop": true,
+			"name": "hanktaunt"
 		}
 	],
 	"no_antialiasing": false,
