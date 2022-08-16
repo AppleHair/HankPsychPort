@@ -14,7 +14,7 @@ done stuff are simbolized with a ✔
 
     7) make the story mode assets smaller like you did with tricky ✔
 
-    8) make sanford and deimos better
+    8) make sanford and deimos better ✔
 
     9) fix fire note anim on down scroll
 
