@@ -1,11 +1,11 @@
 {
 	"idle_anim": "black thing",
-	"image": "BlackThing",
+	"confirm_anim": "M Dad Idle",
 	"position": [
-		303,
-		111
+		173,
+		15
 	],
+	"scale": 1.005,
 	"flipX": false,
-	"scale": 0.67,
-	"confirm_anim": "M Dad Idle"
+	"image": "BlackThing"
 }

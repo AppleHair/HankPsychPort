@@ -2,6 +2,6 @@
 <TextureAtlas imagePath="Accelerant.png">
 	<!-- Created with Adobe Animate version 21.0.6.41649 -->
 	<!-- http://www.adobe.com/products/animate.html -->
-	<SubTexture name="accelerant0000" x="0" y="20" width="762" height="256" frameX="0" frameY="-1" frameWidth="831" frameHeight="257"/>
-	<SubTexture name="accelerant0001" x="0" y="276 " width="762" height="256" frameX="0" frameY="0" frameWidth="831" frameHeight="257"/>
+	<SubTexture name="accelerant0000" x="0" y="0" width="749" height="231" frameX="0" frameY="-1" frameWidth="749" frameHeight="232"/>
+	<SubTexture name="accelerant0001" x="0" y="231" width="686" height="232" frameX="0" frameY="0" frameWidth="749" frameHeight="232"/>
 </TextureAtlas>
