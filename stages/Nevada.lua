@@ -88,8 +88,8 @@ function onCreate()
 	scaleObject('helicopter', 1.2, 1.2, true);
 	
 
-	makeAnimatedLuaSprite('Deimos','Deimos', -440, -205);
-	makeAnimatedLuaSprite('Sanford','Sanford', 1230, -220);
+	makeAnimatedLuaSprite('Deimos','Deimos', -423, -224);
+	makeAnimatedLuaSprite('Sanford','Sanford', 1210, -215);
 
 	local thing = {};
 	thing[1] = 'Deimos';
@@ -100,6 +100,7 @@ function onCreate()
 		addAnimationByPrefix(thing[i], 'Boop', thing[i] .. ' Boop', 24, false);
 		addAnimationByPrefix(thing[i], 'Appear', thing[i] .. ' Appear', 24, false);
 		addAnimationByPrefix(thing[i], 'Shoot', thing[i] .. ' Shoot', 24, false);
+		scaleObject(thing[i], 1.1, 1.1, false);
 		-- setProperty(thing[i] .. '.visible', false);
 		setProperty(thing[i] .. '.alpha', 0.00001);
 	end
@@ -145,12 +146,12 @@ function onCreate()
 
 			-- offsets --
 	-- Deimos
-	addOffset('Deimos', 'Appear', 80, 440);
+	addOffset('Deimos', 'Appear', 90, 492);
 	addOffset('Deimos', 'Shoot', 5, 0);
 
 	-- Sanford
-	addOffset('Sanford', 'Appear', -3, 376);
-	addOffset('Sanford', 'Shoot', 200, 14);
+	addOffset('Sanford', 'Appear', -3, 420);
+	addOffset('Sanford', 'Shoot', 218, 10);
 
 	-- Lazer
 	addOffset('Lazer', 'Flash', -11, -15);

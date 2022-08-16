@@ -34,7 +34,7 @@ end
 local bulletNotesArray = {};
 
 -- stores the x and y positions of the shot ray
-local shotRayPos = {260, 350};
+local shotRayPos = {250, 350};
 
 
 
@@ -80,8 +80,6 @@ function onUpdatePost(elapsed)
             -- removing the strum time from the array
             table.remove(bulletNotesArray, getSmallerInArray(bulletNotesArray, prevSongPosition));
         end
-        -- adding shot ray
-        triggerEvent('Add Shot Ray', '', '');
 
         -- Gets what sing animation Hank is currently on
         local curAnim;
@@ -100,13 +98,20 @@ function onUpdatePost(elapsed)
         -- playing shoot animation
         if singLEFT then
             triggerEvent('Play Animation', 'shootLEFT', 'dad');
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
 		elseif singRIGHT then
             triggerEvent('Play Animation', 'shootRIGHT', 'dad');
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 20, shotRayPos[2] + 10);
 		elseif singDOWN then
             triggerEvent('Play Animation', 'shootDOWN', 'dad');
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
 		else
             triggerEvent('Play Animation', 'shootUP', 'dad');
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2]);
 		end
+
+        -- adding shot ray
+        triggerEvent('Add Shot Ray', '', '');
 
         -- shacking camera
         cameraShake('game', 0.0075, 0.07);
