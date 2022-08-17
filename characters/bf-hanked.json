@@ -3,8 +3,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				172,
-				206
+				200,
+				196
 			],
 			"anim": "firstDeath",
 			"fps": 24,

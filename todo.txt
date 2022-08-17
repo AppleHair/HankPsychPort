@@ -16,14 +16,16 @@ done stuff are simbolized with a ✔
 
     8) make sanford and deimos better ✔
 
-    9) fix fire note anim on down scroll
+    9) fix hanked game over shoot hole ✔
 
     10) make the camera faster on game over
 
-    11) try to fix the lag at the start of the first player section
+    11) fix fire note anim on down scroll
 
-    12) make more comments
+    12) try to fix the lag at the start of the first player section
 
-    13) think of enything else I can fix in this demo
+    13) make more comments
 
-    14) finish banner
+    14) think of enything else I can fix in this demo
+
+    15) finish banner
