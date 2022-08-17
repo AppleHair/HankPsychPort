@@ -18,9 +18,9 @@ done stuff are simbolized with a ✔
 
     9) fix hanked game over shoot hole ✔
 
-    10) make the camera faster on game over
+    10) make the camera faster on game over (I'll need to get some help on this one.. maybe)
 
-    11) fix fire note anim on down scroll
+    11) fix fire note anim on down scroll ✔ 
 
     12) try to fix the lag at the start of the first player section
 

@@ -48,19 +48,38 @@ end
 
 
 function onGameOverStart()
-    -- I don't have to use runHaxeCode here, but there is a high chance I will have to in the future.
     runHaxeCode([[
         GameOverSubstate.instance.boyfriend.animation.curAnim.curFrame = 12;
         FlxG.camera.zoom = 0.65;
     ]]);
-    -- TODO: make the camera's lerp faster on game over
+
+    --     camFollow2 = new FlxPoint(GameOverSubstate.instance.boyfriend.getGraphicMidpoint().x, GameOverSubstate.instance.boyfriend.getGraphicMidpoint().y);
+
+    --     camFollowPos2 = new FlxObject(0, 0, 1, 1);
+	-- 	   camFollowPos2.setPosition(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2));
+	-- 	   GameOverSubstate.instance.add(camFollowPos2);
+
+    --     isFollowingAlready2 = false;
+    --     updateCamera2 = false;
+    -- ]]);
 end
 
---function onUpdatePost(elapsed)
---    if not inGameOver then
---        return;
---    end
---    runHaxeCode([[
-    
---    ]]);
---end
+-- local cameraSpeed = 20000000000000000000000;
+-- function onUpdatePost(elapsed)
+--     if not inGameOver then
+--         return;
+--     end
+--     runHaxeCode([[
+--         if (updateCamera2) {
+--             var lerpVal = CoolUtil.boundTo(]]..elapsed..[[ * 0.6 * ]]..cameraSpeed..[[, 0, 1);
+-- 			   camFollowPos2.setPosition(FlxMath.lerp(camFollowPos2.x, camFollow2.x, lerpVal), FlxMath.lerp(camFollowPos2.y, camFollow2.y, lerpVal));
+--         }
+--         if (GameOverSubstate.instance.boyfriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready2) {
+--             FlxG.camera.follow(camFollowPos2, LOCKON, 1);
+--             isFollowingAlready2 = true;
+--             updateCamera2 = true;
+--         }
+--     ]]);
+-- end
+
+-- It just doesn't work...

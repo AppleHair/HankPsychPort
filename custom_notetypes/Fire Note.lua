@@ -27,13 +27,12 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true);
 			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true);
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3);
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- Change texture
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- Enable splash
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- Change splash texture
+			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire');
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false);
+			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke');
 			setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true);
-			setPropertyFromGroup('unspawnNotes', i, 'offsetX', getPropertyFromGroup('unspawnNotes', i, 'offsetX') - 50);
-			setPropertyFromGroup('unspawnNotes', i, 'offsetY', getPropertyFromGroup('unspawnNotes', i, 'offsetY') - 57.44);
-			
+			setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);
+			setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- Set offsetY according to downscroll prefs
 			
 									-- color calibration--
 			-- note
@@ -47,10 +46,34 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashBrt', 0 --[[/ 100   if you actually want to change it]]);
 		end
 	end
+
+	-- precache stuff
+
 	precacheImage('NOTE_fire');
 	precacheImage('Smoke');
 
 	precacheSound('burnSound');
+end
+
+function onSpawnNote(id, noteData, noteType, isSustainNote)
+	if downscroll and noteType == 'Fire Note' then
+
+		-- we need to make the fire note flip vertically on down scroll
+		-- (that's if you don't want the fire to go in the wrong direction)
+		setPropertyFromGroup('notes', id, 'flipY', true);
+
+		-- and because this vertical flip make the down notes up notes
+		-- and the up notes down notes, we make one play the other's animation
+		if noteData == 1 then
+			runHaxeCode([[
+				game.notes.members[]]..id..[[].animation.play('greenScroll');
+			]])
+		elseif noteData == 2 then
+			runHaxeCode([[
+				game.notes.members[]]..id..[[].animation.play('blueScroll');
+			]])
+		end
+	end
 end
 
 function noteMiss(id, noteData, noteType, isSustainNote)

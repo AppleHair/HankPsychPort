@@ -72,8 +72,8 @@ function onCreate()
 	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.5);
 	scaleObject('LeftCliff', 1.45, 1.45, true);
 	
-	makeLuaSprite('Sky','NevadaSky', -366, -425);
-	setLuaSpriteScrollFactor('Sky', 0.2, 0.1);
+	makeLuaSprite('Sky','NevadaSky', -345, -425);
+	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
 	
 	makeLuaSprite('She friking flyy','GF go bye bye', 170, -80);
@@ -209,7 +209,7 @@ end
 		-- Camera Shit --
 ----------------------------------------------------------------------------------------------------------------------
 local dadCamPos = {419.5, 398.5};
-local bfCamPos = {703.5, 398.5};
+local bfCamPos = {705.5, 398.5};
 
 function onMoveCamera(focus)
 	if focus == 'dad' then
@@ -284,7 +284,7 @@ function onEvent(name, value1, value2)
 	end
 	
 	if name == 'They climb and get shot at' then
-		math.randomseed(os.time());-- os.time() is back baby!!
+		math.randomseed(os.time());
 		for i=1,table.getn(climberSkin) do
 
 			climberSkin[i] = math.random(1,3);
