@@ -20,12 +20,18 @@ done stuff are simbolized with a ✔
 
     10) make the camera faster on game over (I'll need to get some help on this one.. maybe)
 
-    11) fix fire note anim on down scroll ✔ 
+    11) fix fire note anim on down scroll ✔
 
-    12) try to fix the lag at the start of the first player section
+    12) make climbers smaller like you did with tricky
 
-    13) make more comments
+    13) I forgor 💀
 
-    14) think of enything else I can fix in this demo
+    14) I forgor 💀
 
-    15) finish banner
+    15) think of enything else I can fix in this demo
+
+    16) finish banner
+
+    17) release the demo (after finishing task 10)
+    
+    18) try to fix the lag at the start of the first player section

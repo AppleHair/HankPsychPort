@@ -6,6 +6,10 @@ function onCreate()
 	-- setProperty('bloodEffect.visible', false);
     setProperty('bloodEffect.alpha', 0.00001);
 	addLuaSprite('bloodEffect',true);
+    -- I set the alpha to 0.00001 (not 0 and not .visible = false), 
+	-- and because of that the game engine thinks it needs to load the
+	-- sprites into the stage, although you can't actually see
+	-- them. Like that, I can load sprites early and avoid lag.
 
     precacheImage('blood');
 end

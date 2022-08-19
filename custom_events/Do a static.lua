@@ -20,11 +20,23 @@ function onCreate()
 	setProperty('TrickyText.alpha', 0.00001);
 	addLuaText('TrickyText');
 	setObjectOrder('TrickyText', getObjectOrder('Static') + 1);
-	doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.1, 'quadIn');
+
+	-- I set the alpha to 0.00001 (not 0 and not .visible = false), 
+	-- and because of that the game engine thinks it needs to load the
+	-- sprites into the stage, although you can't actually see
+	-- them. Like that, I can load sprites early and avoid lag.
 
 	precacheSound('staticSound');
 end
 
+--[[
+	This function is what makes
+	the static effect and the text show up
+
+	text - The string that will be displayed by the tricky text
+	x - The x position of the tricky text
+	y - The y position of the tricky text
+--]]
 function DoTheStaticTrickyThing(text, x, y)
 	setTextString('TrickyText', text);
 	setProperty('TrickyText.x', x);
@@ -36,24 +48,35 @@ function DoTheStaticTrickyThing(text, x, y)
     playSound('staticSound', 1, 'staticSound');
 end
 
-function Split(s, delimiter)
+function split(s, delimiter)
     result = {};
+    -- go learn stuff: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
     end
     return result;
 end
 
+function trim(s)
+    -- go learn stuff: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
+end
+-- go learn string patterns: https://www.lua.org/pil/20.2.html
+
 local pos;
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Do a static' then
-		pos = Split(tostring(value2), ', ');
-		DoTheStaticTrickyThing(tostring(value1), tonumber(pos[1]), tonumber(pos[2]));
+		-- we split the string into an array of strings
+		pos = split(trim(value2), ',');
+		-- we do the static tricky thing
+		DoTheStaticTrickyThing(value1, tonumber(pos[1]), tonumber(pos[2]));
     end
 end
 
 function onSoundFinished(tag)
+	-- we make the static effect and the text
+	-- go away 
 	if tag == 'staticSound' then
         -- setProperty('Static.visible', false);
 		-- setProperty('TrickyText.visible', false);
@@ -62,11 +85,27 @@ function onSoundFinished(tag)
     end
 end
 
-function onTweenCompleted(tag)
-	if tag == 'TextRotRight' then
-		doTweenAngle('TextRotLeft', 'TrickyText', -2.5, 0.01, 'quadIn');
+
+-- determines who much the x value
+-- will change every second
+local turnSpeed = 150;
+-- represents the x value of the
+-- mathematical function that we use
+-- to change the angle of the Tricky text
+local angleFuncX = 0;
+function onUpdate(elapsed)
+	-- we increase the x value with time but *turnSpeed* times faster
+	angleFuncX = angleFuncX + elapsed * turnSpeed;
+	-- every 10 seconds, the x value will come back to 0
+	if angleFuncX >= turnSpeed * 10 then
+		-- I don't want the values to become too big,
+		-- because I'm afraid the computer won't be able to handle it.
+		angleFuncX = 0;
 	end
-	if tag == 'TextRotLeft' then
-		doTweenAngle('TextRotRight', 'TrickyText', 2.5, 0.01, 'quadIn');
-	end
+	-- 		f(x) = sin(π∙x) ∙ 2.5
+	--  		       ↓
+	-- 		TrickyText.angle = f(x)
+	setProperty('TrickyText.angle', math.sin(math.pi * angleFuncX) * 2.5);
+	-- Mathematical functions are very useful for programming guys!
+	-- Go learn some math!
 end

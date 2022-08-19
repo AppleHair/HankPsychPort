@@ -1,3 +1,5 @@
+-- unfinished script!
+
 function onCreate()
     addLuaScript('custom_events/Blood Effect', true);
 
