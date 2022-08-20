@@ -84,10 +84,10 @@ function onCreate()
 	
 			-- animated lua sprites --
 	
-	makeAnimatedLuaSprite('helicopter', 'helicopter', -1323, -270);
+	makeAnimatedLuaSprite('helicopter', 'helicopter', -1200, -270);
 	addAnimationByPrefix('helicopter', 'Fly', 'Fly', 24, true);
 	setScrollFactor('helicopter', 0.4, 0.3);
-	scaleObject('helicopter', 1.2, 1.2, true);
+	scaleObject('helicopter', 1.15, 1.15, true);
 	
 
 	makeAnimatedLuaSprite('Deimos','Deimos', -423, -224);
@@ -124,9 +124,9 @@ function onCreate()
 	-- setProperty('gf-hot.visible', false);
 	setProperty('gf-hot.alpha', 0.00001);
 	
-	makeAnimatedLuaSprite('climber1','Climbers', 330, -157);
-	makeAnimatedLuaSprite('climber2','Climbers', -300, 183);
-	makeAnimatedLuaSprite('climber3','Climbers', 1170, 210);
+	makeAnimatedLuaSprite('climber1','Climbers', 330, -159);
+	makeAnimatedLuaSprite('climber2','Climbers', -300, 180);
+	makeAnimatedLuaSprite('climber3','Climbers', 1170, 208);
 	setProperty('climber3.angle', 5);
 	setProperty('climber2.angle', -3.5);
 
@@ -142,7 +142,6 @@ function onCreate()
 		end
 		-- setProperty('climber' .. i .. '.visible', false);
 		setProperty('climber' .. i .. '.alpha', 0.00001);
-		scaleObject('climber' .. i, 0.85, 0.85, true);
 	end
 	thing = nil;
 
@@ -157,7 +156,7 @@ function onCreate()
 
 			-- offsets --
 	-- Deimos
-	addOffset('Deimos', 'Appear', 90, 492);
+	addOffset('Deimos', 'Appear', 86, 492);
 	addOffset('Deimos', 'Shoot', 5, 0);
 
 	-- Sanford
@@ -256,7 +255,7 @@ local appearList = {1,0,0; n=3};-- (appearList[1] = middle, appearList[2] = left
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
 		-- we change the helicopter's x velocity
-		setProperty('helicopter.velocity.x', 450);
+		setProperty('helicopter.velocity.x', 430);
 	end
 
 	if name == 'Deimos&Sanford Appear' then
@@ -339,7 +338,7 @@ function onEvent(name, value1, value2)
 			-- if the climber appears
 			if appearList[i] == 1 then
 				-- do the climb animation
-				objectPlayAnimation('climber' .. i, 'Climb' .. climberSkin[i], true);
+				playAnim('climber' .. i, 'Climb' .. climberSkin[i], true);
 				-- be visible
 				-- setProperty('climber' .. i .. '.visible', true);
 				setProperty('climber' .. i .. '.alpha', 1);
@@ -409,7 +408,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 			-- if the climber appears
 			if appearList[i] == 1 then
 				-- make him play the shot animation
-				objectPlayAnimation('climber' .. i, 'Shoot' .. climberSkin[i], true);
+				playAnim('climber' .. i, 'Shoot' .. climberSkin[i], true);
 			end
 		end
 	end
@@ -459,9 +458,9 @@ function onBeatHit()
 		local lazerX = getProperty('Lazer.x');
 		local lazerY = getProperty('Lazer.y');
 		if gfName == 'tricky' then
-			if lazerX ~= 700 and lazerY ~= 10 then
-				setProperty('Lazer.x', 700);
-				setProperty('Lazer.y', 10);
+			if lazerX ~= 710 and lazerY ~= -10 then
+				setProperty('Lazer.x', 710);
+				setProperty('Lazer.y', -10);
 			end
 		elseif lazerX ~= 525 and lazerY ~= -20 then
 			setProperty('Lazer.x', 525);

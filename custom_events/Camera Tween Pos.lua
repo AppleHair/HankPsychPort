@@ -45,5 +45,5 @@ end
 
 -- this event helped me a lot  with getting 
 -- the camera movement stuff right. you can use
--- this script in your own port or mod if you want to.
--- just make sure to credit me for it.
+-- this script in your own port or mod if you
+-- want to (you don't need to credit me).

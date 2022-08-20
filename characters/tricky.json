@@ -1,36 +1,35 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
+			"loop": false,
+			"fps": 24,
 			"anim": "danceRight",
-			"fps": 24,
-			"name": "trickyidle",
-			"indices": []
-		},
-		{
-			"offsets": [
-				0,
-				0
-			],
-			"loop": false,
-			"fps": 24,
-			"anim": "danceLeft",
 			"indices": [],
 			"name": "trickyidle"
 		},
 		{
 			"loop": false,
 			"offsets": [
-				276,
-				584
+				0,
+				0
 			],
-			"anim": "Scream",
+			"anim": "danceLeft",
+			"fps": 24,
+			"name": "trickyidle",
+			"indices": []
+		},
+		{
+			"offsets": [
+				291,
+				613
+			],
+			"loop": false,
 			"fps": 36,
-			"name": "trickyentrance",
+			"anim": "Scream",
 			"indices": [
 				8,
 				9,
@@ -63,79 +62,84 @@
 				36,
 				37,
 				38
-			]
+			],
+			"name": "trickyentrance"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				84,
-				15
+				89,
+				16
 			],
+			"loop": false,
+			"fps": 36,
 			"anim": "singDOWN",
-			"fps": 36,
-			"name": "trickydwon",
-			"indices": []
+			"indices": [],
+			"name": "trickydwon"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				-14,
-				64
+				-16,
+				66
 			],
+			"loop": false,
+			"fps": 36,
 			"anim": "singUP",
-			"fps": 36,
-			"name": "trickyup",
-			"indices": []
+			"indices": [],
+			"name": "trickyup"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				104,
-				32
+				110,
+				33
 			],
+			"loop": false,
+			"fps": 36,
 			"anim": "singLEFT",
-			"fps": 36,
-			"name": "trickyileft",
-			"indices": []
+			"indices": [],
+			"name": "trickyileft"
 		},
 		{
-			"loop": false,
 			"offsets": [
-				135,
-				-25
+				145,
+				-26
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 36,
-			"name": "trickyright",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "trickyright"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-11,
-				22
+				23
 			],
-			"anim": "Turn",
+			"loop": false,
 			"fps": 24,
-			"name": "trickyturning",
-			"indices": []
+			"anim": "Turn",
+			"indices": [],
+			"name": "trickyturning"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				9,
 				250
 			],
-			"anim": "Fall",
+			"loop": true,
 			"fps": 24,
-			"name": "tikygetsshot",
-			"indices": []
+			"anim": "Fall",
+			"indices": [],
+			"name": "tikygetsshot"
 		},
 		{
+			"loop": false,
 			"offsets": [
-				276,
-				584
+				291,
+				613
 			],
+			"anim": "Enter",
+			"fps": 24,
+			"name": "trickyentrance",
 			"indices": [
 				0,
 				1,
@@ -146,18 +150,14 @@
 				36,
 				37,
 				38
-			],
-			"fps": 24,
-			"anim": "Enter",
-			"loop": false,
-			"name": "trickyentrance"
+			]
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/TrickyAssets",
 	"position": [
-		85,
-		-145
+		90,
+		-147
 	],
 	"healthicon": "hank",
 	"flip_x": false,
@@ -171,5 +171,5 @@
 		400
 	],
 	"sing_duration": 4,
-	"scale": 1
+	"scale": 1.05
 }

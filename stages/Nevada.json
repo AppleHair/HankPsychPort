@@ -7,8 +7,6 @@
 	"girlfriend": [205, -65],
 	"opponent": [-90, -85],
 
-	"camera_boyfriend": [-230, -2],
-	"camera_opponent": [10, -16],
 	"camera_girlfriend": [-80, 80],
 	"camera_speed": 0.6
 }

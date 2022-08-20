@@ -34,4 +34,4 @@ end
 -- the camera zoom stuff right and keep it in
 -- sync with the camera movements. you can use
 -- this script in your own port or mod if you
--- want to. just make sure to credit me for it.
+-- want to (you don't need to credit me).
