@@ -22,24 +22,24 @@ end
 -------------------------------------------------------------------
 			onCreate - Table of contents
 -------------------------------------------------------------------
-	-- Static Lua sprites - line 54
+	-- Static Lua sprites - line 57
 	-----------------------------------
-		HotdogStation - line 56
-		Rock - line 60
-		Ground - line 64
-		RightCliff - line 67
-		LeftCliff - line 71
-		Sky - line 75
-		She friking flyy - line 79
+		HotdogStation - line 59
+		Rock - line 63
+		Ground - line 67
+		RightCliff - line 70
+		LeftCliff - line 74
+		Sky - line 78
+		She friking flyy - line 82
 
-	-- Animated Lua sprites - line 83
+	-- Animated Lua sprites - line 86
 	-----------------------------------
-		helicopter - line 85
-		Deimos & Sanford - line 91
-		Lazer - line 108
-		Speakers - line 114
-		gf-hot - line 117
-		Climbers - line 124
+		helicopter - line 88
+		Deimos & Sanford - line 94
+		Lazer - line 112
+		Speakers - line 118
+		gf-hot - line 121
+		Climbers - line 128
 
 	-- tips on sprites in Psych Engine Lua - Line 149
 	-----------------------------------
@@ -51,6 +51,7 @@ end
 	-----------------------------------
 ]]
 function onCreate()
+	-- we add the blood effect script
 	addLuaScript('custom_events/Blood Effect', true);
 
     		-- static lua sprites --
