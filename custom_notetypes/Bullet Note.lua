@@ -37,6 +37,7 @@ function onCreatePost()
 			end
 			setPropertyFromGroup('unspawnNotes', i, 'texture', 'BulletNotes'); -- we change the texture
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
+			setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.8); -- we make the health decrease more if you miss the note
 			
 			

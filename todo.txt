@@ -24,7 +24,7 @@ done stuff are simbolized with a ✔
 
     12) think of enything else I can fix in this demo ✔
 
-    13) make the camera faster on game over
+    13) make the camera faster on game over ✔
 
     14) finish banner
 
