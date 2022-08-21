@@ -40,8 +40,10 @@ function onUpdate(elapsed)
     end
     -- there should just be a cameraSpeed variable for GameOverSubstate in the source code. WHY DO I HAVE TO DO THIS!!
     -- Shadow, I know you worked on adding more stuff to GameOverSubstate to make it more accessible to lua users,
-    -- but asking for a cameraSpeed and moveCamInstantly variables isn't asking for much.
+    -- but asking for cameraSpeed and moveCamInstantly variables isn't asking for much.
 
-    -- It not like I asked you for lua sprites in GameOverSubstate (although it can be really useful to use
-    -- lua sprites instead of ONE GIANT FUCKING GAME OVER SPRITE).
+    -- It could also be useful to add lua sprites to GameOverSubstate and use them 
+    -- instead of making ONE GIANT FUCKING GAME OVER SPRITE, but that will probably take more time.
+    -- This one can be more complicated and I get it, but adding cameraSpeed and moveCamInstantly variables?
+    -- come on....
 end
