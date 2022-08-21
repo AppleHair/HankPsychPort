@@ -21,8 +21,7 @@ function onEvent(name, value1, value2)
         --Value1: x   Value2: y
         setProperty('shotRay.x', tonumber(value1));
         setProperty('shotRay.y', tonumber(value2));
-    end
-    if name == 'Add Shot Ray' then
+    elseif name == 'Add Shot Ray' then
         -- setProperty('shotRay.visible', true);
         setProperty('shotRay.alpha', 0.7);
         RayFade = 0.07;

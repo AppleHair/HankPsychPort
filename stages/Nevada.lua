@@ -198,6 +198,9 @@ function onCreate()
 	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
+
+	-- we add tricky to the girlfriend group
+	addCharacterToList('tricky', 'gf');
 end
 
 
@@ -257,9 +260,7 @@ function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
 		-- we change the helicopter's x velocity
 		setProperty('helicopter.velocity.x', 430);
-	end
-
-	if name == 'Deimos&Sanford Appear' then
+	elseif name == 'Deimos&Sanford Appear' then
 		-- we make the camera positions higher
 		dadCamPos[2] = dadCamPos[2] - 80;
 		bfCamPos[2] = bfCamPos[2] - 80;
@@ -273,9 +274,7 @@ function onEvent(name, value1, value2)
 		stopDeimos = true; 
 		stopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
-	end
-
-	if name == 'Play Animation' then
+	elseif name == 'Play Animation' then
 		if value2 == 'gf' then
 			if value1 == 'Enter' then
 				-- we make the lazer invisible, but not for long..
@@ -313,9 +312,7 @@ function onEvent(name, value1, value2)
 				doTweenY('ClownGoUp', 'gf', -550, 0.3, 'sineOut');
 			end
 		end
-	end
-
-	if name == 'HotDogGF Appears' then
+	elseif name == 'HotDogGF Appears' then
 		-- we stop her idle animation from playing
 		stopHotDogGF = true;
 		-- we make her visible
@@ -325,9 +322,7 @@ function onEvent(name, value1, value2)
 		playAnim('gf-hot', 'Walk', false);
 		-- we do a x position tween
 		doTweenX('HotGFWalksIn', 'gf-hot', getProperty('gf-hot.x') - HotGFMovementAmount, 0.8, 'linear');
-	end
-	
-	if name == 'They climb and get shot at' then
+	elseif name == 'They climb and get shot at' then
 		math.randomseed(os.time()); -- os.time is back baby!!!!
 		for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
 
@@ -364,8 +359,7 @@ function onTweenCompleted(tag)
 		setObjectOrder('gfGroup', getObjectOrder('Ground'));
 		-- and now he falls down. bye bye!
 		doTweenY('ClownGoDown', 'gf', 1000, 0.7, 'sineIn');
-	end
-	if tag == 'HotGFWalksIn' then
+	elseif tag == 'HotGFWalksIn' then
 		-- now that the tween ended, she needs to stop and do
 		-- the idle animation, so we need to stop stoping her
 		-- from doing the idle animation.
@@ -377,17 +371,6 @@ end
 		--Timer Completions--
 --------------------------------------------------------------------------------------------------------------------
 function onTimerCompleted(tag, loops, loopsLeft)
-	if tag == 'HandsUpTimer' then
-		-- we play the hand raise animation
-		triggerEvent('Play Animation', 'Raise', 'gf');
-		-- we change the idle animation
-		triggerEvent('Alt Idle Animation', 'gf', '-alt');
-		-- we make the lazer visible
-		setProperty('Lazer.visible', true);
-		-- we make the lazer play the flash animation
-		playAnim('Lazer', 'Flash', false);
-		stopLazer = true;
-	end
 	if tag == 'ShootTimer' then
 		-- play death sound
 		playSound('death sound', 0.5);
@@ -412,6 +395,16 @@ function onTimerCompleted(tag, loops, loopsLeft)
 				playAnim('climber' .. i, 'Shoot' .. climberSkin[i], true);
 			end
 		end
+	elseif tag == 'HandsUpTimer' then
+		-- we play the hand raise animation
+		triggerEvent('Play Animation', 'Raise', 'gf');
+		-- we change the idle animation
+		triggerEvent('Alt Idle Animation', 'gf', '-alt');
+		-- we make the lazer visible
+		setProperty('Lazer.visible', true);
+		-- we make the lazer play the flash animation
+		playAnim('Lazer', 'Flash', false);
+		stopLazer = true;
 	end
 end
 

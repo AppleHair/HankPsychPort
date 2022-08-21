@@ -98,7 +98,7 @@ end
 
 -- determines who much the x value
 -- will change every second
-local turnSpeed = 150;
+local turnSpeed = 170;
 -- represents the x value of the
 -- mathematical function that we use
 -- to change the angle of the Tricky text

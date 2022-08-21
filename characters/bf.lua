@@ -46,3 +46,11 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     -- we play the splat sound
     playSound('splat');
 end
+
+function onUpdate(elapsed)
+    -- if the player just pressed space
+	if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+        -- make boyfriend do the hey animation
+        triggerEvent('Play Animation', 'hey', 'bf');
+    end
+end

@@ -38,8 +38,7 @@ function onEvent(name, value1, value2)
         end
         -- we now need to generate random Tricky static and text
         doTheThing = true;
-    end
-    if name == 'Stop Tricky Static' and doTheThing then
+    elseif name == 'Stop Tricky Static' and doTheThing then
         -- we now don't need to generate random Tricky static and text
         doTheThing = false;
     end

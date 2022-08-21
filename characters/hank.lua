@@ -119,7 +119,21 @@ function onUpdatePost(elapsed)
         -- shacking camera
         cameraShake('game', 0.0075, 0.07);
     end
+    -- if the player just pressed backspace
+    if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.BACKSPACE') then
+        -- make hank do the hey animation (easter egg)
+        triggerEvent('Play Animation', 'hey', 'dad');
+    end
 end
+
+
+
+
+
+
+
+
+
 
 -------------------------------------------------------------------
 -- Animation Event Related Stuff

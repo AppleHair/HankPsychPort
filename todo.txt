@@ -31,3 +31,17 @@ done stuff are simbolized with a ✔
     15) release the demo
     
     16) try to fix the lag at the start of the first player section
+
+    17) fix more things if needed
+
+    18) release demo patch
+
+    19) make the VS Rating Screen script
+
+    20) make hank-player
+
+    21) make maghank-player
+
+    22) make "fucked difficulty classic"
+
+    23) make "fucked difficulty new" with new mechanics

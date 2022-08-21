@@ -20,9 +20,7 @@ function onEvent(name, value1, value2)
     if name == 'Set Blood Effect Pos' then
         setProperty('bloodEffect.x', tonumber(value1));
         setProperty('bloodEffect.y', tonumber(value2));
-    end
-
-    if name == 'Add Blood Effect' then
+    elseif name == 'Add Blood Effect' then
         playAnim('bloodEffect', 'splat', true);
         -- setProperty('bloodEffect.visible', true);
         setProperty('bloodEffect.alpha', 1);
