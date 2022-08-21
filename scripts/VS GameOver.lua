@@ -38,7 +38,7 @@ function onUpdate(elapsed)
     if getPropertyFromClass('GameOverSubstate', 'instance.updateCamera') then
         setPropertyFromClass('GameOverSubstate', 'instance.updateCamera', false);
     end
-    -- there should just be a cameraSpeed variable for GameOverSubstate in the source code. WHY DO I HAVE TO DO THIS!!
+    -- there should just be a cameraSpeed variable for GameOverSubstate in the source code. WHY DO I HAVE TO DO THIS?!
     -- Shadow, I know you worked on adding more stuff to GameOverSubstate to make it more accessible to lua users,
     -- but asking for cameraSpeed and moveCamInstantly variables isn't asking for much.
 
