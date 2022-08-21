@@ -56,12 +56,12 @@ function onCreate()
 
     		-- static lua sprites --
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', 1014, 441);
-	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.35);
+	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
+	setLuaSpriteScrollFactor('HotdogStation', 1.38, 1.35);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
-	makeLuaSprite('Rock','The Rock', -772, 704);
-	setLuaSpriteScrollFactor('Rock', 1.36, 1.35);
+	makeLuaSprite('Rock','The Rock', -776, 704);
+	setLuaSpriteScrollFactor('Rock', 1.38, 1.35);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
 	makeLuaSprite('Ground','NevadaGround', -795, 458);
@@ -109,7 +109,7 @@ function onCreate()
 	end
 	thing = nil;
 	
-	makeAnimatedLuaSprite('Lazer','LazerDot', 525, -20);
+	makeAnimatedLuaSprite('Lazer','LazerDot', 525, -10);
 	addAnimationByPrefix('Lazer', 'Flash', 'LazerDot Flash', 24, false);
 	addAnimationByPrefix('Lazer', 'Boop', 'LazerDot Boop', 24, false);
 	scaleObject('Lazer', 1.5, 1.5, true);
@@ -157,7 +157,7 @@ function onCreate()
 
 			-- offsets --
 	-- Deimos
-	addOffset('Deimos', 'Appear', 86, 492);
+	addOffset('Deimos', 'Appear', 89, 488);
 	addOffset('Deimos', 'Shoot', 5, 0);
 
 	-- Sanford
@@ -246,10 +246,10 @@ end
 stopDeimos = true;
 -- used to make Sanford stop his idle animation
 stopSanford = true;
--- used to make the lazer stop his idle animation
-stopLazer = true;
 -- used to make hotdog gf stop her idle animation
 stopHotDogGF = true;
+-- used to make the lazer stop his idle animation
+local stopLazer = true;
 -- used to tell each climber what skin it should use (1 = grunt, 2 = agent, 3 = engineer)
 local climberSkin = {1,2,3; n=3};-- (climberSkin[1] = middle, climberSkin[2] = left, climberSkin[3] = right)
 
@@ -452,13 +452,13 @@ function onBeatHit()
 		local lazerX = getProperty('Lazer.x');
 		local lazerY = getProperty('Lazer.y');
 		if gfName == 'tricky' then
-			if lazerX ~= 710 and lazerY ~= -10 then
+			if lazerX ~= 710 and lazerY ~= 0 then
 				setProperty('Lazer.x', 710);
-				setProperty('Lazer.y', -10);
+				setProperty('Lazer.y', 0);
 			end
-		elseif lazerX ~= 525 and lazerY ~= -20 then
+		elseif lazerX ~= 525 and lazerY ~= -10 then
 			setProperty('Lazer.x', 525);
-			setProperty('Lazer.y', -20);
+			setProperty('Lazer.y', -10);
 		end 
 	end
 	if not stopHotDogGF then
