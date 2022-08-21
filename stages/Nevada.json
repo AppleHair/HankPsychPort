@@ -4,9 +4,9 @@
 	"isPixelStage": false,
 
 	"boyfriend": [814, -67],
-	"girlfriend": [205, -65],
+	"girlfriend": [205, -55],
 	"opponent": [-90, -85],
 
-	"camera_girlfriend": [-80, 80],
+	"camera_girlfriend": [-50, 100],
 	"camera_speed": 0.6
 }

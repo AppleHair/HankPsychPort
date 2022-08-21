@@ -105,8 +105,8 @@ function onUpdate(elapsed)
 	-- we make the readyCL thing slightly bigger than the ready thing.
 	-- we need to put this on update, because the ready thing's scale is
 	-- being changed on update (code above↑↑↑).
-	setProperty('readyCL.scale.x', getProperty('ready.scale.x') + 0.1);
-	setProperty('readyCL.scale.y', getProperty('ready.scale.y') + 0.1);
+	setProperty('readyCL.scale.x', getProperty('ready.scale.x') + 0.07);
+	setProperty('readyCL.scale.y', getProperty('ready.scale.y') + 0.07);
 
 	-- if countdown isn't allowed yet and the player pressed space or enter
 	-- or the left mouse button while the cursor was on the ready thing

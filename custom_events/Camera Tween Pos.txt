@@ -1,8 +1,7 @@
 Tweens the position of the GAME CAMERA and LOCKS it.
 You can use this event and the "Camera Follow Pos" 
 one after another respectively.
-to change the camera back to normal though, use an 
-emptyed "Camera Follow Pos" event *ONLY*!
 
-Value 1: X, Y, Duration (with a ', ' between the values)
+
+Value 1: x, y, Duration (with a ', ' between the values)
 Value 2: ease

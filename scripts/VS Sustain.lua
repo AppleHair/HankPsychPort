@@ -91,4 +91,4 @@ end
 -- 
 -- 
 -- 
--- I can already see the nerd emojis coming at me.
+-- I can already see the nerd emojis.

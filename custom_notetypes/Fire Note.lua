@@ -37,7 +37,8 @@ function onCreatePost()
 				removeFromGroup('unspawnNotes', i);
 				break;
 			end
-
+			
+			setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
 			setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
 			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
 			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note

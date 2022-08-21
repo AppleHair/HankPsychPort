@@ -1,4 +1,4 @@
-function trim(s)
+local function trim(s)
     -- go learn stuff: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
     return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
 end

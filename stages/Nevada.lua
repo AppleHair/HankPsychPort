@@ -10,7 +10,7 @@ local DanceDir = false;
 
 	arr - Array to sum
 ]]
-function arraySum(arr)
+local function arraySum(arr)
 	local sum = 0;
 	for i=1, #arr do
 		sum = sum + arr[i]
@@ -56,11 +56,11 @@ function onCreate()
 
     		-- static lua sprites --
 	
-	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
+	makeLuaSprite('HotdogStation','NevadaHotdog', 1014, 441);
 	setLuaSpriteScrollFactor('HotdogStation', 1.36, 1.35);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
-	makeLuaSprite('Rock','The Rock', -772, 707);
+	makeLuaSprite('Rock','The Rock', -772, 704);
 	setLuaSpriteScrollFactor('Rock', 1.36, 1.35);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
@@ -79,7 +79,7 @@ function onCreate()
 	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
 	
-	makeLuaSprite('She friking flyy','GF go bye bye', 170, -80);
+	makeLuaSprite('She friking flyy','GF go bye bye', 170, -70);
 	-- setProperty('She friking flyy.visible', false);
 	setProperty('She friking flyy.alpha', 0.00001);
 	
@@ -115,7 +115,7 @@ function onCreate()
 	scaleObject('Lazer', 1.5, 1.5, true);
 	setProperty('Lazer.visible', false);
 
-	makeAnimatedLuaSprite('Speakers','speakers', 205, 240);
+	makeAnimatedLuaSprite('Speakers','speakers', 205, 250);
 	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
 
 	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
@@ -219,8 +219,8 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 		-- Camera Shit --
 ----------------------------------------------------------------------------------------------------------------------
-local dadCamPos = {419.5, 398.5};
-local bfCamPos = {705.5, 398.5};
+dadCamPos = {419.5, 398.5};
+bfCamPos = {705.5, 398.5};
 
 function onMoveCamera(focus)
 	if focus == 'dad' then
@@ -240,13 +240,13 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 
 -- used to make Deimos stop his idle animation
-local stopDeimos = true;
+stopDeimos = true;
 -- used to make Sanford stop his idle animation
-local stopSanford = true;
+stopSanford = true;
 -- used to make the lazer stop his idle animation
-local stopLazer = true;
+stopLazer = true;
 -- used to make hotdog gf stop her idle animation
-local stopHotDogGF = true;
+stopHotDogGF = true;
 -- used to tell each climber what skin it should use (1 = grunt, 2 = agent, 3 = engineer)
 local climberSkin = {1,2,3; n=3};-- (climberSkin[1] = middle, climberSkin[2] = left, climberSkin[3] = right)
 
@@ -289,7 +289,7 @@ function onEvent(name, value1, value2)
 			end
 			if value1 == 'Turn' then
 				-- we set blood position
-				triggerEvent('Set Blood Effect Pos', 220, -150);
+				triggerEvent('Set Blood Effect Pos', 220, -140);
 				-- now the Lazer will be invisible forever. HAHAHAAH
 				setProperty('Lazer.visible', false);
 				stopLazer = true;

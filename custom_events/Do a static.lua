@@ -37,7 +37,7 @@ end
 	x - The x position of the tricky text
 	y - The y position of the tricky text
 --]]
-function DoTheStaticTrickyThing(text, x, y)
+local function DoTheStaticTrickyThing(text, x, y)
 	setTextString('TrickyText', text);
 	setProperty('TrickyText.x', x);
 	setProperty('TrickyText.y', y);
@@ -48,7 +48,7 @@ function DoTheStaticTrickyThing(text, x, y)
     playSound('staticSound', 1, 'staticSound');
 end
 
-function split(s, delimiter)
+local function split(s, delimiter)
     result = {};
     -- go learn stuff: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
@@ -57,18 +57,28 @@ function split(s, delimiter)
     return result;
 end
 
-function trim(s)
+local function trim(s)
     -- go learn stuff: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
     return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
 end
 -- go learn string patterns: https://www.lua.org/pil/20.2.html
 
-local pos;
+
+-- the max and min x and y positions for
+-- the randomly generated Tricky text positions
+local randomBounds = {--[[X]]{--[[min]]-200, --[[max]]200}, --[[Y]]{--[[min]]200, --[[max]]400}};
+
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Do a static' then
 		-- we split the string into an array of strings
-		pos = split(trim(value2), ',');
+		local pos = split(trim(value2), ',');
+		-- we chack if we need to put a random position
+		for i=1,2 do
+			if pos[i]:lower() == 'random' then
+				pos[i] = tostring(getRandomInt(randomBounds[i][1], randomBounds[i][2]));
+			end
+		end
 		-- we do the static tricky thing
 		DoTheStaticTrickyThing(value1, tonumber(pos[1]), tonumber(pos[2]));
     end

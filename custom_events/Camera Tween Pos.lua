@@ -1,4 +1,4 @@
-function split(s, delimiter)
+local function split(s, delimiter)
     result = {};
     -- go learn stuff: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
@@ -7,7 +7,7 @@ function split(s, delimiter)
     return result;
 end
 
-function trim(s)
+local function trim(s)
     -- go learn stuff: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
     return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
 end
@@ -29,7 +29,9 @@ function onEvent(name, value1, value2)
         doTweenY('CameraEventY', 'camFollowPos', tonumber(XYAndDur[2]), tonumber(XYAndDur[3]), value2);
         -- we set isCameraOnForcedPos to true
         setProperty('isCameraOnForcedPos', true);
+        return;
 	end
+    setProperty('isCameraOnForcedPos', false);
 end
 
 function onTweenCompleted(tag)

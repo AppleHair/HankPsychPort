@@ -3,4 +3,5 @@ Do a Static effect with text like in tricky mod
 Value1: text to write
 
 Value2: text positions with a ', ' between 
-		the coordinates (x, y) 
+		the coordinates (x, y) (you can also type 
+		'random' for a certain axis to use a random position)
