@@ -26,22 +26,24 @@ done stuff are simbolized with a ✔
 
     13) make the camera faster on game over ✔
 
-    14) finish banner
+    14) finish banner ✔
 
     15) release the demo
     
     16) try to fix the lag at the start of the first player section
 
-    17) fix more things if needed
+    17) try to fix deimos' appear animation
 
-    18) release demo patch
+    18) fix more things if needed
 
-    19) make the VS Rating Screen script
+    19) release demo patch
 
-    20) make hank-player
+    20) make the VS Rating Screen script
 
-    21) make maghank-player
+    21) make hank-player
 
-    22) make "fucked difficulty classic"
+    22) make maghank-player
 
-    23) make "fucked difficulty new" with new mechanics
+    23) make "fucked difficulty classic"
+
+    24) make "fucked difficulty new" with new mechanics
