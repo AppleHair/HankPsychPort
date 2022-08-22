@@ -1,4 +1,4 @@
-![New Hank Banner for the Psych Engine port](https://user-images.githubusercontent.com/95587502/185972256-70a3b756-a858-4dc1-b571-391be43759d9.png)
+![New Hank Banner for the Psych Engine port](https://user-images.githubusercontent.com/95587502/185974249-762eee95-324f-468b-b615-8e9b98b77755.png)
 
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 A Psych Engine Port of ONLINE VS. Hank Challenge.
