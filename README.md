@@ -1,14 +1,14 @@
-![Hank Banner FNF ONLINE VS](https://user-images.githubusercontent.com/95587502/155732612-61398705-23bd-41e3-86a2-9df7547fc33b.png)
+![New Hank Banner for the Psych Engine port](https://user-images.githubusercontent.com/95587502/185974249-762eee95-324f-468b-b615-8e9b98b77755.png)
 
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 A Psych Engine Port of ONLINE VS. Hank Challenge.
 
 ## Original Hank Challenge Credits:
 
+* TheBlueHatted - Original Programmer & Additional Assets
 * FifLeo - Lead Artist
 * Philiplol - Musician
 * Banbuds - Additional Assets & Extra Vocals
-* TheBlueHatted - Original Programmer & Additional Assets
 
 ## Psych Engine Team:
 
