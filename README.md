@@ -3,18 +3,19 @@
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 This is a Psych Engine port of the first challenge in FNF ONLINE VS, the hank challenge (with the song's name being "Accelerant").
 
-As of now, a lot of people already tried to port this challenge to psych, but most of these ports are rushed, inaccurate and 
-straight-up garbage. People are busy porting the newer challenges and this one is being Left behind.
-This port, however, is so accurate and well made, that I think it's safe to say that this is one of the most accurate
-and well-coded psych engine ports to date.
+A lot of people already tried to port this challenge to psych, but most of these ports are rushed, inaccurate and 
+straight-up garbage. This port, however, is so accurate and well made, that I think it's safe to say that this is one of the most accurate and well-coded psych engine ports to date.
 
 Currently, the port is in a demo state and has only the hard difficulty implemented.
 In the future, I hope to add the fucked difficulty and more new stuff that I want to make for this
 port. There's just one problem, I don't know how much time that would take, because I'm going 
 back to school soon, and if last year was difficult, THIS ONE IS GOING TO BE HELL!
 So until I make the full version, I encourage other people in the community to try to make
-a patch that adds fucked mode to this demo. I'm also planning to release an update to this demo
-that fixes some small lag problems at some point.
+a patch that adds fucked mode to this demo.
+
+I think I should also point out that accelerant in this port is recharted (I don't like the original chart that much),
+but if there will be demand for it, I'll recreate the original chart and upload it as a separate download.
+I'm also planning to release an update to this demo that fixes some small lag problems at some point.
 
 ## The Process
 
@@ -22,19 +23,20 @@ You are probably going to be shocked by this, but I started working on this port
 I was mostly inspired by the way the shaggy mod was ported to psych engine at the time and I wanted to give accelerant
 a similar treatment, but I didn't have much experience with making FNF mods at the time, which explains why this port took so long
 to make. I learned SO MUCH about programming this year that it's literally INSANE. Programming was always a thing I liked to do,
-but now after I learned more about it, it has a lot more meaning to me, and I can't wait to learn even more!
+but now after I learned more about it, I have a completely different perspective on it that just makes me want to learn even more!
 
 ## A Special Thanks To The Psych Engine Devs
 
-As a person who saw the engine evolving Throughout this year, I have a lot of respect for the people who work on
-psych engine and I know for certain that this port wouldn't have been the same without all of the features that have
-been added and without the Lua API that was released just the day after I thought about making this port.
-I want to thank all of the psych engine devs, contributors, and ESPECIALLY Shadow Mario, for making psych
-engine what it is today!
+As a person who worked on a serious project (this one) with psych engine and saw it 
+evolve Throughout this year, I have a lot of respect for the people who work on
+psych engine and I know for certain that this port wouldn't have been the 
+same without all of the features that have been added and without the Lua API that was
+released just the day after I had the idea to make this port. I want to thank all of the
+psych engine devs, contributors, and ESPECIALLY Shadow Mario, for making psych engine what it is today!
 
 ## Tips For Porters
 
-One of my objectives in making a well-coded and accurate psych engine port is to encourage other porters to make better
+One of my objectives in making a well-coded and accurate psych engine port is to help other porters to make better
 psych engine ports. I made many comments in my code that will probably help others understand what the code does and
 its algorithm. In addition, I also put comments that give tips and suggestions for how to do certain things in the right way, 
 and I also want to give some general tips right now.
@@ -71,7 +73,11 @@ a good psych engine port of another mod, and don't have enough knowledge to make
 
 If you have something to say about the port or find a bug/other problem with the port, please leave feedback in 
 the comments of the mod's GameBanana page. I want this port to be the best it can be, and feedback will help with that a lot.
-Even if you think something I said in the comments (the comments in the code) is incorrect or wrong in some way, feel free to correct me.
+Even if you think something I said in the comments (the comments in the code) is incorrect or wrong in some way, feel free to correct me. Even if you think the port is not accurate enough or not coded well enough and can explain why, I will be happy
+to hear you. 
+
+Just be aware that at the end of this week (as of writing this) I will be going on vacation and won't be able to respond
+to feedback. I will announce on the GameBanana page when I come back.
 
 ## Future Plans
 
@@ -101,7 +107,7 @@ cool and exciting things I'm planning to work on for the full release of the por
 
 		I want to make my own interpretation of the fucked difficulty of Accelerant as 
 		a separate download. I have some cool Ideas for new mechanics and new animations 
-		and cutscenes that I want to add. This is going to be the more original side of the port.
+		and cutscenes that I want to add. This is going to be the more creative side of the port.
 
 
 ## Thanks for reading the README file and thanks for playing this port!!
