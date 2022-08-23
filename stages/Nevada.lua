@@ -125,7 +125,7 @@ function onCreate()
 	-- setProperty('gf-hot.visible', false);
 	setProperty('gf-hot.alpha', 0.00001);
 	
-	makeAnimatedLuaSprite('climber1','Climbers', 330, -159);
+	makeAnimatedLuaSprite('climber1','Climbers', 330, -147);
 	makeAnimatedLuaSprite('climber2','Climbers', -300, 180);
 	makeAnimatedLuaSprite('climber3','Climbers', 1170, 208);
 	setProperty('climber3.angle', 5);
