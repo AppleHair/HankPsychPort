@@ -13,7 +13,8 @@ In the future, I hope to add the fucked difficulty and more new stuff that I wan
 port. There's just one problem, I don't know how much time that would take, because I'm going 
 back to school soon, and if last year was difficult, THIS ONE IS GOING TO BE HELL!
 So until I make the full version, I encourage other people in the community to try to make
-a patch that adds fucked mode to this demo.
+a patch that adds fucked mode to this demo. I'm also planning to release an update to this demo
+that fixes some small lag problems at some point.
 
 ## The Process
 
