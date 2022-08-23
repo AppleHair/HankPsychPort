@@ -27,7 +27,7 @@ end
 --]]
 -- this function is being added to the string library/module
 function string:startswith(start)
-    -- go learn stuff: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
+    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
     -- # means the length of the array or string (table)
     return self:sub(1, #start) == start;
 end

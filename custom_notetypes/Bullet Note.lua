@@ -13,7 +13,7 @@
 	b - blue value
 --]]
 local function ARGBtoHEX(a, r, g, b)
-	-- go learn stuff: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
+	-- string.format explanation: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
 	return string.format("0x%02x%02x%02x%02x", a, r, g, b);
 end
 

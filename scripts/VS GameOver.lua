@@ -13,8 +13,8 @@ function onGameOverStart()
     -- move instantly to make the game over screen more accurate to FNF ONLINE VS.
     -- the .xml of the bf-dead and bf-hanked is modified to start at 12.
     setPropertyFromClass('GameOverSubstate', 'instance.boyfriend.animation.curAnim.curFrame', 12);
-    -- why do I have to do this...
-    -- there should be a boolean moveCamInstantly variable on GameOverSubstate that lets you do that!
+    -- there should be a boolean moveCamInstantly variable on GameOverSubstate that lets you do that.
+    -- it's kinda annoying to do it like that.
 
     -- we make the camera zoom smaller to make the game over screen more accurate to FNF ONLINE VS.
     setPropertyFromClass('flixel.FlxG', 'camera.zoom', 0.65);
@@ -38,12 +38,5 @@ function onUpdate(elapsed)
     if getPropertyFromClass('GameOverSubstate', 'instance.updateCamera') then
         setPropertyFromClass('GameOverSubstate', 'instance.updateCamera', false);
     end
-    -- there should just be a cameraSpeed variable for GameOverSubstate in the source code. WHY DO I HAVE TO DO THIS?!
-    -- Shadow, I know you worked on adding more stuff to GameOverSubstate to make it more accessible to lua users,
-    -- but asking for cameraSpeed and moveCamInstantly variables isn't asking for much.
-
-    -- It could also be useful to add lua sprites to GameOverSubstate and use them 
-    -- instead of making ONE GIANT FUCKING GAME OVER SPRITE, but that will probably take more time.
-    -- This one can be more complicated and I get it, but adding cameraSpeed and moveCamInstantly variables?
-    -- come on....
+    -- there should just be a cameraSpeed variable for GameOverSubstate in the source code. Just saying...
 end
