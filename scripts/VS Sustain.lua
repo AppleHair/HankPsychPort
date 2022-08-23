@@ -49,15 +49,16 @@ end
 -- 
 -- 2) the animation looper - This type is very similar to the holder, but instead of holding the
 --              animation normally, It lets the sing animation loop on itself for the whole duration
---              of the hold 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 𝗱𝗲𝗽𝗲𝗻𝗱𝗶𝗻𝗴 𝗼𝗻 𝘁𝗵𝗲 𝗯𝗲𝗮𝘁 𝗶𝗻 𝗮𝗻𝘆 𝘄𝗮𝘆. This type can be emulated with this
---              script if you give your character a -loop animation for every sing animation that is the 
---              same as the sing animation is self.
+--              of the hold 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 𝗱𝗲𝗽𝗲𝗻𝗱𝗶𝗻𝗴 𝗼𝗻 𝘁𝗵𝗲 𝗯𝗲𝗮𝘁 𝗶𝗻 𝗮𝗻𝘆 𝘄𝗮𝘆. I really don't know why they did
+--              this when they already have the next type.
 --
 -- 3) the animation player - As opposed to the animation looper, in this type the sing animation is being played
 --              again and again for every time a sustain note unit that is included in the chart is being hit,
---              which means the rate that the sing animations are being played at 𝗱𝗲𝗽𝗲𝗻𝗱𝘀 𝗼𝗻 𝘁𝗵𝗲 𝗯𝗲𝗮𝘁. This type
---              is very similer to the way sustain notes animate in the base game, the engines and most of the mods,
+--              which means the rate that the sing animations are being played at 𝗱𝗲𝗽𝗲𝗻𝗱𝘀 𝗼𝗻 𝘁𝗵𝗲 𝗯𝗲𝗮𝘁. 
+--              sometimes, the sing animations play so fast that it looks like it's stuck on the first frame.
+--              This type is very similer to the way sustain notes animate in the base game, the engines and most of the mods,
 --              but I can't know for sure if it's the same, because I don't have access to FNF ONLINE VS' source code.
+--              maybe they intentionally hold the animation on the first frame. idk.
 -- 
 -- every character in FNF ONLINE VS. animates the sustain notes in a different way
 -- heres a list of all of the characters and the types they use according to my research:
