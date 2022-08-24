@@ -36,21 +36,24 @@ psych engine devs, and ESPECIALLY Shadow Mario, for making psych engine what it 
 
 ## Tips For Porters
 
-One of my objectives in making a well-coded and accurate psych engine port is to help other porters to make better
-psych engine ports. I made many comments in my code that will probably help others understand what the code does and
-its algorithm. In addition, I also put comments that give tips and suggestions for how to do certain things in the right way, 
-and I also want to give some general tips right now.
+One of my objectives in making a well-coded and accurate psych engine port is to help other porters make better
+psych engine ports. There are many people who want to make a good psych engine ports of another mods, and don't have 
+enough knowledge to make them actually good, and I want to help them. I made many comments in my code that will probably help 
+others understand what the code does and its algorithm. In addition, I also put comments that give tips and suggestions for 
+how to do certain things in the right way, and I also want to give some general tips right now.
 
 My first tip is more programming related, and it's to understand what is happening in the source code when you write your code
 in Lua. This kind of skill is very important to gain with every tool you use to make something and ESPECIALLY with psych engine.
 Don't just assume the functions you use work like you think, and Instead, go to FunkinLua.hx and check exactly what the functions
-you use do, and how they affect the game as a whole. Furthermore, understanding more things in the code that aren't necessarily
-related to built-in Lua functions will open you to new possibilities and help you do more things in psych engine lua than you ever imagined!
-This skill of being able to read the source code will also help you solve problems and bugs you face along the way and you'll be able to go to
-the source code and try to understand what is causing the problem instead of attempting a lot of stuff for no reason.
-So if you thought you don't need to understand the source code to make a psych engine lua mod, then think again!
-It's also very important to mention that I don't recommend using the psych engine wiki, because it's very outdated
-and doesn't get updates anymore.
+you use do, and how they affect the game as a whole. Furthermore, This skill of being able to read the source code will also help you 
+solve problems and bugs you face along the way and you'll be able to go to the source code and try to understand what is causing the 
+problem instead of attempting a lot of stuff for no reason. So if you thought you don't need to understand the source code to make a 
+psych engine lua mod, then think again! Also, just to be clear, I don't know everything about Haxe and I never went out of my way
+to learn specifically about Haxe, but I know that if I ever face a problem in my code that I don't know how to fix, that's
+the reason why, and in this situaition, I would be learning specifically about everything that might be related to the problem, 
+in the goal of understanding what's causing it. with that being said, I still think learning as much as you can will help you
+a lot and I hope to do it myself soon. I also want to mention that I don't recommend using the psych engine wiki,
+because it's very outdated and doesn't get updates anymore.
 
 My second tip is more about how I made the port accurate, and no, there's no magic trick.
 making something accurate takes a lot of patience, and if you want to make something accurate,
@@ -60,13 +63,8 @@ just put sprites or set tween eases to whatever looks fine to you. I should also
 because you tried to make it accurate, you should make it look good instead of making it accurate. balancing 
 between making things accurate and making things good is the right way to make a port in my opinion.
 
-My third tip is very simple, and it's to learn Lua properly. There's a really good website that
+My third tip is very simple, and it's to learn Lua properly. Luckly, there's a really good website that
 can help you with this. Here's the link:  https://www.lua.org/pil/contents.html
-
-Now, I want to clarify something. There are A LOT of talented people who use psych engine
-Lua to do very cool things. I'M NOT TALKING TO THEM. I'm talking to people who want to make
-a good psych engine port of another mod, and don't have enough knowledge to make it actually good, 
-(and there are a lot of people that fit this description) and I want to help them.
 
 
 ## Feedback
