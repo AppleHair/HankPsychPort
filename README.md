@@ -32,7 +32,7 @@ evolve Throughout this year, I have a lot of respect for the people who work on
 psych engine and I know for certain that this port wouldn't have been the 
 same without all of the features that have been added and without the Lua API that was
 released just the day after I had the idea to make this port. I want to thank all of the
-psych engine devs, contributors, and ESPECIALLY Shadow Mario, for making psych engine what it is today!
+psych engine devs, and ESPECIALLY Shadow Mario, for making psych engine what it is today!
 
 ## Tips For Porters
 
