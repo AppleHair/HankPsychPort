@@ -50,6 +50,12 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
 									-- in-line if moment --		  boolean        true      false
 			
+			-- we make the fire note less hitable to make it more stable
+			-- (there can be instances were you hit a note that is above or below
+			-- a fire note and to would still hit the fire note. this fix prevents it)
+			setPropertyFromGroup('unspawnNotes', i, 'earlyHitMult', 0.5);
+			setPropertyFromGroup('unspawnNotes', i, 'lateHitMult', 0.5);
+			
 									-- color calibration--
 			-- note
 			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);

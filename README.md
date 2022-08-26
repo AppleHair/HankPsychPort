@@ -4,7 +4,8 @@
 This is a Psych Engine port of the first challenge in FNF ONLINE VS, the hank challenge (with the song's name being "Accelerant").
 
 A lot of people already tried to port this challenge to psych, but most of these ports are rushed, inaccurate and 
-straight-up garbage. This port, however, is so accurate and well made, that I think it's safe to say that this is one of the most accurate and well-coded psych engine ports to date.
+just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this port to be
+one of the most accurate and well-coded psych engine ports to date.
 
 Currently, the port is in a demo state and has only the hard difficulty implemented.
 In the future, I hope to add the fucked difficulty and more new stuff that I want to make for this
@@ -13,8 +14,6 @@ back to school soon, and if last year was difficult, THIS ONE IS GOING TO BE HEL
 So until I make the full version, I encourage other people in the community to try to make
 a patch that adds fucked mode to this demo.
 
-I think I should also point out that accelerant in this port is recharted (I don't like the original chart that much),
-but if there will be demand for it, I'll recreate the original chart and upload it as a separate download.
 I'm also planning to release an update to this demo that fixes some small lag problems at some point.
 
 ## The Process
