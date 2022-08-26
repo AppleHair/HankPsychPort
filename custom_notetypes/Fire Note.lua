@@ -46,15 +46,10 @@ function onCreatePost()
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
 			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
 			setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
+			setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
 			setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
 			setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
 									-- in-line if moment --		  boolean        true      false
-			
-			-- we make the fire note less hitable to make it more stable
-			-- (there can be instances were you hit a note that is above or below
-			-- a fire note and to would still hit the fire note. this fix prevents it)
-			setPropertyFromGroup('unspawnNotes', i, 'earlyHitMult', 0.5);
-			setPropertyFromGroup('unspawnNotes', i, 'lateHitMult', 0.5);
 			
 									-- color calibration--
 			-- note
