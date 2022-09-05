@@ -15,7 +15,7 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
     if isSustainNote then
         -- play the correct sing animation (restores the sustain animations 
         -- that are stoped by the VS Sustain script)
-        triggerEvent('Play Animation', getProperty('singAnimations['..direction..']'), 'boyfriend');
+        playAnim('boyfriend', getProperty('singAnimations['..direction..']'), true);
     end
     if noteType == 'Bullet Note' then
         -- play dodge animation

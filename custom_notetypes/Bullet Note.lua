@@ -18,7 +18,7 @@ local function ARGBtoHEX(a, r, g, b)
 end
 
 
-function onCreatePost()
+function onCreate()
 
 	-- unlike the fire notes, here I don't load the 
 	-- sprites early, because they are very small, 
@@ -26,25 +26,25 @@ function onCreatePost()
 	-- and they are not worth extra RAM usage (the extra RAM usage comes
 	-- from the new FlxSprite object we create to make the sprites load early).
 
-	for i = 0, getProperty('unspawnNotes.length')-1 do
+	for i = getProperty('unspawnNotes.length')-1, 0, -1 do
 		-- checks if the note is a bullet note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
 
 			-- no sustain bullet notes allowed! + no opponent bullet notes allowed!
 			if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') or (not getPropertyFromGroup('unspawnNotes', i, 'mustPress')) then
 				removeFromGroup('unspawnNotes', i);
-				break;
+			else
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'BulletNotes'); -- we change the texture
+				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
+				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.8); -- we make the health decrease more if you miss the note
+				
+				
+										-- note color calibrations --
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[ / 360   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
 			end
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'BulletNotes'); -- we change the texture
-			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
-			setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
-			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.8); -- we make the health decrease more if you miss the note
-			
-			
-									-- note color calibrations --
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[ / 360   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
 		end
 
 		precacheImage('BulletNotes');

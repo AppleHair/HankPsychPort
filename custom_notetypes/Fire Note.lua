@@ -1,4 +1,4 @@
-function onCreatePost()
+function onCreate()
 
 	makeAnimatedLuaSprite('fireNote', 'NOTE_fire', 0, 0);
 	addAnimationByPrefix('fireNote', 'red', 'red', 24, false);
@@ -28,39 +28,38 @@ function onCreatePost()
 	-- It's very stupid, because we make a new FlxSprite object, that makes us use more RAM, to make this work,
 	-- but it works really well and prevents serious lag, so it's worth it.	
 
-	for i = 0, getProperty('unspawnNotes.length')-1 do
+	for i = getProperty('unspawnNotes.length')-1, 0, -1 do
 		-- checks if the note is a fire note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Fire Note' then
 
 			-- no sustain fire notes allowed!
 			if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
 				removeFromGroup('unspawnNotes', i);
-				break;
-			end
-			
-			setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
-			setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
-			setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
-			setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note
-			setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
-			setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
-			setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
-			setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
-			setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
-									-- in-line if moment --		  boolean        true      false
-			
-									-- color calibration--
-			-- note
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[/ 100   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
+			else
+				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
+				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
+				setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
+				setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
+				setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
+				setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
+				setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
+										-- in-line if moment --		  boolean        true      false
+				
+										-- color calibration--
+				-- note
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[/ 100   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
 
-			-- splash
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashHue', 0 --[[/ 360   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashSat', 0 --[[/ 100   if you actually want to change it]]);
-			setPropertyFromGroup('unspawnNotes', i, 'noteSplashBrt', 0 --[[/ 100   if you actually want to change it]]);
+				-- splash
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashHue', 0 --[[/ 360   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashSat', 0 --[[/ 100   if you actually want to change it]]);
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashBrt', 0 --[[/ 100   if you actually want to change it]]);
+			end
 		end
 	end
 
