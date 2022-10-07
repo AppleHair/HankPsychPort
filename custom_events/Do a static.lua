@@ -16,6 +16,7 @@ function onCreate()
 	setTextColor('TrickyText', '0xff0000');
 	setTextAlignment('TrickyText', 'center');
 	setObjectCamera('TrickyText','camHud');
+	setProperty('TrickyText.textField.multiline', false);
 	-- setProperty('TrickyText.visible', false);
 	setProperty('TrickyText.alpha', 0.00001);
 	addLuaText('TrickyText');
@@ -28,6 +29,21 @@ function onCreate()
 
 	precacheSound('staticSound');
 end
+
+local function split(s, delimiter)
+    result = {};
+    -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
+    for match in (s..delimiter):gmatch('(.-)'..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+local function trim(s)
+    -- string.gsub() explanation: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
+end
+-- string patterns explanation: https://www.lua.org/pil/20.2.html
 
 --[[
 	This function is what makes
@@ -47,22 +63,6 @@ local function DoTheStaticTrickyThing(text, x, y)
 	setProperty('TrickyText.alpha', 1);
     playSound('staticSound', 1, 'staticSound');
 end
-
-local function split(s, delimiter)
-    result = {};
-    -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
-    for match in (s..delimiter):gmatch('(.-)'..delimiter) do
-        table.insert(result, match);
-    end
-    return result;
-end
-
-local function trim(s)
-    -- string.gsub() explanation: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
-    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
-end
--- string patterns explanation: https://www.lua.org/pil/20.2.html
-
 
 -- the max and min x and y positions for
 -- the randomly generated Tricky text positions
@@ -95,27 +95,63 @@ function onSoundFinished(tag)
     end
 end
 
+-----------------------------------------------------------------------
+-- Tricky Text Shake
+-----------------------------------------------------------------------
 
+--[[
+	This text shake was made to be an improved version of the original
+	text shake and to look more like Madness Accelerant's text shake.
+--]]
+
+local turnShake = true; -- ONLINE VS' camera didn't turn originally
+local posShake = true;
+
+
+local turnAmount = 1; -- default - 1
 -- determines who much the x value
 -- will change every second
-local turnSpeed = 170;
+local turnSpeed = 100; -- default - 100
 -- represents the x value of the
 -- mathematical function that we use
 -- to change the angle of the Tricky text
 local angleFuncX = 0;
+
+-- Shake speed in shakes per second
+local shakeSpeed = 20; -- default - 20   most accurate to ONLINE VS. - 15
+-- multiplies the random shake number
+local shakeIntencity = 5; -- -- default - 5   most accurate to ONLINE VS. - 10
+-- time elapsed since last shake
+local elapsedShake = 0;
 function onUpdate(elapsed)
-	-- we increase the x value with time but *turnSpeed* times faster
-	angleFuncX = angleFuncX + elapsed * turnSpeed;
-	-- every 10 seconds, the x value will come back to 0
-	if angleFuncX >= turnSpeed * 10 then
-		-- I don't want the values to become too big,
-		-- because I'm afraid the computer won't be able to handle it.
-		angleFuncX = 0;
+	if getProperty('TrickyText.alpha') == 0.00001 then return; end
+	-- if we want the text to shake by changing it's position
+	if posShake then
+		-- we add the elapsed time
+		elapsedShake = elapsedShake + elapsed;
+		if elapsedShake >= 1 / shakeSpeed then
+			-- we tween the x and y offsets to a random position between -1 and 1 multiplied by shakeIntencity
+			doTweenX('ShakeX','TrickyText.offset', getRandomFloat() * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'Linear');
+			doTweenY('ShakeY','TrickyText.offset', getRandomFloat() * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'Linear');
+			-- because the shake just happened, we set elapsedShake to 0
+			elapsedShake = 0;
+		end
 	end
-	-- 		f(x) = sin(π∙x) ∙ 2.5
-	--  		       ↓
-	-- 		TrickyText.angle = f(x)
-	setProperty('TrickyText.angle', math.sin(math.pi * angleFuncX) * 2.5);
-	-- Mathematical functions are very useful for programming guys!
-	-- Go learn some math!
+	-- if we want the text to shake by turning
+	if turnShake then
+		-- we increase the x value with time but *turnSpeed* times faster
+		angleFuncX = angleFuncX + elapsed * turnSpeed;
+		-- every 10 seconds, the x value will come back to 0
+		if angleFuncX >= turnSpeed * 10 then
+			-- I don't want the values to become too big,
+			-- because I'm afraid the computer won't be able to handle it.
+			angleFuncX = 0;
+		end
+		-- 		f(x) = sin(π∙x) ∙ turnAmount
+		--  		       ↓
+		-- 		TrickyText.angle = f(x)
+		setProperty('TrickyText.angle', math.sin(math.pi * angleFuncX) * turnAmount);
+		-- Mathematical functions are very useful for programming guys!
+		-- Go learn some math!
+	end
 end
