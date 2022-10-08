@@ -45,6 +45,9 @@ local function trim(s)
 end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
+-- if you want to use static sounds that sound more like the original
+-- static sounds  that are used in madness combat, set this variable to true
+local useCoolerStaticSounds = false;
 --[[
 	This function is what makes
 	the static effect and the text show up
@@ -61,7 +64,7 @@ local function DoTheStaticTrickyThing(text, x, y)
 	-- setProperty('TrickyText.visible', true);
 	setProperty('Static.alpha', 0.6);
 	setProperty('TrickyText.alpha', 1);
-    playSound('staticSound', 1, 'staticSound');
+    playSound((useCoolerStaticSounds and 'coolerStaticSound'..getRandomInt(1,2) or 'staticSound'), 1, 'staticSound');
 end
 
 -- the max and min x and y positions for
@@ -124,7 +127,11 @@ local shakeIntencity = 5; -- -- default - 5   most accurate to ONLINE VS. - 10
 -- time elapsed since last shake
 local elapsedShake = 0;
 function onUpdate(elapsed)
-	if getProperty('TrickyText.alpha') == 0.00001 then return; end
+	if getProperty('TrickyText.alpha') == 0.00001 or (posShake == false and turnShake == false)then
+		return;
+	end
+
+
 	-- if we want the text to shake by changing it's position
 	if posShake then
 		-- we add the elapsed time
@@ -137,6 +144,7 @@ function onUpdate(elapsed)
 			elapsedShake = 0;
 		end
 	end
+
 	-- if we want the text to shake by turning
 	if turnShake then
 		-- we increase the x value with time but *turnSpeed* times faster
