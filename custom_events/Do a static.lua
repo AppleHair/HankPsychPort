@@ -1,11 +1,22 @@
+-- if you want to use the static texture
+-- from madness accelerant, then set this variable to true
+local useAccelerantStaticTexture = true;
+
+-- if you want to use static sounds that sound more like the original
+-- static sounds which are used in madness combat, then set this variable to true
+local useCoolerStaticSounds = true;
+
+-- you can customize the Tricky text shake at the bottom of the script ↓↓↓
+
 function onCreate()
-    makeAnimatedLuaSprite('Static','TrickyStatic', 0, 0);
+    makeAnimatedLuaSprite('Static',(useAccelerantStaticTexture and 'AclrntTrickyStatic' or 'TrickyStatic'), 0, 0);
 	addAnimationByPrefix('Static', 'Stat', 'Stat', 24, true);
 	setGraphicSize('Static',1280,720);
 	setObjectCamera('Static','camHud');
 	-- setProperty('Static.alpha', 0.6);
 	-- setProperty('Static.visible', false);
 	setProperty('Static.alpha', 0.00001);
+	setProperty('Static.antialiasing', false);
 	precacheImage('TrickyStatic');
     addLuaSprite('Static', false);
 	
@@ -45,9 +56,7 @@ local function trim(s)
 end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
--- if you want to use static sounds that sound more like the original
--- static sounds  that are used in madness combat, set this variable to true
-local useCoolerStaticSounds = false;
+
 --[[
 	This function is what makes
 	the static effect and the text show up
@@ -105,10 +114,20 @@ end
 --[[
 	This text shake was made to be an improved version of the original
 	text shake and to look more like Madness Accelerant's text shake.
+
+	If you want to make the shake accurate to FNF ONLINE VS, 
+	then put the "most accurate to ONLINE VS." value for every
+	variable that has them. If a variable has no "most accurate
+	to ONLINE VS." value, then put the default value in the variable.
 --]]
 
-local turnShake = true; -- ONLINE VS' camera didn't turn originally
-local posShake = true;
+-- if this is true, the text shake by turning
+local turnShake = true; -- default - true   most accurate to ONLINE VS. - false
+-- if this is true, the text will shake by changing it's position
+local posShake = true; -- default - true
+
+-- if both are true, it will do both,
+-- and if both are false, it won't shake.
 
 
 local turnAmount = 1; -- default - 1
