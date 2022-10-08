@@ -1,10 +1,10 @@
 -- if you want to use the static texture
 -- from madness accelerant, then set this variable to true
-local useAccelerantStaticTexture = true;
+local useAccelerantStaticTexture = false;
 
 -- if you want to use static sounds that sound more like the original
 -- static sounds which are used in madness combat, then set this variable to true
-local useCoolerStaticSounds = true;
+local useCoolerStaticSounds = false;
 
 -- you can customize the Tricky text shake at the bottom of the script ↓↓↓
 
