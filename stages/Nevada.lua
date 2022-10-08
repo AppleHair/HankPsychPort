@@ -1,10 +1,3 @@
-
--- how much does hotdog gf move
-local HotGFMovementAmount = 350;
-
--- true = left  false = right
-local DanceDir = false;
-
 --[[
 	Sums all the values in an array
 
@@ -30,7 +23,7 @@ end
 		RightCliff - line 70
 		LeftCliff - line 74
 		Sky - line 78
-		She friking flyy - line 82
+		SheFrikingFlyy - line 82
 
 	-- Animated Lua sprites - line 86
 	-----------------------------------
@@ -79,9 +72,9 @@ function onCreate()
 	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
 	
-	makeLuaSprite('She friking flyy','GF go bye bye', 170, -70);
-	-- setProperty('She friking flyy.visible', false);
-	setProperty('She friking flyy.alpha', 0.00001);
+	makeLuaSprite('SheFrikingFlyy','GF go bye bye', 170, -70);
+	-- setProperty('SheFrikingFlyy.visible', false);
+	setProperty('SheFrikingFlyy.alpha', 0.00001);
 	
 			-- animated lua sprites --
 	
@@ -181,7 +174,7 @@ function onCreate()
 		addLuaSprite('climber' .. i,false);
 	end
 	addLuaSprite('gf-hot', false);
-	addLuaSprite('She friking flyy',true);
+	addLuaSprite('SheFrikingFlyy',true);
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
@@ -281,10 +274,10 @@ function onEvent(name, value1, value2)
 				-- setProperty('Lazer.visible', false);
 				setProperty('Lazer.alpha', 0.00001);
 
-				-- setProperty('She friking flyy.visible', true);
-				setProperty('She friking flyy.alpha', 1);
-				setProperty('She friking flyy.velocity.x', 15000);
-				-- She friking flyy!!
+				-- setProperty('SheFrikingFlyy.visible', true);
+				setProperty('SheFrikingFlyy.alpha', 1);
+				setProperty('SheFrikingFlyy.velocity.x', 15000);
+				-- SheFrikingFlyy!!
 			end
 			if value1 == 'Turn' then
 				-- we set blood position
@@ -308,8 +301,9 @@ function onEvent(name, value1, value2)
 			if value1 == 'Fall' then
 				-- we play the blood animation
 				triggerEvent('Add Blood Effect', '', '');
-				-- he goes up
-				doTweenY('ClownGoUp', 'gf', -550, 0.3, 'sineOut');
+				-- and now he falls down. bye bye!
+				setProperty('gf.velocity.y', -2500);
+				setProperty('gf.acceleration.y', 9000);
 			end
 		end
 	elseif name == 'HotDogGF Appears' then
@@ -320,8 +314,8 @@ function onEvent(name, value1, value2)
 		setProperty('gf-hot.alpha', 1);
 		-- we play her walking animation
 		playAnim('gf-hot', 'Walk', false);
-		-- we do a x position tween
-		doTweenX('HotGFWalksIn', 'gf-hot', getProperty('gf-hot.x') - HotGFMovementAmount, 0.8, 'linear');
+		-- we make girlfriend go forward
+		setProperty('gf-hot.velocity.x', -437.5);
 	elseif name == 'They climb and get shot at' then
 		math.randomseed(os.time()); -- os.time is back baby!!!!
 		for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
@@ -347,23 +341,6 @@ function onEvent(name, value1, value2)
 			-- will run in the end of the timer)
 			runTimer('ShootTimer', 0.55, 1);
 		end
-	end
-end
-
---------------------------------------------------------------------------------------------------------------------
-		--Tween Completions--
---------------------------------------------------------------------------------------------------------------------
-function onTweenCompleted(tag)
-	if tag == 'ClownGoUp' then
-		-- he goes behind the ground
-		setObjectOrder('gfGroup', getObjectOrder('Ground'));
-		-- and now he falls down. bye bye!
-		doTweenY('ClownGoDown', 'gf', 1000, 0.7, 'sineIn');
-	elseif tag == 'HotGFWalksIn' then
-		-- now that the tween ended, she needs to stop and do
-		-- the idle animation, so we need to stop stoping her
-		-- from doing the idle animation.
-		stopHotDogGF = false;
 	end
 end
 
@@ -422,6 +399,9 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	-- we make the lazer invisible when tricky hits a note
 end
 
+-- true = left  false = right
+local hotdogGFDanceDir = false;
+
 function onBeatHit()
 -----------         -----------
   --Lazer Visibility Sequel--
@@ -436,7 +416,7 @@ function onBeatHit()
 	-- we don't need to check this on update
 
 ---------------------------------------------------
-        --Boop Control--
+        --Boop handler--
 ---------------------------------------------------
 	-- you know what this does
 	if not stopDeimos then
@@ -463,12 +443,12 @@ function onBeatHit()
 	end
 	if not stopHotDogGF then
 		-- we make gf move her head left and right
-		if DanceDir then
+		if hotdogGFDanceDir then
 			playAnim('gf-hot', 'Boop-left', true);
-			DanceDir = false;
+			hotdogGFDanceDir = false;
 		else
 			playAnim('gf-hot', 'Boop-right', true);
-			DanceDir = true;
+			hotdogGFDanceDir = true;
 		end
 	end
 	-- the speakers always do the idle animation
@@ -476,9 +456,20 @@ function onBeatHit()
 end
 
 ---------------------------------------------------
-	--Object Visibility and Animation Controls--
+	--Sprite and Animation Controls--
 ---------------------------------------------------
+
+-- true if tricky is behind the ground
+local trickyBehindGround = false;
+-- true if tricky is gone
+local trickyIsGone = false;
+-- true if hotdog girlfriend stopped walking
+local HotDogGFStoppedWalking = false;
+
 function onUpdate(elapsed)
+
+	-- Climbers Visibility handler
+	-----------------------------------------------
 	for i=1,3 do
 		-- if the current animation is a shot animation and it's
 		-- finished, then make the sprite invisible
@@ -488,7 +479,9 @@ function onUpdate(elapsed)
 			setProperty('climber' .. i .. '.alpha', 0.00001);
 		end
 	end
-
+	
+	-- Idle Animation Release handler
+	-----------------------------------------------
 	-- if the sprite is completely visible and the current animation is finished
 	-- then let the sprite play it's idle animation 
 	if getProperty('Deimos.alpha') == 1 and getProperty('Deimos.visible') and 
@@ -502,5 +495,51 @@ function onUpdate(elapsed)
 	if getProperty('Lazer.alpha') == 1 and getProperty('Lazer.visible') and 
 	  getProperty('Lazer.animation.curAnim.finished') and stopLazer then
 		stopLazer = false;
+	end
+
+	
+	-- Tricky Fall handler
+	-----------------------------------------------
+	if getProperty('gf.y') <= -500 and not trickyBehindGround then
+		-- he goes behind the ground
+		setObjectOrder('gfGroup', getObjectOrder('Ground'));
+		trickyBehindGround = true;
+	end
+
+	if getProperty('gf.y') >= 1000 and not trickyIsGone then
+		setProperty('gf.velocity.y', 0);
+		setProperty('gf.acceleration.y', 0);
+		setProperty('gf.visible', false);
+		trickyIsGone = true;
+	end
+
+	
+	-- Girlfriend Hotdog handler
+	-----------------------------------------------
+
+	if getProperty('gf-hot.x') <= 1180 and not HotDogGFStoppedWalking then
+		setProperty('gf-hot.velocity.x', 0);
+		-- now that she stopped, she needs to do
+		-- the idle animation, so we need to stop stoping her
+		-- from doing the idle animation.
+		stopHotDogGF = false;
+		HotDogGFStoppedWalking = true;
+	end
+
+	
+	-- The Sprite Destroyer
+	-----------------------------------------------
+
+	-- the order here really matters, because when
+	-- the script destroys an sprite, and then checks
+	-- for him, it will not run the rest of the script,
+	-- so the first to be destroyed should be the last
+	-- and the last to be destroyed should be the first.
+
+	if getProperty('SheFrikingFlyy.x') >= 1700 then
+		removeLuaSprite('SheFrikingFlyy', true);
+	end
+	if getProperty('helicopter.x') >= 1700 then
+		removeLuaSprite('helicopter', true);
 	end
 end
