@@ -66,6 +66,9 @@ end
 	y - The y position of the tricky text
 --]]
 local function DoTheStaticTrickyThing(text, x, y)
+	if not (text and x and y) then
+		return;
+	end
 	setTextString('TrickyText', text);
 	setProperty('TrickyText.x', x);
 	setProperty('TrickyText.y', y);
@@ -142,7 +145,7 @@ local angleFuncX = 0;
 -- Shake speed in shakes per second
 local shakeSpeed = 20; -- default - 20   most accurate to ONLINE VS. - 15
 -- multiplies the random shake number
-local shakeIntencity = 5; -- -- default - 5   most accurate to ONLINE VS. - 10
+local shakeIntencity = 5; -- default - 5   most accurate to ONLINE VS. - 10
 -- time elapsed since last shake
 local elapsedShake = 0;
 function onUpdate(elapsed)

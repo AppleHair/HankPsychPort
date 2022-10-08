@@ -49,7 +49,7 @@ solve problems and bugs you face along the way and you'll be able to go to the s
 problem instead of attempting a lot of stuff for no reason. So if you thought you don't need to understand the source code to make a 
 psych engine lua mod, then think again! Also, just to be clear, I don't know everything about Haxe and I never went out of my way
 to learn specifically about Haxe, but I know that if I ever face a problem in my code that I don't know how to fix, that's
-the reason why, and in this situaition, I would be learning specifically about everything that might be related to the problem, 
+the reason why, and in this situaition, I would go to learn specifically about everything that might be related to the problem, 
 in the goal of understanding what's causing it. with that being said, I still think learning as much as you can will help you
 a lot and I hope to do it myself soon. I also want to mention that I don't recommend using the psych engine wiki,
 because it's very outdated and doesn't get updates anymore.
@@ -62,7 +62,7 @@ just put sprites or set tween eases to whatever looks fine to you. I should also
 because you tried to make it accurate, you should make it look good instead of making it accurate. balancing 
 between making things accurate and making things good is the right way to make a port in my opinion.
 
-My third tip is very simple, and it's to learn Lua properly. Luckly, there's a really good website that
+My third tip is very simple, and it's to learn Lua properly. Luckily for you, there's a really good website that
 can help you with this. Here's the link:  https://www.lua.org/pil/contents.html
 
 
@@ -70,11 +70,7 @@ can help you with this. Here's the link:  https://www.lua.org/pil/contents.html
 
 If you have something to say about the port or find a bug/other problem with the port, please leave feedback in 
 the comments of the mod's GameBanana page. I want this port to be the best it can be, and feedback will help with that a lot.
-Even if you think something I said in the comments (the comments in the code) is incorrect or wrong in some way, feel free to correct me. Even if you think the port is not accurate enough or not coded well enough and can explain why, I will be happy
-to hear you. 
-
-Just be aware that at the end of this week (as of writing this) I will be going on vacation and won't be able to respond
-to feedback. I will announce on the GameBanana page when I come back.
+Even if you think something I said in the comments (the comments in the code) is incorrect or wrong in some way, feel free to correct me. Even if you think the port is not accurate enough or not coded well enough and can explain why, I will be happy to hear you.
 
 ## Future Plans
 
@@ -104,7 +100,10 @@ cool and exciting things I'm planning to work on for the full release of the por
 
 		I want to make my own interpretation of the fucked difficulty of Accelerant as 
 		a separate download. I have some cool Ideas for new mechanics and new animations 
-		and cutscenes that I want to add. This is going to be the more creative side of the port.
+		and cutscenes that I want to add.
+		
+		Update (0.5.3): I just want to say that I'm not sure I'll actually do this one.
+		I'll probably not do it, but I'm not really sure about it. We'll just have to wait and see.
 
 
 ## Thanks for reading the README file and thanks for playing this port!!
