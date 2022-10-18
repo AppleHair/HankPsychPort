@@ -3,8 +3,8 @@
     returns the index of the first member
     from a curtain array that is smaller
     then a curtain value. if the array doesn't
-     have a member that is smaller than the
-     value, the function will return nil.
+    have a member that is smaller than the
+    value, the function will return nil.
 
     arr - Array to check
     value - Value to check
@@ -50,9 +50,9 @@ function onCreatePost()
 
     -- getting Bullet notes' strum time
     for i = 0, getProperty('unspawnNotes.length')-1 do
-        -- Checking if the note is an Bullet Note
+        -- we check if the note is an Bullet Note
         if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
-            -- adding the strum time to the array
+            -- we add the strum time to the array
             table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
         end
     end

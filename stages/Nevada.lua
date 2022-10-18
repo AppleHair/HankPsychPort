@@ -152,10 +152,12 @@ function onCreate()
 	-- Deimos
 	addOffset('Deimos', 'Appear', 89, 488);
 	addOffset('Deimos', 'Shoot', 5, 0);
+	addOffset('Deimos', 'Boop', 0, 0);
 
 	-- Sanford
 	addOffset('Sanford', 'Appear', -3, 420);
 	addOffset('Sanford', 'Shoot', 218, 10);
+	addOffset('Sanford', 'Boop', 0, 0);
 
 	-- Lazer
 	addOffset('Lazer', 'Flash', 0, -20);
