@@ -161,6 +161,7 @@ function onCreate()
 
 	-- Lazer
 	addOffset('Lazer', 'Flash', 0, -20);
+	addOffset('Lazer', 'Boop', 0, 0);
 
 	  -- Adding to PlayState --
 	
