@@ -1,1 +1,6 @@
 why are they climbing?
+
+
+Value 1: If you don't want them to appear
+        in a curtain position(s), then put
+        the IDs here with a ', ' between them.

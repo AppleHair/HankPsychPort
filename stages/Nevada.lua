@@ -12,6 +12,50 @@ local function arraySum(arr)
 end
 
 --[[
+	Checks if a curtain value is
+	in a curtain array
+
+	arr - array to check in
+	value - value to check
+]]
+local function isInArray(arr, value)
+	for i=1, #arr do
+		if arr[i] == value then
+			return true;
+		end
+	end
+	return false;
+end
+
+--[[
+	Splits a string into an array of
+	strings according to a curtain delimiter
+
+	s - string to split
+	delimiter - delimiter to use
+]]
+local function split(s, delimiter)
+    result = {};
+    -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
+    for match in (s..delimiter):gmatch('(.-)'..delimiter) do
+        table.insert(result, match);
+    end
+    return result;
+end
+
+--[[
+	returns a trimed version of
+	the argument string (removes spaces)
+
+	s - string to trim
+]]
+local function trim(s)
+    -- string.gsub() explanation: https://www.lua.org/pil/20.1.html#:~:text=The-,string.gsub,-function%20has%20three
+    return (string.gsub(s, "^%s*(.-)%s*$", "%1"));
+end
+-- string patterns explanation: https://www.lua.org/pil/20.2.html
+
+--[[
 -------------------------------------------------------------------
 			onCreate - Table of contents
 -------------------------------------------------------------------
@@ -320,14 +364,20 @@ function onEvent(name, value1, value2)
 		-- we make girlfriend go forward
 		setProperty('gf-hot.velocity.x', -437.5);
 	elseif name == 'They climb and get shot at' then
+		-- IDs of climbers we don't want to appear
+		exeptions = split(trim(value1), ',');
+		-- if we want no one to appear
+		if #exeptions == 3 then
+			-- dumbass...
+			debugPrint("DUDE, IF YOU DON'T WANT THE CLIMBERS TO APPEAR, THEN JUST DON'T CALL THE EVENT!!");
+			return;
+		end
 		math.randomseed(os.time()); -- os.time is back baby!!!!
 		for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
-
 			-- we make them appear at a random
 			-- amount and order with a random look.
 			climberSkin[i] = math.random(1,3);
-			appearList[i] = math.random(0,1);
-
+			appearList[i] = (isInArray(exeptions, tostring(i)) and 0 or math.random(0,1));
 			-- if the climber appears
 			if appearList[i] == 1 then
 				-- do the climb animation
