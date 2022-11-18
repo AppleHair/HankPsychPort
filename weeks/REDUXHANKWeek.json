@@ -8,17 +8,17 @@
 		46,
 		46
 	],
-	"weekBefore": "Hank Challenge",
+	"weekBefore": "accelerantWeek",
 	"startUnlocked": true,
 	"hideStoryMode": false,
 	"songs": [
 		[
-			"accelerant-redux",
+			"Accelerant REDUX",
 			"hank",
 			[
-				235,
-				25,
-				45
+				255,
+				85,
+				65
 			]
 		]
 	],
@@ -27,6 +27,5 @@
 		"hankmenu",
 		"accelerant"
 	],
-	"weekName": "Accelerant REDUX",
-	"hiddenUntilUnlocked": true
+	"weekName": "Accelerant REDUX"
 }
