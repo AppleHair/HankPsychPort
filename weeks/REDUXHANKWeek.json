@@ -1,11 +1,11 @@
 {
-	"storyName": "Hank Challenge REDUX",
+	"storyName": "Hank Challenge Redux",
 	"difficulties": "Madness",
 	"hideFreeplay": false,
 	"weekBackground": "accelerant",
 	"freeplayColor": [
 		191,
-		46,
+		45,
 		46
 	],
 	"weekBefore": "accelerantWeek",
@@ -13,7 +13,7 @@
 	"hideStoryMode": false,
 	"songs": [
 		[
-			"Accelerant REDUX",
+			"Accelerant Redux",
 			"hank",
 			[
 				255,
@@ -27,5 +27,6 @@
 		"hankmenu",
 		"accelerant"
 	],
-	"weekName": "Accelerant REDUX"
+	"weekName": "Hank Challenge Redux",
+	"hiddenUntilUnlocked": false
 }
