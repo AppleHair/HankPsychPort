@@ -1,19 +1,23 @@
 {
-	"storyName": "Hank Challenge Redux",
+	"storyName": "Hank Challenge REDUX",
 	"difficulties": "Madness",
 	"hideFreeplay": false,
 	"weekBackground": "accelerant",
+	"weekBefore": "accelerantweek",
 	"freeplayColor": [
 		191,
 		45,
 		46
 	],
-	"weekBefore": "accelerantWeek",
 	"startUnlocked": true,
-	"hideStoryMode": false,
+	"weekCharacters": [
+		"blackthing",
+		"hankmenu",
+		"accelerant"
+	],
 	"songs": [
 		[
-			"Accelerant Redux",
+			"Accelerant REDUX",
 			"hank",
 			[
 				255,
@@ -22,11 +26,7 @@
 			]
 		]
 	],
-	"weekCharacters": [
-		"blackthing",
-		"hankmenu",
-		"accelerant"
-	],
-	"weekName": "Hank Challenge Redux",
-	"hiddenUntilUnlocked": false
+	"hideStoryMode": false,
+	"hiddenUntilUnlocked": false,
+	"weekName": "Hank Challenge REDUX"
 }
