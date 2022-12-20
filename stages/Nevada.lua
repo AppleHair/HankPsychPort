@@ -290,6 +290,8 @@ stopSanford = true;
 stopHotDogGF = true;
 -- used to make the lazer stop his idle animation
 local stopLazer = true;
+-- used to make the climbers climb every section hit
+local climb = false;
 -- used to tell each climber what skin it should use (1 = grunt, 2 = agent, 3 = engineer)
 local climberSkin = {1,2,3; n=3};-- (climberSkin[1] = middle, climberSkin[2] = left, climberSkin[3] = right)
 
@@ -363,40 +365,65 @@ function onEvent(name, value1, value2)
 		playAnim('gf-hot', 'Walk', false);
 		-- we make girlfriend go forward
 		setProperty('gf-hot.velocity.x', -437.5);
-	elseif name == 'They climb and get shot at' then
+	elseif name == 'Start climbers' then
 		-- IDs of climbers we don't want to appear
-		exeptions = split(trim(value1), ',');
-		-- if we want no one to appear
-		if #exeptions == 3 then
+		neverClimb = split(trim(value1), ',');
+		-- we set climb to true and make the
+		-- climbers start climbing
+		climb = true
+		-- "if we want no one to appear"
+		if #neverClimb == 3 then
+			neverClimb = {};
+			climb = false;
 			-- dumbass...
 			debugPrint("DUDE, IF YOU DON'T WANT THE CLIMBERS TO APPEAR, THEN JUST DON'T CALL THE EVENT!!");
 			return;
 		end
-		math.randomseed(os.time()); -- os.time is back baby!!!!
-		for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
-			-- we make them appear at a random
-			-- amount and order with a random look.
-			climberSkin[i] = math.random(1,3);
-			appearList[i] = (isInArray(exeptions, tostring(i)) and 0 or math.random(0,1));
-			-- if the climber appears
-			if appearList[i] == 1 then
-				-- do the climb animation
-				playAnim('climber' .. i, 'Climb' .. climberSkin[i], true);
-				-- be visible
-				-- setProperty('climber' .. i .. '.visible', true);
-				setProperty('climber' .. i .. '.alpha', 1);
-			end
-		end
-		-- if any climber appears
-		if arraySum(appearList) ~= 0 then
-			-- run the shoot timer (code that handles
-			-- the animation of the climbers being shot
-			-- will run in the end of the timer)
-			runTimer('ShootTimer', 0.55, 1);
-		end
+	elseif name == 'Stop climbers' then
+		neverClimb = {};
+		-- we set climb to false and make the
+		-- climbers stop climbing
+		climb = false;
 	end
 end
 
+-- used to specify indexes of climbers that should never appear (1 = middle, 2 = left, 3 = right)
+local neverClimb = {};
+
+-- used to delay the climbers' appearance on section hit
+-- (this is done to make their appearance more accurate 
+-- to the original FNF ONLINE VS. Challenge)
+-- (minus - early    plus - late)
+local climbDelay = -1;
+
+function onStepHit()
+---------------------------------------------------
+        --Climbers handler--
+---------------------------------------------------
+	if (not climb) or ((curStep-climbDelay) % 16 ~= 0) then return; end
+	math.randomseed(os.time()); -- os.time is back baby!!!!
+	for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
+		-- we make them appear at a random
+		-- amount and order with a random look.
+		climberSkin[i] = math.random(1,3);
+		appearList[i] = (isInArray(neverClimb, tostring(i)) and 0 or math.random(0,1));
+		-- if the climber appears
+		if appearList[i] == 1 then
+			-- do the climb animation
+			playAnim('climber' .. i, 'Climb' .. climberSkin[i], true);
+			-- be visible
+			-- setProperty('climber' .. i .. '.visible', true);
+			setProperty('climber' .. i .. '.alpha', 1);
+		end
+	end
+	-- if any climber appears
+	if arraySum(appearList) ~= 0 then
+		-- run the shoot timer (code that handles
+		-- the animation of the climbers being shot
+		-- will run in the end of the timer)
+		runTimer('ShootTimer', 0.55, 1);
+	end
+end
 --------------------------------------------------------------------------------------------------------------------
 		--Timer Completions--
 --------------------------------------------------------------------------------------------------------------------
@@ -584,16 +611,16 @@ function onUpdate(elapsed)
 	-----------------------------------------------
 
 	-- here we make sure every sprite that goes off-screen gets removed
-	for i= 2, 1, -1 do
+	for i = #spriteDestroyerArray, 1, -1 do
 		if getProperty(spriteDestroyerArray[i] .. '.x') >= 1700 then
 			removeLuaSprite(v, true);
 			-- because the sprite doesn't exist enymore,
 			-- we remove it from the array, to avoid dealing
-			-- with exceptions for checking attributes on an 
+			-- with neverClimb for checking attributes on an 
 			-- object that doesn't exist.
 			table.remove(spriteDestroyerArray, i);
 		end
 	end
 end
 -- we use an array to itrate over the relevant sprites
-spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};
+local spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};
