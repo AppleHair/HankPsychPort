@@ -583,16 +583,17 @@ function onUpdate(elapsed)
 	-- The Sprite Destroyer
 	-----------------------------------------------
 
-	-- the order here really matters, because when
-	-- the script destroys an sprite, and then checks
-	-- for him, it will not run the rest of the script,
-	-- so the first to be destroyed should be the last
-	-- and the last to be destroyed should be the first.
-
-	if getProperty('SheFrikingFlyy.x') >= 1700 then
-		removeLuaSprite('SheFrikingFlyy', true);
-	end
-	if getProperty('helicopter.x') >= 1700 then
-		removeLuaSprite('helicopter', true);
+	-- here we make sure every sprite that goes off-screen gets removed
+	for i= 2, 1, -1 do
+		if getProperty(spriteDestroyerArray[i] .. '.x') >= 1700 then
+			removeLuaSprite(v, true);
+			-- because the sprite doesn't exist enymore,
+			-- we remove it from the array, to avoid dealing
+			-- with exceptions for checking attributes on an 
+			-- object that doesn't exist.
+			table.remove(spriteDestroyerArray, i);
+		end
 	end
 end
+-- we use an array to itrate over the relevant sprites
+spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};

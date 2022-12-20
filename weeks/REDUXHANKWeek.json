@@ -3,13 +3,13 @@
 	"difficulties": "Madness",
 	"hideFreeplay": false,
 	"weekBackground": "accelerant",
-	"weekBefore": "accelerantweek",
+	"weekBefore": "accelerantWeek",
 	"freeplayColor": [
 		191,
 		45,
 		46
 	],
-	"startUnlocked": true,
+	"startUnlocked": false,
 	"weekCharacters": [
 		"blackthing",
 		"hankmenu",
@@ -27,6 +27,6 @@
 		]
 	],
 	"hideStoryMode": false,
-	"hiddenUntilUnlocked": false,
+	"hiddenUntilUnlocked": true,
 	"weekName": "Hank Challenge REDUX"
 }

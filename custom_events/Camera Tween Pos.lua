@@ -17,14 +17,25 @@ end
 -- and duration that is required for the tween
 local XYAndDur;
 function onEvent(name, value1, value2)
+    if name == 'Camera Follow Pos' then
+        -- we cancel the current camera position tween if there is one
+        -- because we don't want the tween to interupt this other procedure
+        -- of camera following.
+        cancelTween('CameraEventX');
+        cancelTween('CameraEventY');
+        return;
+    end
 	if name == 'Camera Tween Pos' then
+        -- we cancel the current camera position tween if there is one
+        cancelTween('CameraEventX');
+        cancelTween('CameraEventY');
+
+        -- if there are no values, we set isCameraOnForcedPos to false
+        -- and make the camera move naturally again 
         if value1 == '' and value2 == '' then
             setProperty('isCameraOnForcedPos', false);
             return;
         end
-        -- we cancel the current camera position tween if there is one
-        cancelTween('CameraEventX');
-        cancelTween('CameraEventY');
 
         -- we split the string into an array of strings
         XYAndDur = split(trim(value1), ',');
@@ -37,6 +48,7 @@ function onEvent(name, value1, value2)
 end
 
 function onTweenCompleted(tag)
+    if getProperty('isCameraOnForcedPos') == false then return; end
     -- we set camFollow's positions to the required positions when the tween ends
 	if tag == 'CameraEventX' then
         setProperty('camFollow.x', tonumber(XYAndDur[1]));
