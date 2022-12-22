@@ -100,17 +100,6 @@
 			"indices": []
 		},
 		{
-			"loop": false,
-			"offsets": [
-				-137,
-				180
-			],
-			"anim": "scream",
-			"fps": 24,
-			"name": "Hank screamright",
-			"indices": []
-		},
-		{
 			"offsets": [
 				-215,
 				171
@@ -309,6 +298,9 @@
 				-50,
 				138
 			],
+			"loop": true,
+			"fps": 36,
+			"anim": "hey-loop",
 			"indices": [
 				8,
 				9,
@@ -319,10 +311,37 @@
 				14,
 				15
 			],
-			"fps": 36,
-			"anim": "hey-loop",
-			"loop": true,
 			"name": "hanktaunt"
+		},
+		{
+			"offsets": [
+				-137,
+				180
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT-alt",
+			"loop": false,
+			"name": "Hank screamright"
+		},
+		{
+			"offsets": [
+				-137,
+				180
+			],
+			"indices": [
+				30,
+				31,
+				32,
+				33,
+				34,
+				35,
+				36
+			],
+			"fps": 24,
+			"anim": "singRIGHT-alt-loop",
+			"loop": true,
+			"name": "Hank screamright"
 		}
 	],
 	"no_antialiasing": false,

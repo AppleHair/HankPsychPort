@@ -298,6 +298,9 @@ local climberSkin = {1,2,3; n=3};-- (climberSkin[1] = middle, climberSkin[2] = l
 -- used to tell each climber if he should appear or not (0 = appear, 1 = don't appear)
 local appearList = {1,0,0; n=3};-- (appearList[1] = middle, appearList[2] = left, appearList[3] = right)
 
+-- used to specify indexes of climbers that should never appear (1 = middle, 2 = left, 3 = right)
+local neverClimb = {};
+
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
 		-- we change the helicopter's x velocity
@@ -370,14 +373,13 @@ function onEvent(name, value1, value2)
 		neverClimb = split(trim(value1), ',');
 		-- we set climb to true and make the
 		-- climbers start climbing
-		climb = true
+		climb = true;
 		-- "if we want no one to appear"
 		if #neverClimb == 3 then
 			neverClimb = {};
 			climb = false;
 			-- dumbass...
 			debugPrint("DUDE, IF YOU DON'T WANT THE CLIMBERS TO APPEAR, THEN JUST DON'T CALL THE EVENT!!");
-			return;
 		end
 	elseif name == 'Stop climbers' then
 		neverClimb = {};
@@ -386,9 +388,6 @@ function onEvent(name, value1, value2)
 		climb = false;
 	end
 end
-
--- used to specify indexes of climbers that should never appear (1 = middle, 2 = left, 3 = right)
-local neverClimb = {};
 
 -- used to delay the climbers' appearance on section hit
 -- (this is done to make their appearance more accurate 
@@ -445,6 +444,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 			-- stop his idle animation
 			stopSanford = true;
 		end
+		if stopDeimos and stopSanford then
+			setProperty('Lazer.alpha', 0.00001);
+		end
 		for i=1, #climberSkin do -- #climberSkin = #appearList = 3
 			-- if the climber appears
 			if appearList[i] == 1 then
@@ -487,12 +489,13 @@ function onBeatHit()
   --Lazer Visibility Sequel--
 -----------  		-----------
 	-- when tricky is back to his idle animation, we make the lazer visible again
-	if (getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
-	getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' then
+	if ((getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
+		getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' and
+		(not stopDeimos) and (not stopDeimos)) or ((not stopDeimos) and (not stopDeimos) and gfName ~= 'tricky') then
 		-- setProperty('Lazer.visible', true);
 		setProperty('Lazer.alpha', 1);
 	end
-	-- it's on beat hit, because tricky plays his idle animation every beat, so
+	-- it's on beat hit, because tricky, sanford and deimos play their idle animations every beat, so
 	-- we don't need to check this on update
 
 ---------------------------------------------------
@@ -545,6 +548,8 @@ local trickyBehindGround = false;
 local trickyIsGone = false;
 -- true if hotdog girlfriend stopped walking
 local HotDogGFStoppedWalking = false;
+-- we use an array to itrate over the relevant sprites
+local spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};
 
 function onUpdate(elapsed)
 
@@ -622,5 +627,3 @@ function onUpdate(elapsed)
 		end
 	end
 end
--- we use an array to itrate over the relevant sprites
-local spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};

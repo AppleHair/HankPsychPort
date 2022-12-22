@@ -308,7 +308,8 @@
 					[
 						8780.48780487805,
 						7,
-						274.390243902439
+						274.390243902439,
+						"Alt Animation"
 					],
 					[
 						8780.48780487805,
@@ -525,7 +526,8 @@
 					[
 						11707.3170731707,
 						7,
-						274.390243902439
+						274.390243902439,
+						"Alt Animation"
 					]
 				],
 				"typeOfSection": 0,
@@ -9087,7 +9089,7 @@
 						133170.731707317,
 						3,
 						1371.9512195122,
-						"No Animation"
+						"Alt Animation"
 					],
 					[
 						133170.731707317,
@@ -9115,32 +9117,32 @@
 				"bpm": 164
 			},
 			{
-				"gfSection": false,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
-				"bpm": 164,
 				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
 				"changeBPM": false,
 				"mustHitSection": false
 			},
 			{
-				"gfSection": false,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
-				"bpm": 164,
 				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
 				"changeBPM": false,
 				"mustHitSection": false
 			},
 			{
-				"gfSection": false,
-				"altAnim": false,
 				"typeOfSection": 0,
 				"sectionNotes": [],
-				"bpm": 164,
 				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
 				"changeBPM": false,
 				"mustHitSection": false
 			}
@@ -9247,6 +9249,16 @@
 				]
 			],
 			[
+				37225.6097560976,
+				[
+					[
+						"Start climbers",
+						"1",
+						""
+					]
+				]
+			],
+			[
 				37637.1951219512,
 				[
 					[
@@ -9281,6 +9293,16 @@
 				[
 					[
 						"Camera Follow Pos",
+						"",
+						""
+					]
+				]
+			],
+			[
+				60731.7073170732,
+				[
+					[
+						"Stop climbers",
 						"",
 						""
 					]
@@ -9520,23 +9542,13 @@
 						""
 					]
 				]
-			],
-			[
-				133170.731707317,
-				[
-					[
-						"Play Animation",
-						"scream",
-						"dad"
-					]
-				]
 			]
 		],
 		"player2": "hank",
 		"song": "Accelerant REDUX",
-		"needsVoices": false,
 		"validScore": true,
 		"stage": "Nevada",
+		"needsVoices": false,
 		"bpm": 164,
 		"speed": 3.1
 	}
