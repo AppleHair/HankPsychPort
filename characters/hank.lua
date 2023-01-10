@@ -58,6 +58,25 @@ function onCreatePost()
     end
 end
 
+
+local shootAgainNextFrame = false;
+                ---Trying to override a sing animation with a shot animation - Part 2---
+-- Ok, so there was another problem. The way iteration works in the ForEachAlive method is just
+-- like a for loop behind the scenes, which means removing an item from the array in the middle of
+-- the iteration results in a "skip"-the item will be removed, the next item will move to the index
+-- of the item that was just removed, and when the ForEachAlive function will try to continue to the next
+-- item, it'll increase the index counter and check the item on that index, thus skipping the item that just
+-- moved to the previous index as a result of the removal of the item that was there in the first place.
+-- THIS IS EXACTLY WHAT HAPPENS IN THE UPDATE FUNCTION WHEN THE NOTES ARE BEING ITERATED ON, and as a result,
+-- when there are several notes which need to appear at the same time, and some of them are being hit,
+-- EVERY SECOND HIT NOTE WILL ONLY BE CHECKED AT THE NEXT FRAME, and if more than 1 hit note will stay
+-- for the next frame, THE SAME PRINCIPLE WILL APPLY. This happpens when hank hits a double note with
+-- a bullet note at the same time, and as a result, the shot animation overrode the sing animation on the
+-- first frame, but on the next frame, the second note that hank needed to hit was checked, and as a result,
+-- the sing animation for that note played and overrode the shot animation. So now I check every time I
+-- play the shot animation if there are still opponent notes that should have already been checked, and
+-- use this shootAgainNextFrame variable to make the shot animation play on the next frame, overriding
+-- every sing animation on every relevant frame.
 function onUpdatePost(elapsed)
     -- character must be Hank!!
     if dadName ~= 'hank' then
@@ -67,6 +86,7 @@ function onUpdatePost(elapsed)
                     -- Hank shoot animation section --
 
     local prevSongPosition = getSongPosition() - getPropertyFromClass('flixel.FlxG', 'elapsed') * 1000;
+                    ---Trying to override a sing animation with a shot animation - Part 1---
     -- Ok, so I looked at the source code, and it turns out that because the song position is being updated
     -- on PlayState's update function, but the notes' update functions, which update thair wasGoodHit value and such
     -- in relation to the song position, only happen after PlayState's update function, every check for values 
@@ -77,7 +97,7 @@ function onUpdatePost(elapsed)
     -- psych engine lua is so easy, right?
 
     -- checks if a bullet note passed
-    if getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil then
+    if getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil or shootAgainNextFrame then
         -- local strumTime = bulletNotesArray[getSmallerInArray(bulletNotesArray, prevSongPosition)];
         while getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil do
             -- removing the strum time from the array
@@ -118,6 +138,18 @@ function onUpdatePost(elapsed)
 
         -- shacking camera
         cameraShake('game', 0.0075, 0.07);
+
+        -- if the condition below is false,
+        -- we shouldn't play the shot animation again
+        shootAgainNextFrame = false;
+
+        for i = 0, getProperty('notes.length')-1 do
+            if getPropertyFromGroup('notes', i, 'strumTime') <= prevSongPosition and 
+                (not getPropertyFromGroup('notes', i, 'mustPress')) then
+                shootAgainNextFrame = true;
+                break;
+            end
+        end
     end
     -- if the player just pressed backspace
     if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.BACKSPACE') then
