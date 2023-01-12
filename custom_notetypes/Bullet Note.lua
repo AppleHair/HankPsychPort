@@ -70,8 +70,7 @@ local alphaFuncX = 0;
 function onUpdate(elapsed)
 	-- the health Drain itself
 	if healthDrain > 0 then
-		-- we decrease healthDrain and PlayState.instance.health by
-		-- 0.3 every second
+		-- we decrease healthDrain and PlayState.instance.health by 0.3 every second
 		healthDrain = healthDrain - elapsed * 0.3;
 		setProperty('health', getProperty('health') - elapsed * 0.3);
 

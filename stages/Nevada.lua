@@ -56,6 +56,15 @@ end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
 
+--[[
+	checks if a certain event will be
+	called in the current song and returns
+	a boolean value accordingly 
+	(This function doesn't work with custom events onCreate.
+	alternatively, you should use it onCreatePost)
+
+	name - the name of the event
+]]
 function eventIsCalled(name)
 	for i = 0, getProperty('eventNotes.length')-1 do
 		if getPropertyFromGroup('eventNotes', i, 'event') == name then
@@ -67,41 +76,48 @@ end
 
 --[[
 -------------------------------------------------------------------
-			onCreate - Table of contents (NOT UPDATED)
+			onCreate(Post) - Table of contents
 -------------------------------------------------------------------
-	-- Static Lua sprites - line 57
+	-- Event Related Checks - line 116
 	-----------------------------------
-		HotdogStation - line 59
-		Rock - line 63
-		Ground - line 67
-		RightCliff - line 70
-		LeftCliff - line 74
-		Sky - line 78
-		SheFrikingFlyy - line 82
+	-- Static Lua Sprites - line 120
+	-----------------------------------
+		HotdogStation - line 122
+		Rock - line 126
+		Ground - line 130
+		RightCliff - line 133
+		LeftCliff - line 137
+		Sky - line 141
+		SheFrikingFlyy - line 145
 
-	-- Animated Lua sprites - line 86
+	-- Animated Lua Sprites - line 149
 	-----------------------------------
-		helicopter - line 88
-		Deimos & Sanford - line 94
-		Lazer - line 112
-		Speakers - line 118
-		gf-hot - line 121
-		Climbers - line 128
+		helicopter - line 151
+		Deimos & Sanford - line 157
+		Lazer - line 175
+		Speakers - line 181
+		gf-hot - line 184
+		Climbers - line 191
+		HellClown - line 212
 
-	-- tips on sprites in Psych Engine Lua - Line 149
+	-- Tips on sprites in Psych Engine Lua - Line 225
 	-----------------------------------
-	-- Offsets - line 158
+	-- Offsets - line 235
 	-----------------------------------
-	-- Adding to PlayState - line 170
+	-- Adding to PlayState - line 250
 	-----------------------------------
-	-- Precaches - line 189
+	-- Precaches - line 277
 	-----------------------------------
 ]]
 function onCreatePost()
-	-- we add the blood effect script
+	-- we add the blood effect script for use with tricky's fall animation
 	addLuaScript('custom_events/Blood Effect', true);
 
-    		-- static lua sprites --
+			-- Event Related Checks --
+
+	local summon_hellclown = eventIsCalled('Summon Hellclown');
+
+    		-- Static Lua Sprites --
 	
 	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
 	setLuaSpriteScrollFactor('HotdogStation', 1.38, 1.35);
@@ -130,7 +146,7 @@ function onCreatePost()
 	-- setProperty('SheFrikingFlyy.visible', false);
 	setProperty('SheFrikingFlyy.alpha', 0.00001);
 	
-			-- animated lua sprites --
+			-- Animated Lua Sprites --
 	
 	makeAnimatedLuaSprite('helicopter', 'helicopter', -1200, -270);
 	addAnimationByPrefix('helicopter', 'Fly', 'Fly', 24, true);
@@ -193,7 +209,7 @@ function onCreatePost()
 	end
 	thing = nil;
 
-	if eventIsCalled('Summon Hellclown') then
+	if summon_hellclown then
 		makeAnimatedLuaSprite('HellClown','HellclownIdle', -100, 535);
 		addAnimationByPrefix('HellClown', 'Idle', 'HellClownIdle', 16, true);
 
@@ -205,6 +221,7 @@ function onCreatePost()
 		setProperty('HellClownLeftHand.flipX', true);
 	end
 
+
 	-- I set the alpha to 0.00001 (not 0 and not .visible = false), 
 	-- and because of that the game engine thinks it needs to load the
 	-- sprites into the stage, although you can't actually see
@@ -214,7 +231,8 @@ function onCreatePost()
 	-- code. Make the sprites smaller before loading them, and like that
 	-- you won't have to load bigger sprites than you actually need to.
 
-			-- offsets --
+
+			-- Offsets --
 	-- Deimos
 	addOffset('Deimos', 'Appear', 89, 488);
 	addOffset('Deimos', 'Shoot', 5, 0);
@@ -237,7 +255,7 @@ function onCreatePost()
 	addLuaSprite('RightCliff',false);
 	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
-	if eventIsCalled('Summon Hellclown') then
+	if summon_hellclown then
 		addLuaSprite('HellClown', false);
 		addLuaSprite('HellClownRightHand', false);
 		addLuaSprite('HellClownLeftHand', false);
@@ -256,7 +274,7 @@ function onCreatePost()
 		addLuaSprite('HellClownLight',false);
 	end
 
-			-- precaches --
+			-- Precaches --
 
 	precacheSound('death sound');
 
@@ -268,13 +286,10 @@ function onCreatePost()
 	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
-	if eventIsCalled('Summon Hellclown') then
+	if summon_hellclown then
 		precacheImage('HellclownIdle');
 		precacheImage('HellclownHand');
 	end
-
-	-- we add tricky to the girlfriend group
-	addCharacterToList('tricky', 'gf');
 end
 
 
@@ -333,13 +348,16 @@ local appearList = {1,0,0; n=3};-- (appearList[1] = middle, appearList[2] = left
 -- used to specify indexes of climbers that should never appear (1 = middle, 2 = left, 3 = right)
 local neverClimb = {};
 -- used to save the intended positions for all of Hellclown's parts
-local HellclownTable = 
+local hellclownTable = 
 {
      --Name-     --X-  --Y-
 	{'HellClown', -100, -765},
 	{'HellClownRightHand', -410, 35},
 	{'HellClownLeftHand', 720, 35}
 };
+-- used to determine the current direction
+-- hellclown is tweening towards (true - UP   false - DOWN)
+local hellClownTweenDir = false;
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -382,12 +400,14 @@ function onEvent(name, value1, value2)
 				-- we set specialAnim to false to prevent him from playing the idle animation anyway
 				setProperty('gf.specialAnim', false);
 
-				-- I see a lot of people that make separate sprites for character animations that
-				-- need to not convert to the idle animation. This can cause lag problems if not done
+				-- I see a lot of people who make separate sprites for character animations which
+				-- shouldn't be followed by the idle animation. This can cause lag problems if not done
 				-- right (without the alpha = 0.00001 thing), uses more RAM then It needs to 
 				-- (because of all the FlxSprite object that are created) and makes your code unorganized.
-				-- There are also people that make separate characters, which is better performance wise,
-				-- but worse RAM wise. The code above reaches the same goal, but without making any extra 
+				-- There are also people who make separate characters, which is better performance wise,
+				-- but worse RAM wise, because the objects of the Character class are MUCH heavier.
+				
+				-- The code above reaches the same goal, but without making any extra 
 				-- sprites or characters. just one character for all of the animations.
 			end
 			if value1 == 'Fall' then
@@ -427,28 +447,30 @@ function onEvent(name, value1, value2)
 		-- climbers stop climbing
 		climb = false;
 	elseif name == 'Summon Hellclown' then
-		if getProperty('HellClown.y') == -765 then
+		if hellClownTweenDir then
 			dadCamPos[2] = dadCamPos[2] + 65;
 			bfCamPos[2] = bfCamPos[2] + 65;
-			for i=1, #HellclownTable do
-				doTweenY(HellclownTable[i][1] .. 'Tween',HellclownTable[i][1], HellclownTable[i][3] + 1300, 4, 'quadOut');
+			for i=1, #hellclownTable do
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 4, 'quadOut');
 			end
 			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 4, 'quadOut');
 			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadOut');
+			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 4, 'quadOut');
 			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') == 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadOut');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadOut');
+			hellClownTweenDir = false;
 		else
 			dadCamPos[2] = dadCamPos[2] - 65;
 			bfCamPos[2] = bfCamPos[2] - 65;
-			for i=1, #HellclownTable do
-				doTweenY(HellclownTable[i][1] .. 'Tween',HellclownTable[i][1], HellclownTable[i][3], 4, 'quadOut');
+			for i=1, #hellclownTable do
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 4, 'quadOut');
 			end
 			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 4, 'quadOut');
 			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 4, 'quadOut');
 			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadOut');
 			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') == 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadOut');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadOut');
+			hellClownTweenDir = true;
 		end
 	end
 end
@@ -463,8 +485,11 @@ function onStepHit()
 ---------------------------------------------------
         --Climbers handler--
 ---------------------------------------------------
-	if (not climb) or ((curStep-climbDelay) % 16 ~= 0) then return; end
-	math.randomseed(os.time()); -- os.time is back baby!!!!
+	if (not climb) or ((curStep-climbDelay) % 16 ~= 0) then 
+		return;
+	end
+
+	math.randomseed(os.time());
 	for i=1, #climberSkin do  -- #climberSkin = #appearList = 3
 		-- we make them appear at a random
 		-- amount and order with a random look.

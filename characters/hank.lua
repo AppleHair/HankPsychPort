@@ -60,23 +60,27 @@ end
 
 
 local shootAgainNextFrame = false;
-                ---Trying to override a sing animation with a shot animation - Part 2---
+                ---Trying to override a sing animation with a shoot animation - Part 2---
 -- Ok, so there was another problem. The way iteration works in the ForEachAlive method is just
 -- like a for loop behind the scenes, which means removing an item from the array in the middle of
 -- the iteration results in a "skip"-the item will be removed, the next item will move to the index
 -- of the item that was just removed, and when the ForEachAlive function will try to continue to the next
 -- item, it'll increase the index counter and check the item on that index, thus skipping the item that just
 -- moved to the previous index as a result of the removal of the item that was there in the first place.
--- THIS IS EXACTLY WHAT HAPPENS IN THE UPDATE FUNCTION WHEN THE NOTES ARE BEING ITERATED ON, and as a result,
--- when there are several notes which need to appear at the same time, and some of them are being hit,
+
+-- THIS IS EXACTLY WHAT HAPPENS ON THE UPDATE FUNCTION WHEN THE NOTES ARE BEING ITERATED ON PLAYSTATE,
+-- and as a result, when there are several notes which need to appear at the same time, and some of them are being hit,
 -- EVERY SECOND HIT NOTE WILL ONLY BE CHECKED AT THE NEXT FRAME, and if more than 1 hit note will stay
--- for the next frame, THE SAME PRINCIPLE WILL APPLY. This happpens when hank hits a double note with
--- a bullet note at the same time, and as a result, the shot animation overrode the sing animation on the
--- first frame, but on the next frame, the second note that hank needed to hit was checked, and as a result,
--- the sing animation for that note played and overrode the shot animation. So now I check every time I
--- play the shot animation if there are still opponent notes that should have already been checked, and
--- use this shootAgainNextFrame variable to make the shot animation play on the next frame, overriding
--- every sing animation on every relevant frame.
+-- for the next frame, THE SAME PRINCIPLE WILL APPLY.
+
+-- This happpens when hank hits a double note with a bullet note at the same time, and as a result,
+-- the shoot animation overrode the sing animation on the first frame, but on the next frame, the second note
+-- that hank needed to hit was checked, and as a result, the sing animation for that note played and overrode
+-- the shoot animation. So now I check every time I play the shoot animation if there are still opponent
+-- notes that should have already been checked, and use this shootAgainNextFrame variable to make the shoot
+-- animation play on the next frame, overriding every sing animation on every relevant frame.
+-- GOSH I'M SO HAPPY I'M FINALLY OVER ALL THIS SHIT!!!
+
 function onUpdatePost(elapsed)
     -- character must be Hank!!
     if dadName ~= 'hank' then
@@ -86,15 +90,15 @@ function onUpdatePost(elapsed)
                     -- Hank shoot animation section --
 
     local prevSongPosition = getSongPosition() - getPropertyFromClass('flixel.FlxG', 'elapsed') * 1000;
-                    ---Trying to override a sing animation with a shot animation - Part 1---
+                    ---Trying to override a sing animation with a shoot animation - Part 1---
     -- Ok, so I looked at the source code, and it turns out that because the song position is being updated
-    -- on PlayState's update function, but the notes' update functions, which update thair wasGoodHit value and such
+    -- on PlayState's update function, and the notes' update functions, which update thair wasGoodHit value and such
     -- in relation to the song position, only happen after PlayState's update function, every check for values 
     -- like wasGoodHit in notes in PlayState's update function are in relation to the previous song position,
-    -- AND THAT'S WHY MY SHOOT ANIMAITIONS WERE GETTING CANCELED BY THE NORMAL SING ANIMATIONS! 
+    -- AND THAT'S WHY MY SHOOT ANIMAITIONS WERE GETTING OVERRIDDEN BY THE NORMAL SING ANIMATIONS! 
     -- BECAUSE THEY WERE ONE FUCKING FRAME EARLY!!!
     -- ...
-    -- psych engine lua is so easy, right?
+    -- Psych engine lua is so easy, am I right?
 
     -- checks if a bullet note passed
     if getSmallerInArray(bulletNotesArray, prevSongPosition) ~= nil or shootAgainNextFrame then
@@ -140,7 +144,7 @@ function onUpdatePost(elapsed)
         cameraShake('game', 0.0075, 0.07);
 
         -- if the condition below is false,
-        -- we shouldn't play the shot animation again
+        -- we shouldn't play the shoot animation again
         shootAgainNextFrame = false;
 
         for i = 0, getProperty('notes.length')-1 do
@@ -188,10 +192,12 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
     end
 end
 
--- I see a lot of people that make separate sprites for character animations that
--- need to not convert to the idle animation. This can cause lag problems if not done
+-- I see a lot of people who make separate sprites for character animations which
+-- shouldn't be followed by the idle animation. This can cause lag problems if not done
 -- right (without the alpha = 0.00001 thing), uses more RAM then It needs to 
 -- (because of all the FlxSprite object that are created) and makes your code unorganized.
--- There are also people that make separate characters, which is better performance wise,
--- but worse RAM wise. The code above reaches the same goal, but without making any extra 
+-- There are also people who make separate characters, which is better performance wise,
+-- but worse RAM wise, because the objects of the Character class are MUCH heavier.
+
+-- The code above reaches the same goal, but without making any extra 
 -- sprites or characters. just one character for all of the animations.

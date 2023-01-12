@@ -3,7 +3,7 @@
 local useAccelerantStaticTexture = false;
 
 -- if you want to use static sounds that sound more like the original
--- static sounds which are used in madness combat, then set this variable to true
+-- static sounds from madness combat, then set this variable to true
 local useCoolerStaticSounds = false;
 
 -- you can customize the Tricky text shake at the bottom of the script ↓↓↓
@@ -100,8 +100,7 @@ function onEvent(name, value1, value2)
 end
 
 function onSoundFinished(tag)
-	-- we make the static effect and the text
-	-- go away 
+	-- we make the static effect and the text go away
 	if tag == 'staticSound' then
         -- setProperty('Static.visible', false);
 		-- setProperty('TrickyText.visible', false);
@@ -124,28 +123,38 @@ end
 	to ONLINE VS." value, then put the default value in the variable.
 --]]
 
--- if this is true, the text shake by turning
+-- if this is true, the text will turn
 local turnShake = true; -- default - true   most accurate to ONLINE VS. - false
--- if this is true, the text will shake by changing it's position
+
+-- if this is true, the text will move
 local posShake = true; -- default - true
 
 -- if both are true, it will do both,
 -- and if both are false, it won't shake.
 
 
+
+-- Shake speed in shakes per second
+local shakeSpeed = 20; -- default - 20   most accurate to ONLINE VS. - 15
+
+-- multiplies the random shake number
+local shakeIntencity = 5; -- default - 5   most accurate to ONLINE VS. - 10
+
+-- the turning angle from the X axis
 local turnAmount = 1; -- default - 1
--- determines who much the x value
+
+-- determines who much the angle
 -- will change every second
 local turnSpeed = 100; -- default - 100
+
+
+
+
 -- represents the x value of the
 -- mathematical function that we use
 -- to change the angle of the Tricky text
 local angleFuncX = 0;
 
--- Shake speed in shakes per second
-local shakeSpeed = 20; -- default - 20   most accurate to ONLINE VS. - 15
--- multiplies the random shake number
-local shakeIntencity = 5; -- default - 5   most accurate to ONLINE VS. - 10
 -- time elapsed since last shake
 local elapsedShake = 0;
 function onUpdate(elapsed)
