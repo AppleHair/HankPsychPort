@@ -55,25 +55,6 @@ local function trim(s)
 end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
-
---[[
-	checks if a certain event will be
-	called in the current song and returns
-	a boolean value accordingly 
-	(This function doesn't work with custom events onCreate.
-	alternatively, you should use it onCreatePost)
-
-	name - the name of the event
-]]
-function eventIsCalled(name)
-	for i = 0, getProperty('eventNotes.length')-1 do
-		if getPropertyFromGroup('eventNotes', i, 'event') == name then
-			return true;
-		end
-	end
-	return false;
-end
-
 --[[
 -------------------------------------------------------------------
 			onCreate(Post) - Table of contents
@@ -112,10 +93,6 @@ end
 function onCreatePost()
 	-- we add the blood effect script for use with tricky's fall animation
 	addLuaScript('custom_events/Blood Effect', true);
-
-			-- Event Related Checks --
-
-	local summon_hellclown = eventIsCalled('Summon Hellclown');
 
     		-- Static Lua Sprites --
 	
@@ -209,18 +186,6 @@ function onCreatePost()
 	end
 	thing = nil;
 
-	if summon_hellclown then
-		makeAnimatedLuaSprite('HellClown','HellclownIdle', -100, 535);
-		addAnimationByPrefix('HellClown', 'Idle', 'HellClownIdle', 16, true);
-
-		makeAnimatedLuaSprite('HellClownRightHand','HellclownHand', -410, 1335);
-		addAnimationByPrefix('HellClownRightHand', 'Idle', 'HellClownHandsIdle', 16, true);
-
-		makeAnimatedLuaSprite('HellClownLeftHand','HellclownHand', 720, 1335);
-		addAnimationByIndicesLoop('HellClownLeftHand', 'Idle', 'HellClownHandsIdle', '6,7,8,9,10,11,12,13,1,2,3,4,5', 16);
-		setProperty('HellClownLeftHand.flipX', true);
-	end
-
 
 	-- I set the alpha to 0.00001 (not 0 and not .visible = false), 
 	-- and because of that the game engine thinks it needs to load the
@@ -255,11 +220,6 @@ function onCreatePost()
 	addLuaSprite('RightCliff',false);
 	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
-	if summon_hellclown then
-		addLuaSprite('HellClown', false);
-		addLuaSprite('HellClownRightHand', false);
-		addLuaSprite('HellClownLeftHand', false);
-	end
 	addLuaSprite('Ground',false);
 	addLuaSprite('Speakers',false);
 	for i=1,3 do
@@ -270,9 +230,6 @@ function onCreatePost()
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
-	if eventIsCalled('Summon Hellclown') then
-		addLuaSprite('HellClownLight',false);
-	end
 
 			-- Precaches --
 
@@ -286,10 +243,6 @@ function onCreatePost()
 	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
-	if summon_hellclown then
-		precacheImage('HellclownIdle');
-		precacheImage('HellclownHand');
-	end
 end
 
 
@@ -348,16 +301,6 @@ local appearList = {1,0,0; n=3};-- (appearList[1] = middle, appearList[2] = left
 -- used to specify indexes of climbers that should never appear (1 = middle, 2 = left, 3 = right)
 local neverClimb = {};
 -- used to save the intended positions for all of Hellclown's parts
-local hellclownTable = 
-{
-     --Name-     --X-  --Y-
-	{'HellClown', -100, -765},
-	{'HellClownRightHand', -410, 35},
-	{'HellClownLeftHand', 720, 35}
-};
--- used to determine the current direction
--- hellclown is tweening towards (true - UP   false - DOWN)
-local hellClownTweenDir = false;
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -446,32 +389,6 @@ function onEvent(name, value1, value2)
 		-- we set climb to false and make the
 		-- climbers stop climbing
 		climb = false;
-	elseif name == 'Summon Hellclown' then
-		if hellClownTweenDir then
-			dadCamPos[2] = dadCamPos[2] + 65;
-			bfCamPos[2] = bfCamPos[2] + 65;
-			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 4, 'quadOut');
-			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadOut');
-			hellClownTweenDir = false;
-		else
-			dadCamPos[2] = dadCamPos[2] - 65;
-			bfCamPos[2] = bfCamPos[2] - 65;
-			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 4, 'quadOut');
-			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadOut');
-			hellClownTweenDir = true;
-		end
 	end
 end
 
