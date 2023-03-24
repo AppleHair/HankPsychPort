@@ -57,37 +57,34 @@ end
 
 --[[
 -------------------------------------------------------------------
-			onCreate(Post) - Table of contents
+			onCreatePost - Table of contents
 -------------------------------------------------------------------
-	-- Event Related Checks - line 116
+	-- Static Lua Sprites - line 94
 	-----------------------------------
-	-- Static Lua Sprites - line 120
-	-----------------------------------
-		HotdogStation - line 122
-		Rock - line 126
-		Ground - line 130
-		RightCliff - line 133
-		LeftCliff - line 137
-		Sky - line 141
-		SheFrikingFlyy - line 145
+		HotdogStation - line 96
+		Rock - line 100
+		Ground - line 104
+		RightCliff - line 107
+		LeftCliff - line 111
+		Sky - line 115
+		SheFrikingFlyy - line 119
 
-	-- Animated Lua Sprites - line 149
+	-- Animated Lua Sprites - line 123
 	-----------------------------------
-		helicopter - line 151
-		Deimos & Sanford - line 157
-		Lazer - line 175
-		Speakers - line 181
-		gf-hot - line 184
-		Climbers - line 191
-		HellClown - line 212
+		helicopter - line 125
+		Deimos & Sanford - line 131
+		Lazer - line 149
+		Speakers - line 155
+		gf-hot - line 158
+		Climbers - line 165
 
-	-- Tips on sprites in Psych Engine Lua - Line 225
+	-- Tips on sprites in Psych Engine Lua - Line 187
 	-----------------------------------
-	-- Offsets - line 235
+	-- Offsets - line 197
 	-----------------------------------
-	-- Adding to PlayState - line 250
+	-- Adding to PlayState - line 212
 	-----------------------------------
-	-- Precaches - line 277
+	-- Precaches - line 231
 	-----------------------------------
 ]]
 function onCreatePost()
