@@ -106,7 +106,7 @@ cool and exciting things I'm planning to work on for the full release of the por
 		I'll probably not do it, but I'm not really sure about it. We'll just have to wait and see.
 
 
-## Thanks for reading the README file and thanks for playing this port!!
+## Thank you for reading the README file and thank you for playing this port!!
 
 
 # Credits:
