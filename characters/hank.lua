@@ -149,7 +149,7 @@ function onUpdatePost(elapsed)
 
         for i = 0, getProperty('notes.length')-1 do
             if getPropertyFromGroup('notes', i, 'strumTime') <= prevSongPosition and 
-                (not getPropertyFromGroup('notes', i, 'mustPress')) then
+                (not (getPropertyFromGroup('notes', i, 'mustPress') or getPropertyFromGroup('notes', i, 'noAnimation'))) then
                 shootAgainNextFrame = true;
                 break;
             end

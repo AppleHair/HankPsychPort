@@ -1,7 +1,8 @@
 function onCreatePost()
 	for i = 0, getProperty('unspawnNotes.length')-1 do
-        -- we check if the note is an Sustain Note
-        if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') then
+        -- we check if the note is a sustain note and an opponent note
+        if getPropertyFromGroup('unspawnNotes', i, 'isSustainNote') and 
+            (not getPropertyFromGroup('unspawnNotes', i, 'mustPress')) then
             -- we make the note a no animation note
 			setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true);
         end
@@ -12,17 +13,17 @@ end
 -- a sustain note is being hit helps us hold the sing animation
 -- until the sustain is over
 
-function goodNoteHit(id, direction, noteType, isSustainNote)
-    -- we check if the note is an Sustain Note
-    if isSustainNote then
-        -- we check if the note is an gf note of some kind
-        if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
-            setProperty('gf.holdTimer', 0);
-        else
-            setProperty('boyfriend.holdTimer', 0);
-        end
-    end
-end
+-- function goodNoteHit(id, direction, noteType, isSustainNote)
+--     -- we check if the note is an Sustain Note
+--     if isSustainNote then
+--         -- we check if the note is an gf note of some kind
+--         if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
+--             setProperty('gf.holdTimer', 0);
+--         else
+--             setProperty('boyfriend.holdTimer', 0);
+--         end
+--     end
+-- end
 
 
 function opponentNoteHit(id, direction, noteType, isSustainNote)

@@ -7,20 +7,14 @@ end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
     -- character must be bf and the code is 
-    -- only relevant to notes that are hit by boyfriend
-    if boyfriendName ~= 'bf' or getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
+    -- only relevant to bullet notes that are hit by boyfriend
+    if boyfriendName ~= 'bf' or 
+        getPropertyFromGroup('notes', id, 'gfNote') or
+        noteType ~= 'Bullet Note' then
         return;
     end
-    -- if the note is a sustain note
-    if isSustainNote then
-        -- play the correct sing animation (restores the sustain animations 
-        -- that are stoped by the VS Sustain script)
-        playAnim('boyfriend', getProperty('singAnimations['..direction..']'), true);
-    end
-    if noteType == 'Bullet Note' then
-        -- play dodge animation
-        triggerEvent('Play Animation', 'dodge', 'boyfriend');
-    end
+    -- play dodge animation
+    triggerEvent('Play Animation', 'dodge', 'boyfriend');
 end
 
 
@@ -28,8 +22,8 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     -- character must be bf and the code is 
     -- only relevant to bullet notes that are missed by boyfriend
     if boyfriendName ~= 'bf' or 
-      getPropertyFromGroup('notes', id, 'gfNote') or
-      noteType ~= 'Bullet Note' then
+        getPropertyFromGroup('notes', id, 'gfNote') or
+        noteType ~= 'Bullet Note' then
         return;
     end
     -- we make boyfriend play his hurt animation
