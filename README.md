@@ -96,14 +96,11 @@ cool and exciting things I'm planning to work on for the full release of the por
 
 		Same with Mag-Hank.
 
-	4) New Fucked Difficulty:
+	4) Accelerant REDUX:
 
-		I want to make my own interpretation of the fucked difficulty of Accelerant as 
-		a separate download. I have some cool Ideas for new mechanics and new animations 
-		and cutscenes that I want to add.
-		
-		Update (0.5.3): I just want to say that I'm not sure I'll actually do this one.
-		I'll probably not do it, but I'm not really sure about it. We'll just have to wait and see.
+		The offical remix (by philiplol) for accelerant will be playable in this port
+		with new graphics and animations. I hope to even add a cutscene at the start,
+		that will give an explanation to why hank is rapping with boyfriend in the first place.
 
 
 ## Thank you for reading the README file and thank you for playing this port!!
