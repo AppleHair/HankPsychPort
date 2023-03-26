@@ -67,14 +67,12 @@ end
 		RightCliff - line 107
 		LeftCliff - line 111
 		Sky - line 115
-		SheFrikingFlyy - line 119
 
 	-- Animated Lua Sprites - line 123
 	-----------------------------------
 		helicopter - line 125
 		Deimos & Sanford - line 131
 		Lazer - line 149
-		Speakers - line 155
 		gf-hot - line 158
 		Climbers - line 165
 
@@ -88,9 +86,6 @@ end
 	-----------------------------------
 ]]
 function onCreatePost()
-	-- we add the blood effect script for use with tricky's fall animation
-	addLuaScript('custom_events/Blood Effect', true);
-
     		-- Static Lua Sprites --
 	
 	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
@@ -116,10 +111,6 @@ function onCreatePost()
 	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
 	
-	makeLuaSprite('SheFrikingFlyy','GF go bye bye', 170, -70);
-	-- setProperty('SheFrikingFlyy.visible', false);
-	setProperty('SheFrikingFlyy.alpha', 0.00001);
-	
 			-- Animated Lua Sprites --
 	
 	makeAnimatedLuaSprite('helicopter', 'helicopter', -1200, -270);
@@ -127,7 +118,6 @@ function onCreatePost()
 	setScrollFactor('helicopter', 0.4, 0.3);
 	scaleObject('helicopter', 1.15, 1.15, true);
 	
-
 	makeAnimatedLuaSprite('Deimos','Deimos', -423, -224);
 	makeAnimatedLuaSprite('Sanford','Sanford', 1210, -215);
 
@@ -151,9 +141,6 @@ function onCreatePost()
 	addAnimationByPrefix('Lazer', 'Boop', 'LazerDot Boop', 24, false);
 	scaleObject('Lazer', 1.5, 1.5, true);
 	setProperty('Lazer.visible', false);
-
-	makeAnimatedLuaSprite('Speakers','speakers', 205, 250);
-	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
 
 	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
@@ -218,12 +205,10 @@ function onCreatePost()
 	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
 	addLuaSprite('Ground',false);
-	addLuaSprite('Speakers',false);
 	for i=1,3 do
 		addLuaSprite('climber' .. i,false);
 	end
 	addLuaSprite('gf-hot', false);
-	addLuaSprite('SheFrikingFlyy',true);
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
@@ -234,10 +219,8 @@ function onCreatePost()
 
 	precacheImage('Climbers');
 	precacheImage('GFHotdog');
-	precacheImage('GF go bye bye');
 	precacheImage('LazerDot');
 	precacheImage('helicopter');
-	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
 end
@@ -320,43 +303,20 @@ function onEvent(name, value1, value2)
 	elseif name == 'Play Animation' then
 		if value2 == 'gf' then
 			if value1 == 'Enter' then
-				-- we make the lazer invisible, but not for long..
-				-- setProperty('Lazer.visible', false);
-				setProperty('Lazer.alpha', 0.00001);
-
-				-- setProperty('SheFrikingFlyy.visible', true);
-				setProperty('SheFrikingFlyy.alpha', 1);
-				setProperty('SheFrikingFlyy.velocity.x', 15000);
-				-- SheFrikingFlyy!!
-			end
+                -- we make the lazer invisible, but not for long..
+                -- setProperty('Lazer.visible', false);
+                setProperty('Lazer.alpha', 0.00001);
+            end
 			if value1 == 'Turn' then
-				-- we set blood position
-				triggerEvent('Set Blood Effect Pos', 220, -140);
 				-- now the Lazer will be invisible forever. HAHAHAAH
-				setProperty('Lazer.visible', false);
-				stopLazer = true;
-				-- we make the character stunned to prevent him from playing the idle animation
-				setProperty('gf.stunned', true);
-				-- we set specialAnim to false to prevent him from playing the idle animation anyway
-				setProperty('gf.specialAnim', false);
-
-				-- I see a lot of people who make separate sprites for character animations which
-				-- shouldn't be followed by the idle animation. This can cause lag problems if not done
-				-- right (without the alpha = 0.00001 thing), uses more RAM then It needs to 
-				-- (because of all the FlxSprite object that are created) and makes your code unorganized.
-				-- There are also people who make separate characters, which is better performance wise,
-				-- but worse RAM wise, because the objects of the Character class are MUCH heavier.
-				
-				-- The code above reaches the same goal, but without making any extra 
-				-- sprites or characters. just one character for all of the animations.
+                setProperty('Lazer.visible', false);
+                stopLazer = true;
 			end
 			if value1 == 'Fall' then
-				-- we play the blood animation
-				triggerEvent('Add Blood Effect', '', '');
-				-- and now he falls down. bye bye!
-				setProperty('gf.velocity.y', -2500);
-				setProperty('gf.acceleration.y', 9000);
-			end
+                -- and now he falls down. bye bye!
+                setProperty('gf.velocity.y', -2500);
+                setProperty('gf.acceleration.y', 9000);
+            end
 		end
 	elseif name == 'HotDogGF Appears' then
 		-- we stop her idle animation from playing
@@ -537,8 +497,6 @@ function onBeatHit()
 			hotdogGFDanceDir = true;
 		end
 	end
-	-- the speakers always do the idle animation
-	playAnim('Speakers', 'Boop', true);
 end
 
 ---------------------------------------------------
@@ -552,7 +510,7 @@ local trickyIsGone = false;
 -- true if hotdog girlfriend stopped walking
 local HotDogGFStoppedWalking = false;
 -- we use an array to itrate over the relevant sprites
-local spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};
+local spriteDestroyerArray = {'helicopter'};
 
 function onUpdate(elapsed)
 

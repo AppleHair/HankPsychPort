@@ -46,9 +46,10 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
 			end
 		end
-
-		precacheImage('BulletNotes');
 	end
+
+	
+	precacheImage('BulletNotes');
 end
 
 -- this variable determines how much health

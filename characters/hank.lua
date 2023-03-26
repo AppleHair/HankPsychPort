@@ -36,8 +36,8 @@ end
 -- this is being set later
 local bulletNotesArray = {};
 
--- stores the x and y positions of the shot ray
-local shotRayPos = {250, 350};
+-- stores the x and y offsets of the shot ray
+local shotRayPos = {300, 425};
 
 
 
@@ -46,6 +46,8 @@ function onCreatePost()
     addLuaScript('custom_events/Shot Ray Effect', true);
 
     -- setting the shot ray position
+    shotRayPos[1] = defaultOpponentX + shotRayPos[1];
+    shotRayPos[2] = defaultOpponentY + shotRayPos[2];
     triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2]);
 
     -- getting Bullet notes' strum time
@@ -125,13 +127,13 @@ function onUpdatePost(elapsed)
         -- playing shoot animation
         if singLEFT then
             triggerEvent('Play Animation', 'shootLEFT', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] - 50 , shotRayPos[2] + 10);
 		elseif singRIGHT then
             triggerEvent('Play Animation', 'shootRIGHT', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 20, shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 75, shotRayPos[2] + 25);
 		elseif singDOWN then
             triggerEvent('Play Animation', 'shootDOWN', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 50, shotRayPos[2] + 50);
 		else-- that's why we don't need to check for singUP
             triggerEvent('Play Animation', 'shootUP', 'dad');
             triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2]);
