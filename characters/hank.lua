@@ -39,8 +39,6 @@ local bulletNotesArray = {};
 -- stores the x and y offsets of the shot ray
 local shotRayPos = {300, 425};
 
-
-
 function onCreatePost()
     -- adding the required script
     addLuaScript('custom_events/Shot Ray Effect', true);
@@ -84,10 +82,6 @@ local shootAgainNextFrame = false;
 -- GOSH I'M SO HAPPY I'M FINALLY OVER ALL THIS SHIT!!!
 
 function onUpdatePost(elapsed)
-    -- character must be Hank!!
-    if dadName ~= 'hank' then
-        return;
-    end
 
                     -- Hank shoot animation section --
 
@@ -163,12 +157,6 @@ function onUpdatePost(elapsed)
         triggerEvent('Play Animation', 'hey', 'dad');
     end
 end
-
-
-
-
-
-
 
 
 

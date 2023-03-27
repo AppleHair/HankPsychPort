@@ -437,7 +437,7 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if not gfName == 'tricky' then
 		return;
 	end
-	if noteType == 'GF Sing' then
+	if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
 		-- setProperty('Lazer.visible', false);
 		setProperty('Lazer.alpha', 0.00001);
 	end

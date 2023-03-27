@@ -31,7 +31,7 @@ function onEvent(name, value1, value2)
             end
             if value1 == 'Turn' then
                 -- we set blood position
-                triggerEvent('Set Blood Effect Pos', 220, -140);
+                triggerEvent('Set Blood Effect Pos', defaultGirlfriendX + 15, defaultGirlfriendY - 85);
                 -- we make the character stunned to prevent him from playing the idle animation
                 setProperty('gf.stunned', true);
                 -- we set specialAnim to false to prevent him from playing the idle animation anyway
@@ -56,8 +56,8 @@ function onEvent(name, value1, value2)
                 -- and now he falls. bye bye!
                 setProperty('gf.velocity.y', -2500);
                 setProperty('gf.acceleration.y', 9000);
-                setProperty('gf.velocity.x', 5000);
-                setProperty('gf.angularVelocity', -5);
+                setProperty('gf.velocity.x', 2500);
+                setProperty('gf.angularVelocity', 0.5);
             end
         end
     end
