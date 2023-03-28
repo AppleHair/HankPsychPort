@@ -2,6 +2,9 @@
 -- and was significantly edited by me,
 -- so props to Kevin
 
+-- true if the mouse is on the ready thing
+local MouseOnReady = false;
+
 function onCreate()
 	makeLuaSprite('ready', 'ready', 0, 0);
 	makeLuaSprite('readyCL', 'readyCL', 0, 0);
@@ -13,30 +16,46 @@ function onCreate()
 	addLuaSprite('readyCL', true);
 	setObjectCamera('ready', 'hud');
 	setObjectCamera('readyCL', 'hud');
+	setProperty('ready.visible', true);
+	setProperty('readyCL.visible', false);
+
+	runningUMM = version:find("UMM") ~= nil;
+
+	-- we set stunned to true on everyone
+	-- to stop them from playing the idle animation
+	setProperty('boyfriend.stunned', true);
+	setProperty('gf.stunned', true);
+	setProperty('dad.stunned', true);
+
+	-- we skip the freeplay arrow alpha tween
+	setProperty('skipArrowStartTween', true);
+
+	readyCondition = function() return (not allowCountdown) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or 
+		getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or (getPropertyFromClass('flixel.FlxG', 'mouse.justReleased') and MouseOnReady)); end
+		
+	if runningUMM and onlinePlay then
+		readyCondition = function() return (not allowCountdown) and getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER'); end
+		return;
+	end
+
+	-- we make the mouse visible
+	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
 end
 
 -- very self-explanatory
 local allowCountdown = false;
 function onStartCountdown()
+	if runningUMM and onlinePlay then
+		return;
+	end
 	-- we check if countdown is allowed
 	if not allowCountdown then
-		-- we make the mouse visible
-		setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
-		-- we set stunned to true on everyone
-		-- to stop them from playing the idle animation
-		setProperty('boyfriend.stunned', true);
-		setProperty('gf.stunned', true);
-		setProperty('dad.stunned', true);
-
-		-- we skip the freeplay arrow alpha tween
-		setProperty('skipArrowStartTween', true);
-
 		-- we make the arrows generate early
 		runHaxeCode([[
 			game.generateStaticArrows(0);
 			game.generateStaticArrows(1);
 		]]);
-
+		
 		-- we stop the countdown from happening
 		return Function_Stop;
 	end
@@ -64,10 +83,6 @@ function onCountdownTick(counter)
 	-- allow pause when song starts
 	allowPause = counter == 4;
 end
-
-
--- true if the mouse is on the ready thing
-local MouseOnReady = false;
 
 -- helps me play the scrollMenu sound on update
 -- without playing is 60-240 times every second
@@ -110,20 +125,30 @@ function onUpdate(elapsed)
 
 	-- if countdown isn't allowed yet and the player pressed space or enter
 	-- or the left mouse button while the cursor was on the ready thing
-	if not allowCountdown and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or 
-	  getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or (mouseReleased() and MouseOnReady)) then
+	if readyCondition() then
 		-- we allow the countdown
 		allowCountdown = true;
+
+		-- we remove the ready sprites
+		removeLuaSprite('ready', true);
+		removeLuaSprite('readyCL', true);
+
+		-- we make the mouse invisible
+		setPropertyFromClass('flixel.FlxG', 'mouse.visible', false);
+		
+		if runningUMM and onlinePlay then
+			return;
+		end
 		-- we start the countdown
 		startCountdown();
 		-- we play the clickText sound
 		playSound('clickText');
-		-- we remove the ready sprites
-		removeLuaSprite('ready', true);
-		removeLuaSprite('readyCL', true);
-		-- we make the mouse invisible
-		setPropertyFromClass('flixel.FlxG', 'mouse.visible', false);
 	end
+
+	if runningUMM and onlinePlay then
+		return;
+	end
+
 	-- we check if the mouse is on the ready thing in the x axis
 	local MouseOnReadyX = getMouseX('hud') > getProperty('ready.x') and 
 							getMouseX('hud') < getProperty('ready.x') + getProperty('ready.width');
@@ -154,9 +179,15 @@ function onUpdate(elapsed)
 		playTheSound = true;
 	end
 end
+
 function onUpdatePost(elapsed)
 	-- if the player pressed escape and the pause isn't allowed yet
 	if getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE') and not allowPause then
+		-- we don't want this to happen when people use
+		-- the script with online play in UMM
+		if runningUMM and onlinePlay then
+			return;
+		end
 		-- we prevent a game crash that is being caused by 3 achievements that are being 
 		-- unlocked in the same time. we prevent these achievements from being achieved.
 		setProperty('boyfriendIdled', true);
