@@ -90,26 +90,35 @@ function onCreatePost()
     hankScriptRunning = isRunning('characters/hank');
 
 
+    -- the next part is for hosters only!
     if not Hosting then
         return;
     end
 
     -- WELCOME TO THE WORLD OF DEALING WITH SERVERS
 
-    -- if a custom stage is used
+    -- getTextFromFile doesn't work properly on the other end,
+    -- so now I need to write my code in this weird kind of
+    -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
+    -- if it's true
     if inCustomStage then
+        -- send a message to the server
         send("inCustomStage");
     end
 
+    -- we do some important checks (see implumentation)
     iNeedToDoThisTwiceForOnlinePlay();
     
 end
 
 function onReceive(message)
+    -- we receive the message in the other end
     if message == "inCustomStage" then
+        -- we set it to true
         inCustomStage = true;
 
+        -- we do some important checks AGAIN (see implumentation)
         iNeedToDoThisTwiceForOnlinePlay();
 
     end
