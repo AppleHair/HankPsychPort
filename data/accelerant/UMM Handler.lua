@@ -34,6 +34,21 @@ local function checkRequiredAnims(arr, char)
     return count == #requiredAnims;
 end
 
+function iNeedToDoThisTwiceForOnlinePlay()
+
+    -- we remove every kind of camera movement events
+    -- from the song in order to avoid weird stage problems,
+    -- and we also remove alt idle events if the character
+    -- doesn't have the required animations.
+    for i = getProperty('eventNotes.length')-1, 0, -1 do
+		if (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Pos" and inCustomStage) or
+          (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
+          (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Follow Pos" and inCustomStage) or
+          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) then
+            removeFromGroup('eventNotes', i);
+		end
+	end
+end
 
 function onCreatePost()
     runningUMM = version:find("UMM") ~= nil;
@@ -56,7 +71,7 @@ function onCreatePost()
         end
     end
 
-    bfScriptRunning = isRunning('characters/hank');
+    bfScriptRunning = isRunning('characters/bf');
 
     --[[
         To use a custom P2 in this song properly,
@@ -71,24 +86,33 @@ function onCreatePost()
             addLuaScript('characters/hank');
         end
     end
-
+    
     hankScriptRunning = isRunning('characters/hank');
+
+
+    if not Hosting then
+        return;
+    end
+
+    -- WELCOME TO THE WORLD OF DEALING WITH SERVERS
 
     -- if a custom stage is used
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
+    if inCustomStage then
+        send("inCustomStage");
+    end
 
-    -- we remove every kind of camera movement events
-    -- from the song in order to avoid weird stage problems,
-    -- and we also remove alt idle events if the character
-    -- doesn't have the required animations.
-    for i = getProperty('eventNotes.length')-1, 0, -1 do
-		if (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Pos" and inCustomStage) or
-          (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
-          (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Follow Pos" and inCustomStage) or
-          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) then
-            removeFromGroup('eventNotes', i);
-		end
-	end
+    iNeedToDoThisTwiceForOnlinePlay();
+    
+end
+
+function onReceive(message)
+    if message == "inCustomStage" then
+        inCustomStage = true;
+
+        iNeedToDoThisTwiceForOnlinePlay();
+
+    end
 end
 
 function onUpdate(elapsed)
