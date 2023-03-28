@@ -3,6 +3,8 @@ function onCreate()
     addLuaScript('custom_events/Blood Effect', true);
 
     precacheSound('splat');
+
+    runningUMM = version:find("UMM") ~= nil;
 end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
@@ -40,6 +42,10 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 end
 
 function onUpdate(elapsed)
+    -- UMM has different conditions for this
+    if runningUMM then
+        return;
+    end
     -- if the player just pressed space
 	if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
         -- make boyfriend do the hey animation

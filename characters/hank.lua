@@ -56,6 +56,8 @@ function onCreatePost()
             table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
         end
     end
+
+    runningUMM = version:find("UMM") ~= nil;
 end
 
 
@@ -151,6 +153,12 @@ function onUpdatePost(elapsed)
             end
         end
     end
+
+    -- UMM has different conditions for this
+    if runningUMM then
+        return;
+    end
+
     -- if the player just pressed backspace
     if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.BACKSPACE') then
         -- make hank do the hey animation (easter egg)

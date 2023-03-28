@@ -1,4 +1,3 @@
-
 --[[
 	Checks if a curtain value is
 	in a curtain array
@@ -37,7 +36,8 @@ end
 
 
 function onCreatePost()
-    if version:find("UMM") == nil then
+    runningUMM = version:find("UMM") ~= nil;
+    if not runningUMM then
         return;
     end
 ----------------------------------------------------------------------------------------------------------------------
@@ -56,7 +56,8 @@ function onCreatePost()
         end
     end
 
-    local hankScriptRunning = false;
+    bfScriptRunning = isRunning('characters/hank');
+
     --[[
         To use a custom P2 in this song properly,
         it needs to have the following animations:
@@ -66,18 +67,20 @@ function onCreatePost()
     ]]
     if getProperty("dad.Custom") or dadName ~= 'hank' then 
         if checkRequiredAnims({"shootRIGHT", "shootDOWN", "shootUP", "shootLEFT", "hey", 
-          "scaredShoot", "idle-scared", "getReady"}, "dad") then
+          "scaredShoot", "idle-scared", "getReady", "singRIGHT-alt"}, "dad") then
             addLuaScript('characters/hank');
-            hankScriptRunning = true;
         end
     end
 
+    hankScriptRunning = isRunning('characters/hank');
 
     -- if a custom stage is used
-    local inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
+    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
 
     -- we remove every kind of camera movement events
-    -- from the song in order to avoid weird stage problems
+    -- from the song in order to avoid weird stage problems,
+    -- and we also remove alt idle events if the character
+    -- doesn't have the required animations.
     for i = getProperty('eventNotes.length')-1, 0, -1 do
 		if (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Pos" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
@@ -86,4 +89,26 @@ function onCreatePost()
             removeFromGroup('eventNotes', i);
 		end
 	end
+end
+
+function onUpdate(elapsed)
+    if not runningUMM then
+        return;
+    end
+
+    if not leftSide then
+        -- if the player just pressed space
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+            -- make boyfriend do the hey animation
+            triggerEvent('Play Animation', 'hey', 'bf');
+        end
+    end
+
+    if leftSide then
+        -- if the player just pressed space
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+            -- make boyfriend do the hey animation
+            triggerEvent('Play Animation', 'hey', 'dad');
+        end
+    end
 end
