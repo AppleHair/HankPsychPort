@@ -104,7 +104,7 @@ cool and exciting things I'm planning to work on for the full release of the por
 		with new graphics and animations. I hope to even add a cutscene at the start,
 		that will give an explanation to why hank is rapping with boyfriend in the first place.
 
-	4) Full UMM (Untitled Multiplayer Mod) support(2023):
+	4) Full UMM (Unnamed Multiplayer Mod) support(2023):
 
 		This demo of the port already has UMM support, and I'm looking forward to
 		having this support in the full release as well. 
