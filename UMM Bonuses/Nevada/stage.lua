@@ -72,12 +72,12 @@ function onMoveCamera(focus)
 	end
 end
 
-function onStartSong()
+function onSongStart()
     setProperty('helicopter.velocity.x', 430);
 
-    if songName == "Tutorial" then
-        dadCamPos = {565, 170};
-        -- doesn't work...
+	-- for tutorial
+    if dadName == gfName then
+        dadCamPos = gfCamPos;
     end
 end
 

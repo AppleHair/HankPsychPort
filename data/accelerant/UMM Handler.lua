@@ -92,7 +92,7 @@ function onCreatePost()
 
 
     -- the next part is for hosters only!
-    if not Hosting then
+    if onlinePlay and (not Hosting) then
         return;
     end
 
@@ -102,8 +102,9 @@ function onCreatePost()
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
-    -- if it's true
-    if inCustomStage then
+
+    -- if it's true and we are in onlinePlay
+    if onlinePlay and inCustomStage then
         -- send a message to the server
         send("inCustomStage");
     end
