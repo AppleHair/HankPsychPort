@@ -59,30 +59,30 @@ end
 -------------------------------------------------------------------
 			onCreatePost - Table of contents
 -------------------------------------------------------------------
-	-- Static Lua Sprites - line 94
+	-- Static Lua Sprites - line 89
 	-----------------------------------
-		HotdogStation - line 96
-		Rock - line 100
-		Ground - line 104
-		RightCliff - line 107
-		LeftCliff - line 111
-		Sky - line 115
+		HotdogStation - line 91
+		Rock - line 95
+		Ground - line 99
+		RightCliff - line 102
+		LeftCliff - line 106
+		Sky - line 110
 
-	-- Animated Lua Sprites - line 123
+	-- Animated Lua Sprites - line 114
 	-----------------------------------
-		helicopter - line 125
-		Deimos & Sanford - line 131
-		Lazer - line 149
-		gf-hot - line 158
-		Climbers - line 165
+		helicopter - line 116
+		Deimos & Sanford - line 121
+		Lazer - line 139
+		gf-hot - line 145
+		Climbers - line 152
 
-	-- Tips on sprites in Psych Engine Lua - Line 187
+	-- Tips on sprites in Psych Engine Lua - Line 174
 	-----------------------------------
-	-- Offsets - line 197
+	-- Offsets - line 184
 	-----------------------------------
-	-- Adding to PlayState - line 212
+	-- Adding to PlayState - line 199
 	-----------------------------------
-	-- Precaches - line 231
+	-- Precaches - line 216
 	-----------------------------------
 ]]
 function onCreatePost()
