@@ -34,7 +34,7 @@ local function checkRequiredAnims(arr, char)
     return count == #requiredAnims;
 end
 
-function iNeedToDoThisTwiceForOnlinePlay()
+function iNeedToWriteThisTwiceForOnlinePlay()
 
     -- we remove every kind of camera movement events
     -- from the song in order to avoid weird stage problems,
@@ -51,6 +51,7 @@ function iNeedToDoThisTwiceForOnlinePlay()
 end
 
 function onCreatePost()
+    -- version = v0.x.y + 𝗨𝗠𝗠 0.z
     runningUMM = version:find("UMM") ~= nil;
     if not runningUMM then
         return;
@@ -108,7 +109,7 @@ function onCreatePost()
     end
 
     -- we do some important checks (see implumentation)
-    iNeedToDoThisTwiceForOnlinePlay();
+    iNeedToWriteThisTwiceForOnlinePlay();
     
 end
 
@@ -119,7 +120,7 @@ function onReceive(message)
         inCustomStage = true;
 
         -- we do some important checks AGAIN (see implumentation)
-        iNeedToDoThisTwiceForOnlinePlay();
+        iNeedToWriteThisTwiceForOnlinePlay();
 
     end
 end

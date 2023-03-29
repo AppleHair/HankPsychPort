@@ -80,3 +80,22 @@ function onStartSong()
         -- doesn't work...
     end
 end
+
+-- tells us if the helicopter is removed
+local helicopterRemoved = false;
+function onUpdate(elapsed)
+    
+    -- The Helicopter Destroyer
+	-----------------------------------------------
+
+	-- we make sure that if the helicopter goes off-screen, it gets removed
+	if not helicopterRemoved then
+		if getProperty('helicopter.x') >= 1700 then
+			-- we remove the helicopter
+			removeLuaSprite('helicopter', true);
+			-- we set this value to true in order
+            -- to not check this again
+			helicopterRemoved = true;
+		end
+	end
+end

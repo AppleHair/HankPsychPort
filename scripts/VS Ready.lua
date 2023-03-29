@@ -19,22 +19,22 @@ function onCreate()
 	setProperty('ready.visible', true);
 	setProperty('readyCL.visible', false);
 
+	-- version = v0.x.y + 𝗨𝗠𝗠 0.z
 	runningUMM = version:find("UMM") ~= nil;
-
-	-- we set stunned to true on everyone
-	-- to stop them from playing the idle animation
-	setProperty('boyfriend.stunned', true);
-	setProperty('gf.stunned', true);
-	setProperty('dad.stunned', true);
 
 	-- we skip the freeplay arrow alpha tween
 	setProperty('skipArrowStartTween', true);
 
+	-- this is the function we'll need to call when we want
+	-- to check if the player pressed the ready button
 	readyCondition = function() return (not allowCountdown) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or 
 		getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or (getPropertyFromClass('flixel.FlxG', 'mouse.justReleased') and MouseOnReady)); end
 		
+	-- because UMM's online play has it's own way of checking
+	-- if all players are ready, we should adapt to it.
 	if runningUMM and onlinePlay then
-		readyCondition = function() return (not allowCountdown) and getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER'); end
+		readyCondition = function() return (not wasReady) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or 
+			getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE')); end
 		return;
 	end
 
@@ -42,12 +42,27 @@ function onCreate()
 	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
 end
 
--- very self-explanatory
+function onCreatePost()
+	-- we set stunned to true on everyone
+	-- to stop them from playing the idle animation
+	setProperty('boyfriend.stunned', true);
+	setProperty('gf.stunned', true);
+	setProperty('dad.stunned', true);
+end
+
+-- this helps us check if we want the
+-- countdown to be allowed or not.
+-- we'll set this to true when we
+-- are ready to start the count down.
 local allowCountdown = false;
+
+-- Only used in UMM's online play to prevent
+-- the player from pressing ready after it
+-- disappeard. Usually allowCountdown already
+-- fulfils this role.
+local wasReady = false;
+
 function onStartCountdown()
-	if runningUMM and onlinePlay then
-		return;
-	end
 	-- we check if countdown is allowed
 	if not allowCountdown then
 		-- we make the arrows generate early
@@ -55,7 +70,17 @@ function onStartCountdown()
 			game.generateStaticArrows(0);
 			game.generateStaticArrows(1);
 		]]);
-		
+		if runningUMM and onlinePlay then
+			-- If we play online with UMM,
+			-- this function (onStartCountdown()) will
+			-- run again after all players are ready,
+			-- and in order to adapt to this, we'll
+			-- set allowCountdown to true right away.
+			allowCountdown = true;
+			-- In order to adapt to UMM's online play,
+			-- we return noting and let UMM do its thing.
+			return;
+		end
 		-- we stop the countdown from happening
 		return Function_Stop;
 	end
@@ -66,11 +91,19 @@ function onStartCountdown()
 			game.opponentStrums.clear();
 			game.strumLineNotes.clear();
 	]]);
+	if runningUMM and onlinePlay then
+		-- In order to adapt to UMM's online play,
+		-- we return noting and let UMM do its thing.
+		return;
+	end
 	-- we let the countdown happen
 	return Function_Continue;
 end
 
--- very self-explanatory
+-- this helps us check if we want
+-- pause to be allowed or not.
+-- we'll set this to true when we
+-- are ready to let the player pause.
 local allowPause = false;
 function onCountdownTick(counter)
 	if counter == 2 then
@@ -126,25 +159,27 @@ function onUpdate(elapsed)
 	-- if countdown isn't allowed yet and the player pressed space or enter
 	-- or the left mouse button while the cursor was on the ready thing
 	if readyCondition() then
-		-- we allow the countdown
-		allowCountdown = true;
-
 		-- we remove the ready sprites
 		removeLuaSprite('ready', true);
 		removeLuaSprite('readyCL', true);
-
-		-- we make the mouse invisible
-		setPropertyFromClass('flixel.FlxG', 'mouse.visible', false);
 		
 		if runningUMM and onlinePlay then
+			-- we stop this condition from being true again
+			wasReady = true;
 			return;
 		end
+		-- we allow the countdown
+		allowCountdown = true;
+		-- we make the mouse invisible
+		setPropertyFromClass('flixel.FlxG', 'mouse.visible', false);
 		-- we start the countdown
 		startCountdown();
 		-- we play the clickText sound
 		playSound('clickText');
 	end
 
+	-- because we don't check for mouse input in
+	-- UMM's online play, the code ahead isn't relevant
 	if runningUMM and onlinePlay then
 		return;
 	end

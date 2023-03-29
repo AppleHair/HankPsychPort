@@ -11,6 +11,11 @@ function onCreatePost()
     -- setProperty('Speakers.visible', false);
     setProperty('Speakers.alpha', 0.00001);
 
+    -- I set the alpha to 0.00001 (not 0 and not .visible = false), 
+	-- and because of that the game engine thinks it needs to load the
+	-- sprites into the stage, although you can't actually see
+	-- them. Like that, I can load sprites early and avoid lag.
+
     addLuaSprite('Speakers',false);
     addLuaSprite('SheFrikingFlyy',true);
 
@@ -67,8 +72,8 @@ function onBeatHit()
     playAnim('Speakers', 'Boop', true);
 end
 
--- we use an array to itrate over the relevant sprites
-local spriteDestroyerArray = {'SheFrikingFlyy'};
+-- tells us if SheFrikingFlyy is removed
+local SheFrikingFlyyRemoved = false;
 -- true if tricky is gone
 local trickyIsGone = false;
 function onUpdate(elapsed)
@@ -76,15 +81,14 @@ function onUpdate(elapsed)
     -- The Sprite Destroyer
 	-----------------------------------------------
 
-	-- here we make sure every sprite that goes off-screen gets removed
-	for i = #spriteDestroyerArray, 1, -1 do
-		if getProperty(spriteDestroyerArray[i] .. '.x') >= 1700 then
-			removeLuaSprite(v, true);
-			-- because the sprite doesn't exist enymore,
-			-- we remove it from the array, to avoid dealing
-			-- with neverClimb for checking attributes on an 
-			-- object that doesn't exist.
-			table.remove(spriteDestroyerArray, i);
+	-- we make sure that if SheFrikingFlyy goes off-screen, it gets removed
+	if not SheFrikingFlyyRemoved then
+		if getProperty('SheFrikingFlyy.x') >= 1700 then
+            -- we remove SheFrikingFlyy
+			removeLuaSprite('SheFrikingFlyy', true);
+			-- we set this value to true in order
+            -- to not check this again
+			SheFrikingFlyyRemoved = true;
 		end
 	end
 
@@ -92,13 +96,17 @@ function onUpdate(elapsed)
         return;
     end
 
-    if getProperty('gf.x') >= 1700 and not trickyIsGone then
+    -- we make sure that if tricky goes off-screen, he stops and becomes invisible
+    if not trickyIsGone and getProperty('gf.x') >= 1700 then
+        -- we stop tricky and make him invisible
 		setProperty('gf.velocity.y', 0);
 		setProperty('gf.acceleration.y', 0);
         setProperty('gf.velocity.x', 0);
         setProperty('gf.angularVelocity', 0);
         setProperty('gf.angle', 0);
 		setProperty('gf.visible', false);
+        -- we set this value to true in order
+        -- to not check this again
 		trickyIsGone = true;
 	end
 end

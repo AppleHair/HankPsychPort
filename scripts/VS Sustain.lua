@@ -11,7 +11,11 @@ end
 
 -- the way we set the character's hold timer to 0 every time
 -- a sustain note is being hit helps us hold the sing animation
--- until the sustain is over
+-- until the sustain is over.
+
+-- in this specific mod, we don't want boyfriend to 
+-- have this kind of sustain animation (read what I 
+-- wrote under opponentNoteHit for more context).
 
 -- function goodNoteHit(id, direction, noteType, isSustainNote)
 --     -- we check if the note is an Sustain Note
@@ -63,6 +67,8 @@ end
 -- 
 -- every character in FNF ONLINE VS. animates the sustain notes in a different way
 -- heres a list of all of the characters and the types they use according to my research:
+-- (this was writen before the new Sportsman and Alien Hominid challanges and I don't have
+-- time to add these into the list, sorry)
 -- 
 -- Hank (Accelerant) - Holder
 -- Tricky (Accelerant) - Holder
@@ -80,17 +86,3 @@ end
 -- Another thing I found out about through my research is that all of boyfriend's sing
 -- animations in every boyfriend character in FNF ONLINE VS. 𝗲𝘅𝗰𝗲𝗽𝘁 𝗳𝗼𝗿 𝘀𝗶𝗻𝗴𝗗𝗢𝗪𝗡 are 𝗿𝗲𝘃𝗲𝗿𝘀𝗲𝗱, and that's why
 -- they look strange.
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- I can already see the nerd emojis.

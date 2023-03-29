@@ -509,8 +509,8 @@ local trickyBehindGround = false;
 local trickyIsGone = false;
 -- true if hotdog girlfriend stopped walking
 local HotDogGFStoppedWalking = false;
--- we use an array to itrate over the relevant sprites
-local spriteDestroyerArray = {'helicopter'};
+-- tells us if the helicopter is removed
+local helicopterRemoved = false;
 
 function onUpdate(elapsed)
 
@@ -573,18 +573,17 @@ function onUpdate(elapsed)
 	end
 
 	
-	-- The Sprite Destroyer
+	-- The Helicopter Destroyer
 	-----------------------------------------------
 
-	-- here we make sure every sprite that goes off-screen gets removed
-	for i = #spriteDestroyerArray, 1, -1 do
-		if getProperty(spriteDestroyerArray[i] .. '.x') >= 1700 then
-			removeLuaSprite(v, true);
-			-- because the sprite doesn't exist enymore,
-			-- we remove it from the array, to avoid dealing
-			-- with neverClimb for checking attributes on an 
-			-- object that doesn't exist.
-			table.remove(spriteDestroyerArray, i);
+	-- we make sure that if the helicopter goes off-screen, it gets removed
+	if not helicopterRemoved then
+		if getProperty('helicopter.x') >= 1700 then
+			-- we remove the helicopter
+			removeLuaSprite('helicopter', true);
+			-- we set this value to true in order
+            -- to not check this again
+			helicopterRemoved = true;
 		end
 	end
 end

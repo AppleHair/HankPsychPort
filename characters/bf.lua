@@ -4,6 +4,7 @@ function onCreate()
 
     precacheSound('splat');
 
+    -- version = v0.x.y + 𝗨𝗠𝗠 0.z
     runningUMM = version:find("UMM") ~= nil;
 end
 
@@ -42,7 +43,8 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 end
 
 function onUpdate(elapsed)
-    -- UMM has different conditions for this
+    -- UMM has different conditions for
+    -- the purpose of the code ahead
     if runningUMM then
         return;
     end
