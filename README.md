@@ -3,26 +3,26 @@
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 This is a Psych Engine port of the first challenge in FNF ONLINE VS, the hank challenge (with the song's name being "Accelerant").
 
-(writen in 2022) A lot of people already tried to port this challenge to psych, but most of these ports are rushed, 
-inaccurate and just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this 
+(written in 2022) A lot of people have already tried to port this challenge to psych, but most of these ports are rushed, 
+inaccurate, and just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this 
 port to be one of the most accurate and well-coded psych engine ports to date.
 
 Currently, the port is in a demo state and has only the hard difficulty implemented.
 In the future, I hope to add the fucked difficulty and more new stuff that I want to make for this
-port. There's just one problem, I don't know how much time that would take, because I'm going 
+port. There's just one problem, I don't know how much time that would take because I'm going 
 back to school soon, and if last year was difficult, THIS ONE IS GOING TO BE HELL!
 
 (2023 Update): So, my studies at school started being much less stressful recently, and there's a high
 chance that I will have more time to work on this port. The only things that I have to do for school 
-is to study for my matriculation examinations, and work on my software engineering project, which
-happens to be a 2D game engine. This means my schedule in now much more flexible, which means
+are to study for my matriculation examinations and work on my software engineering project, which
+happens to be a 2D game engine. This means my schedule is now much more flexible, which means
 I'll be able to work on this port more often. However, it doesn't mean that you should be seeing
-a release any time soon. If there will be any kind of of major progress on this port, I'll make sure
-to let you guys know on my youtube channel and on the gamejolt page.
+a release any time soon. If there will be any major progress on this port, I'll make sure
+to let you guys know on my youtube channel and on the game jolt page.
 
 ## The Process
 
-(writen in 2022) You are probably going to be shocked by this, but I started working on this port approximately ONE YEAR AGO
+(written in 2022) You are probably going to be shocked by this, but I started working on this port approximately ONE YEAR AGO
 (as of writing this). I was mostly inspired by how the shaggy mod was ported to psych engine at the time and I wanted to give
 accelerant a similar treatment, but I didn't have much experience with making FNF mods at the time, which explains why this port 
 took so long to make. I learned SO MUCH about programming this year that it's literally INSANE. Programming was always a thing I 
@@ -31,7 +31,7 @@ even more!
 
 ## A Special Thanks To The Psych Engine Devs
 
-(writen in 2022) As a person who worked on a serious project (this one) with psych  
+(written in 2022) As a person who worked on a serious project (this one) with psych  
 engine and saw it evolve throughout this year(2021-2022), I have a lot of respect for the
 people who work on psych engine and I know for certain that this port wouldn't have been 
 the same without all of the features that have been added and without the Lua API that was
@@ -40,21 +40,21 @@ psych engine devs, and ESPECIALLY Shadow Mario, for making psych engine what it 
 
 ## Tips For Porters
 
-(writen in 2022) One of my objectives in making a well-coded and accurate psych engine port is to help other porters make
-better psych engine ports. There are many people who want to make a good psych engine ports of another mods, and don't have 
+(written in 2022) One of my objectives in making a well-coded and accurate psych engine port is to help other porters make
+better psych engine ports. There are many people who want to make good psych engine ports of other mods and don't have 
 enough knowledge to make them actually good, and I want to help them. I made many comments in my code that will probably help 
 others understand what the code does and its algorithm. In addition, I also put comments that give tips and suggestions for 
 how to do certain things in the right way, and I also want to give some general tips right now.
 
 My first tip is more programming related, and it's to understand what is happening in the source code when you write your code
-in Lua. This kind of skill is very important to gain with every tool you use to make something and ESPECIALLY with psych engine.
-Don't just assume the functions you use work like you think, and Instead, go to FunkinLua.hx and check exactly what the functions
+in Lua. This kind of skill is very important to gain with every tool you use to make something, ESPECIALLY with psych engine.
+Don't just assume the functions you use work as you think, and Instead, go to FunkinLua.hx and check exactly what the functions
 you use do, and how they affect the game as a whole. Furthermore, This skill of being able to read the source code will also help you 
 solve problems and bugs you face along the way and you'll be able to go to the source code and try to understand what is causing the 
 problem instead of attempting a lot of stuff for no reason. So if you thought you don't need to understand the source code to make a 
 psych engine lua mod, then think again! Also, just to be clear, I don't know everything about Haxe and I never went out of my way
 to learn specifically about Haxe, but I know that if I ever face a problem in my code that I don't know how to fix, that's
-the reason why, and in this situaition, I would go to learn specifically about everything that might be related to the problem, 
+the reason why, and in this situation, I would go to learn specifically about everything that might be related to the problem, 
 in the goal of understanding what's causing it. with that being said, I still think learning as much as you can will help you
 a lot and I hope to do it myself soon. I also want to mention that I don't recommend using the psych engine wiki,
 because it's very outdated and doesn't get updates anymore.
@@ -131,3 +131,4 @@ cool and exciting things I'm planning to work on for the full release of the por
 ## Additional Credits:
 
 * KevinKuntz255 - Made The Original VS. Ready script
+* Teniente Mantequilla - Creator of the Unnamed Multiplayer Mod
