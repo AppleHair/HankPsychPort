@@ -3,40 +3,45 @@
 # FNF ONLINE VS. Hank Challenge - Psych Engine Port
 This is a Psych Engine port of the first challenge in FNF ONLINE VS, the hank challenge (with the song's name being "Accelerant").
 
-A lot of people already tried to port this challenge to psych, but most of these ports are rushed, inaccurate and 
-just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this port to be
-one of the most accurate and well-coded psych engine ports to date.
+(writen in 2022) A lot of people already tried to port this challenge to psych, but most of these ports are rushed, 
+inaccurate and just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this 
+port to be one of the most accurate and well-coded psych engine ports to date.
 
 Currently, the port is in a demo state and has only the hard difficulty implemented.
 In the future, I hope to add the fucked difficulty and more new stuff that I want to make for this
 port. There's just one problem, I don't know how much time that would take, because I'm going 
 back to school soon, and if last year was difficult, THIS ONE IS GOING TO BE HELL!
-So until I make the full version, I encourage other people in the community to try to make
-a patch that adds fucked mode to this demo.
 
-I'm also planning to release an update to this demo that fixes some small lag problems at some point.
+(2023 Update): So, my studies at school started being much less stressful recently, and there's a high
+chance that I will have more time to work on this port. The only things that I have to do for school 
+is to study for my matriculation examinations, and work on my software engineering project, which
+happens to be a 2D game engine. This means my schedule in now much more flexible, which means
+I'll be able to work on this port more often. However, it doesn't mean that you should be seeing
+a release any time soon. If there will be any kind of of major progress on this port, I'll make sure
+to let you guys know on my youtube channel and on the gamejolt page.
 
 ## The Process
 
-You are probably going to be shocked by this, but I started working on this port approximately ONE YEAR AGO (as of writing this).
-I was mostly inspired by the way the shaggy mod was ported to psych engine at the time and I wanted to give accelerant
-a similar treatment, but I didn't have much experience with making FNF mods at the time, which explains why this port took so long
-to make. I learned SO MUCH about programming this year that it's literally INSANE. Programming was always a thing I liked to do,
-but now after I learned more about it, I have a completely different perspective on it that just makes me want to learn even more!
+(writen in 2022) You are probably going to be shocked by this, but I started working on this port approximately ONE YEAR AGO
+(as of writing this). I was mostly inspired by how the shaggy mod was ported to psych engine at the time and I wanted to give
+accelerant a similar treatment, but I didn't have much experience with making FNF mods at the time, which explains why this port 
+took so long to make. I learned SO MUCH about programming this year that it's literally INSANE. Programming was always a thing I 
+liked to do, but now after I learned more about it, I have a completely different perspective on it that just makes me want to learn 
+even more!
 
 ## A Special Thanks To The Psych Engine Devs
 
-As a person who worked on a serious project (this one) with psych engine and saw it 
-evolve Throughout this year, I have a lot of respect for the people who work on
-psych engine and I know for certain that this port wouldn't have been the 
-same without all of the features that have been added and without the Lua API that was
+(writen in 2022) As a person who worked on a serious project (this one) with psych  
+engine and saw it evolve throughout this year(2021-2022), I have a lot of respect for the
+people who work on psych engine and I know for certain that this port wouldn't have been 
+the same without all of the features that have been added and without the Lua API that was
 released just the day after I had the idea to make this port. I want to thank all of the
 psych engine devs, and ESPECIALLY Shadow Mario, for making psych engine what it is today!
 
 ## Tips For Porters
 
-One of my objectives in making a well-coded and accurate psych engine port is to help other porters make better
-psych engine ports. There are many people who want to make a good psych engine ports of another mods, and don't have 
+(writen in 2022) One of my objectives in making a well-coded and accurate psych engine port is to help other porters make
+better psych engine ports. There are many people who want to make a good psych engine ports of another mods, and don't have 
 enough knowledge to make them actually good, and I want to help them. I made many comments in my code that will probably help 
 others understand what the code does and its algorithm. In addition, I also put comments that give tips and suggestions for 
 how to do certain things in the right way, and I also want to give some general tips right now.
@@ -77,7 +82,7 @@ Even if you think something I said in the comments (the comments in the code) is
 Ok, so other than an accurate port of the fucked difficulty, I have some very 
 cool and exciting things I'm planning to work on for the full release of the port:
 
-	1) FNF ONLINE VS. Rating Screen Recreation:
+	1) FNF ONLINE VS. Rating Screen Recreation(2022):
 
 		Starting with the one that excites me the most,
 		this is going to be a recreation of the cool rating screen
@@ -87,20 +92,22 @@ cool and exciting things I'm planning to work on for the full release of the por
 		Ss rank is going to be replaced with something else.
 		maybe it'll be a "Perfect" rank instead.
 		
-	2) hank-player:
+	2) hank-player and maghank-player(2022):
 
-		A proper hank player with miss animations, game-over animations
-		and any other animation that a player character in FNF usually has.
+		A proper hank and maghank players with miss animations, game-over animations
+		and any other animation that a player character in FNF usually has. 
+		(2023 update): These will also come in the form of UMM Custom characters.
 
-	3) maghank-player:
-
-		Same with Mag-Hank.
-
-	4) Accelerant REDUX:
+	3) Accelerant REDUX(2022): 
 
 		The offical remix (by philiplol) for accelerant will be playable in this port
 		with new graphics and animations. I hope to even add a cutscene at the start,
 		that will give an explanation to why hank is rapping with boyfriend in the first place.
+
+	4) Full UMM (Untitled Multiplayer Mod) support(2023):
+
+		This demo of the port already has UMM support, and I'm looking forward to
+		having this support in the full release as well. 
 
 
 ## Thank you for reading the README file and thank you for playing this port!!
