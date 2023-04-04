@@ -1,5 +1,5 @@
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -39,9 +39,13 @@ function onEvent(name, value1, value2)
 
         -- we split the string into an array of strings
         XYAndDur = split(trim(value1), ',');
+        -- we make sure they are numbers
+        XYAndDur[1] = (tonumber(XYAndDur[1]) ~= nil and tonumber(XYAndDur[1]) or 0);
+        XYAndDur[2] = (tonumber(XYAndDur[2]) ~= nil and tonumber(XYAndDur[2]) or 0);
+        XYAndDur[3] = (tonumber(XYAndDur[3]) ~= nil and tonumber(XYAndDur[3]) or 0);
         -- we do the tweens
-        doTweenX('CameraEventX', 'camFollowPos', tonumber(XYAndDur[1]), tonumber(XYAndDur[3]), value2);
-        doTweenY('CameraEventY', 'camFollowPos', tonumber(XYAndDur[2]), tonumber(XYAndDur[3]), value2);
+        doTweenX('CameraEventX', 'camFollowPos', XYAndDur[1], XYAndDur[3], value2);
+        doTweenY('CameraEventY', 'camFollowPos', XYAndDur[2], XYAndDur[3], value2);
         -- we set isCameraOnForcedPos to true
         setProperty('isCameraOnForcedPos', true);
     end
@@ -51,10 +55,10 @@ function onTweenCompleted(tag)
     if getProperty('isCameraOnForcedPos') == false then return; end
     -- we set camFollow's positions to the required positions when the tween ends
 	if tag == 'CameraEventX' then
-        setProperty('camFollow.x', tonumber(XYAndDur[1]));
+        setProperty('camFollow.x', XYAndDur[1]);
     end
     if tag == 'CameraEventY' then
-        setProperty('camFollow.y', tonumber(XYAndDur[2]));
+        setProperty('camFollow.y', XYAndDur[2]);
     end
 end
 

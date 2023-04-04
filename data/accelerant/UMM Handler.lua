@@ -34,7 +34,7 @@ local function checkRequiredAnims(arr, char)
     return count == #requiredAnims;
 end
 
-function iNeedToWriteThisTwiceForOnlinePlay()
+local function iNeedToWriteThisTwiceForOnlinePlay()
 
     -- we remove every kind of camera movement events
     -- from the song in order to avoid weird stage problems,
@@ -66,7 +66,7 @@ function onCreatePost()
 
         hey, dodge, hurt
     ]]
-    if getProperty("boyfriend.Custom") or bfName ~= 'bf' then
+    if getProperty("boyfriend.Custom") or boyfriendName ~= 'bf' then
         if checkRequiredAnims({"dodge", "hurt", "hey"},"boyfriend") then
             addLuaScript('characters/bf');
         end

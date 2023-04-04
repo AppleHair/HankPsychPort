@@ -35,7 +35,7 @@ end
 	delimiter - delimiter to use
 ]]
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -89,26 +89,26 @@ function onCreatePost()
     		-- Static Lua Sprites --
 	
 	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
-	setLuaSpriteScrollFactor('HotdogStation', 1.38, 1.35);
+	setScrollFactor('HotdogStation', 1.38, 1.35);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
 	makeLuaSprite('Rock','The Rock', -776, 704);
-	setLuaSpriteScrollFactor('Rock', 1.38, 1.35);
+	setScrollFactor('Rock', 1.38, 1.35);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
 	makeLuaSprite('Ground','NevadaGround', -795, 458);
 	scaleObject('Ground', 1.45, 1.45, true);
 	
 	makeLuaSprite('RightCliff','NevadaRightCliff', 1173, -246);
-	setLuaSpriteScrollFactor('RightCliff', 0.5, 0.5);
+	setScrollFactor('RightCliff', 0.5, 0.5);
 	scaleObject('RightCliff', 1.45, 1.45, true);
 
 	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -213);
-	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.5);
+	setScrollFactor('LeftCliff', 0.5, 0.5);
 	scaleObject('LeftCliff', 1.45, 1.45, true);
 	
 	makeLuaSprite('Sky','NevadaSky', -345, -425);
-	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
+	setScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
 	
 			-- Animated Lua Sprites --
@@ -126,7 +126,7 @@ function onCreatePost()
 	thing[2] = 'Sanford';
 
 	for i=1,2 do
-		setLuaSpriteScrollFactor(thing[i], 0.5, 0.5);
+		setScrollFactor(thing[i], 0.5, 0.5);
 		addAnimationByPrefix(thing[i], 'Boop', thing[i] .. ' Boop', 24, false);
 		addAnimationByPrefix(thing[i], 'Appear', thing[i] .. ' Appear', 24, false);
 		addAnimationByPrefix(thing[i], 'Shoot', thing[i] .. ' Shoot', 24, false);
@@ -244,19 +244,19 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 		-- Camera Shit --
 ----------------------------------------------------------------------------------------------------------------------
-dadCamPos = {419.5, 398.5};
-bfCamPos = {705.5, 398.5};
+DadCamPos = {419.5, 398.5};
+BfCamPos = {705.5, 398.5};
 
 function onMoveCamera(focus)
 	if focus == 'dad' then
 		-- we override the character's camera positions
-		setProperty('camFollow.x', dadCamPos[1]);
-		setProperty('camFollow.y', dadCamPos[2]);
+		setProperty('camFollow.x', DadCamPos[1]);
+		setProperty('camFollow.y', DadCamPos[2]);
 	end
 	if focus == 'boyfriend' then
 		-- we override the character's camera positions
-		setProperty('camFollow.x', bfCamPos[1]);
-		setProperty('camFollow.y', bfCamPos[2]);
+		setProperty('camFollow.x', BfCamPos[1]);
+		setProperty('camFollow.y', BfCamPos[2]);
 	end
 end
 
@@ -265,11 +265,11 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 
 -- used to make Deimos stop his idle animation
-stopDeimos = true;
+StopDeimos = true;
 -- used to make Sanford stop his idle animation
-stopSanford = true;
+StopSanford = true;
 -- used to make hotdog gf stop her idle animation
-stopHotDogGF = true;
+StopHotDogGF = true;
 -- used to make the lazer stop his idle animation
 local stopLazer = true;
 -- used to make the climbers climb every section hit
@@ -288,8 +288,8 @@ function onEvent(name, value1, value2)
 		setProperty('helicopter.velocity.x', 430);
 	elseif name == 'Deimos&Sanford Appear' then
 		-- we make the camera positions higher
-		dadCamPos[2] = dadCamPos[2] - 80;
-		bfCamPos[2] = bfCamPos[2] - 80;
+		DadCamPos[2] = DadCamPos[2] - 80;
+		BfCamPos[2] = BfCamPos[2] - 80;
 		-- setProperty('Deimos.visible', true);
 		setProperty('Deimos.alpha', 1);
 		-- setProperty('Sanford.visible', true);
@@ -297,8 +297,8 @@ function onEvent(name, value1, value2)
 		playAnim('Deimos', 'Appear', false);
 		playAnim('Sanford', 'Appear', false);
 		-- we stop their idle
-		stopDeimos = true; 
-		stopSanford = true;
+		StopDeimos = true; 
+		StopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
 	elseif name == 'Play Animation' then
 		if value2 == 'gf' then
@@ -320,7 +320,7 @@ function onEvent(name, value1, value2)
 		end
 	elseif name == 'HotDogGF Appears' then
 		-- we stop her idle animation from playing
-		stopHotDogGF = true;
+		StopHotDogGF = true;
 		-- we make her visible
 		-- setProperty('gf-hot.visible', true);
 		setProperty('gf-hot.alpha', 1);
@@ -398,16 +398,16 @@ function onTimerCompleted(tag, loops, loopsLeft)
 			-- make Deimos shoot
 			playAnim('Deimos', 'Shoot', false);
 			-- stop his idle animation
-			stopDeimos = true;
+			StopDeimos = true;
 		end
 		-- if the middle or left climber appears
 		if appearList[1] == 1 or appearList[2] == 1 then
 			-- make Sanford shoot
 			playAnim('Sanford', 'Shoot', false);
 			-- stop his idle animation
-			stopSanford = true;
+			StopSanford = true;
 		end
-		if stopDeimos and stopSanford then
+		if StopDeimos and StopSanford then
 			setProperty('Lazer.alpha', 0.00001);
 		end
 		for i=1, #climberSkin do -- #climberSkin = #appearList = 3
@@ -454,7 +454,7 @@ function onBeatHit()
 	-- when tricky is back to his idle animation, we make the lazer visible again
 	if ((getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
 		getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' and
-		(not stopDeimos) and (not stopDeimos)) or ((not stopDeimos) and (not stopDeimos) and gfName ~= 'tricky') then
+		(not StopDeimos) and (not StopDeimos)) or ((not StopDeimos) and (not StopDeimos) and gfName ~= 'tricky') then
 		-- setProperty('Lazer.visible', true);
 		setProperty('Lazer.alpha', 1);
 	end
@@ -465,10 +465,10 @@ function onBeatHit()
         --Boop handler--
 ---------------------------------------------------
 	-- you know what this does
-	if not stopDeimos then
+	if not StopDeimos then
 		playAnim('Deimos', 'Boop', true);
 	end
-	if not stopSanford then
+	if not StopSanford then
 		playAnim('Sanford', 'Boop', true);
 	end
 	if not stopLazer then
@@ -487,7 +487,7 @@ function onBeatHit()
 			setProperty('Lazer.y', -10);
 		end 
 	end
-	if not stopHotDogGF then
+	if not StopHotDogGF then
 		-- we make gf move her head left and right
 		if hotdogGFDanceDir then
 			playAnim('gf-hot', 'Boop-left', true);
@@ -531,12 +531,12 @@ function onUpdate(elapsed)
 	-- if the sprite is completely visible and the current animation is finished
 	-- then let the sprite play it's idle animation 
 	if getProperty('Deimos.alpha') == 1 and getProperty('Deimos.visible') and 
-	  getProperty('Deimos.animation.curAnim.finished') and stopDeimos then
-		stopDeimos = false;
+	  getProperty('Deimos.animation.curAnim.finished') and StopDeimos then
+		StopDeimos = false;
 	end
 	if getProperty('Sanford.alpha') == 1 and getProperty('Sanford.visible') and 
-	  getProperty('Sanford.animation.curAnim.finished') and stopSanford then
-		stopSanford = false;
+	  getProperty('Sanford.animation.curAnim.finished') and StopSanford then
+		StopSanford = false;
 	end
 	if getProperty('Lazer.alpha') == 1 and getProperty('Lazer.visible') and 
 	  getProperty('Lazer.animation.curAnim.finished') and stopLazer then
@@ -568,7 +568,7 @@ function onUpdate(elapsed)
 		-- now that she stopped, she needs to do
 		-- the idle animation, so we need to stop stoping her
 		-- from doing the idle animation.
-		stopHotDogGF = false;
+		StopHotDogGF = false;
 		HotDogGFStoppedWalking = true;
 	end
 

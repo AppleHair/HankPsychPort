@@ -1,5 +1,5 @@
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -14,7 +14,7 @@ end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
 -- the default clown phrases array
-clownPhrases = {'IMPROBABLE','HANK!!!','MADNESS',"WHO'S THAT??",'INTERRUPTION','FIGHT ME','INVALID','CORRECTION','CLOWN','OMFG!!!'};
+local clownPhrases = {'IMPROBABLE','HANK!!!','MADNESS',"WHO'S THAT??",'INTERRUPTION','FIGHT ME','INVALID','CORRECTION','CLOWN','OMFG!!!'};
 
 -- the chance of the static and text appearing
 -- for every step
@@ -32,9 +32,9 @@ end
 -- Event notes hooks
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
-        if value1 ~= '' then
+        if value2 ~= '' then
             -- value 2 will become the chance
-            chance = tonumber(value2);
+            chance = (tonumber(value2) ~= nil and tonumber(value2) or 0);
         end
         -- we now need to generate random Tricky static and text
         doTheThing = true;
