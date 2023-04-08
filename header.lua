@@ -9,12 +9,13 @@
     Written and Maintained by saturn-volv (https://github.com/saturn-volv)
 ]]--
 --[[
-    AppleHair notes:
+    AppleHair's fixes:
         - `setTextFont()` was missing.
         - `obj` was number instead of string in all tween functions.
         - camera was number in `doTweenZoom()` instead of "game" | "hud" | "other" | "camGame" | "camHUD" | "camOther".
         - `alignment` in `setTextAlignment()` was number instead of "left" | "right" | "center".
-        - In `addAnimationByIndices()` and `addAnimationByIndicesLoop()`, the word "Indices" was misspelled as "Indicies".
+        - The word "Indices" was misspelled as "Indicies" in `addAnimationByIndices()` and `addAnimationByIndicesLoop()`.
+        - `color` in `setTextBorder()` was string | common_colors instead of number.
         - version was number instead of string.
         - `onCountdownStarted` was missing in callbacks.
 ]]--
