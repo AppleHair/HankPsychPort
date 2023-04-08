@@ -1,35 +1,63 @@
 ---@diagnostic disable: lowercase-global, unused-local
 
 
---[[ CALLBACKS ]]--
+----------------------------------------------------------------------------------
+    	-- Callbacks --
+----------------------------------------------------------------------------------
+
 --[[
     onTaunt(number: 1|2|3|4, character: "boyfriend" | "dad")
     onReceive(message: string)
+    onGameSet(winner: string, forfeit: boolean)
+    onResultScreen()
+    onResultStats(left: table, right: table)
+        [1] - name: string 
+        [2] - accuracy: number
+        [3] - misses: number
+        [4] - score: number
+        [5] - average: number
 ]]--
 
---[[ VARIABLES ]]--
---- If you are hosting in online multiplayer
+----------------------------------------------------------------------------------
+    	-- Variables --
+----------------------------------------------------------------------------------
+
+---True if you are hosting in online\
+---multiplayer, and false otherwise.
 ---@type boolean
 Hosting = nil;
---- If you are the opponent
+
+---True if you are the opponent,\
+---and false otherwise.
 ---@type boolean
 leftSide = nil;
---- If you are in local multiplayer
+
+---True if you are in local multiplayer,\
+---and false otherwise.
 ---@type boolean
 localPlay = nil;
---- If you are in online multiplayer
+
+---True if you are in online multiplayer,\
+---and false otherwise.
 ---@type boolean
 onlinePlay = nil;
 
---[[ FUNCTIONS ]]--
----sends `message` to the connected[non-host] player
+----------------------------------------------------------------------------------
+    	-- Functions --
+----------------------------------------------------------------------------------
+
+---Sends `message` to the other connected\
+---player in online multiplayer.
 ---@param message string A message string to send
 function send(message) end
----@alias characters "boyfriend" | "dad"
----Resizes a character
----@param character characters The character to resize
+
+---Sets `character`'s scale to `size`.
+---@param character "boyfriend" | "dad" The character to resize
 ---@param size number The new size for the character
 function characterRezise(character, size) end
----flips a character from left to right and contrarily
----@param character characters The character to flip
-function characterFlip(character) end -- only for custom characters!
+
+---Flips `character` horizontally while\
+---making sure all animations are offsetted correctly.\
+---(Only works on custom characters due to the use of left and right .json files)
+---@param character "boyfriend" | "dad" The character to flip
+function characterFlip(character) end

@@ -8,6 +8,16 @@
 
     Written and Maintained by saturn-volv (https://github.com/saturn-volv)
 ]]--
+--[[
+    AppleHair notes:
+        - `setTextFont()` was missing.
+        - `obj` was number instead of string in all tween functions.
+        - camera was number in `doTweenZoom()` instead of "game" | "hud" | "other" | "camGame" | "camHUD" | "camOther".
+        - `alignment` in `setTextAlignment()` was number instead of "left" | "right" | "center".
+        - In `addAnimationByIndices()` and `addAnimationByIndicesLoop()`, the word "Indices" was misspelled as "Indicies".
+        - version was number instead of string.
+        - `onCountdownStarted` was missing in callbacks.
+]]--
 
 --- Common colors that may be used. Just a helper object.
 ---@enum common_colors
@@ -259,6 +269,7 @@ local GAME_KEY_LIST = {
     onTimerCompleted
     onSoundFinished
     onStartCountdown
+    onCountdownStarted
     onCountdownTick
     onPause
     onResume
@@ -1221,7 +1232,7 @@ function setTextItalic(tag, italic) end
 ---Sets the alignment of the ModchartText `tag`
 -- at the specified tag: 'left','right', or 'center'
 ---@param tag string Text object name
----@param alignment aligntags New text field alignment
+---@param alignment aligntags New text alignment
 function setTextAlignment(tag, alignment) end
 ---sets the font of a ModchartText `tag` to `font`
 ---@param tag string Text object name
