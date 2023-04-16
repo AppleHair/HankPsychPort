@@ -22,8 +22,8 @@ end
     Checks if a string starts with a curtain
     sequence of characters
 
-    start - A string value of the initual sequence of characters
-            that needs to be checked
+    start - A string value of the sequence of characters
+            that needs to be checked from the start
 --]]
 -- this function is being added to the string library/module
 function string:startswith(start)

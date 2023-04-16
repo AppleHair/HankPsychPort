@@ -30,11 +30,49 @@ end
 -- end
 
 
+-- related to dealing with UMM bugs. 
+-- Don't bother looking into this.
+local forFuckSake = true;
+
+
+local function gfCondition(messageStart, id, noteType)
+    -- related to dealing with UMM bugs. 
+    -- Don't bother looking into this.
+    if runningUMM and onlinePlay then
+        if leftSide then
+            send(messageStart..tostring(getPropertyFromGroup('notes', id, 'gfNote') or 
+            noteType == 'GF Sing'));
+            return getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing';
+        end
+        local copy = forFuckSake;
+        forFuckSake = true;
+        return copy;
+    end
+
+    -- we check if the note is an gf note of some kind
+    return getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing';
+end
+
+-- related to dealing with UMM bugs. 
+-- Don't bother looking into this.
+function onReceive(message)
+    if message:find("BulletDad ") then
+        message = message:sub(11, #message);
+        if message == "true" then
+            forFuckSake = true;
+        elseif message == "false" then
+            forFuckSake = false;
+        end
+        opponentNoteHit(nil,nil,nil,true);
+    end
+end
+
+
 function opponentNoteHit(id, direction, noteType, isSustainNote)
     -- we check if the note is an Sustain Note
     if isSustainNote then
-        -- we check if the note is an gf note of some kind
-        if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
+        -- we check stuff(look at the last return inside the function)
+        if gfCondition("BulletDad ", id, noteType) then
             setProperty('gf.holdTimer', 0);
         else
             setProperty('dad.holdTimer', 0);

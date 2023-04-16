@@ -16,8 +16,9 @@
         - `alignment` in `setTextAlignment()` was number instead of "left" | "right" | "center".
         - The word "Indices" was misspelled as "Indicies" in `addAnimationByIndices()` and `addAnimationByIndicesLoop()`.
         - `color` in `setTextBorder()` was string | common_colors instead of number.
-        - version was number instead of string.
+        - `version` was number instead of string.
         - `onCountdownStarted` was missing in callbacks.
+        - "`0xFFFFFFFF` or `FFFFFF` format" replaced with "`0xAARRGGBB` or `RRGGBB` format".
 ]]--
 
 --- Common colors that may be used. Just a helper object.
@@ -561,7 +562,8 @@ defaultOpponentStrumY3 = 0
 --- The current version of Psych Engine being used
 ---@type string
 version = ''
----@type "windows" | "linux" | "mac" | "browser" | "android" | "unknown" The current build target.
+---The current build target.
+---@type "windows" | "linux" | "mac" | "browser" | "android" | "unknown"
 buildTarget = "windows"
 --- The filename for the working script
 ---@type string
