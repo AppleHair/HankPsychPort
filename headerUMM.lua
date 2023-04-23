@@ -10,13 +10,11 @@
     onReceive(message: string)
     onGameSet(winner: string, forfeit: boolean)
     onResultScreen()
-    onResultStats(left: table, right: table)
-        [1] - name: string 
-        [2] - accuracy: number
-        [3] - misses: number
-        [4] - score: number
-        [5] - average: number
-]]--
+    onResultsQuit()
+    onResultStats(name: table, accuracy: table, misses: table, score: table, average: table)
+        [1] - Left Player
+        [2] - Right Player
+--]]
 
 ----------------------------------------------------------------------------------
     	-- Variables --
