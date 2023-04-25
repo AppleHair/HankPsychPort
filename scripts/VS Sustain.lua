@@ -11,7 +11,11 @@ end
 
 -- the way we set the character's hold timer to 0 every time
 -- a sustain note is being hit helps us hold the sing animation
--- until the sustain is over
+-- until the sustain is over.
+
+-- in this specific mod, we don't want boyfriend to 
+-- have this kind of sustain animation (read what I 
+-- wrote under opponentNoteHit for more context).
 
 -- function goodNoteHit(id, direction, noteType, isSustainNote)
 --     -- we check if the note is an Sustain Note
@@ -26,11 +30,49 @@ end
 -- end
 
 
+-- related to dealing with UMM bugs. 
+-- Don't bother looking into this.
+local forFuckSake = true;
+
+
+local function gfCondition(messageStart, id, noteType)
+    -- related to dealing with UMM bugs. 
+    -- Don't bother looking into this.
+    if runningUMM and onlinePlay then
+        if leftSide then
+            send(messageStart..tostring(getPropertyFromGroup('notes', id, 'gfNote') or 
+            noteType == 'GF Sing'));
+            return getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing';
+        end
+        local copy = forFuckSake;
+        forFuckSake = true;
+        return copy;
+    end
+
+    -- we check if the note is an gf note of some kind
+    return getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing';
+end
+
+-- related to dealing with UMM bugs. 
+-- Don't bother looking into this.
+function onReceive(message)
+    if message:find("BulletDad ") then
+        message = message:sub(11, #message);
+        if message == "true" then
+            forFuckSake = true;
+        elseif message == "false" then
+            forFuckSake = false;
+        end
+        opponentNoteHit(nil,nil,nil,true);
+    end
+end
+
+
 function opponentNoteHit(id, direction, noteType, isSustainNote)
     -- we check if the note is an Sustain Note
     if isSustainNote then
-        -- we check if the note is an gf note of some kind
-        if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
+        -- we check stuff(look at the last return inside the function)
+        if gfCondition("BulletDad ", id, noteType) then
             setProperty('gf.holdTimer', 0);
         else
             setProperty('dad.holdTimer', 0);
@@ -63,6 +105,8 @@ end
 -- 
 -- every character in FNF ONLINE VS. animates the sustain notes in a different way
 -- heres a list of all of the characters and the types they use according to my research:
+-- (this was writen before the new Sportsman and Alien Hominid challanges and I don't have
+-- time to add these into the list, sorry)
 -- 
 -- Hank (Accelerant) - Holder
 -- Tricky (Accelerant) - Holder
@@ -80,17 +124,3 @@ end
 -- Another thing I found out about through my research is that all of boyfriend's sing
 -- animations in every boyfriend character in FNF ONLINE VS. 𝗲𝘅𝗰𝗲𝗽𝘁 𝗳𝗼𝗿 𝘀𝗶𝗻𝗴𝗗𝗢𝗪𝗡 are 𝗿𝗲𝘃𝗲𝗿𝘀𝗲𝗱, and that's why
 -- they look strange.
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- 
--- I can already see the nerd emojis.

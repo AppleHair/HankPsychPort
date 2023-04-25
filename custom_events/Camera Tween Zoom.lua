@@ -1,5 +1,5 @@
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -37,10 +37,13 @@ function onEvent(name, value1, value2)
         -- we split the string into an array of strings
         -- that stores the target zoom and the duration that is required for the tween
 		local tarAndDur = split(trim(value1) , ',');
+        -- we make sure they are numbers
+        tarAndDur[1] = (tonumber(tarAndDur[1]) ~= nil and tonumber(tarAndDur[1]) or 0);
+        tarAndDur[2] = (tonumber(tarAndDur[2]) ~= nil and tonumber(tarAndDur[2]) or 0);
         -- we do the tween
-		doTweenZoom('ZoomEvent', 'camGame', tonumber(tarAndDur[1]), tonumber(tarAndDur[2]), tostring(value2));
+		doTweenZoom('ZoomEvent', 'camGame', tarAndDur[1], tarAndDur[2], value2);
         -- we set defaultCamZoom to the required zoom value
-        setProperty('defaultCamZoom', tonumber(tarAndDur[1]));
+        setProperty('defaultCamZoom', tarAndDur[1]);
         -- we set camZooming to false, so the zoom tween won't be interupted 
         setProperty('camZooming', false);
 	end

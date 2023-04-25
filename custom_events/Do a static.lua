@@ -12,7 +12,7 @@ function onCreate()
     makeAnimatedLuaSprite('Static',(useAccelerantStaticTexture and 'AclrntTrickyStatic' or 'TrickyStatic'), 0, 0);
 	addAnimationByPrefix('Static', 'Stat', 'Stat', 24, true);
 	setGraphicSize('Static',1280,720);
-	setObjectCamera('Static','camHud');
+	setObjectCamera('Static','camHUD');
 	-- setProperty('Static.alpha', 0.6);
 	-- setProperty('Static.visible', false);
 	setProperty('Static.alpha', 0.00001);
@@ -26,7 +26,7 @@ function onCreate()
 	setTextFont('TrickyText', 'impact.ttf');
 	setTextColor('TrickyText', '0xff0000');
 	setTextAlignment('TrickyText', 'center');
-	setObjectCamera('TrickyText','camHud');
+	setObjectCamera('TrickyText','camHUD');
 	setProperty('TrickyText.textField.multiline', false);
 	-- setProperty('TrickyText.visible', false);
 	setProperty('TrickyText.alpha', 0.00001);
@@ -42,7 +42,7 @@ function onCreate()
 end
 
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -169,8 +169,8 @@ function onUpdate(elapsed)
 		elapsedShake = elapsedShake + elapsed;
 		if elapsedShake >= 1 / shakeSpeed then
 			-- we tween the x and y offsets to a random position between -1 and 1 multiplied by shakeIntencity
-			doTweenX('ShakeX','TrickyText.offset', getRandomFloat() * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'Linear');
-			doTweenY('ShakeY','TrickyText.offset', getRandomFloat() * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'Linear');
+			doTweenX('ShakeX','TrickyText.offset', getRandomFloat(0,1) * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'linear');
+			doTweenY('ShakeY','TrickyText.offset', getRandomFloat(0,1) * getRandomInt(-1,1) * shakeIntencity, 1 / shakeSpeed, 'linear');
 			-- because the shake just happened, we set elapsedShake to 0
 			elapsedShake = 0;
 		end

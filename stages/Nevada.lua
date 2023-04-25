@@ -35,7 +35,7 @@ end
 	delimiter - delimiter to use
 ]]
 local function split(s, delimiter)
-    result = {};
+    local result = {};
     -- string.gmatch() explanation: https://www.ibm.com/docs/en/ias?topic=manipulation-stringgmatch-s-pattern#:~:text=Product%20list-,string.gmatch%20(s%2C%20pattern),-Last%20Updated%3A%202021
     for match in (s..delimiter):gmatch('(.-)'..delimiter) do
         table.insert(result, match);
@@ -76,75 +76,64 @@ end
 
 --[[
 -------------------------------------------------------------------
-			onCreate(Post) - Table of contents
+			onCreatePost - Table of contents
 -------------------------------------------------------------------
-	-- Event Related Checks - line 116
+	-- Static Lua Sprites - line 113
 	-----------------------------------
-	-- Static Lua Sprites - line 120
-	-----------------------------------
-		HotdogStation - line 122
-		Rock - line 126
-		Ground - line 130
-		RightCliff - line 133
-		LeftCliff - line 137
-		Sky - line 141
-		SheFrikingFlyy - line 145
+		HotdogStation - line 115
+		Rock - line 119
+		Ground - line 123
+		RightCliff - line 126
+		LeftCliff - line 130
+		Sky - line 134
 
-	-- Animated Lua Sprites - line 149
+	-- Animated Lua Sprites - line 138
 	-----------------------------------
-		helicopter - line 151
-		Deimos & Sanford - line 157
-		Lazer - line 175
-		Speakers - line 181
-		gf-hot - line 184
-		Climbers - line 191
-		HellClown - line 212
+		helicopter - line 140
+		Deimos & Sanford - line 145
+		Lazer - line 163
+		gf-hot - line 169
+		Climbers - line 176
+		Hellclown - line 197
 
-	-- Tips on sprites in Psych Engine Lua - Line 225
+	-- Tips on sprites in Psych Engine Lua - Line 210
 	-----------------------------------
-	-- Offsets - line 235
+	-- Offsets - line 220
 	-----------------------------------
-	-- Adding to PlayState - line 250
+	-- Adding to PlayState - line 235
 	-----------------------------------
-	-- Precaches - line 277
+	-- Precaches - line 257
 	-----------------------------------
-]]
+]]--
 function onCreatePost()
-	-- we add the blood effect script for use with tricky's fall animation
-	addLuaScript('custom_events/Blood Effect', true);
-
 			-- Event Related Checks --
 
 	local summon_hellclown = eventIsCalled('Summon Hellclown');
 
-    		-- Static Lua Sprites --
+			-- Static Lua Sprites --
 	
 	makeLuaSprite('HotdogStation','NevadaHotdog', 1010, 441);
-	setLuaSpriteScrollFactor('HotdogStation', 1.38, 1.35);
+	setScrollFactor('HotdogStation', 1.38, 1.35);
 	scaleObject('HotdogStation', 1.25, 1.25, true);
 
 	makeLuaSprite('Rock','The Rock', -776, 704);
-	setLuaSpriteScrollFactor('Rock', 1.38, 1.35);
+	setScrollFactor('Rock', 1.38, 1.35);
 	scaleObject('Rock', 1.32, 1.32, true);
 	
 	makeLuaSprite('Ground','NevadaGround', -795, 458);
 	scaleObject('Ground', 1.45, 1.45, true);
 	
 	makeLuaSprite('RightCliff','NevadaRightCliff', 1173, -246);
-	setLuaSpriteScrollFactor('RightCliff', 0.5, 0.5);
+	setScrollFactor('RightCliff', 0.5, 0.5);
 	scaleObject('RightCliff', 1.45, 1.45, true);
 
 	makeLuaSprite('LeftCliff','NevadaLeftCliff', -550, -213);
-	setLuaSpriteScrollFactor('LeftCliff', 0.5, 0.5);
+	setScrollFactor('LeftCliff', 0.5, 0.5);
 	scaleObject('LeftCliff', 1.45, 1.45, true);
 	
 	makeLuaSprite('Sky','NevadaSky', -345, -425);
-	setLuaSpriteScrollFactor('Sky', 0.1, 0.1);
+	setScrollFactor('Sky', 0.1, 0.1);
 	scaleObject('Sky', 1.16, 1.16, true);
-	
-	makeLuaSprite('SheFrikingFlyy','GF go bye bye', 170, -70);
-	-- setProperty('SheFrikingFlyy.visible', false);
-	setProperty('SheFrikingFlyy.alpha', 0.00001);
 	
 			-- Animated Lua Sprites --
 	
@@ -153,7 +142,6 @@ function onCreatePost()
 	setScrollFactor('helicopter', 0.4, 0.3);
 	scaleObject('helicopter', 1.15, 1.15, true);
 	
-
 	makeAnimatedLuaSprite('Deimos','Deimos', -423, -224);
 	makeAnimatedLuaSprite('Sanford','Sanford', 1210, -215);
 
@@ -162,7 +150,7 @@ function onCreatePost()
 	thing[2] = 'Sanford';
 
 	for i=1,2 do
-		setLuaSpriteScrollFactor(thing[i], 0.5, 0.5);
+		setScrollFactor(thing[i], 0.5, 0.5);
 		addAnimationByPrefix(thing[i], 'Boop', thing[i] .. ' Boop', 24, false);
 		addAnimationByPrefix(thing[i], 'Appear', thing[i] .. ' Appear', 24, false);
 		addAnimationByPrefix(thing[i], 'Shoot', thing[i] .. ' Shoot', 24, false);
@@ -177,9 +165,6 @@ function onCreatePost()
 	addAnimationByPrefix('Lazer', 'Boop', 'LazerDot Boop', 24, false);
 	scaleObject('Lazer', 1.5, 1.5, true);
 	setProperty('Lazer.visible', false);
-
-	makeAnimatedLuaSprite('Speakers','speakers', 205, 250);
-	addAnimationByPrefix('Speakers', 'Boop', 'speakers', 24, false);
 
 	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
@@ -261,18 +246,13 @@ function onCreatePost()
 		addLuaSprite('HellClownLeftHand', false);
 	end
 	addLuaSprite('Ground',false);
-	addLuaSprite('Speakers',false);
 	for i=1,3 do
 		addLuaSprite('climber' .. i,false);
 	end
 	addLuaSprite('gf-hot', false);
-	addLuaSprite('SheFrikingFlyy',true);
 	addLuaSprite('HotdogStation',true);
 	addLuaSprite('Rock',true);
 	addLuaSprite('Lazer',true);
-	if eventIsCalled('Summon Hellclown') then
-		addLuaSprite('HellClownLight',false);
-	end
 
 			-- Precaches --
 
@@ -280,10 +260,8 @@ function onCreatePost()
 
 	precacheImage('Climbers');
 	precacheImage('GFHotdog');
-	precacheImage('GF go bye bye');
 	precacheImage('LazerDot');
 	precacheImage('helicopter');
-	precacheImage('speakers');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
 	if summon_hellclown then
@@ -311,19 +289,19 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 		-- Camera Shit --
 ----------------------------------------------------------------------------------------------------------------------
-dadCamPos = {419.5, 398.5};
-bfCamPos = {705.5, 398.5};
+DadCamPos = {419.5, 398.5};
+BfCamPos = {705.5, 398.5};
 
 function onMoveCamera(focus)
 	if focus == 'dad' then
 		-- we override the character's camera positions
-		setProperty('camFollow.x', dadCamPos[1]);
-		setProperty('camFollow.y', dadCamPos[2]);
+		setProperty('camFollow.x', DadCamPos[1]);
+		setProperty('camFollow.y', DadCamPos[2]);
 	end
 	if focus == 'boyfriend' then
 		-- we override the character's camera positions
-		setProperty('camFollow.x', bfCamPos[1]);
-		setProperty('camFollow.y', bfCamPos[2]);
+		setProperty('camFollow.x', BfCamPos[1]);
+		setProperty('camFollow.y', BfCamPos[2]);
 	end
 end
 
@@ -332,11 +310,11 @@ end
 ----------------------------------------------------------------------------------------------------------------------
 
 -- used to make Deimos stop his idle animation
-stopDeimos = true;
+StopDeimos = true;
 -- used to make Sanford stop his idle animation
-stopSanford = true;
+StopSanford = true;
 -- used to make hotdog gf stop her idle animation
-stopHotDogGF = true;
+StopHotDogGF = true;
 -- used to make the lazer stop his idle animation
 local stopLazer = true;
 -- used to make the climbers climb every section hit
@@ -365,8 +343,8 @@ function onEvent(name, value1, value2)
 		setProperty('helicopter.velocity.x', 430);
 	elseif name == 'Deimos&Sanford Appear' then
 		-- we make the camera positions higher
-		dadCamPos[2] = dadCamPos[2] - 80;
-		bfCamPos[2] = bfCamPos[2] - 80;
+		DadCamPos[2] = DadCamPos[2] - 80;
+		BfCamPos[2] = BfCamPos[2] - 80;
 		-- setProperty('Deimos.visible', true);
 		setProperty('Deimos.alpha', 1);
 		-- setProperty('Sanford.visible', true);
@@ -374,53 +352,30 @@ function onEvent(name, value1, value2)
 		playAnim('Deimos', 'Appear', false);
 		playAnim('Sanford', 'Appear', false);
 		-- we stop their idle
-		stopDeimos = true; 
-		stopSanford = true;
+		StopDeimos = true; 
+		StopSanford = true;
 		runTimer('HandsUpTimer', 0.3, 1);
 	elseif name == 'Play Animation' then
 		if value2 == 'gf' then
 			if value1 == 'Enter' then
-				-- we make the lazer invisible, but not for long..
-				-- setProperty('Lazer.visible', false);
-				setProperty('Lazer.alpha', 0.00001);
-
-				-- setProperty('SheFrikingFlyy.visible', true);
-				setProperty('SheFrikingFlyy.alpha', 1);
-				setProperty('SheFrikingFlyy.velocity.x', 15000);
-				-- SheFrikingFlyy!!
-			end
+                -- we make the lazer invisible, but not for long..
+                -- setProperty('Lazer.visible', false);
+                setProperty('Lazer.alpha', 0.00001);
+            end
 			if value1 == 'Turn' then
-				-- we set blood position
-				triggerEvent('Set Blood Effect Pos', 220, -140);
 				-- now the Lazer will be invisible forever. HAHAHAAH
-				setProperty('Lazer.visible', false);
-				stopLazer = true;
-				-- we make the character stunned to prevent him from playing the idle animation
-				setProperty('gf.stunned', true);
-				-- we set specialAnim to false to prevent him from playing the idle animation anyway
-				setProperty('gf.specialAnim', false);
-
-				-- I see a lot of people who make separate sprites for character animations which
-				-- shouldn't be followed by the idle animation. This can cause lag problems if not done
-				-- right (without the alpha = 0.00001 thing), uses more RAM then It needs to 
-				-- (because of all the FlxSprite object that are created) and makes your code unorganized.
-				-- There are also people who make separate characters, which is better performance wise,
-				-- but worse RAM wise, because the objects of the Character class are MUCH heavier.
-				
-				-- The code above reaches the same goal, but without making any extra 
-				-- sprites or characters. just one character for all of the animations.
+                setProperty('Lazer.visible', false);
+                stopLazer = true;
 			end
 			if value1 == 'Fall' then
-				-- we play the blood animation
-				triggerEvent('Add Blood Effect', '', '');
-				-- and now he falls down. bye bye!
-				setProperty('gf.velocity.y', -2500);
-				setProperty('gf.acceleration.y', 9000);
-			end
+                -- and now he falls down. bye bye!
+                setProperty('gf.velocity.y', -2500);
+                setProperty('gf.acceleration.y', 9000);
+            end
 		end
 	elseif name == 'HotDogGF Appears' then
 		-- we stop her idle animation from playing
-		stopHotDogGF = true;
+		StopHotDogGF = true;
 		-- we make her visible
 		-- setProperty('gf-hot.visible', true);
 		setProperty('gf-hot.alpha', 1);
@@ -448,28 +403,28 @@ function onEvent(name, value1, value2)
 		climb = false;
 	elseif name == 'Summon Hellclown' then
 		if hellClownTweenDir then
-			dadCamPos[2] = dadCamPos[2] + 65;
-			bfCamPos[2] = bfCamPos[2] + 65;
+			DadCamPos[2] = DadCamPos[2] + 65;
+			BfCamPos[2] = BfCamPos[2] + 65;
 			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 4, 'quadOut');
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 4, 'quadout');
 			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 4, 'quadOut');
-			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadOut');
+			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 4, 'quadout');
+			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 4, 'quadout');
+			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 4, 'quadout');
+			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 4, 'quadout');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadout');
 			hellClownTweenDir = false;
 		else
-			dadCamPos[2] = dadCamPos[2] - 65;
-			bfCamPos[2] = bfCamPos[2] - 65;
+			DadCamPos[2] = DadCamPos[2] - 65;
+			BfCamPos[2] = BfCamPos[2] - 65;
 			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 4, 'quadOut');
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 4, 'quadout');
 			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 4, 'quadOut');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadOut');
+			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 4, 'quadout');
+			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 4, 'quadout');
+			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadout');
+			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 4, 'quadout');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadout');
 			hellClownTweenDir = true;
 		end
 	end
@@ -524,16 +479,16 @@ function onTimerCompleted(tag, loops, loopsLeft)
 			-- make Deimos shoot
 			playAnim('Deimos', 'Shoot', false);
 			-- stop his idle animation
-			stopDeimos = true;
+			StopDeimos = true;
 		end
 		-- if the middle or left climber appears
 		if appearList[1] == 1 or appearList[2] == 1 then
 			-- make Sanford shoot
 			playAnim('Sanford', 'Shoot', false);
 			-- stop his idle animation
-			stopSanford = true;
+			StopSanford = true;
 		end
-		if stopDeimos and stopSanford then
+		if StopDeimos and StopSanford then
 			setProperty('Lazer.alpha', 0.00001);
 		end
 		for i=1, #climberSkin do -- #climberSkin = #appearList = 3
@@ -563,7 +518,7 @@ function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if not gfName == 'tricky' then
 		return;
 	end
-	if noteType == 'GF Sing' then
+	if getPropertyFromGroup('notes', id, 'gfNote') or noteType == 'GF Sing' then
 		-- setProperty('Lazer.visible', false);
 		setProperty('Lazer.alpha', 0.00001);
 	end
@@ -580,7 +535,7 @@ function onBeatHit()
 	-- when tricky is back to his idle animation, we make the lazer visible again
 	if ((getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
 		getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' and
-		(not stopDeimos) and (not stopDeimos)) or ((not stopDeimos) and (not stopDeimos) and gfName ~= 'tricky') then
+		(not StopDeimos) and (not StopDeimos)) or ((not StopDeimos) and (not StopDeimos) and gfName ~= 'tricky') then
 		-- setProperty('Lazer.visible', true);
 		setProperty('Lazer.alpha', 1);
 	end
@@ -591,10 +546,10 @@ function onBeatHit()
         --Boop handler--
 ---------------------------------------------------
 	-- you know what this does
-	if not stopDeimos then
+	if not StopDeimos then
 		playAnim('Deimos', 'Boop', true);
 	end
-	if not stopSanford then
+	if not StopSanford then
 		playAnim('Sanford', 'Boop', true);
 	end
 	if not stopLazer then
@@ -613,7 +568,7 @@ function onBeatHit()
 			setProperty('Lazer.y', -10);
 		end 
 	end
-	if not stopHotDogGF then
+	if not StopHotDogGF then
 		-- we make gf move her head left and right
 		if hotdogGFDanceDir then
 			playAnim('gf-hot', 'Boop-left', true);
@@ -623,8 +578,6 @@ function onBeatHit()
 			hotdogGFDanceDir = true;
 		end
 	end
-	-- the speakers always do the idle animation
-	playAnim('Speakers', 'Boop', true);
 end
 
 ---------------------------------------------------
@@ -637,8 +590,8 @@ local trickyBehindGround = false;
 local trickyIsGone = false;
 -- true if hotdog girlfriend stopped walking
 local HotDogGFStoppedWalking = false;
--- we use an array to itrate over the relevant sprites
-local spriteDestroyerArray = {'SheFrikingFlyy', 'helicopter'};
+-- tells us if the helicopter is removed
+local helicopterRemoved = false;
 
 function onUpdate(elapsed)
 
@@ -659,12 +612,12 @@ function onUpdate(elapsed)
 	-- if the sprite is completely visible and the current animation is finished
 	-- then let the sprite play it's idle animation 
 	if getProperty('Deimos.alpha') == 1 and getProperty('Deimos.visible') and 
-	  getProperty('Deimos.animation.curAnim.finished') and stopDeimos then
-		stopDeimos = false;
+	  getProperty('Deimos.animation.curAnim.finished') and StopDeimos then
+		StopDeimos = false;
 	end
 	if getProperty('Sanford.alpha') == 1 and getProperty('Sanford.visible') and 
-	  getProperty('Sanford.animation.curAnim.finished') and stopSanford then
-		stopSanford = false;
+	  getProperty('Sanford.animation.curAnim.finished') and StopSanford then
+		StopSanford = false;
 	end
 	if getProperty('Lazer.alpha') == 1 and getProperty('Lazer.visible') and 
 	  getProperty('Lazer.animation.curAnim.finished') and stopLazer then
@@ -696,23 +649,22 @@ function onUpdate(elapsed)
 		-- now that she stopped, she needs to do
 		-- the idle animation, so we need to stop stoping her
 		-- from doing the idle animation.
-		stopHotDogGF = false;
+		StopHotDogGF = false;
 		HotDogGFStoppedWalking = true;
 	end
 
 	
-	-- The Sprite Destroyer
+	-- The Helicopter Destroyer
 	-----------------------------------------------
 
-	-- here we make sure every sprite that goes off-screen gets removed
-	for i = #spriteDestroyerArray, 1, -1 do
-		if getProperty(spriteDestroyerArray[i] .. '.x') >= 1700 then
-			removeLuaSprite(v, true);
-			-- because the sprite doesn't exist enymore,
-			-- we remove it from the array, to avoid dealing
-			-- with neverClimb for checking attributes on an 
-			-- object that doesn't exist.
-			table.remove(spriteDestroyerArray, i);
+	-- we make sure that if the helicopter goes off-screen, it gets removed
+	if not helicopterRemoved then
+		if getProperty('helicopter.x') >= 1700 then
+			-- we remove the helicopter
+			removeLuaSprite('helicopter', true);
+			-- we set this value to true in order
+            -- to not check this again
+			helicopterRemoved = true;
 		end
 	end
 end

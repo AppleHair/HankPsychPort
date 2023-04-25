@@ -22,13 +22,16 @@ end
     Checks if a string starts with a curtain
     sequence of characters
 
-    start - A string value of the initual sequence of characters
-            that needs to be checked
+    start - A string value of the sequence of characters
+            that needs to be checked from the start
 --]]
 -- this function is being added to the string library/module
 function string:startswith(start)
     -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
-    -- # means the length of the array or string (table)
+    -- # - the length of an table(array) / string
+
+--"type 'string|number' doesn't match type 'string'" what an idiot...
+---@diagnostic disable-next-line: param-type-mismatch 
     return self:sub(1, #start) == start;
 end
 
@@ -36,16 +39,16 @@ end
 -- this is being set later
 local bulletNotesArray = {};
 
--- stores the x and y positions of the shot ray
-local shotRayPos = {250, 350};
-
-
+-- stores the x and y offsets of the shot ray
+local shotRayPos = {300, 425};
 
 function onCreatePost()
     -- adding the required script
     addLuaScript('custom_events/Shot Ray Effect', true);
 
     -- setting the shot ray position
+    shotRayPos[1] = defaultOpponentX + shotRayPos[1];
+    shotRayPos[2] = defaultOpponentY + shotRayPos[2];
     triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2]);
 
     -- getting Bullet notes' strum time
@@ -56,6 +59,9 @@ function onCreatePost()
             table.insert(bulletNotesArray, getPropertyFromGroup('unspawnNotes', i, 'strumTime'));
         end
     end
+
+    -- version = v0.x.y + 𝗨𝗠𝗠 0.z
+    runningUMM = version:find("UMM") ~= nil;
 end
 
 
@@ -82,10 +88,6 @@ local shootAgainNextFrame = false;
 -- GOSH I'M SO HAPPY I'M FINALLY OVER ALL THIS SHIT!!!
 
 function onUpdatePost(elapsed)
-    -- character must be Hank!!
-    if dadName ~= 'hank' then
-        return;
-    end
 
                     -- Hank shoot animation section --
 
@@ -125,13 +127,13 @@ function onUpdatePost(elapsed)
         -- playing shoot animation
         if singLEFT then
             triggerEvent('Play Animation', 'shootLEFT', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] - 50 , shotRayPos[2] + 10);
 		elseif singRIGHT then
             triggerEvent('Play Animation', 'shootRIGHT', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 20, shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 75, shotRayPos[2] + 25);
 		elseif singDOWN then
             triggerEvent('Play Animation', 'shootDOWN', 'dad');
-            triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2] + 10);
+            triggerEvent('Set Shot Ray Pos', shotRayPos[1] + 50, shotRayPos[2] + 50);
 		else-- that's why we don't need to check for singUP
             triggerEvent('Play Animation', 'shootUP', 'dad');
             triggerEvent('Set Shot Ray Pos', shotRayPos[1], shotRayPos[2]);
@@ -155,18 +157,19 @@ function onUpdatePost(elapsed)
             end
         end
     end
+
+    -- UMM has different conditions for
+    -- the purpose of the code ahead
+    if runningUMM then
+        return;
+    end
+
     -- if the player just pressed backspace
     if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.BACKSPACE') then
         -- make hank do the hey animation (easter egg)
         triggerEvent('Play Animation', 'hey', 'dad');
     end
 end
-
-
-
-
-
-
 
 
 
