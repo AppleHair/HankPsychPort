@@ -3600,6 +3600,11 @@
 						61280.4878048781,
 						1,
 						0
+					],
+					[
+						60365.8536585366,
+						4,
+						274.390243902439
 					]
 				],
 				"typeOfSection": 0,
@@ -7405,11 +7410,6 @@
 						0
 					],
 					[
-						110853.658536585,
-						1,
-						0
-					],
-					[
 						110487.804878049,
 						1,
 						0
@@ -7436,6 +7436,11 @@
 						5,
 						0,
 						"Bullet Note"
+					],
+					[
+						110853.658536585,
+						3,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -7703,11 +7708,6 @@
 						0
 					],
 					[
-						116707.317073171,
-						1,
-						0
-					],
-					[
 						115975.609756097,
 						1,
 						0,
@@ -7760,8 +7760,19 @@
 						0
 					],
 					[
+						116890.243902439,
+						1,
+						0,
+						"Bullet Note"
+					],
+					[
 						116707.317073171,
-						5,
+						3,
+						0
+					],
+					[
+						116707.317073171,
+						7,
 						0
 					],
 					[
@@ -7806,11 +7817,6 @@
 						0
 					],
 					[
-						118353.658536585,
-						2,
-						0
-					],
-					[
 						117439.024390244,
 						3,
 						0,
@@ -7819,12 +7825,6 @@
 					[
 						117987.804878049,
 						1,
-						0,
-						"Bullet Note"
-					],
-					[
-						118353.658536585,
-						0,
 						0,
 						"Bullet Note"
 					],
@@ -7906,6 +7906,17 @@
 					[
 						117804.87804878,
 						6,
+						0
+					],
+					[
+						118353.658536585,
+						1,
+						0,
+						"Bullet Note"
+					],
+					[
+						118353.658536585,
+						0,
 						0
 					]
 				],
@@ -9799,6 +9810,46 @@
 				"bpm": 164
 			},
 			{
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 164
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"altAnim": false,
 				"typeOfSection": 0,
@@ -10208,9 +10259,9 @@
 		],
 		"player2": "hank",
 		"song": "Accelerant REDUX",
-		"needsVoices": false,
 		"validScore": true,
 		"stage": "Nevada",
+		"needsVoices": false,
 		"bpm": 164,
 		"speed": 3.1
 	}
