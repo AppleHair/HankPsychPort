@@ -28,7 +28,10 @@ end
 -- this function is being added to the string library/module
 function string:startswith(start)
     -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
-    -- # means the length of the array or string (table)
+    -- # - the length of an table(array) / string
+
+--"type 'string|number' doesn't match type 'string'" what an idiot...
+---@diagnostic disable-next-line: param-type-mismatch 
     return self:sub(1, #start) == start;
 end
 

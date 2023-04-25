@@ -8,7 +8,7 @@ function onCreate()
     runningUMM = version:find("UMM") ~= nil;
 end
 
--- related to dealing with UMM bugs. 
+-- Related to dealing with UMM bugs. 
 -- Don't bother looking into this.
 local forFuckSake = true;
 
@@ -31,7 +31,7 @@ local function BulletCondition(messageStart, id, noteType)
     return getPropertyFromGroup('notes', id, 'gfNote') or noteType ~= 'Bullet Note';
 end
 
--- related to dealing with UMM bugs. 
+-- Related to dealing with UMM bugs. 
 -- Don't bother looking into this.
 function onReceive(message)
     if message:find("BulletMiss ") then
