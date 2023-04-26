@@ -406,25 +406,25 @@ function onEvent(name, value1, value2)
 			DadCamPos[2] = DadCamPos[2] + 65;
 			BfCamPos[2] = BfCamPos[2] + 65;
 			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 4, 'quadout');
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 3, 'cubeout');
 			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 4, 'quadout');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 4, 'quadout');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 4, 'quadout');
-			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 4, 'quadout');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 4, 'quadout');
+			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 3, 'cubeout');
+			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 3, 'cubeout');
+			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 3, 'cubeout');
+			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 3, 'cubeout');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 3, 'cubeout');
 			hellClownTweenDir = false;
 		else
 			DadCamPos[2] = DadCamPos[2] - 65;
 			BfCamPos[2] = BfCamPos[2] - 65;
 			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 4, 'quadout');
+				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 3, 'cubeout');
 			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 4, 'quadout');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 4, 'quadout');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 4, 'quadout');
-			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 4, 'quadout');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 4, 'quadout');
+			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 3, 'cubeout');
+			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 3, 'cubeout');
+			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 3, 'cubeout');
+			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
+			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
 			hellClownTweenDir = true;
 		end
 	end
