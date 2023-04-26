@@ -108,7 +108,9 @@ end
 function onCreatePost()
 			-- Event Related Checks --
 
-	local summon_hellclown = eventIsCalled('Summon Hellclown');
+	Summon_hellclown = eventIsCalled('Summon Hellclown');
+
+	Climbers_appear = eventIsCalled('Start climbers');
 
 			-- Static Lua Sprites --
 	
@@ -173,28 +175,30 @@ function onCreatePost()
 	-- setProperty('gf-hot.visible', false);
 	setProperty('gf-hot.alpha', 0.00001);
 	
-	makeAnimatedLuaSprite('climber1','Climbers', 330, -147);
-	makeAnimatedLuaSprite('climber2','Climbers', -300, 180);
-	makeAnimatedLuaSprite('climber3','Climbers', 1170, 208);
-	setProperty('climber3.angle', 5);
-	setProperty('climber2.angle', -3.5);
+	if Climbers_appear then
+		makeAnimatedLuaSprite('climber1','Climbers', 330, -147);
+		makeAnimatedLuaSprite('climber2','Climbers', -300, 180);
+		makeAnimatedLuaSprite('climber3','Climbers', 1170, 208);
+		setProperty('climber3.angle', 5);
+		setProperty('climber2.angle', -3.5);
 
-	local thing = {};
-	thing[1] = 'grunt';
-	thing[2] = 'agent';
-	thing[3] = 'eng';
+		local thing = {};
+		thing[1] = 'grunt';
+		thing[2] = 'agent';
+		thing[3] = 'eng';
 
-	for i=1,3 do
-		for j=1,3 do
-			addAnimationByIndices('climber' .. i, 'Climb' .. j, thing[j] .. 'climbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
-			addAnimationByIndices('climber' .. i, 'Shoot' .. j, thing[j] .. 'climbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+		for i=1,3 do
+			for j=1,3 do
+				addAnimationByIndices('climber' .. i, 'Climb' .. j, thing[j] .. 'climbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
+				addAnimationByIndices('climber' .. i, 'Shoot' .. j, thing[j] .. 'climbanddie', '16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28', 24);
+			end
+			-- setProperty('climber' .. i .. '.visible', false);
+			setProperty('climber' .. i .. '.alpha', 0.00001);
 		end
-		-- setProperty('climber' .. i .. '.visible', false);
-		setProperty('climber' .. i .. '.alpha', 0.00001);
+		thing = nil;
 	end
-	thing = nil;
 
-	if summon_hellclown then
+	if Summon_hellclown then
 		makeAnimatedLuaSprite('HellClown','HellclownIdle', -100, 535);
 		addAnimationByPrefix('HellClown', 'Idle', 'HellClownIdle', 16, true);
 
@@ -240,14 +244,16 @@ function onCreatePost()
 	addLuaSprite('RightCliff',false);
 	addLuaSprite('Deimos',false);
 	addLuaSprite('Sanford',false);
-	if summon_hellclown then
+	if Summon_hellclown then
 		addLuaSprite('HellClown', false);
 		addLuaSprite('HellClownRightHand', false);
 		addLuaSprite('HellClownLeftHand', false);
 	end
 	addLuaSprite('Ground',false);
-	for i=1,3 do
-		addLuaSprite('climber' .. i,false);
+	if Climbers_appear then
+		for i=1,3 do
+			addLuaSprite('climber' .. i,false);
+		end
 	end
 	addLuaSprite('gf-hot', false);
 	addLuaSprite('HotdogStation',true);
@@ -258,13 +264,15 @@ function onCreatePost()
 
 	precacheSound('death sound');
 
-	precacheImage('Climbers');
+	if Climbers_appear then
+		precacheImage('Climbers');
+	end
 	precacheImage('GFHotdog');
 	precacheImage('LazerDot');
 	precacheImage('helicopter');
 	precacheImage('Sanford');
 	precacheImage('Deimos');
-	if summon_hellclown then
+	if Summon_hellclown then
 		precacheImage('HellclownIdle');
 		precacheImage('HellclownHand');
 	end
@@ -414,19 +422,19 @@ function onEvent(name, value1, value2)
 			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 3, 'cubeout');
 			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 3, 'cubeout');
 			hellClownTweenDir = false;
-		else
-			DadCamPos[2] = DadCamPos[2] - 65;
-			BfCamPos[2] = BfCamPos[2] - 65;
-			for i=1, #hellclownTable do
-				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 3, 'cubeout');
-			end
-			doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 3, 'cubeout');
-			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 3, 'cubeout');
-			doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 3, 'cubeout');
-			doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
-			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
-			hellClownTweenDir = true;
+			return;
 		end
+		DadCamPos[2] = DadCamPos[2] - 65;
+		BfCamPos[2] = BfCamPos[2] - 65;
+		for i=1, #hellclownTable do
+			doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3], 3, 'cubeout');
+		end
+		doTweenColor('HankHCTween', 'dadGroup', 'ffc9c9', 3, 'cubeout');
+		doTweenColor('BFHCTween', 'boyfriendGroup', 'ffc9c9', 3, 'cubeout');
+		doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 3, 'cubeout');
+		doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
+		doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
+		hellClownTweenDir = true;
 	end
 end
 
@@ -594,18 +602,6 @@ local HotDogGFStoppedWalking = false;
 local helicopterRemoved = false;
 
 function onUpdate(elapsed)
-
-	-- Climbers Visibility handler
-	-----------------------------------------------
-	for i=1,3 do
-		-- if the current animation is a shot animation and it's
-		-- finished, then make the sprite invisible
-		if getProperty('climber' .. i .. '.animation.curAnim.finished') and 
-			getProperty('climber' .. i .. '.animation.curAnim.name'):sub(1, 5) == 'Shoot' then
-			-- setProperty('climber' .. i .. '.visible', false);
-			setProperty('climber' .. i .. '.alpha', 0.00001);
-		end
-	end
 	
 	-- Idle Animation Release handler
 	-----------------------------------------------
@@ -665,6 +661,22 @@ function onUpdate(elapsed)
 			-- we set this value to true in order
             -- to not check this again
 			helicopterRemoved = true;
+		end
+	end
+
+	-- Climbers Visibility handler
+	-----------------------------------------------
+	if not Climbers_appear then
+		return;
+	end
+	
+	for i=1,3 do
+		-- if the current animation is a shot animation and it's
+		-- finished, then make the sprite invisible
+		if getProperty('climber' .. i .. '.animation.curAnim.finished') and 
+			getProperty('climber' .. i .. '.animation.curAnim.name'):sub(1, 5) == 'Shoot' then
+			-- setProperty('climber' .. i .. '.visible', false);
+			setProperty('climber' .. i .. '.alpha', 0.00001);
 		end
 	end
 end
