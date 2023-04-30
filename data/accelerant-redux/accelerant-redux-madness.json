@@ -2973,11 +2973,6 @@
 						0
 					],
 					[
-						49573.1707317073,
-						7,
-						0
-					],
-					[
 						48841.4634146342,
 						7,
 						0
@@ -3036,6 +3031,16 @@
 					[
 						48475.6097560976,
 						0,
+						0
+					],
+					[
+						49573.1707317073,
+						4,
+						0
+					],
+					[
+						49573.1707317073,
+						6,
 						0
 					]
 				],
@@ -4001,7 +4006,7 @@
 					[
 						60365.8536585366,
 						4,
-						274.390243902439
+						320.121951219512
 					]
 				],
 				"sectionBeats": 4,
@@ -4856,18 +4861,6 @@
 						"Fire Note"
 					],
 					[
-						74634.1463414634,
-						1,
-						0,
-						"Fire Note"
-					],
-					[
-						75000,
-						3,
-						0,
-						"Fire Note"
-					],
-					[
 						75731.7073170731,
 						3,
 						0,
@@ -4917,6 +4910,18 @@
 						75731.7073170731,
 						1,
 						274.390243902439
+					],
+					[
+						74634.1463414634,
+						1,
+						0,
+						"Fire Note"
+					],
+					[
+						75000,
+						3,
+						0,
+						"Fire Note"
 					]
 				],
 				"sectionBeats": 4,
@@ -4942,31 +4947,13 @@
 						"No Animation"
 					],
 					[
-						77378.0487804878,
-						1,
-						0,
-						"No Animation"
-					],
-					[
 						76829.2682926829,
 						3,
 						0,
 						"Fire Note"
 					],
 					[
-						77195.1219512195,
-						2,
-						0,
-						"Fire Note"
-					],
-					[
 						76097.5609756097,
-						0,
-						0,
-						"Fire Note"
-					],
-					[
-						76463.4146341463,
 						0,
 						0,
 						"Fire Note"
@@ -5017,14 +5004,44 @@
 						0
 					],
 					[
-						77195.1219512195,
+						76280.487804878,
+						2,
 						0,
-						0
+						"Fire Note"
+					],
+					[
+						76463.4146341463,
+						0,
+						0,
+						"Fire Note"
 					],
 					[
 						77378.0487804878,
 						2,
+						0,
+						"No Animation"
+					],
+					[
+						77378.0487804878,
+						3,
 						0
+					],
+					[
+						77195.1219512195,
+						1,
+						0
+					],
+					[
+						77378.0487804878,
+						0,
+						0,
+						"Fire Note"
+					],
+					[
+						77103.6585365853,
+						0,
+						0,
+						"Fire Note"
 					]
 				],
 				"sectionBeats": 4,
@@ -5038,75 +5055,14 @@
 				"typeOfSection": 0,
 				"sectionNotes": [
 					[
-						77743.9024390244,
-						0,
-						0,
-						"Fire Note"
-					],
-					[
-						77926.8292682926,
-						2,
-						0,
-						"Fire Note"
-					],
-					[
-						78109.7560975609,
-						0,
-						0,
-						"Fire Note"
-					],
-					[
-						78292.6829268292,
-						2,
-						0,
-						"Fire Note"
-					],
-					[
-						78658.5365853658,
-						1,
-						0,
-						"Fire Note"
-					],
-					[
 						78841.4634146341,
 						3,
 						0,
 						"Fire Note"
 					],
 					[
-						77560.9756097561,
-						2,
-						0,
-						"Fire Note"
-					],
-					[
 						77652.4390243902,
 						3,
-						0
-					],
-					[
-						77560.9756097561,
-						1,
-						0
-					],
-					[
-						77743.9024390244,
-						2,
-						0
-					],
-					[
-						77926.8292682926,
-						1,
-						0
-					],
-					[
-						78018.2926829268,
-						3,
-						0
-					],
-					[
-						78109.7560975609,
-						2,
 						0
 					],
 					[
@@ -5138,6 +5094,49 @@
 						78841.4634146341,
 						1,
 						0
+					],
+					[
+						78658.5365853658,
+						2,
+						0,
+						"No Animation"
+					],
+					[
+						77743.9024390244,
+						2,
+						0
+					],
+					[
+						77560.9756097561,
+						1,
+						0
+					],
+					[
+						78109.7560975609,
+						2,
+						0
+					],
+					[
+						77926.8292682926,
+						1,
+						0
+					],
+					[
+						78018.2926829268,
+						3,
+						0
+					],
+					[
+						78109.7560975609,
+						0,
+						0,
+						"Fire Note"
+					],
+					[
+						77743.9024390244,
+						0,
+						0,
+						"Fire Note"
 					]
 				],
 				"sectionBeats": 4,
@@ -10218,6 +10217,86 @@
 				"bpm": 164
 			},
 			{
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"sectionBeats": 4,
+				"altAnim": false,
+				"gfSection": false,
+				"bpm": 164,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 164
+			},
+			{
+				"sectionBeats": 4,
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"gfSection": false,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 164
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"gfSection": false,
+				"altAnim": false,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"bpm": 164,
+				"sectionBeats": 4,
+				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
 				"gfSection": false,
 				"altAnim": false,
 				"typeOfSection": 0,
@@ -10230,9 +10309,9 @@
 		],
 		"gfVersion": "gf-hank",
 		"song": "Accelerant REDUX",
-		"needsVoices": false,
 		"validScore": true,
 		"stage": "Nevada",
+		"needsVoices": false,
 		"speed": 3.1,
 		"bpm": 164
 	}

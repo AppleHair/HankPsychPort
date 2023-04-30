@@ -6,6 +6,7 @@
 ----------------------------------------------------------------------------------
 
 --[[
+    opponentNoteMiss(id: number, noteData: number, noteType: string, isSustainNote: boolean)
     onTaunt(number: 1|2|3|4, character: "boyfriend" | "dad")
     onReceive(message: string)
     onGameSet(winner: string, forfeit: boolean)
