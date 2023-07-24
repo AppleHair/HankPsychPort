@@ -92,9 +92,50 @@ function onSpawnNote(id, noteData, noteType, isSustainNote)
 	end
 end
 
+-- An array of indexes of the current missed
+-- fire notes' splashes on the grpNoteSplashes group.
+local MissSplashIndex = {};
+
 function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Fire Note' then
-		-- plays the sound
+		-- we get the length of the grpNoteSplashes group
+		local length = getProperty('grpNoteSplashes.length');
+		-- we itrate on every splash in grpNoteSplashes
+		for i = 0, length do
+			-- if we're at the groups length
+			if i == length then
+				-- then the new splash will
+				-- be added to the end of
+				-- the group, and its index 
+				-- will be the group's length
+				table.insert(MissSplashIndex, length);
+				break;
+			end
+			-- if the current splash doesn't exist
+			if not getPropertyFromGroup('grpNoteSplashes', i, 'exists') then
+				-- then the new splash will
+				-- be recycled as this splash,
+				-- and its index will be the 
+				-- same as this one's.
+				table.insert(MissSplashIndex, i);
+				break;
+			end
+		end
+		-- we play the burnSound
 		playSound('burnSound');
+	end
+end
+
+function onUpdatePost(elapsed)
+	-- if we have a missed fire note on the current frame
+	if MissSplashIndex[1] ~= nil then
+		-- we itrate on every splash
+		for i,v in ipairs(MissSplashIndex) do
+			-- we set it's offset to a good-looking value
+			setPropertyFromGroup('grpNoteSplashes', v, 'offset.x', -20);
+			setPropertyFromGroup('grpNoteSplashes', v, 'offset.y', -20);
+		end
+		-- we make MissSplashIndex empty again.
+		MissSplashIndex = {};
 	end
 end
