@@ -40,11 +40,11 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
 				setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
 				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
 				setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
 				setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
+				setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
 				setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
 				setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
 										-- in-line if moment --		  boolean        true      false
@@ -96,5 +96,53 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 	if noteType == 'Fire Note' then
 		-- plays the sound
 		playSound('burnSound');
+	end
+end
+
+-- An array of indexes of the current missed
+-- fire notes' splashes on the grpNoteSplashes group.
+local MissSplashIndex = {};
+
+function noteMiss(id, noteData, noteType, isSustainNote)
+	if noteType == 'Fire Note' then
+		-- we get the length of the grpNoteSplashes group
+		local length = getProperty('grpNoteSplashes.length');
+		-- we itrate on every splash in grpNoteSplashes
+		for i = 0, length do
+			-- if we're at the groups length
+			if i == length then
+				-- then the new splash will
+				-- be added to the end of
+				-- the group, and its index 
+				-- will be the group's length
+				table.insert(MissSplashIndex, length);
+				break;
+			end
+			-- if the current splash doesn't exist
+			if not getPropertyFromGroup('grpNoteSplashes', i, 'exists') then
+				-- then the new splash will
+				-- be recycled as this splash,
+				-- and its index will be the 
+				-- same as this one's.
+				table.insert(MissSplashIndex, i);
+				break;
+			end
+		end
+		-- we play the burnSound
+		playSound('burnSound');
+	end
+end
+
+function onUpdatePost(elapsed)
+	-- if we have a missed fire note on the current frame
+	if MissSplashIndex[1] ~= nil then
+		-- we itrate on every splash
+		for i,v in ipairs(MissSplashIndex) do
+			-- we set it's offset to a good-looking value
+			setPropertyFromGroup('grpNoteSplashes', v, 'offset.x', -20);
+			setPropertyFromGroup('grpNoteSplashes', v, 'offset.y', -20);
+		end
+		-- we make MissSplashIndex empty again.
+		MissSplashIndex = {};
 	end
 end
