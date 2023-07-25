@@ -1,4 +1,9 @@
 
+-- short for linear interpolation
+local function lerp(a, b, ratio)
+    return a + (b - a) * ratio;
+end
+
 --[[
 	takes ARGB color values
 	and turns them into
@@ -17,8 +22,11 @@ local function ARGBtoHEX(a, r, g, b)
 	return string.format("0x%02x%02x%02x%02x", a, r, g, b);
 end
 
+local OnPsych06 = false;
 
 function onCreate()
+
+	OnPsych06 = version:find('^v?0%.6') ~= nil;
 
 	-- unlike the fire notes, here I don't load the 
 	-- sprites early, because they are very small, 
@@ -41,9 +49,16 @@ function onCreate()
 
 				
 										-- note color calibrations --
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[ / 360   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
+				if OnPsych06 then
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[ / 360   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
+				else
+					-- disables the coloring of the bullet notes
+					setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
+					-- makes the note splashes use the default colors
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.useGlobalShader', true);
+				end
 			end
 		end
 	end
@@ -83,18 +98,29 @@ function onUpdate(elapsed)
 		-- increasing the x value
 		alphaFuncX = alphaFuncX + elapsed;
 
-		-- 		f(x) = |sin(π∙x)| ∙ 255
+		-- 	f(x) = (cos((x + 1)∙π) + 1) : 2
 		--  		       ↓
-		-- 		  local bfAlpha = f(x)
-		local bfAlpha = math.abs(math.sin(math.pi * alphaFuncX)) * 255;
+		-- 	      local bfAlpha = f(x)     
+		local bfAlpha = (math.cos((alphaFuncX + 1) * math.pi) + 1) / 2;
 		-- Mathematical functions are very useful for programming guys!
 		-- Go learn some math!
+
+		-- if psych is on 0.7 or above
+		if not OnPsych06 then
+			-- we lerp between every
+			-- RGB value of the two
+			-- colors. using bfAlpha
+			-- as a ratio.
+			for i = 1, 3 do
+				bfColor[i] = lerp(bfColor[i], dadColor[i], bfAlpha);
+			end
+		end
 		
 		-- Changing the health bar's color.
 		-- The right side of the bar will flash in 
 		-- the color of the left side of the bar
 		setHealthBarColors(ARGBtoHEX(255, dadColor[1], dadColor[2], dadColor[3]),
-			ARGBtoHEX(bfAlpha, bfColor[1], bfColor[2], bfColor[3]));
+			ARGBtoHEX(bfAlpha * 255, bfColor[1], bfColor[2], bfColor[3]));
 
 		if healthDrain <= 0 then
 			-- if healthDrain passed 0, then

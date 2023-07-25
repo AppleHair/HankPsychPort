@@ -223,13 +223,8 @@ function onUpdatePost(elapsed)
 		if RunningUMM and onlinePlay then
 			return;
 		end
-		-- we prevent a game crash that is being caused by 3 achievements that are being 
-		-- unlocked in the same time. we prevent these achievements from being achieved.
-		setProperty('boyfriendIdled', true);
-		setProperty('keysPressed', {true,true,true});
-		setProperty('ratingPercent', 0.41);
 		-- we end the song
-		endSong();
+		exitSong();
 	end
 end
 

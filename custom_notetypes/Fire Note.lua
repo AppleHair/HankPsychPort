@@ -1,4 +1,9 @@
+
+local OnPsych06 = false;
+
 function onCreate()
+
+	OnPsych06 = version:find('^v?0%.6') ~= nil;
 
 	makeAnimatedLuaSprite('fireNote', 'NOTE_fire', 0, 0);
 	addAnimationByPrefix('fireNote', 'red', 'red', 24, false);
@@ -28,6 +33,10 @@ function onCreate()
 	-- It's very stupid, because we make a new FlxSprite object, that makes us use more RAM, to make this work,
 	-- but it works really well and prevents serious lag, so it's worth it.	
 
+	local splashDisabledProp = (OnPsych06 and 'noteSplashDisabled' or 'noteSplashData.disabled');
+	local splashTextureProp = (OnPsych06 and 'noteSplashTexture' or 'noteSplashData.texture');
+	-- in-line if moment --		 boolean             true                    false
+
 	for i = getProperty('unspawnNotes.length')-1, 0, -1 do
 		-- checks if the note is a fire note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Fire Note' then
@@ -42,23 +51,36 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note
 				setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
 				setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashDisabled', false); -- we enable splash despite the prefs
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashTexture', 'Smoke'); -- we change the splash texture
+				setPropertyFromGroup('unspawnNotes', i, splashDisabledProp, false); -- we enable splash despite the prefs
+				setPropertyFromGroup('unspawnNotes', i, splashTextureProp, 'Smoke'); -- we change the splash texture
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
 				setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
 				setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
 										-- in-line if moment --		  boolean        true      false
 				
 										-- color calibration--
-				-- note
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[/ 100   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
+				if OnPsych06 then
+					-- note
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[/ 360   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[/ 100   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[/ 100   if you actually want to change it]]);
 
-				-- splash
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashHue', 0 --[[/ 360   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashSat', 0 --[[/ 100   if you actually want to change it]]);
-				setPropertyFromGroup('unspawnNotes', i, 'noteSplashBrt', 0 --[[/ 100   if you actually want to change it]]);
+					-- splash
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashHue', 0 --[[/ 360   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashSat', 0 --[[/ 100   if you actually want to change it]]);
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashBrt', 0 --[[/ 100   if you actually want to change it]]);
+				else
+					-- disables the coloring of the fire notes
+					setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
+
+					-- disables the coloring of the fire note splashes
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.r', 0xFF0000);
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.g', 0x00FF00);
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.b', 0x0000FF);
+
+					-- makes the fire note splashes opaque
+					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.a', 1);
+				end
 			end
 		end
 	end
@@ -141,6 +163,10 @@ function onUpdatePost(elapsed)
 			-- we set it's offset to a good-looking value
 			setPropertyFromGroup('grpNoteSplashes', v, 'offset.x', -20);
 			setPropertyFromGroup('grpNoteSplashes', v, 'offset.y', -20);
+			if OnPsych06 then
+				-- we make it opaque
+				setPropertyFromGroup('grpNoteSplashes', v, 'alpha', 1);
+			end
 		end
 		-- we make MissSplashIndex empty again.
 		MissSplashIndex = {};
