@@ -87,9 +87,9 @@ function onStartCountdown()
 	-- we clear everything we did with the arrows
 	-- before the game does it again
 	runHaxeCode([[
-			game.playerStrums.clear();
-			game.opponentStrums.clear();
-			game.strumLineNotes.clear();
+		game.playerStrums.clear();
+		game.opponentStrums.clear();
+		game.strumLineNotes.clear();
 	]]);
 	if RunningUMM and onlinePlay then
 		-- In order to adapt to UMM's online play,
