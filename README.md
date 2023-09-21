@@ -35,21 +35,21 @@ If you have something to say about the port or find a bug/other problem with the
 
 Ok, so other than an accurate port of the fucked difficulty, I have some very cool and exciting things I'm planning to work on for the full release of the port:
 
-	1) FNF ONLINE VS. Rating Screen Recreation (2022):
+1. FNF ONLINE VS. Rating Screen Recreation (2022):
 
-		Starting with the one that excites me the most, this is going to be a recreation of the cool rating screen that appears in FNF ONLINE VS, and it's going to be very accurate and very cool, except the maximum accuracy you will be able to get is 100% (no above 100% thing), and the Ss rank is going to be replaced with something else. maybe it'll be a "Perfect" rank instead.
+Starting with the one that excites me the most, this is going to be a recreation of the cool rating screen that appears in FNF ONLINE VS, and it's going to be very accurate and very cool, except the maximum accuracy you will be able to get is 100% (no above 100% thing), and the Ss rank is going to be replaced with something else. maybe it'll be a "Perfect" rank instead.
 		
-	2) hank-player and maghank-player (2022):
+2. hank-player and maghank-player (2022):
 
-		A proper hank and maghank players with miss animations, game-over animations and any other animation that a player character in FNF usually has. (2023 update): These will also come in the form of UMM Custom characters.
+A proper hank and maghank players with miss animations, game-over animations and any other animation that a player character in FNF usually has. (2023 update): These will also come in the form of UMM Custom characters.
 
-	3) Accelerant REDUX (2022): 
+3. Accelerant REDUX (2022): 
 
-		The offical remix (by philiplol) for accelerant will be playable in this port with new graphics and animations. I hope to even add a cutscene at the start, that will give an explanation to why hank is rapping with boyfriend in the first place.
+The offical remix (by philiplol) for accelerant will be playable in this port with new graphics and animations. I hope to even add a cutscene at the start, that will give an explanation to why hank is rapping with boyfriend in the first place.
 
-	4) Full UMM (Unnamed Multiplayer Mod) support (2023):
+4. Full UMM (Unnamed Multiplayer Mod) support (2023):
 
-		This demo of the port already has UMM support, and I'm looking forward to having this support in the full release as well.
+This demo of the port already has UMM support, and I'm looking forward to having this support in the full release as well.
 
 
 ## Thank you for reading the README file and thank you for playing this port!!
