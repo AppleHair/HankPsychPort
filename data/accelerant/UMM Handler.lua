@@ -53,6 +53,8 @@ end
 function onCreatePost()
     -- onlinePlay = true | false
     runningUMM = onlinePlay ~= nil;
+    OnPsych06 = version:find('^v?0%.6') ~= nil;
+    PlayState = (OnPsych06 and "PlayState" or "states.PlayState");
     if not runningUMM then
         return;
     end
@@ -102,7 +104,7 @@ function onCreatePost()
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
-    find("\"stage\": \""..getPropertyFromClass('states.PlayState', 'curStage').."\"") == nil;
+    find("\"stage\": \""..getPropertyFromClass(PlayState, 'curStage').."\"") == nil;
     -- if it's true and we are in onlinePlay
     if onlinePlay and inCustomStage then
         -- send a message to the server
