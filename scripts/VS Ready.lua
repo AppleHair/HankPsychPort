@@ -52,6 +52,8 @@ function onCreate()
 
 	-- we make the mouse visible
 	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
+	-- add the VS Ready Helper script for 0.7.1h
+	addLuaScript('scripts/VS Ready Helper', true);
 end
 
 function onCreatePost()
@@ -86,11 +88,7 @@ function onStartCountdown()
 	end
 	-- we clear everything we did with the arrows
 	-- before the game does it again
-	runHaxeCode([[
-		game.playerStrums.clear();
-		game.opponentStrums.clear();
-		game.strumLineNotes.clear();
-	]]);
+	triggerEvent('0.7.1h clearNotes', '', '');
 	if RunningUMM and onlinePlay then
 		-- In order to adapt to UMM's online play,
 		-- we return noting and let UMM do its thing.
