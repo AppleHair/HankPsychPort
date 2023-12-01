@@ -31,8 +31,8 @@ function onCreate()
 	setProperty('ready.visible', true);
 	setProperty('readyCL.visible', false);
 
-	-- version = v0.x.y + 𝗨𝗠𝗠 0.z
-	RunningUMM = version:find("UMM") ~= nil;
+	-- onlinePlay = true | false
+	RunningUMM = onlinePlay ~= nil;
 
 	-- we skip the freeplay arrow alpha tween
 	setProperty('skipArrowStartTween', true);

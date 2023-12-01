@@ -55,7 +55,7 @@ function onEvent(name, value1, value2)
             if value1 == 'Fall' then
                 -- we play the blood animation
                 triggerEvent('Add Blood Effect', '', '');
-                if curStage == "Nevada" then
+                if getPropertyFromClass('states.PlayState', 'curStage') == "Nevada" then
                     return;
                 end
                 -- and now he falls. bye bye!
@@ -92,7 +92,7 @@ function onUpdate(elapsed)
 		end
 	end
 
-    if curStage == "Nevada" then
+    if getPropertyFromClass('states.PlayState', 'curStage') == "Nevada" then
         return;
     end
 
