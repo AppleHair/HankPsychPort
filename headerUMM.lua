@@ -8,7 +8,7 @@
 --[[
     opponentNoteMiss(id: number, noteData: number, noteType: string, isSustainNote: boolean)
     onTaunt(number: 1|2|3|4, character: "boyfriend" | "dad")
-    onReceive(message: string)
+    onReceive(message: string, side: "left" | "right")
     onGameSet(winner: string, forfeit: boolean)
     onResultScreen()
     onResultsQuit()
@@ -41,6 +41,11 @@ localPlay = nil;
 ---@type boolean
 onlinePlay = nil;
 
+--- The version of the Unnamed Multiplayer,\
+--- Mod, which is being used.
+---@type number
+versionUMM = nil;
+
 ----------------------------------------------------------------------------------
     	-- Functions --
 ----------------------------------------------------------------------------------
@@ -55,8 +60,9 @@ function send(message) end
 ---@param size number The new size for the character
 function characterRezise(character, size) end
 
----Flips `character` horizontally while\
----making sure all animations are offsetted correctly.\
----(Only works on custom characters due to the use of left and right .json files)
+---Flips `character` horizontally while making\
+---sure all animations are offsetted correctly.\
+---(Only works on custom characters due to the\
+---use of left and right .json files)
 ---@param character "boyfriend" | "dad" The character to flip
 function characterFlip(character) end
