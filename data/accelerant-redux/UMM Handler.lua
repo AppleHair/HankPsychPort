@@ -51,11 +51,13 @@ local function iNeedToWriteThisTwiceForOnlinePlay()
 end
 
 function onCreatePost()
-    -- version = v0.x.y + 𝗨𝗠𝗠 0.z
-    runningUMM = version:find("UMM") ~= nil;
+    -- onlinePlay = true | false
+    runningUMM = onlinePlay ~= nil;
     if not runningUMM then
         return;
     end
+    OnPsych06 = version:find('^v?0%.6') ~= nil;
+    PlayState = (OnPsych06 and "PlayState" or "states.PlayState");
 ----------------------------------------------------------------------------------------------------------------------
 		-- The Unnamed Multiplayer Mod Handler --
 ----------------------------------------------------------------------------------------------------------------------
@@ -101,7 +103,8 @@ function onCreatePost()
     -- getTextFromFile doesn't work properly on the other end,
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
-    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):find("\"stage\": \""..curStage.."\"") == nil;
+    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
+    find("\"stage\": \""..getPropertyFromClass(PlayState, 'curStage').."\"") == nil;
 
     -- if it's true and we are in onlinePlay
     if onlinePlay and inCustomStage then

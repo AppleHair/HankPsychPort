@@ -4,8 +4,8 @@ function onCreate()
 
     precacheSound('splat');
 
-    -- version = v0.x.y + 𝗨𝗠𝗠 0.z
-    runningUMM = version:find("UMM") ~= nil;
+    -- onlinePlay = true | false
+    runningUMM = onlinePlay ~= nil;
 
     OnPsych06 = version:find('^v?0%.6') ~= nil;
 end
