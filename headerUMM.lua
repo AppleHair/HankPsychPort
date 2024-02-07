@@ -44,7 +44,7 @@ onlinePlay = nil;
 --- The version of the Unnamed Multiplayer,\
 --- Mod, which is being used.
 ---@type number
-versionUMM = nil;
+UMMversion = nil;
 
 ----------------------------------------------------------------------------------
     	-- Functions --
