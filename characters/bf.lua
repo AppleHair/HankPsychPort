@@ -12,6 +12,8 @@ end
 -- Don't bother looking into this.
 local forFuckSake = true;
 
+-- Related to dealing with UMM bugs. 
+-- Don't bother looking into this.
 local function BulletCondition(messageStart, id, noteType)
     -- related to dealing with UMM bugs. 
     -- Don't bother looking into this.
@@ -43,7 +45,7 @@ function onReceive(message)
         end
         noteMiss();
     end
-    if message:find("BulletBoy ") then
+    if message:find("BulletHit ") then
         message = message:sub(11, #message);
         if message == "true" then
             forFuckSake = true;
@@ -56,7 +58,7 @@ end
 
 function goodNoteHit(id, direction, noteType, isSustainNote)
     -- we check stuff(look at the last return inside the function)
-    if BulletCondition("BulletBoy ", id, noteType) then
+    if BulletCondition("BulletHit ", id, noteType) then
         return;
     end
     -- play dodge animation
@@ -85,7 +87,7 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     -- if the bullet note killed the player instantly
     if getProperty('health') <= 0 then
         -- switch the boyfriend in GameOverSubstate to bf-hanked
-        setPropertyFromClass('GameOverSubstate', 'characterName', 'bf-hanked');
+        setPropertyFromClass('substates.GameOverSubstate', 'characterName', 'bf-hanked');
     end
     -- we play the splat sound
     playSound('splat');

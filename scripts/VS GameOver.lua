@@ -3,18 +3,27 @@ local function boundTo(val, min, max)
     return math.min(max, math.max(min, val));
 end
 
+local OnPsych06 = false;
+
 function onGameOverStart()
-    addHaxeLibrary("GameOverSubstate", "");
+
+    OnPsych06 = version:find('^v?0%.6') ~= nil;
+
+    local lib = (OnPsych06 and "" or "substates");
+    local follow = (OnPsych06 and "camFollowPos" or "camFollow");
+    --               boolean           true            false
+
+    addHaxeLibrary("GameOverSubstate", lib);
     runHaxeCode([[
         var bf = GameOverSubstate.instance.boyfriend;
-        var follow = GameOverSubstate.instance.camFollowPos;
+        var follow = GameOverSubstate.instance.]]..follow..[[;
 
         bf.playAnim('deathLoop');
         follow.setPosition(bf.getGraphicMidpoint().x, bf.getGraphicMidpoint().y);
         bf.playAnim('firstDeath');
 
         FlxG.camera.follow(follow);
-
+        
         GameOverSubstate.instance.isFollowingAlready = true;
         GameOverSubstate.instance.updateCamera = false;
     ]]);
