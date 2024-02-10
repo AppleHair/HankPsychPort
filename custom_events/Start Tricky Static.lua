@@ -33,8 +33,12 @@ end
 function onEvent(name, value1, value2)
     if name == 'Start Tricky Static' then
         if value1 ~= '' then
-            -- value 2 will become the chance
+            -- value 1 will become the chance
             chance = (tonumber(value1) ~= nil and tonumber(value1) or 0);
+        end
+        if value2 ~= '' then
+            -- value 2 will be a new phrase
+            table.insert(clownPhrases, value2);
         end
         -- we now need to generate random Tricky static and text
         doTheThing = true;

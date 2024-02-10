@@ -22,11 +22,7 @@ local function ARGBtoHEX(a, r, g, b)
 	return string.format("0x%02x%02x%02x%02x", a, r, g, b);
 end
 
-local OnPsych06 = false;
-
 function onCreate()
-
-	OnPsych06 = version:find('^v?0%.6') ~= nil;
 
 	-- unlike the fire notes, here I don't load the 
 	-- sprites early, because they are very small, 
@@ -46,24 +42,15 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
 				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
 				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.8); -- we make the health decrease more if you miss the note
-
-				
-										-- note color calibrations --
-				if OnPsych06 then
-					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.hue', 0 --[[ / 360   if you actually want to change it]]);
-					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.saturation', 0 --[[ / 100   if you actually want to change it]]);
-					setPropertyFromGroup('unspawnNotes', i, 'colorSwap.brightness', 0 --[[ / 100   if you actually want to change it]]);
-				else
-					-- disables the coloring of the bullet notes
-					setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
-					-- makes the note splashes use the default colors
-					setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.useGlobalShader', true);
-				end
+	
+				-- disables the coloring of the bullet notes
+				setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
+				-- makes the note splashes use the default colors
+				setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.useGlobalShader', true);
 			end
 		end
 	end
 
-	
 	precacheImage('BulletNotes');
 end
 
@@ -105,15 +92,12 @@ function onUpdate(elapsed)
 		-- Mathematical functions are very useful for programming guys!
 		-- Go learn some math!
 
-		-- if psych is on 0.7 or above
-		if not OnPsych06 then
-			-- we lerp between every
-			-- RGB value of the two
-			-- colors. using bfAlpha
-			-- as a ratio.
-			for i = 1, 3 do
-				bfColor[i] = lerp(bfColor[i], dadColor[i], bfAlpha);
-			end
+		-- we lerp between every
+		-- RGB value of the two
+		-- colors. using bfAlpha
+		-- as a ratio.
+		for i = 1, 3 do
+			bfColor[i] = lerp(bfColor[i], dadColor[i], bfAlpha);
 		end
 		
 		-- Changing the health bar's color.

@@ -56,8 +56,6 @@ function onCreatePost()
     if not runningUMM then
         return;
     end
-    OnPsych06 = version:find('^v?0%.6') ~= nil;
-    PlayState = (OnPsych06 and "PlayState" or "states.PlayState");
 ----------------------------------------------------------------------------------------------------------------------
 		-- The Unnamed Multiplayer Mod Handler --
 ----------------------------------------------------------------------------------------------------------------------
@@ -104,7 +102,7 @@ function onCreatePost()
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
-    find("\"stage\": \""..getPropertyFromClass(PlayState, 'curStage').."\"") == nil;
+    find("\"stage\": \""..getPropertyFromClass('states.PlayState', 'curStage').."\"") == nil;
 
     -- if it's true and we are in onlinePlay
     if onlinePlay and inCustomStage then

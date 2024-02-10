@@ -2,3 +2,7 @@ CLOWN ENGAGED!
 
 
 Value 1: Chance of appearing (from 0 to 100)
+    (if empty, the default chance will be used)
+
+Value 2: A new phrase to be added
+    (if empty, the new phrase will be ignored)

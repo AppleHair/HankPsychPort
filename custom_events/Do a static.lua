@@ -20,7 +20,7 @@ function onCreate()
 	precacheImage('TrickyStatic');
     addLuaSprite('Static', false);
 	
-	makeLuaText('TrickyText', 'SUSSY BAKA', 1280, 0, 0);
+	makeLuaText('TrickyText', 'ABab.!?[];', 1280, 0, 0);
 	setTextSize('TrickyText', 100);
 	setTextBorder('TrickyText', 0, 0);
 	setTextFont('TrickyText', 'impact.ttf');

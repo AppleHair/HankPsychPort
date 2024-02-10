@@ -6,8 +6,6 @@ function onCreate()
 
     -- onlinePlay = true | false
     runningUMM = onlinePlay ~= nil;
-
-    OnPsych06 = version:find('^v?0%.6') ~= nil;
 end
 
 -- Related to dealing with UMM bugs. 
@@ -89,7 +87,7 @@ function noteMiss(id, noteData, noteType, isSustainNote)
     -- if the bullet note killed the player instantly
     if getProperty('health') <= 0 then
         -- switch the boyfriend in GameOverSubstate to bf-hanked
-        setPropertyFromClass((OnPsych06 and "" or "substates.")..'GameOverSubstate', 'characterName', 'bf-hanked');
+        setPropertyFromClass('substates.GameOverSubstate', 'characterName', 'bf-hanked');
     end
     -- we play the splat sound
     playSound('splat');

@@ -13,13 +13,6 @@ local function trim(s)
 end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
-local OnPsych06 = false;
-local camPosProp;
-function onCreate()
-    OnPsych06 = version:find('^v?0%.6') ~= nil;
-    camPosProp = (OnPsych06 and "camFollowPos" or "camGame.scroll");
-end
-
 -- this variable stores the x position, y position
 -- and duration that is required for the tween
 local XYAndDur;
@@ -51,8 +44,8 @@ function onEvent(name, value1, value2)
         XYAndDur[2] = (tonumber(XYAndDur[2]) ~= nil and tonumber(XYAndDur[2]) or 0);
         XYAndDur[3] = (tonumber(XYAndDur[3]) ~= nil and tonumber(XYAndDur[3]) or 0);
         -- we do the tweens
-        doTweenX('CameraEventX', camPosProp, XYAndDur[1] - (OnPsych06 and 0 or (screenWidth / 2)), XYAndDur[3], value2);
-        doTweenY('CameraEventY', camPosProp, XYAndDur[2] - (OnPsych06 and 0 or (screenHeight / 2)), XYAndDur[3], value2);
+        doTweenX('CameraEventX', "camGame.scroll", XYAndDur[1] - (screenWidth / 2), XYAndDur[3], value2);
+        doTweenY('CameraEventY', "camGame.scroll", XYAndDur[2] - (screenHeight / 2), XYAndDur[3], value2);
         -- we set isCameraOnForcedPos to true
         setProperty('isCameraOnForcedPos', true);
     end

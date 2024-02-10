@@ -55,6 +55,10 @@ local function trim(s)
 end
 -- string patterns explanation: https://www.lua.org/pil/20.2.html
 
+-- a linear interpolation function
+local function lerp(a, b, r)
+	return a + (b - a) * r;
+end
 
 --[[
 	checks if a certain event will be
@@ -200,13 +204,13 @@ function onCreatePost()
 
 	if Summon_hellclown then
 		makeAnimatedLuaSprite('HellClown','HellclownIdle', -100, 535);
-		addAnimationByPrefix('HellClown', 'Idle', 'HellClownIdle', 16, true);
+		addAnimationByPrefix('HellClown', 'Idle', 'HellClownIdle', 20, true);
 
 		makeAnimatedLuaSprite('HellClownRightHand','HellclownHand', -410, 1335);
-		addAnimationByPrefix('HellClownRightHand', 'Idle', 'HellClownHandsIdle', 16, true);
+		addAnimationByPrefix('HellClownRightHand', 'Idle', 'HellClownHandsIdle', 20, true);
 
 		makeAnimatedLuaSprite('HellClownLeftHand','HellclownHand', 720, 1335);
-		addAnimationByIndicesLoop('HellClownLeftHand', 'Idle', 'HellClownHandsIdle', '6,7,8,9,10,11,12,13,1,2,3,4,5', 16);
+		addAnimationByIndicesLoop('HellClownLeftHand', 'Idle', 'HellClownHandsIdle', '6,7,8,9,10,11,12,13,1,2,3,4,5', 20);
 		setProperty('HellClownLeftHand.flipX', true);
 	end
 
@@ -341,9 +345,9 @@ local hellclownTable =
 	{'HellClownRightHand', -410, 35},
 	{'HellClownLeftHand', 720, 35}
 };
--- used to determine the current direction
--- hellclown is tweening towards (true - UP   false - DOWN)
-local hellClownTweenDir = false;
+-- used to determine if
+-- hellclown was just summoned
+local hellClownSummoned = false;
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -410,18 +414,19 @@ function onEvent(name, value1, value2)
 		-- climbers stop climbing
 		climb = false;
 	elseif name == 'Summon Hellclown' then
-		if hellClownTweenDir then
+		if hellClownSummoned then
 			DadCamPos[2] = DadCamPos[2] + 65;
 			BfCamPos[2] = BfCamPos[2] + 65;
 			for i=1, #hellclownTable do
 				doTweenY(hellclownTable[i][1] .. 'Tween',hellclownTable[i][1], hellclownTable[i][3] + 1300, 3, 'cubeout');
+				setProperty(hellclownTable[i][1]..'.useColorTransform', true);
 			end
 			doTweenColor('HankHCTween', 'dadGroup', 'ffffff', 3, 'cubeout');
 			doTweenColor('BFHCTween', 'boyfriendGroup', 'ffffff', 3, 'cubeout');
 			doTweenColor('GFHCTween', 'gfGroup', 'ffffff', 3, 'cubeout');
 			doTweenColor('GroundHCTween', 'Ground', 'ffffff', 3, 'cubeout');
 			doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffffff' or 'ffffff'), 3, 'cubeout');
-			hellClownTweenDir = false;
+			hellClownSummoned = false;
 			return;
 		end
 		DadCamPos[2] = DadCamPos[2] - 65;
@@ -434,7 +439,7 @@ function onEvent(name, value1, value2)
 		doTweenColor('GFHCTween', 'gfGroup', 'ffc9c9', 3, 'cubeout');
 		doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
 		doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
-		hellClownTweenDir = true;
+		hellClownSummoned = true;
 	end
 end
 
@@ -473,6 +478,45 @@ function onStepHit()
 		-- the animation of the climbers being shot
 		-- will run in the end of the timer)
 		runTimer('ShootTimer', 0.55, 1);
+	end
+end
+
+--------------------------------------------------------------------------------------------------------------------
+		--Hellclown Shooting Behavior--
+--------------------------------------------------------------------------------------------------------------------
+
+-- determines how much time it takes 
+-- for hellclown's glow to "fade"
+local HellclownGlowFade = 0;
+-- Determines how much hellclown
+-- should shake when he gets shot
+-- (multiplier of 50)
+local HellclownShakeIntencity = 1;
+
+function goodNoteHit(id, direction, noteType, isSustainNote)
+	if hellClownSummoned and noteType == 'Bullet Note' then
+		-- make Deimos shoot
+		playAnim('Deimos', 'Shoot', true);
+		-- stop his idle animation
+		StopDeimos = true;
+		-- make Sanford shoot
+		playAnim('Sanford', 'Shoot', true);
+		-- stop his idle animation
+		StopSanford = true;
+
+		-- make hellclown brighter
+		for i=1, #hellclownTable do
+			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.75);
+			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
+			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
+		end
+		-- start the glow fade
+		HellclownGlowFade = 0.15;
+		-- offset hellclown's middle part's position randomly
+		local shake = HellclownShakeIntencity * 50;
+		math.randomseed(os.time());
+		setProperty(hellclownTable[1][1]..'.offset.x', math.random(-shake, shake));
+		setProperty(hellclownTable[1][1]..'.offset.y', math.random(-shake, shake));
 	end
 end
 --------------------------------------------------------------------------------------------------------------------
@@ -516,7 +560,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 		-- we make the lazer play the flash animation
 		playAnim('Lazer', 'Flash', false);
 		stopLazer = true;
-	end
+	end 
 end
 
 ---------------------------------------------------
@@ -602,6 +646,30 @@ local HotDogGFStoppedWalking = false;
 local helicopterRemoved = false;
 
 function onUpdate(elapsed)
+
+	-- Hellclown Offset & Glow Fade Handler
+	-----------------------------------------------
+	-- if the fade value is greater than 0
+    if HellclownGlowFade > 0 then
+        -- we decrease the fade value with time
+        HellclownGlowFade = HellclownGlowFade - elapsed;
+        -- we check if the fade value passed 0
+        if HellclownGlowFade <= 0 then
+            -- reset hellclown's brightness
+			for i=1, #hellclownTable do
+				setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1);
+				setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
+				setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
+			end
+			-- reset the fade value
+            HellclownGlowFade = 0;
+        end
+    end
+	-- we make the hellclown middle part slide into it's main position
+	setProperty(hellclownTable[1][1]..'.offset.x',
+		lerp(getProperty(hellclownTable[1][1]..'.offset.x'),0,0.2 * (60/(1/elapsed))));
+	setProperty(hellclownTable[1][1]..'.offset.y',
+		lerp(getProperty(hellclownTable[1][1]..'.offset.y'),0,0.2 * (60/(1/elapsed))));
 	
 	-- Idle Animation Release handler
 	-----------------------------------------------

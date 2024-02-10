@@ -143,7 +143,7 @@ function onUpdatePost(elapsed)
         triggerEvent('Add Shot Ray', '', '');
 
         -- shacking camera
-        cameraShake('game', 0.0075, 0.07);
+        cameraShake('game', 0.01, 0.07);
 
         -- if the condition below is false,
         -- we shouldn't play the shoot animation again
