@@ -506,17 +506,19 @@ function goodNoteHit(id, direction, noteType, isSustainNote)
 
 		-- make hellclown brighter
 		for i=1, #hellclownTable do
-			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.75);
-			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
-			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
+			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.5);
+			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1.5);
+			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1.5);
 		end
 		-- start the glow fade
 		HellclownGlowFade = 0.15;
-		-- offset hellclown's middle part's position randomly
-		local shake = HellclownShakeIntencity * 50;
+		-- offset hellclown's middle part
+		-- in a random direction and amount
+		local shakeAmount = HellclownShakeIntencity * 50;
+		local shakeDirection = math.random(0,359);
 		math.randomseed(os.time());
-		setProperty(hellclownTable[1][1]..'.offset.x', math.random(-shake, shake));
-		setProperty(hellclownTable[1][1]..'.offset.y', math.random(-shake, shake));
+		setProperty(hellclownTable[1][1]..'.offset.x', shakeAmount * math.cos(math.rad(shakeDirection)));
+		setProperty(hellclownTable[1][1]..'.offset.y', shakeAmount * math.sin(math.rad(shakeDirection)));
 	end
 end
 --------------------------------------------------------------------------------------------------------------------
