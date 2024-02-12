@@ -640,30 +640,6 @@ local HotDogGFStoppedWalking = false;
 local helicopterRemoved = false;
 
 function onUpdate(elapsed)
-
-	-- Hellclown Offset & Glow Fade Handler
-	-----------------------------------------------
-	-- if the fade value is greater than 0
-    if HellclownGlowFade > 0 then
-        -- we decrease the fade value with time
-        HellclownGlowFade = HellclownGlowFade - elapsed;
-        -- we check if the fade value passed 0
-        if HellclownGlowFade <= 0 then
-            -- reset hellclown's brightness
-			for i=1, #hellclownTable do
-				setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1);
-				setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
-				setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
-			end
-			-- reset the fade value
-            HellclownGlowFade = 0;
-        end
-    end
-	-- we make the hellclown middle part slide into it's main position
-	setProperty(hellclownTable[1][1]..'.offset.x',
-		lerp(getProperty(hellclownTable[1][1]..'.offset.x'),0,0.2 * (60/(1/elapsed))));
-	setProperty(hellclownTable[1][1]..'.offset.y',
-		lerp(getProperty(hellclownTable[1][1]..'.offset.y'),0,0.2 * (60/(1/elapsed))));
 	
 	-- Idle Animation Release handler
 	-----------------------------------------------
@@ -726,19 +702,43 @@ function onUpdate(elapsed)
 		end
 	end
 
+	-- Hellclown Offset & Glow Fade Handler
+	-----------------------------------------------
+	if Summon_hellclown then
+		-- if the fade value is greater than 0
+		if HellclownGlowFade > 0 then
+			-- we decrease the fade value with time
+			HellclownGlowFade = HellclownGlowFade - elapsed;
+			-- we check if the fade value passed 0
+			if HellclownGlowFade <= 0 then
+				-- reset hellclown's brightness
+				for i=1, #hellclownTable do
+					setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1);
+					setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
+					setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
+				end
+				-- reset the fade value
+				HellclownGlowFade = 0;
+			end
+		end
+		-- we make the hellclown middle part slide into it's main position
+		setProperty(hellclownTable[1][1]..'.offset.x',
+			lerp(getProperty(hellclownTable[1][1]..'.offset.x'),0,0.2 * (60/(1/elapsed))));
+		setProperty(hellclownTable[1][1]..'.offset.y',
+			lerp(getProperty(hellclownTable[1][1]..'.offset.y'),0,0.2 * (60/(1/elapsed))));
+	end
+
 	-- Climbers Visibility handler
 	-----------------------------------------------
-	if not Climbers_appear then
-		return;
-	end
-	
-	for i=1,3 do
-		-- if the current animation is a shot animation and it's
-		-- finished, then make the sprite invisible
-		if getProperty('climber' .. i .. '.animation.curAnim.finished') and 
-			getProperty('climber' .. i .. '.animation.curAnim.name'):sub(1, 5) == 'Shoot' then
-			-- setProperty('climber' .. i .. '.visible', false);
-			setProperty('climber' .. i .. '.alpha', 0.00001);
+	if Climbers_appear then
+		for i=1,3 do
+			-- if the current animation is a shot animation and it's
+			-- finished, then make the sprite invisible
+			if getProperty('climber' .. i .. '.animation.curAnim.finished') and 
+				getProperty('climber' .. i .. '.animation.curAnim.name'):sub(1, 5) == 'Shoot' then
+				-- setProperty('climber' .. i .. '.visible', false);
+				setProperty('climber' .. i .. '.alpha', 0.00001);
+			end
 		end
 	end
 end

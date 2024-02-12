@@ -95,8 +95,10 @@ end
 -- to change the alpha value of the right
 -- side of the health bar
 local alphaFuncX = 0;
+-- used to determine if we need
+-- to make the shoot sound play
+local bulletSoundAllowed = true;
 
-local shootAgainNextFrame = false;
                 ---Trying to override a sing animation with a shoot animation - Part 2---
 -- Ok, so there was another problem. The way iteration works in the ForEachAlive method is just
 -- like a for loop behind the scenes, which means removing an item from the array in the middle of
@@ -117,6 +119,7 @@ local shootAgainNextFrame = false;
 -- notes that should have already been checked, and use this shootAgainNextFrame variable to make the shoot
 -- animation play on the next frame, overriding every sing animation on every relevant frame.
 -- GOSH I'M SO HAPPY I'M FINALLY OVER ALL THIS SHIT!!!
+local shootAgainNextFrame = false;
 
 function onUpdatePost(elapsed)
 	-- the health Drain itself
@@ -164,9 +167,34 @@ function onUpdatePost(elapsed)
 			]]);
 		end
 	end
+
+---------------------------------------------------
+        --Bullet Shoot Sound Behavior--
+---------------------------------------------------
+
+	-- we play the shoot sound according to the next step
+	local nextStep = getSongPosition() + stepCrochet;
+	if getSmallerInArray(bulletNotesArray, nextStep) ~= nil and bulletSoundAllowed then
+		-- we play the sound only if it's
+		-- not already baked into the song
+		local bakedSound = nil;
+		if BulletFilter[songPath] ~= nil then
+			bakedSound = getSmallerInArray(BulletFilter[songPath], nextStep);
+		end
+		if bakedSound == nil then
+			playSound('hankshoot', 1);
+		else
+			table.remove(BulletFilter[songPath], bakedSound);
+		end
+		-- we prevent another bullet sound from
+		-- playing until a few frames later
+		bulletSoundAllowed = false;
+	end
+
 ---------------------------------------------------
         --Bullet Note Time Events ("Signals")--
 ---------------------------------------------------
+
 	local prevSongPosition = getSongPosition() - getPropertyFromClass('flixel.FlxG', 'elapsed') * 1000;
                     ---Trying to override a sing animation with a shoot animation - Part 1---
     -- Ok, so I looked at the source code, and it turns out that because the song position is being updated
@@ -187,8 +215,8 @@ function onUpdatePost(elapsed)
         end
 
 		if not shootAgainNextFrame then
-			-- play shot sound
-			-- playSound('hankshoot', 1);
+			-- we allow the bullet sound to play later
+			bulletSoundAllowed = true;
 			-- if you want to do something
 			-- when a bullet note is hit,
 			-- and don't need to override
@@ -219,3 +247,120 @@ function onUpdatePost(elapsed)
         end
 	end
 end
+
+BulletFilter = {
+	["accelerant"] = {
+		15548.7804878049,
+		18292.6829268293,
+		18475.6097560976,
+		40609.756097561,
+		43536.5853658537,
+		43719.512195122,
+		42804.8780487805,
+		42896.3414634146,
+		42987.8048780488,
+		54329.2682926829,
+		54512.1951219512,
+		54878.0487804878,
+		75182.9268292683,
+		75548.7804878048,
+		75731.7073170731,
+		88902.4390243902,
+		91097.5609756097,
+		91280.487804878,
+		91829.2682926828,
+		97682.9268292682,
+		98414.6341463413,
+		98963.4146341462,
+		99329.2682926828,
+		99878.0487804877,
+		100426.829268293,
+		100792.682926829,
+		101341.463414634,
+		101890.243902439,
+		102256.097560975,
+		102621.951219512,
+		102804.87804878,
+		103170.731707317,
+		103353.658536585,
+		103536.585365854,
+		103719.512195122,
+		104268.292682927,
+		104817.073170732,
+		105182.926829268,
+		105731.707317073,
+		106280.487804878,
+		106646.341463414,
+		107195.121951219,
+		107743.902439024,
+		108109.756097561,
+		108475.609756097,
+		108658.536585366,
+	},
+	["accelerant-redux"] = {
+		15548.7804878049,
+		18109.756097561,
+		18475.6097560976,
+		24146.3414634146,
+		37682.9268292683,
+		40609.756097561,
+		42804.8780487805,
+		42896.3414634146,
+		42987.8048780488,
+		43536.5853658537,
+		47195.1219512195,
+		49390.243902439,
+		54329.2682926829,
+		54512.1951219512,
+		54878.0487804878,
+		55060.9756097561,
+		55975.6097560976,
+		57439.0243902439,
+		58902.4390243903,
+		61829.2682926829,
+		63475.6097560976,
+		64756.0975609756,
+		66402.4390243903,
+		70975.6097560976,
+		71341.4634146341,
+		71707.3170731707,
+		85426.8292682926,
+		86890.2439024389,
+		88902.4390243902,
+		89268.2926829267,
+		89817.0731707316,
+		90365.8536585365,
+		100243.902439024,
+		100609.756097561,
+		102804.87804878,
+		102896.341463414,
+		102987.804878049,
+		110121.951219512,
+		110670.731707317,
+		111036.585365853,
+		111585.365853658,
+		112134.146341463,
+		112500,
+		113048.780487805,
+		113597.56097561,
+		113963.414634146,
+		114512.195121951,
+		114878.048780488,
+		115060.975609756,
+		115243.902439024,
+		115426.829268292,
+		115975.609756097,
+		116524.390243902,
+		116890.243902439,
+		117439.024390244,
+		117987.804878049,
+		118353.658536585,
+		118902.43902439,
+		119451.219512195,
+		119817.073170731,
+		120182.926829268,
+		120731.707317073,
+		120914.634146341,
+		121097.56097561,
+	}
+};
