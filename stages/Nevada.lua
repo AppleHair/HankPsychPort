@@ -348,6 +348,13 @@ local hellclownTable =
 -- used to determine if
 -- hellclown was just summoned
 local hellClownSummoned = false;
+-- determines how much time it takes 
+-- for hellclown's glow to "fade"
+local HellclownGlowFade = 0;
+-- Determines how much hellclown
+-- should shake when he gets shot
+-- (multiplier of 50)
+local HellclownShakeIntencity = 1;
 
 function onEvent(name, value1, value2)
 	if name == 'Heli Appear' then
@@ -440,6 +447,31 @@ function onEvent(name, value1, value2)
 		doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
 		doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
 		hellClownSummoned = true;
+	elseif name == "Bullet Note Time" and hellClownSummoned then
+		-- make Deimos shoot
+		playAnim('Deimos', 'Shoot', true);
+		-- stop his idle animation
+		StopDeimos = true;
+		-- make Sanford shoot
+		playAnim('Sanford', 'Shoot', true);
+		-- stop his idle animation
+		StopSanford = true;
+
+		-- make hellclown brighter
+		for i=1, #hellclownTable do
+			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.5);
+			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1.5);
+			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1.5);
+		end
+		-- start the glow fade
+		HellclownGlowFade = 0.15;
+		-- offset hellclown's middle part
+		-- in a random direction and amount
+		local shakeAmount = HellclownShakeIntencity * 50;
+		local shakeDirection = math.random(0,359);
+		math.randomseed(os.time());
+		setProperty(hellclownTable[1][1]..'.offset.x', shakeAmount * math.cos(math.rad(shakeDirection)));
+		setProperty(hellclownTable[1][1]..'.offset.y', shakeAmount * math.sin(math.rad(shakeDirection)));
 	end
 end
 
@@ -481,46 +513,6 @@ function onStepHit()
 	end
 end
 
---------------------------------------------------------------------------------------------------------------------
-		--Hellclown Shooting Behavior--
---------------------------------------------------------------------------------------------------------------------
-
--- determines how much time it takes 
--- for hellclown's glow to "fade"
-local HellclownGlowFade = 0;
--- Determines how much hellclown
--- should shake when he gets shot
--- (multiplier of 50)
-local HellclownShakeIntencity = 1;
-
-function goodNoteHit(id, direction, noteType, isSustainNote)
-	if hellClownSummoned and noteType == 'Bullet Note' then
-		-- make Deimos shoot
-		playAnim('Deimos', 'Shoot', true);
-		-- stop his idle animation
-		StopDeimos = true;
-		-- make Sanford shoot
-		playAnim('Sanford', 'Shoot', true);
-		-- stop his idle animation
-		StopSanford = true;
-
-		-- make hellclown brighter
-		for i=1, #hellclownTable do
-			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.5);
-			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1.5);
-			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1.5);
-		end
-		-- start the glow fade
-		HellclownGlowFade = 0.15;
-		-- offset hellclown's middle part
-		-- in a random direction and amount
-		local shakeAmount = HellclownShakeIntencity * 50;
-		local shakeDirection = math.random(0,359);
-		math.randomseed(os.time());
-		setProperty(hellclownTable[1][1]..'.offset.x', shakeAmount * math.cos(math.rad(shakeDirection)));
-		setProperty(hellclownTable[1][1]..'.offset.y', shakeAmount * math.sin(math.rad(shakeDirection)));
-	end
-end
 --------------------------------------------------------------------------------------------------------------------
 		--Timer Completions--
 --------------------------------------------------------------------------------------------------------------------
