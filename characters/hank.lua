@@ -57,7 +57,7 @@ function onEvent(name, val1, val2)
         setProperty('dad.stunned', true);
         -- we set specialAnim to false to prevent him from playing the idle animation anyway
         setProperty('dad.specialAnim', false);
-    elseif name == "Shoot Anim Time" then
+    elseif name == "Signal-Shoot Anim Time" then
         -- Gets what sing animation Hank is currently on
         local curAnim;
         local singLEFT;

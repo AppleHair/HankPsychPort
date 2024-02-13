@@ -223,7 +223,7 @@ function onUpdatePost(elapsed)
 			-- a sing animation, refer to
 			-- This event (always gets called
 			-- once per bullet note strumtime)
-			triggerEvent("Bullet Note Time");
+			triggerEvent("Signal-Bullet Note Time");
 			-- shake camera
 			cameraShake('game', 0.01, 0.07);
 		end
@@ -232,7 +232,7 @@ function onUpdatePost(elapsed)
 		-- another animation, refer to
 		-- This event (might get called
 		-- across multiple frames)
-		triggerEvent("Shoot Anim Time");
+		triggerEvent("Signal-Shoot Anim Time");
 
 		-- if the condition below is false,
         -- we shouldn't play the shoot animation again

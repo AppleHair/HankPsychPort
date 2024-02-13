@@ -448,7 +448,7 @@ function onEvent(name, value1, value2)
 		doTweenColor('GroundHCTween', 'Ground', 'ffc9c9', 3, 'cubeout');
 		doTweenColor('GFHotdogHCTween', 'gf-hot', (getProperty('gf-hot.alpha') <= 0.00001 and '0x00ffc9c9' or 'ffc9c9'), 3, 'cubeout');
 		hellClownSummoned = true;
-	elseif name == "Bullet Note Time" and hellClownSummoned then
+	elseif name == "Signal-Bullet Note Time" and hellClownSummoned then
 		-- make Deimos shoot
 		playAnim('Deimos', 'Shoot', true);
 		-- stop his idle animation
