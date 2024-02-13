@@ -149,12 +149,6 @@ local turnSpeed = 100; -- default - 100
 
 
 
-
--- represents the x value of the
--- mathematical function that we use
--- to change the angle of the Tricky text
-local angleFuncX = 0;
-
 -- time elapsed since last shake
 local elapsedShake = 0;
 function onUpdate(elapsed)
@@ -178,18 +172,10 @@ function onUpdate(elapsed)
 
 	-- if we want the text to shake by turning
 	if turnShake then
-		-- we increase the x value with time but *turnSpeed* times faster
-		angleFuncX = angleFuncX + elapsed * turnSpeed;
-		-- every 10 seconds, the x value will come back to 0
-		if angleFuncX >= turnSpeed * 10 then
-			-- I don't want the values to become too big,
-			-- because I'm afraid the computer won't be able to handle it.
-			angleFuncX = 0;
-		end
 		-- 		f(x) = sin(π∙x) ∙ turnAmount
 		--  		       ↓
 		-- 		TrickyText.angle = f(x)
-		setProperty('TrickyText.angle', math.sin(math.pi * angleFuncX) * turnAmount);
+		setProperty('TrickyText.angle', math.sin(math.pi * os.clock() * turnSpeed) * turnAmount);
 		-- Mathematical functions are very useful for programming guys!
 		-- Go learn some math!
 	end
