@@ -172,10 +172,11 @@ function onCreatePost()
 	scaleObject('Lazer', 1.5, 1.5, true);
 	setProperty('Lazer.visible', false);
 
-	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
+	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1520, 160);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
 	addAnimationByIndices('gf-hot', 'Boop-right', 'GFStandingWithHotDog', '15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29', 24);
 	addAnimationByPrefix('gf-hot', 'Walk', 'GFStandingWithHotDogWalk', 24, true);
+	scaleObject('gf-hot', 1.1, 1.1, true);
 	-- setProperty('gf-hot.visible', false);
 	setProperty('gf-hot.alpha', 0.00001);
 	
@@ -401,7 +402,7 @@ function onEvent(name, value1, value2)
 		-- we play her walking animation
 		playAnim('gf-hot', 'Walk', false);
 		-- we make girlfriend go forward
-		setProperty('gf-hot.velocity.x', -437.5);
+		setProperty('gf-hot.velocity.x', -328);
 	elseif name == 'Start climbers' then
 		-- IDs of climbers we don't want to appear
 		neverClimb = split(trim(value1), ',');
@@ -678,7 +679,7 @@ function onUpdate(elapsed)
 	-- Girlfriend Hotdog handler
 	-----------------------------------------------
 
-	if getProperty('gf-hot.x') <= 1180 and not HotDogGFStoppedWalking then
+	if getProperty('gf-hot.x') <= 1170 and not HotDogGFStoppedWalking then
 		setProperty('gf-hot.velocity.x', 0);
 		-- now that she stopped, she needs to do
 		-- the idle animation, so we need to stop stoping her
