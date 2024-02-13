@@ -211,7 +211,7 @@ function onCreatePost()
 		addAnimationByPrefix('HellClownRightHand', 'Idle', 'HellClownHandsIdle', 20, true);
 
 		makeAnimatedLuaSprite('HellClownLeftHand','HellclownHand', 720, 1335);
-		addAnimationByIndicesLoop('HellClownLeftHand', 'Idle', 'HellClownHandsIdle', '6,7,8,9,10,11,12,13,1,2,3,4,5', 20);
+		addAnimationByIndicesLoop('HellClownLeftHand', 'Idle', 'HellClownHandsIdle', '13,12,11,10,9,8,7,6,5,4,3,2,1', 20);
 		setProperty('HellClownLeftHand.flipX', true);
 	end
 
@@ -459,11 +459,9 @@ function onEvent(name, value1, value2)
 		StopSanford = true;
 
 		-- make hellclown brighter
-		for i=1, #hellclownTable do
-			setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1.5);
-			setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1.5);
-			setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1.5);
-		end
+		setProperty(hellclownTable[1][1]..'.colorTransform.redMultiplier', 1.5);
+		setProperty(hellclownTable[1][1]..'.colorTransform.greenMultiplier', 1.5);
+		setProperty(hellclownTable[1][1]..'.colorTransform.blueMultiplier', 1.5);
 		-- start the glow fade
 		HellclownGlowFade = 0.15;
 		-- offset hellclown's middle part
@@ -713,11 +711,9 @@ function onUpdate(elapsed)
 			-- we check if the fade value passed 0
 			if HellclownGlowFade <= 0 then
 				-- reset hellclown's brightness
-				for i=1, #hellclownTable do
-					setProperty(hellclownTable[i][1]..'.colorTransform.redMultiplier', 1);
-					setProperty(hellclownTable[i][1]..'.colorTransform.greenMultiplier', 1);
-					setProperty(hellclownTable[i][1]..'.colorTransform.blueMultiplier', 1);
-				end
+				setProperty(hellclownTable[1][1]..'.colorTransform.redMultiplier', 1);
+				setProperty(hellclownTable[1][1]..'.colorTransform.greenMultiplier', 1);
+				setProperty(hellclownTable[1][1]..'.colorTransform.blueMultiplier', 1);
 				-- reset the fade value
 				HellclownGlowFade = 0;
 			end
