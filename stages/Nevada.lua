@@ -466,9 +466,9 @@ function onEvent(name, value1, value2)
 		HellclownGlowFade = 0.15;
 		-- offset hellclown's middle part
 		-- in a random direction and amount
+		math.randomseed(os.time());
 		local shakeAmount = HellclownShakeIntencity * 50;
 		local shakeDirection = math.random(0,359);
-		math.randomseed(os.time());
 		setProperty(hellclownTable[1][1]..'.offset.x', shakeAmount * math.cos(math.rad(shakeDirection)));
 		setProperty(hellclownTable[1][1]..'.offset.y', shakeAmount * math.sin(math.rad(shakeDirection)));
 	end

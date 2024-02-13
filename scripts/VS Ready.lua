@@ -120,31 +120,18 @@ end
 -- that MouseOnReady is true
 local playTheSound = true;
 
--- represents the x value of the
--- mathematical function that we use
--- to change the scale of the ready thing
-local scaleFuncX = 0;
-
 -- determines who much the x value
 -- will change every second
 local morphSpeed = 2;
 
 function onUpdate(elapsed)
-	-- we increase the x value with time but *morphSpeed* times faster
-	scaleFuncX = scaleFuncX + elapsed * morphSpeed;
-	-- every 10 seconds, the x value will come back to 0
-	if scaleFuncX >= morphSpeed * 10 then
-		-- I don't want the values to become too big,
-		-- because I'm afraid the computer won't be able to handle it.
-		scaleFuncX = 0;
-	end
 	-- f(x) = ((1 - sin(π∙x)) : 2 + 64) : 100
 	--  		       ↓
 	-- f(x) = ((129 - sin(π∙x)) : 2) : 100
 	--  		       ↓
 	-- 		ready.scale.x = f(x)
 	-- 		ready.scale.y = f(x)
-	local theFunc = ((129 - math.sin(math.pi * scaleFuncX)) / 2) / 100;
+	local theFunc = ((129 - math.sin(math.pi * os.clock() * morphSpeed)) / 2) / 100;
 	setProperty('ready.scale.x', theFunc);
 	setProperty('ready.scale.y', theFunc);
 

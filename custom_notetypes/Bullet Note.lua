@@ -90,11 +90,6 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 end
 
 
--- represents the x value of the
--- mathematical function that we use
--- to change the alpha value of the right
--- side of the health bar
-local alphaFuncX = 0;
 -- used to determine if we need
 -- to make the shoot sound play
 local bulletSoundAllowed = true;
@@ -133,13 +128,10 @@ function onUpdatePost(elapsed)
 		local dadColor = getProperty('dad.healthColorArray');
 		local bfColor = getProperty('boyfriend.healthColorArray');
 
-		-- increasing the x value
-		alphaFuncX = alphaFuncX + elapsed;
-
 		-- f(x) = (cos((x + 1)∙π) + 1) : 2
 		--  		      ↓
 		-- 	     local bfAlpha = f(x)
-		local bfAlpha = (math.cos((alphaFuncX + 1) * math.pi) + 1) / 2;
+		local bfAlpha = (math.cos((os.clock() + 1) * math.pi) + 1) / 2;
 		-- Mathematical functions are very useful for programming guys!
 		-- Go learn some math!
 
@@ -161,7 +153,6 @@ function onUpdatePost(elapsed)
 			-- if healthDrain passed 0, then
 			-- the health drain will stop
 			healthDrain = 0;
-			alphaFuncX = 0;
 			runHaxeCode([[
 				game.reloadHealthBarColors();
 			]]);
