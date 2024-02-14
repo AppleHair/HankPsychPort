@@ -172,11 +172,10 @@ function onCreatePost()
 	scaleObject('Lazer', 1.5, 1.5, true);
 	setProperty('Lazer.visible', false);
 
-	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1520, 160);
+	makeAnimatedLuaSprite('gf-hot','GFHotdog', 1530, 200);
 	addAnimationByIndices('gf-hot', 'Boop-left', 'GFStandingWithHotDog', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14', 24);
 	addAnimationByIndices('gf-hot', 'Boop-right', 'GFStandingWithHotDog', '15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29', 24);
 	addAnimationByPrefix('gf-hot', 'Walk', 'GFStandingWithHotDogWalk', 24, true);
-	scaleObject('gf-hot', 1.1, 1.1, true);
 	-- setProperty('gf-hot.visible', false);
 	setProperty('gf-hot.alpha', 0.00001);
 	
@@ -677,13 +676,18 @@ function onUpdate(elapsed)
 	-- Girlfriend Hotdog handler
 	-----------------------------------------------
 
-	if getProperty('gf-hot.x') <= 1170 and not HotDogGFStoppedWalking then
+	if getProperty('gf-hot.x') <= 1180 and not HotDogGFStoppedWalking then
 		setProperty('gf-hot.velocity.x', 0);
 		-- now that she stopped, she needs to do
-		-- the idle animation, so we need to stop stoping her
-		-- from doing the idle animation.
+		-- the idle animation, so we need to stop
+		-- stoping her from doing the idle animation.
 		StopHotDogGF = false;
 		HotDogGFStoppedWalking = true;
+		-- we should also just start playing a
+		-- part of the idle animation to make it
+		-- look like she's just standing there and
+		-- not walking in place.
+		playAnim('gf-hot', 'Boop-right', true);
 	end
 
 	
