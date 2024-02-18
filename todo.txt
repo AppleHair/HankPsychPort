@@ -1,7 +1,7 @@
 done stuff are simbolized with a ✔
 
 make the bullet note instakill work on fucked difficulty ✔
-make the fire note instakill work on fucked difficulty (halo note)
+make the fire note instakill work on fucked difficulty (halo note) ✔
 make the fucked difficulty charts
 make the lever machanic
 make the VS Rating Screen

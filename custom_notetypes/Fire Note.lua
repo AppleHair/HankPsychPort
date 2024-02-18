@@ -1,6 +1,19 @@
 
-function onCreate()
-	makeAnimatedLuaSprite('fireNote', 'NOTE_fire', 0, 0);
+-- tells if the fire note
+-- should be a halo note
+-- (instakill on hit)
+local halo = false;
+
+function onCreatePost()
+
+	-- toggles halo note if in the
+	-- fucked difficulty. can be toggled earlier
+	-- to prevent halo note on fucked difficulty
+	if difficultyPath == "fucked" or difficultyPath == "unfair" then
+		triggerEvent("Signal-Toggle Halo Note");
+	end
+
+	makeAnimatedLuaSprite('fireNote', (halo and 'Halo Note' or 'NOTE_fire'), 0, 0);
 	addAnimationByPrefix('fireNote', 'red', 'red', 24, false);
 	addAnimationByPrefix('fireNote', 'purple', 'purple', 24, false);
 	addAnimationByPrefix('fireNote', 'green', 'green', 24, false);
@@ -40,14 +53,14 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
 				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
 				setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.3); -- we make the health decrease more if you miss(hit) the note
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', (halo and 2 or 0.3)); -- we make the health decrease more if you miss(hit) the note
 				setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
 				setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
 				setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', false); -- we enable splash despite the prefs
 				setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.texture', 'Smoke'); -- we change the splash texture
-				setPropertyFromGroup('unspawnNotes', i, 'texture', 'NOTE_fire'); -- we change the texture
-				setPropertyFromGroup('unspawnNotes', i, 'offsetX', -50);-- we set offsetX
-				setPropertyFromGroup('unspawnNotes', i, 'offsetY', (downscroll and -195.34 or -57.44));-- we set offsetY according to downscroll prefs
+				setPropertyFromGroup('unspawnNotes', i, 'texture', (halo and 'Halo Note' or 'NOTE_fire')); -- we change the texture
+				setPropertyFromGroup('unspawnNotes', i, 'offsetX', (halo and -166.5 or -50));-- we set offsetX
+				setPropertyFromGroup('unspawnNotes', i, 'offsetY', (halo and -66.44 or (downscroll and -195.34 or -57.44)));-- we set offsetY according to downscroll prefs
 										-- in-line if moment --		  boolean        true      false
 				
 				-- disables the coloring of the fire notes
@@ -66,14 +79,19 @@ function onCreate()
 
 	-- precache stuff
 
-	precacheImage('NOTE_fire');
+	
 	precacheImage('Smoke');
-
+	if halo then
+		precacheImage('Halo Note');
+		precacheSound('death');
+		return;
+	end
+	precacheImage('NOTE_fire');
 	precacheSound('burnSound');
 end
 
 function onSpawnNote(id, noteData, noteType, isSustainNote)
-	if downscroll and noteType == 'Fire Note' then
+	if downscroll and noteType == 'Fire Note' and (not halo) then
 
 		-- we need to make the fire note flip vertically on down scroll
 		-- (that's if you don't want the fire to go in the wrong direction)
@@ -122,8 +140,20 @@ function noteMiss(id, noteData, noteType, isSustainNote)
 				break;
 			end
 		end
+		if halo then
+			-- we play the death sound
+			playSound('death');
+			return;
+		end
 		-- we play the burnSound
 		playSound('burnSound');
+	end
+end
+
+function onEvent(name)
+	-- toggles halo note
+	if name == "Signal-Toggle Halo Note" then
+		halo = not halo;
 	end
 end
 
