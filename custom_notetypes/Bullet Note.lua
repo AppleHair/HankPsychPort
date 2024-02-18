@@ -45,13 +45,23 @@ end
 -- this is being set later
 local bulletNotesArray = {};
 
-function onCreate()
+-- tells if the bullet notes should instakill when missed
+local instakill = false;
+
+function onCreatePost()
 
 	-- unlike the fire notes, here I don't load the 
 	-- sprites early, because they are very small, 
 	-- they don't cause lag (maybe on weaker computer they do, but they are not worth...) 
 	-- and they are not worth extra RAM usage (the extra RAM usage comes
 	-- from the new FlxSprite object we create to make the sprites load early).
+
+	-- toggles bullet instakill if in the
+	-- fucked difficulty. can be toggled earlier
+	-- to prevent the instakill on fucked difficulty
+	if difficultyPath == "fucked" then
+		triggerEvent("Signal-Toggle Bullet Instakill");
+	end
 
 	for i = getProperty('unspawnNotes.length')-1, 0, -1 do
 		-- checks if the note is a bullet note
@@ -64,7 +74,7 @@ function onCreate()
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'BulletNotes'); -- we change the texture
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
 				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', 0.8); -- we make the health decrease more if you miss the note
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', (instakill and 2 or 0.8)); -- we make the health decrease more if you miss the note
 	
 				-- disables the coloring of the bullet notes
 				setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
@@ -77,6 +87,13 @@ function onCreate()
 	end
 
 	precacheImage('BulletNotes');
+end
+
+function onEvent(name)
+	-- toggles bullet instakill
+	if name == "Signal-Toggle Bullet Instakill" then
+		instakill = not instakill;
+	end
 end
 
 -- this variable determines how much health
