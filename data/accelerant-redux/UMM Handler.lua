@@ -1,39 +1,3 @@
---[[
-	Checks if a curtain value is
-	in a curtain array
-
-	arr - array to check in
-	value - value to check
-]]
-local function isInArray(arr, value)
-	for i=1, #arr do
-		if arr[i] == value then
-			return true;
-		end
-	end
-	return false;
-end
-
---[[
-	Checks if a curtain character
-    includes a curtain list of
-    animations and returns a 
-    boolean accordingly.
-
-	arr - array of animation names to check
-	char - name of character to check
-]]
-local function checkRequiredAnims(arr, char)
-    local count = 0;
-    local requiredAnims = arr;
-    for i = 0, getProperty(char..".animationsArray.length") - 1 do
-        if isInArray(requiredAnims, getProperty(char..".animationsArray["..i.."].anim")) then
-            count = count + 1;
-        end
-    end
-    return count == #requiredAnims;
-end
-
 local function iNeedToWriteThisTwiceForOnlinePlay()
 
     -- we remove every kind of camera movement events
@@ -60,43 +24,14 @@ function onCreatePost()
 		-- The Unnamed Multiplayer Mod Handler --
 ----------------------------------------------------------------------------------------------------------------------
 
-    --[[
-        To use a custom P1 in this song properly,
-        it needs to have the following animations:
-
-        hey, dodge, hurt
-    ]]
-    if getProperty("boyfriend.Custom") or boyfriendName ~= 'bf' then
-        if checkRequiredAnims({"dodge", "hurt", "hey"},"boyfriend") then
-            addLuaScript('characters/bf');
-        end
-    end
-
     bfScriptRunning = isRunning('characters/bf');
-
-    --[[
-        To use a custom P2 in this song properly,
-        it needs to have the following animations:
-
-        shootRIGHT, shootDOWN, shootUP, shootLEFT,
-        hey, scaredShoot, idle-scared, getReady
-    ]]
-    if getProperty("dad.Custom") or dadName ~= 'hank' then 
-        if checkRequiredAnims({"shootRIGHT", "shootDOWN", "shootUP", "shootLEFT", "hey", 
-          "scaredShoot", "idle-scared", "getReady", "singRIGHT-alt"}, "dad") then
-            addLuaScript('characters/hank');
-        end
-    end
     
     hankScriptRunning = isRunning('characters/hank');
-
 
     -- the next part is for hosters only!
     if onlinePlay and (not Hosting) then
         return;
     end
-
-    -- WELCOME TO THE WORLD OF DEALING WITH SERVERS
 
     -- getTextFromFile doesn't work properly on the other end,
     -- so now I need to write my code in this weird kind of

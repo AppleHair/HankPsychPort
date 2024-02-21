@@ -48,6 +48,12 @@ local bulletNotesArray = {};
 -- tells if the bullet notes should instakill when missed
 local instakill = false;
 
+-- Used to determine if the game
+-- is in multiplayer mode on UMM,
+-- and tell the script to balance
+-- the bullet mechanic accordingly.
+local balance = false;
+
 function onCreatePost()
 
 	-- unlike the fire notes, here I don't load the 
@@ -63,6 +69,9 @@ function onCreatePost()
 		triggerEvent("Signal-Toggle Bullet Instakill");
 	end
 
+	-- check if the game is in multiplayer mode
+    balance = localPlay or onlinePlay;
+
 	for i = getProperty('unspawnNotes.length')-1, 0, -1 do
 		-- checks if the note is a bullet note
 		if getPropertyFromGroup('unspawnNotes', i, 'noteType') == 'Bullet Note' then
@@ -74,8 +83,10 @@ function onCreatePost()
 				setPropertyFromGroup('unspawnNotes', i, 'texture', 'BulletNotes'); -- we change the texture
 				setPropertyFromGroup('unspawnNotes', i, 'noAnimation', true); -- we make the note a no animation note
 				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', (instakill and 2 or 0.8)); -- we make the health decrease more if you miss the note
-	
+				if not balance then
+					setPropertyFromGroup('unspawnNotes', i, 'missHealth', (instakill and 2 or 0.8)); -- we make the health decrease more if you miss the note
+				end
+
 				-- disables the coloring of the bullet notes
 				setPropertyFromGroup('unspawnNotes', i, 'rgbShader.enabled', false);
 				-- makes the note splashes use the default colors
@@ -100,7 +111,7 @@ end
 -- is being drained
 local healthDrain = 0;
 function noteMiss(id, noteData, noteType, isSustainNote)
-	if noteType == 'Bullet Note' then
+	if noteType == 'Bullet Note' and (not balance) then
 		-- health -= 1 , but with drain
 		healthDrain = healthDrain + 1;
 	end

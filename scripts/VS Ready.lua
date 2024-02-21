@@ -32,7 +32,7 @@ function onCreate()
 	setProperty('readyCL.visible', false);
 
 	-- onlinePlay = true | false
-	RunningUMM = onlinePlay ~= nil;
+	runningUMM = onlinePlay ~= nil;
 
 	-- we skip the freeplay arrow alpha tween
 	setProperty('skipArrowStartTween', true);
@@ -44,7 +44,7 @@ function onCreate()
 		
 	-- because UMM's online play has it's own way of checking
 	-- if all players are ready, we should adapt to it.
-	if RunningUMM and onlinePlay then
+	if runningUMM and onlinePlay then
 		readyCondition = function() return (not wasReady) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or 
 			getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE')); end
 		return;
@@ -72,7 +72,7 @@ function onStartCountdown()
 			game.generateStaticArrows(0);
 			game.generateStaticArrows(1);
 		]]);
-		if RunningUMM and onlinePlay then
+		if runningUMM and onlinePlay then
 			-- If we play online with UMM,
 			-- this function (onStartCountdown()) will
 			-- run again after all players are ready,
@@ -89,7 +89,7 @@ function onStartCountdown()
 	-- we clear everything we did with the arrows
 	-- before the game does it again
 	triggerEvent('0.7.1h clearNotes', '', '');
-	if RunningUMM and onlinePlay then
+	if runningUMM and onlinePlay then
 		-- In order to adapt to UMM's online play,
 		-- we return noting and let UMM do its thing.
 		return;
@@ -148,7 +148,7 @@ function onUpdate(elapsed)
 		removeLuaSprite('ready', true);
 		removeLuaSprite('readyCL', true);
 		
-		if RunningUMM and onlinePlay then
+		if runningUMM and onlinePlay then
 			-- we stop this condition from being true again
 			wasReady = true;
 			return;
@@ -165,7 +165,7 @@ function onUpdate(elapsed)
 
 	-- because we don't check for mouse input in
 	-- UMM's online play, the code ahead isn't relevant
-	if RunningUMM and onlinePlay then
+	if runningUMM and onlinePlay then
 		return;
 	end
 
@@ -205,7 +205,7 @@ function onUpdatePost(elapsed)
 	if getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE') and not allowPause then
 		-- we don't want this to happen when people use
 		-- the script with online play in UMM
-		if RunningUMM and onlinePlay then
+		if runningUMM and onlinePlay then
 			return;
 		end
 		-- we end the song
