@@ -4,6 +4,12 @@
 -- (instakill on hit)
 local halo = false;
 
+-- Used to determine if the game
+-- is in multiplayer mode on UMM,
+-- and tell the script to balance
+-- the halo note accordingly.
+local balance = false;
+
 function onCreatePost()
 
 	-- toggles halo note if in the
@@ -12,6 +18,9 @@ function onCreatePost()
 	if difficultyPath == "fucked" or difficultyPath == "unfair" then
 		triggerEvent("Signal-Toggle Halo Note");
 	end
+
+	-- check if the game is in multiplayer mode
+    balance = localPlay or onlinePlay;
 
 	makeAnimatedLuaSprite('fireNote', (halo and 'Halo Note' or 'NOTE_fire'), 0, 0);
 	addAnimationByPrefix('fireNote', 'red', 'red', 24, false);
@@ -53,7 +62,7 @@ function onCreatePost()
 				setPropertyFromGroup('unspawnNotes', i, 'noMissAnimation', true); -- we make the note have no miss animation
 				setPropertyFromGroup('unspawnNotes', i, 'ignoreNote', true); -- we make botplay and opponent not press this note
 				setPropertyFromGroup('unspawnNotes', i, 'hitCausesMiss', true); -- we make hitting this note cause a miss
-				setPropertyFromGroup('unspawnNotes', i, 'missHealth', (halo and 2 or 0.3)); -- we make the health decrease more if you miss(hit) the note
+				setPropertyFromGroup('unspawnNotes', i, 'missHealth', ((halo and (not balance)) and 2 or 0.3)); -- we make the health decrease more if you miss(hit) the note
 				setPropertyFromGroup('unspawnNotes', i, 'ratingDisabled', true); -- we make this note not make a pop-up rating thing 
 				setPropertyFromGroup('unspawnNotes', i, 'lowPriority', true); -- we make the note low priority
 				setPropertyFromGroup('unspawnNotes', i, 'noteSplashData.disabled', false); -- we enable splash despite the prefs

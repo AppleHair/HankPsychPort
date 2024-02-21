@@ -8,65 +8,14 @@ function onCreate()
     runningUMM = onlinePlay ~= nil;
 end
 
--- Related to dealing with UMM bugs. 
--- Don't bother looking into this.
-local forFuckSake = true;
-
--- Related to dealing with UMM bugs. 
--- Don't bother looking into this.
-local function BulletCondition(messageStart, id, noteType)
-    -- related to dealing with UMM bugs. 
-    -- Don't bother looking into this.
-    if runningUMM and onlinePlay then
-        if (not leftSide) then
-            send(messageStart..tostring(getPropertyFromGroup('notes', id, 'gfNote') or
-            noteType ~= 'Bullet Note'));
-            return getPropertyFromGroup('notes', id, 'gfNote') or noteType ~= 'Bullet Note';
-        end
-        local copy = forFuckSake;
-        forFuckSake = true;
-        return copy;
-    end
-
-    -- character must be bf and the code is 
-    -- only relevant to bullet notes that are hit by boyfriend
-    return getPropertyFromGroup('notes', id, 'gfNote') or noteType ~= 'Bullet Note';
-end
-
--- Related to dealing with UMM bugs. 
--- Don't bother looking into this.
-function onReceive(message)
-    if message:find("BulletMiss ") then
-        message = message:sub(12, #message);
-        if message == "true" then
-            forFuckSake = true;
-        elseif message == "false" then
-            forFuckSake = false;
-        end
-        noteMiss();
-    end
-    if message:find("BulletHit ") then
-        message = message:sub(11, #message);
-        if message == "true" then
-            forFuckSake = true;
-        elseif message == "false" then
-            forFuckSake = false;
-        end
-        goodNoteHit();
-    end
-end
-
 function goodNoteHit(id, direction, noteType, isSustainNote)
-    -- we check stuff(look at the last return inside the function)
-    if BulletCondition("BulletHit ", id, noteType) then
+    -- only relevant to bullet notes that are missed by boyfriend
+    if getPropertyFromGroup('notes', id, 'gfNote') or noteType ~= 'Bullet Note' then
         return;
     end
     -- play dodge animation
     triggerEvent('Play Animation', 'dodge', 'boyfriend');
 end
-
--- another UMM online play bug handeling related thing
-local overrideUMMsMiss = false;
 
 -- Tells if extra visual effects
 -- should be added to the game over
@@ -75,17 +24,13 @@ local overrideUMMsMiss = false;
 local hanked = false;
 
 function noteMiss(id, noteData, noteType, isSustainNote)
-    -- just move on for now don't look at this function
-    if BulletCondition("BulletMiss ", id, noteType) then
+    -- only relevant to bullet notes that are missed by boyfriend
+    if getPropertyFromGroup('notes', id, 'gfNote') or noteType ~= 'Bullet Note' then
         return;
     end
     -- we make boyfriend play his hurt animation
     triggerEvent('Play Animation', 'hurt', 'boyfriend');
 
-    -- another UMM online play bug handeling related thing
-    if onlinePlay and leftSide then
-        overrideUMMsMiss = true;
-    end
     -- we set the blood effect's position
     triggerEvent('Set Blood Effect Pos', defaultBoyfriendX - 264, defaultBoyfriendY + 67);
     -- we make the blood effect play it's animation
@@ -118,17 +63,6 @@ function onGameOverStart()
         setProperty('bulletRay.alpha', 1);
 		addLuaSprite('bulletRay', false);
 		doTweenAlpha('rayFade', 'bulletRay', 0, 0.2);
-    end
-end
-
-function onUpdatePost(elapsed)
-    -- another UMM online play bug handeling related thing
-    if runningUMM and overrideUMMsMiss then
-        if getProperty('boyfriend.animation.curAnim.name') ~= "hurt" then
-            triggerEvent('Play Animation', 'hurt', 'boyfriend');
-            return;
-        end
-        overrideUMMsMiss = false;
     end
 end
 
