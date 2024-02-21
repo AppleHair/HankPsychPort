@@ -37,20 +37,19 @@ Ok, so other than an accurate port of the fucked difficulty, I have some very co
 
 1. FNF ONLINE VS. Rating Screen Recreation (2022):
 
-Starting with the one that excites me the most, this is going to be a recreation of the cool rating screen that appears in FNF ONLINE VS, and it's going to be very accurate and very cool, except the maximum accuracy you will be able to get is 100% (no above 100% thing), and the Ss rank is going to be replaced with something else. maybe it'll be a "Perfect" rank instead.
+Starting with the one that excites me the most, this is going to be a recreation of the cool rating screen that appears in FNF ONLINE VS, and it's going to be very accurate and very cool, except the maximum accuracy you will be able to get is 100% (no above 100% thing).
 		
 2. hank-player and maghank-player (2022):
 
 A proper hank and maghank players with miss animations, game-over animations and any other animation that a player character in FNF usually has. (2023 update): These will also come in the form of UMM Custom characters.
 
-3. Accelerant REDUX (2022): 
-
-The offical remix (by philiplol) for accelerant will be playable in this port with new graphics and animations. I hope to even add a cutscene at the start, that will give an explanation to why hank is rapping with boyfriend in the first place.
-
-4. Full UMM (Unnamed Multiplayer Mod) support (2023):
+3. Full UMM (Unnamed Multiplayer Mod) support (2023):
 
 This demo of the port already has UMM support, and I'm looking forward to having this support in the full release as well.
 
+4. Accelerant REDUX (2024): 
+
+The offical remix (by philiplol) for accelerant will be playable in this port, but only as a preview of a bigger project I'll be working on. the preview will include the new song with one difficulty ("madness"), and a few minor visual effects added. The full thing will have completely new visuals, animations and cutscenes, a "normal" difficulty and a few new mechanics I still need to figure out. It will take more time for the full accelerant redux to be finished and I'll publish it as a separate mod.
 
 ## Thank you for reading the README file and thank you for playing this port!!
 
