@@ -8,11 +8,15 @@ make the fucked difficulty charts
 fix animation errors
 make hank-player
 make maghank-player
-make the VS Rating Screen
+make the vs rating screen
+add redux preview unlock screen
+add extra art
+- credits icon
+- story mode art for redux preview
 
 make the atlas optimization
 make the mod options
 - hank icon select
 - hud select
 
-the real accelerant redux will be a separate mod
+NOTE: the real accelerant redux will be a separate mod!
