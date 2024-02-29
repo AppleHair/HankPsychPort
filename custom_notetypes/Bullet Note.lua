@@ -244,7 +244,8 @@ function onUpdatePost(elapsed)
 			-- once per bullet note strumtime)
 			triggerEvent("Signal-Bullet Note Time");
 			-- shake camera
-			cameraShake('game', 0.01, 0.07);
+			cameraShake('game', 0.005, 0.07);
+			triggerEvent('Add Camera Zoom', 0.01, 0);
 		end
 		-- if you want to override the
 		-- current sing animation with
