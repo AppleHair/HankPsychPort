@@ -8,7 +8,8 @@ local function iNeedToWriteThisTwiceForOnlinePlay()
 		if (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Pos" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Follow Pos" and inCustomStage) or
-          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) then
+          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) or
+          (difficultyPath == "fucked" and getPropertyFromGroup('eventNotes', i, 'strumTime') >= 87530.487804878 and inCustomStage) then
             removeFromGroup('eventNotes', i);
 		end
 	end
@@ -37,7 +38,7 @@ function onCreatePost()
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
-    find("\"stage\": \""..getPropertyFromClass('states.PlayState', 'curStage').."\"") == nil;
+    find("\"stage\": \""..curStage.."\"") == nil;
 
     -- if it's true and we are in onlinePlay
     if onlinePlay and inCustomStage then

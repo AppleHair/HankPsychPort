@@ -37,7 +37,7 @@ function onCreatePost()
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
     inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
-    find("\"stage\": \""..getPropertyFromClass('states.PlayState', 'curStage').."\"") == nil;
+    find("\"stage\": \""..curStage.."\"") == nil;
 
     -- if it's true and we are in onlinePlay
     if onlinePlay and inCustomStage then

@@ -125,7 +125,42 @@ end
 local MissSplashIndex = {};
 
 function noteMiss(id, noteData, noteType, isSustainNote)
-	if noteType == 'Fire Note' then
+	if noteType == 'Fire Note' and (not leftSide) then
+		-- we get the length of the grpNoteSplashes group
+		local length = getProperty('grpNoteSplashes.length');
+		-- we itrate on every splash in grpNoteSplashes
+		for i = 0, length do
+			-- if we're at the groups length
+			if i == length then
+				-- then the new splash will
+				-- be added to the end of
+				-- the group, and its index 
+				-- will be the group's length
+				table.insert(MissSplashIndex, length);
+				break;
+			end
+			-- if the current splash doesn't exist
+			if not getPropertyFromGroup('grpNoteSplashes', i, 'exists') then
+				-- then the new splash will
+				-- be recycled as this splash,
+				-- and its index will be the 
+				-- same as this one's.
+				table.insert(MissSplashIndex, i);
+				break;
+			end
+		end
+		if halo then
+			-- we play the death sound
+			playSound('death');
+			return;
+		end
+		-- we play the burnSound
+		playSound('burnSound');
+	end
+end
+
+function opponentNoteMiss(id, noteData, noteType, isSustainNote)
+	if noteType == 'Fire Note' and leftSide then
 		-- we get the length of the grpNoteSplashes group
 		local length = getProperty('grpNoteSplashes.length');
 		-- we itrate on every splash in grpNoteSplashes
