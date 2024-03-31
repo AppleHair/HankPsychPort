@@ -1,22 +1,26 @@
 done stuff is symbolized with a ✔
 
+1.0:
+
 make the bullet note instakill work on fucked difficulty ✔
 make the fire note instakill work on fucked difficulty (halo note) ✔
 remake the lever's fla ✔
 make the lever mechanic ✔
 make the fucked difficulty charts
 fix animation errors
-make hank-player
-make maghank-player
-make the vs rating screen
 add redux preview unlock screen
 add extra art
 - credits icon
 - story mode art for redux preview
 
+1.5:
+
+make hank-player
+make maghank-player
+make the vs rating screen
 make the atlas optimization
 make the mod options
 - hank icon select
 - hud select
 
-NOTE: the real accelerant redux will be a separate mod!
+NOTE: the final version of accelerant redux will be a separate mod!
