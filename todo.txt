@@ -7,11 +7,11 @@ make the fire note instakill work on fucked difficulty (halo note) ✔
 remake the lever's fla ✔
 make the lever mechanic ✔
 make the fucked difficulty charts ✔
-fix animation errors
-add redux preview unlock screen
+fix animation errors ✔
 add extra art
 - credits icon
 - story mode art for redux preview
+add redux preview unlock screen
 
 1.5:
 
