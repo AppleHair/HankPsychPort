@@ -9,7 +9,7 @@ make the lever mechanic ✔
 make the fucked difficulty charts ✔
 fix animation errors ✔
 add extra art
-- credits icon
+- credits icon ✔
 - story mode art for redux preview
 add redux preview unlock screen
 
