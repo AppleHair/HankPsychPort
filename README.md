@@ -5,8 +5,6 @@ This is a Psych Engine port of the first challenge in FNF ONLINE VS, the hank ch
 
 A lot of people have already tried to port this challenge to psych, but most of these ports are rushed, inaccurate, and just stupidly lazy. In this port, however, I'm trying to put as much effort as I can and I want this port to be one of the most accurate and well-coded psych engine ports to date.
 
-Currently, the port is in a demo state and has only the hard difficulty implemented. In the future, I hope to add the fucked difficulty and more new stuff that I want to make for this port.
-
 ## The Process (2022)
 
 You are probably going to be shocked by this, but I started working on this port approximately ONE YEAR AGO (as of writing this). I was mostly inspired by how the shaggy mod was ported to psych engine at the time and I wanted to give accelerant a similar treatment, but I didn't have much experience with making FNF mods at the time, which explains why this port took so long to make. I learned SO MUCH about programming this year that it's literally INSANE. Programming was always a thing I liked to do, but now after I learned more about it, I have a completely different perspective on it that just makes me want to learn even more!
@@ -35,21 +33,17 @@ If you have something to say about the port or find a bug/other problem with the
 
 Ok, so other than an accurate port of the fucked difficulty, I have some very cool and exciting things I'm planning to work on for the full release of the port:
 
-1. FNF ONLINE VS. Rating Screen Recreation (2022):
+1. FNF ONLINE VS. Result Screen Recreation:
 
-Starting with the one that excites me the most, this is going to be a recreation of the cool rating screen that appears in FNF ONLINE VS, and it's going to be very accurate and very cool, except the maximum accuracy you will be able to get is 100% (no above 100% thing).
+A full recreation of the result screen that appears in FNF ONLINE VS, which will also work with UMM on multiplayer and will also allow the unlock screen.
 		
-2. hank-player and maghank-player (2022):
+2. hank-player and maghank-player:
 
-A proper hank and maghank players with miss animations, game-over animations and any other animation that a player character in FNF usually has. (2023 update): These will also come in the form of UMM Custom characters.
+A proper hank and maghank players with miss animations, game-over animations and any other animation that a player character in FNF usually has. These will also come in the form of UMM Custom characters.
 
-3. Full UMM (Unnamed Multiplayer Mod) support (2023):
+## Accelerant REDUX
 
-This demo of the port already has UMM support, and I'm looking forward to having this support in the full release as well.
-
-4. Accelerant REDUX (2024): 
-
-The offical remix (by philiplol) for accelerant will be playable in this port, but only as a preview of a bigger project I'll be working on. the preview will include the new song with one difficulty ("madness"), and a few minor visual effects added. The full thing will have completely new visuals, animations and cutscenes, a "normal" difficulty and a few new mechanics I still need to figure out. It will take more time for the full accelerant redux to be finished and I'll publish it as a separate mod.
+The offical remix (by philiplol) for accelerant is be playable in this port, but only as a preview of a bigger project I'll be working on. the preview includes the new song with one difficulty ("madness"), and a few minor visual effects added. The full thing will have completely new visuals, animations and cutscenes, a "normal" difficulty and a few new mechanics I still need to figure out. It will take more time for the full accelerant redux to be finished and I'll publish it as a separate mod.
 
 ## Thank you for reading the README file and thank you for playing this port!!
 
