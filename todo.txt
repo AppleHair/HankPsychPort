@@ -11,7 +11,7 @@ fix animation errors ✔
 add extra art ✔
 - credits icon ✔
 - story mode art for redux preview ✔
-add redux preview unlock screen
+add redux preview unlock screen ✔
 
 1.5:
 

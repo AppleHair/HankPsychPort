@@ -744,6 +744,15 @@ function getPropertyFromGroup(group, index, property) end
 ---@param property string Path to the variable. Local to `group[index]`
 ---@param value any
 function setPropertyFromGroup(group, index, property, value) end
+---Calls a method on a certain object on PlayState.
+---@param funcToRun string The method to run
+---@param args? table Arguments to pass to the method
+function callMethod(funcToRun, args) end
+---Calls a method on a certain object from a class.
+---@param className string The class name, such as `PlayState`
+---@param funcToRun string The method to run
+---@param args? table Arguments to pass to the method
+function callMethodFromClass(className, funcToRun, args) end
 ---@param script string The Haxe code to run
 ---Runs the given Haxe code in `script` as long as all of it is valid. Any errors will cause the code to not run, `null` values and other runtime errors cause a break at the current line
 ---You can get variables/functions from other classes but natively limited to what is already imported. To add more libraries to your current `Expr` use `addHaxeLibrary`\
@@ -1323,6 +1332,18 @@ function doTweenZoom(tag, camera, value, duration, ease) end
 ---@param duration number The time it takes for the Tween to take place. In seconds
 ---@param ease? ease The tweening method used. Default is `'linear'`
 function doTweenColor(tag, obj, color, duration, ease) end
+---Converts a hexadecimal color to a `FlxColor` object
+---@param color string Hexadecimal color in `AARRGGBB` or `RRGGBB` format
+function FlxColor(color) end
+---Converts a hexadecimal color to a `FlxColor` object
+---@param color string Hexadecimal color in `AARRGGBB` or `RRGGBB` format
+function getColorFromName(color) end
+---Converts a hexadecimal color to a `FlxColor` object
+---@param color string Hexadecimal color in `AARRGGBB` or `RRGGBB` format
+function getColorFromString(color) end
+---Converts a hexadecimal color to a `FlxColor` object
+---@param color string Hexadecimal color in `AARRGGBB` or `RRGGBB` format
+function getColorFromHex(color) end
 ---Cancels the `FlxTween` with the tag `tag`
 ---@param tag string Tween tag name
 function cancelTween(tag) end
