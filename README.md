@@ -31,7 +31,7 @@ If you have something to say about the port or find a bug/other problem with the
 
 ## Future Plans
 
-Ok, so other than an accurate port of the fucked difficulty, I have some very cool and exciting things I'm planning to work on for the full release of the port:
+Here are some of the major things that will be added in future updates:
 
 1. FNF ONLINE VS. Result Screen Recreation:
 
