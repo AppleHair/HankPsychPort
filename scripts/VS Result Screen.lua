@@ -47,6 +47,7 @@ function onEndSong()
                 PlayState.instance.camGame.alpha = 0.0;
                 PlayState.instance.camHUD.alpha = 0.0;
                 PlayState.instance.camOther.alpha = 1.0;
+                FlxG.state.closeSubState();
             };
         ]]);
         runTimer("TransitionEnd", 0.6);
