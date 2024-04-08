@@ -143,7 +143,7 @@ function initUnlockedScreen()
     doTweenY('GRevealUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') - screenHeight/4, 1.5, "quadout");
     doTweenY('RevealDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') + screenHeight/4, 1.5, "quadout");
     doTweenY('GRevealDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') + screenHeight/4, 1.5, "quadout");
-    doTweenX('RevealObject', 'UnlockedObject', middle + OffsetX, 1.5, "quadout");
+    doTweenX('RevealObject', 'UnlockedObject', middle + OffsetX, 2, "quadout");
     runTimer("WaitText", 1);
 end
 
@@ -153,11 +153,11 @@ function onTimerCompleted(tag, loops, loopsLeft)
         initUnlockedScreen();
     end
     if tag == "WaitText" then
-        doTweenY('RevealText', 'UnlockedText', 20, 0.5, "sineinout");
+        doTweenY('RevealText', 'UnlockedText', 20, 0.5, "quadinout");
         runTimer("HideText", 2);
     end
     if tag == "HideText" then
-        doTweenY('HideText', 'UnlockedText', -233, 0.5, "sineout");
+        doTweenY('HideText', 'UnlockedText', -233, 1, "quadout");
     end
     if tag == "HideBG" then
         doTweenAlpha('BGExit', 'UnlockedScreenBG', 0.0, 1, "quadin");
