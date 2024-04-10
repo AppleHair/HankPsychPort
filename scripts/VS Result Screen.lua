@@ -138,12 +138,12 @@ function initUnlockedScreen()
 
     playSound("woosh", 1);
 
-    doTweenAlpha('BGEnter', 'UnlockedScreenBG', 1.0, 1.5, "quadout");
-    doTweenY('RevealUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') - screenHeight/4, 1.5, "quadout");
-    doTweenY('GRevealUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') - screenHeight/4, 1.5, "quadout");
-    doTweenY('RevealDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') + screenHeight/4, 1.5, "quadout");
-    doTweenY('GRevealDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') + screenHeight/4, 1.5, "quadout");
-    doTweenX('RevealObject', 'UnlockedObject', middle + OffsetX, 2, "quadout");
+    doTweenAlpha('BGEnter', 'UnlockedScreenBG', 1.0, 2, "cubeout");
+    doTweenY('RevealUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') - screenHeight/4, 2, "cubeout");
+    doTweenY('GRevealUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') - screenHeight/4, 2, "cubeout");
+    doTweenY('RevealDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') + screenHeight/4, 2, "cubeout");
+    doTweenY('GRevealDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') + screenHeight/4, 2, "cubeout");
+    doTweenX('RevealObject', 'UnlockedObject', middle + OffsetX, 2, "cubeout");
     runTimer("WaitText", 1);
 end
 
@@ -153,31 +153,31 @@ function onTimerCompleted(tag, loops, loopsLeft)
         initUnlockedScreen();
     end
     if tag == "WaitText" then
-        doTweenY('RevealText', 'UnlockedText', 20, 0.5, "quadinout");
-        runTimer("HideText", 2);
+        doTweenY('RevealText', 'UnlockedText', 20, 0.5, "quadout");
+        runTimer("HideText", 1.5);
     end
     if tag == "HideText" then
-        doTweenY('HideText', 'UnlockedText', -233, 1, "quadout");
+        doTweenY('HideText', 'UnlockedText', -233, 1, "cubeout");
     end
     if tag == "HideBG" then
-        doTweenAlpha('BGExit', 'UnlockedScreenBG', 0.0, 1, "quadin");
-        doTweenY('HideUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') + screenHeight/4, 1, "quadin");
-        doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1, "quadin");
-        doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1, "quadin");
-        doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1, "quadin");
-        doTweenX('HideObject', 'UnlockedObject', -getProperty('UnlockedObject.frameWidth'), 1, "quadin");
+        doTweenAlpha('BGExit', 'UnlockedScreenBG', 0.0, 1.25, "cubein");
+        doTweenY('HideUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') + screenHeight/4, 1.25, "cubein");
+        doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1.25, "cubein");
+        doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1.25, "cubein");
+        doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1.25, "cubein");
+        doTweenX('HideObject', 'UnlockedObject', -getProperty('UnlockedObject.frameWidth'), 1.25, "cubein");
     end
 end
 
 function onTweenCompleted(tag)
-    if tag == "BGEnter" then
+    if tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
         cameraShake("camOther", 0.002, 0.2);
         playSound("unlocksound", 1);
         if not HasTitle then
             setProperty('UnlockedObject.color', 0xFFFFFF);
         end
-        runTimer("HideBG", 2);
+        runTimer("HideBG", 1.25);
     end
     if tag == "BGExit" then
         UnlockedScreenActive = false;
