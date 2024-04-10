@@ -41,6 +41,8 @@ function onEndSong()
     if UnlockedObjectPath ~= "" then
         addHaxeLibrary("CustomFadeTransition", "backend");
         addHaxeLibrary("FlxGradient", "flixel.util");
+        addHaxeLibrary("FlxTrail", "flixel.addons.effects");
+        addHaxeLibrary("ModchartSprite", "psychlua");
         runHaxeCode([[
             FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
             CustomFadeTransition.finishCallback = function() {
@@ -113,14 +115,14 @@ function initUnlockedScreen()
     else
         makeLuaSprite('UnlockedObject', UnlockedObjectPath, 0, 0);
     end
-    if not HasTitle then
-        setProperty('UnlockedObject.color', 0x000000);
-    end
     screenCenter('UnlockedObject', 'XY');
     local middle = getProperty('UnlockedObject.x');
     setProperty('UnlockedObject.x', getProperty('UnlockedObject.x') + screenWidth/2 + getProperty('UnlockedObject.frameWidth') );
     setProperty('UnlockedObject.y', getProperty('UnlockedObject.y') + OffsetY );
     setObjectCamera('UnlockedObject', "camOther");
+    if not HasTitle then
+        setProperty('UnlockedObject.color', 0x000000);
+    end
 
 
 
@@ -136,6 +138,21 @@ function initUnlockedScreen()
     addLuaSprite('UnlockedObject');
     addLuaSprite('UnlockedText');
 
+
+
+    runHaxeCode([[
+        var object:ModchartSprite = game.modchartSprites.get("UnlockedObject");
+        var trail:FlxTrail = new FlxTrail(object, null, 6, 5, 0.25, 0.05);
+        trail.cameras = [game.camOther];
+        game.insert(game.members.indexOf(object), trail);
+        setVar("UnlockedTrail", trail);
+    ]]);
+    if not HasTitle then
+        setProperty('UnlockedTrail.color', 0x000000);
+    end
+
+
+    
     playSound("woosh", 1);
 
     doTweenAlpha('BGEnter', 'UnlockedScreenBG', 1.0, 2, "cubeout");
@@ -165,7 +182,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
         doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1.25, "cubein");
         doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1.25, "cubein");
         doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1.25, "cubein");
-        doTweenX('HideObject', 'UnlockedObject', -getProperty('UnlockedObject.frameWidth'), 1.25, "cubein");
+        doTweenX('HideObject', 'UnlockedObject', -(getProperty('UnlockedObject.frameWidth') + screenWidth/2), 1.25, "cubein");
     end
 end
 
@@ -176,6 +193,7 @@ function onTweenCompleted(tag)
         playSound("unlocksound", 1);
         if not HasTitle then
             setProperty('UnlockedObject.color', 0xFFFFFF);
+            setProperty('UnlockedTrail.color', 0xFFFFFF);
         end
         runTimer("HideBG", 1.25);
     end
