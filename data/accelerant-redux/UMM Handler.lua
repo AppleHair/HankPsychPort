@@ -8,7 +8,8 @@ local function iNeedToWriteThisTwiceForOnlinePlay()
 		if (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Pos" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Follow Pos" and inCustomStage) or
-          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) then
+          (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) or
+          (getPropertyFromGroup('eventNotes', i, 'strumTime') >= 99237.8048780486 and inCustomStage) then
             removeFromGroup('eventNotes', i);
 		end
 	end
