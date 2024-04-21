@@ -108,11 +108,18 @@ function initUnlockedScreen()
 
     screenCenter(UnlockedObjectName, 'XY');
     local middle = getProperty(UnlockedObjectName..'.x');
-    setProperty(UnlockedObjectName..'.x', getProperty(UnlockedObjectName..'.x') + screenWidth/2 + getProperty(UnlockedObjectName..'.frameWidth') );
-    setProperty(UnlockedObjectName..'.y', getProperty(UnlockedObjectName..'.y') );
+    setProperty(UnlockedObjectName..'.x', getProperty(UnlockedObjectName..'.x') + screenWidth/2 +
+        getProperty(UnlockedObjectName..'.frameWidth') + getProperty(UnlockedObjectName..'.offset.x'));
     setObjectCamera(UnlockedObjectName, "camOther");
     if UnlockedTitleName == nil then
         setProperty(UnlockedObjectName..'.color', 0x000000);
+    else
+        setObjectCamera(UnlockedTitleName, "camOther");
+        screenCenter(UnlockedTitleName, 'XY');
+        setProperty(UnlockedTitleName..'.x', getProperty(UnlockedTitleName..'.x') + screenWidth/4);
+        setProperty(UnlockedTitleName..'.y', getProperty(UnlockedTitleName..'.y') + screenHeight/4);
+        setProperty(UnlockedTitleName..'.alpha', 0.00001);
+        setProperty(UnlockedTitleName..'.visible', true);
     end
 
 
@@ -127,6 +134,9 @@ function initUnlockedScreen()
     addLuaSprite('UnlockedGradientUp');
     addLuaSprite('UnlockedGradientDown');
     addLuaSprite(UnlockedObjectName);
+    if UnlockedTitleName ~= nil then
+        addLuaSprite(UnlockedTitleName);
+    end
     addLuaSprite('UnlockedText');
 
 
@@ -168,12 +178,17 @@ function onTimerCompleted(tag, loops, loopsLeft)
         doTweenY('HideText', 'UnlockedText', -233, 1, "cubeout");
     end
     if tag == "HideBG" then
-        doTweenAlpha('BGExit', 'UnlockedScreenBG', 0.0, 1.25, "cubein");
-        doTweenY('HideUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') + screenHeight/4, 1.25, "cubein");
-        doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1.25, "cubein");
-        doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1.25, "cubein");
-        doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1.25, "cubein");
-        doTweenX('HideObject', UnlockedObjectName, -(getProperty(UnlockedObjectName..'.frameWidth') + screenWidth/2), 1.25, "cubein");
+        doTweenAlpha('BGExit', 'UnlockedScreenBG', 0.0, 1.5, "cubein");
+        doTweenY('HideUp', 'UnlockedBlackUp', getProperty('UnlockedBlackUp.y') + screenHeight/4, 1.5, "cubein");
+        doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1.5, "cubein");
+        doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1.5, "cubein");
+        doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1.5, "cubein");
+        doTweenX('HideObject', UnlockedObjectName, -(getProperty(UnlockedObjectName..'.frameWidth') + screenWidth/2) +
+            getProperty(UnlockedObjectName..'.offset.x'), 1.5, "cubein");
+        if UnlockedTitleName ~= nil then
+            doTweenX('HideTitle', UnlockedTitleName, getProperty(UnlockedTitleName..'.frameWidth') + screenWidth * 1.5 +
+                getProperty(UnlockedObjectName..'.offset.x'), 1.25, "cubein");
+        end
     end
 end
 
@@ -185,6 +200,8 @@ function onTweenCompleted(tag)
         if UnlockedTitleName == nil then
             setProperty(UnlockedObjectName..'.color', 0xFFFFFF);
             setProperty('UnlockedTrail.color', 0xFFFFFF);
+        else
+            setProperty(UnlockedTitleName..'.alpha', 1.0);
         end
         runTimer("HideBG", 1.25);
     end
