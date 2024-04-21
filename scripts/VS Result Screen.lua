@@ -4,41 +4,36 @@
 ----------------------
 
 UnlockedScreenActive = false;
-UnlockedObjectPath = "";
-UnlockedTitlePath = "";
-UnlockedColor = "#FFFFFF";
-HasTitle = false;
-
-OffsetX = 0;
-OffsetY = 0;
-Prefix = "";
+---@type any
+UnlockedObjectName = nil;
+---@type any
+UnlockedTitleName = nil;
+UnlockedColor = 0xFFFFFF;
 
 function onEvent(name, value1, value2)
     if name == "Signal-Enable Unlocked Screen" then
-        if not checkFileExists('images/'..value1..'.png', false) then
+        if not luaSpriteExists(value1) then
             close();
         end
-        UnlockedObjectPath = value1;
-        UnlockedTitlePath = value2;
-        HasTitle = checkFileExists('images/'..value2..'.png', false);
+        UnlockedObjectName = value1;
+        UnlockedTitleName = (luaSpriteExists(value2) and value2 or nil);
+        addHaxeLibrary("CoolUtil", "backend");
+        UnlockedColor = runHaxeCode([[
+            return FlxColor.fromInt(CoolUtil.dominantColor(game.modchartSprites.get("]]..value1..[[")));
+        ]]);
     elseif name == "Signal-Set Unlock Screen Color" then
-        UnlockedColor = value1;
-    elseif name == "Signal-Set Unlock Object Offset" then
-        OffsetX = tonumber(value1);
-        OffsetY = tonumber(value2);
-    elseif name == "Signal-Set Unlock Animation Prefix" then
-        Prefix = value1;
+        UnlockedColor = FlxColor(value1);
     end
 end
 
 function onCreatePost()
-    if UnlockedObjectPath == "" then
+    if UnlockedObjectName == nil then
         close();
     end
 end
 
 function onEndSong()
-    if UnlockedObjectPath ~= "" then
+    if UnlockedObjectName ~= nil then
         addHaxeLibrary("CustomFadeTransition", "backend");
         addHaxeLibrary("FlxGradient", "flixel.util");
         addHaxeLibrary("FlxTrail", "flixel.addons.effects");
@@ -61,8 +56,11 @@ end
 function initUnlockedScreen()
     makeLuaSprite('UnlockedScreenBG', 'menuDesat', 0, 0);
     setGraphicSize('UnlockedScreenBG', screenWidth, screenHeight);
+    scaleObject('UnlockedScreenBG', 1.125, 1.125, false);
+    setProperty('UnlockedScreenBG.offset.y', 12);
+    setProperty('UnlockedScreenBG.offset.x', 37);
     screenCenter('UnlockedScreenBG', 'XY');
-    setProperty('UnlockedScreenBG.color', FlxColor(UnlockedColor));
+    setProperty('UnlockedScreenBG.color', UnlockedColor);
     setProperty('UnlockedScreenBG.alpha', 0.00001);
     setObjectCamera('UnlockedScreenBG', "camOther");
     addLuaSprite('UnlockedScreenBG');
@@ -108,20 +106,13 @@ function initUnlockedScreen()
     setObjectCamera('UnlockedGradientDown', "camOther");
 
 
-
-    if checkFileExists('images/'..UnlockedObjectPath..'.xml', false) then
-        makeAnimatedLuaSprite('UnlockedObject', UnlockedObjectPath, 0, 0);
-        addAnimationByPrefix('UnlockedObject', 'loop', Prefix, 24, true);
-    else
-        makeLuaSprite('UnlockedObject', UnlockedObjectPath, 0, 0);
-    end
-    screenCenter('UnlockedObject', 'XY');
-    local middle = getProperty('UnlockedObject.x');
-    setProperty('UnlockedObject.x', getProperty('UnlockedObject.x') + screenWidth/2 + getProperty('UnlockedObject.frameWidth') );
-    setProperty('UnlockedObject.y', getProperty('UnlockedObject.y') + OffsetY );
-    setObjectCamera('UnlockedObject', "camOther");
-    if not HasTitle then
-        setProperty('UnlockedObject.color', 0x000000);
+    screenCenter(UnlockedObjectName, 'XY');
+    local middle = getProperty(UnlockedObjectName..'.x');
+    setProperty(UnlockedObjectName..'.x', getProperty(UnlockedObjectName..'.x') + screenWidth/2 + getProperty(UnlockedObjectName..'.frameWidth') );
+    setProperty(UnlockedObjectName..'.y', getProperty(UnlockedObjectName..'.y') );
+    setObjectCamera(UnlockedObjectName, "camOther");
+    if UnlockedTitleName == nil then
+        setProperty(UnlockedObjectName..'.color', 0x000000);
     end
 
 
@@ -135,19 +126,19 @@ function initUnlockedScreen()
     addLuaSprite('UnlockedBlackDown');
     addLuaSprite('UnlockedGradientUp');
     addLuaSprite('UnlockedGradientDown');
-    addLuaSprite('UnlockedObject');
+    addLuaSprite(UnlockedObjectName);
     addLuaSprite('UnlockedText');
 
 
 
     runHaxeCode([[
-        var object:ModchartSprite = game.modchartSprites.get("UnlockedObject");
+        var object:ModchartSprite = game.modchartSprites.get("]]..UnlockedObjectName..[[");
         var trail:FlxTrail = new FlxTrail(object, null, 6, 5, 0.25, 0.05);
         trail.cameras = [game.camOther];
         game.insert(game.members.indexOf(object), trail);
         setVar("UnlockedTrail", trail);
     ]]);
-    if not HasTitle then
+    if UnlockedTitleName == nil then
         setProperty('UnlockedTrail.color', 0x000000);
     end
 
@@ -160,7 +151,7 @@ function initUnlockedScreen()
     doTweenY('GRevealUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') - screenHeight/4, 2, "cubeout");
     doTweenY('RevealDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') + screenHeight/4, 2, "cubeout");
     doTweenY('GRevealDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') + screenHeight/4, 2, "cubeout");
-    doTweenX('RevealObject', 'UnlockedObject', middle + OffsetX, 2, "cubeout");
+    doTweenX('RevealObject', UnlockedObjectName, middle, 2, "cubeout");
     runTimer("WaitText", 1);
 end
 
@@ -182,7 +173,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
         doTweenY('GHideUp', 'UnlockedGradientUp', getProperty('UnlockedGradientUp.y') + screenHeight/4, 1.25, "cubein");
         doTweenY('HideDown', 'UnlockedBlackDown', getProperty('UnlockedBlackDown.y') - screenHeight/4, 1.25, "cubein");
         doTweenY('GHideDown', 'UnlockedGradientDown', getProperty('UnlockedGradientDown.y') - screenHeight/4, 1.25, "cubein");
-        doTweenX('HideObject', 'UnlockedObject', -(getProperty('UnlockedObject.frameWidth') + screenWidth/2), 1.25, "cubein");
+        doTweenX('HideObject', UnlockedObjectName, -(getProperty(UnlockedObjectName..'.frameWidth') + screenWidth/2), 1.25, "cubein");
     end
 end
 
@@ -191,15 +182,15 @@ function onTweenCompleted(tag)
         cameraFlash("camOther", "FFFFFF", 0.2, false);
         cameraShake("camOther", 0.002, 0.2);
         playSound("unlocksound", 1);
-        if not HasTitle then
-            setProperty('UnlockedObject.color', 0xFFFFFF);
+        if UnlockedTitleName == nil then
+            setProperty(UnlockedObjectName..'.color', 0xFFFFFF);
             setProperty('UnlockedTrail.color', 0xFFFFFF);
         end
         runTimer("HideBG", 1.25);
     end
     if tag == "BGExit" then
         UnlockedScreenActive = false;
-        UnlockedObjectPath = "";
+        UnlockedObjectName = nil;
         endSong();
     end
 end
