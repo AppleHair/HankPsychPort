@@ -67,7 +67,7 @@ function onEndSong()
                 FlxG.state.closeSubState();
             };
         ]]);
-        runTimer("UnlockScreenTransition", 0.6);
+        runTimer("UnlockScreenTransition", 0.65);
         return Function_Stop;
     end
     return Function_Continue;
@@ -94,8 +94,6 @@ end
 function onTimerCompleted(tag, loops, loopsLeft)
     if tag == "ResultScreenTransition" then
         SetupResultScreenBG();
-        --debugPrint(tostring(getProperty('ResultScreenBG.graphic.bitmap.readable')));
-        --setProperty('ResultScreenBG.graphic.bitmap.readable', true);
         ResultScreenActive = true;
         UnlockScreenActive = false;
         doTweenAlpha('ResultScreenEnter', 'camOther', 1.0, 1, "linear");
@@ -255,7 +253,7 @@ function SetupUnlockedScreen()
     runHaxeCode([[
         var object:FlxSprite = game.modchartSprites.get("]]..UnlockedObjectName..[[");
         var trail:FlxTrail = new FlxTrail(object, null, 6, ]]..
-        (getPropertyFromClass('backend.ClientPrefs', 'data.framerate') / 60) * 1.25
+        math.ceil((getPropertyFromClass('backend.ClientPrefs', 'data.framerate') / 60) * 1.25)
         ..[[, 0.25, 0.05);
         setVar("UnlockedTrail", trail);
     ]]);
