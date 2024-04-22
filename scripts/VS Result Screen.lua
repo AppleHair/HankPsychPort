@@ -37,14 +37,14 @@ function onEvent(name, value1, value2)
     end
 end
 
-function onCreatePost()
-    if UnlockedObjectName == nil then
-        close();
-    end
-end
-
 function onEndSong()
+    local tweenTag = "";
     if not ResultsShown then
+        tweenTag = "ResultScreenTransition";
+    elseif UnlockedObjectName ~= nil then
+        tweenTag = "UnlockScreenTransition";
+    end
+    if tweenTag ~= "" then
         runHaxeCode([[
             FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
             CustomFadeTransition.finishCallback = function() {
@@ -54,20 +54,7 @@ function onEndSong()
                 FlxG.state.closeSubState();
             };
         ]]);
-        runTimer("ResultScreenTransition", 0.65);
-        return Function_Stop;
-    end
-    if UnlockedObjectName ~= nil then
-        runHaxeCode([[
-            FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
-            CustomFadeTransition.finishCallback = function() {
-                PlayState.instance.camGame.alpha = 0.0;
-                PlayState.instance.camHUD.alpha = 0.0;
-                PlayState.instance.camOther.alpha = 1.0;
-                FlxG.state.closeSubState();
-            };
-        ]]);
-        runTimer("UnlockScreenTransition", 0.65);
+        runTimer(tweenTag, 0.65);
         return Function_Stop;
     end
     return Function_Continue;
@@ -81,7 +68,7 @@ function onUpdate(elapsed)
     end
 
     BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
-    setProperty('ResultScreenBG.offset.x', 37 + BGScrollAmount * 1.125);
+    setProperty('ResultScreenBG.offset.x', BGScrollAmount);
 
     if AllowExitResults and keyPressed("accept") then
         playSound("confirmMenu", 1);
@@ -101,9 +88,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
         SetupUnlockedScreen();
         UnlockScreenActive = true;
         ResultScreenActive = false;
-
-        BGScrollAmount = 0;
-        setProperty('ResultScreenBG.offset.x', 37);
+        setProperty('camOther.alpha', 1.0);
 
         playSound("woosh", 1);
 
@@ -165,44 +150,45 @@ end
 
 function SetupResultScreenBG()
     runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
-    scaleObject('ResultScreenBG', 1.125, 1.125, false);
-    setProperty('ResultScreenBG.offset.y', 12);
-    setProperty('ResultScreenBG.offset.x', 37);
-    screenCenter('ResultScreenBG', 'XY');
     setObjectCamera('ResultScreenBG', "camOther");
-    setProperty('ResultScreenBG.color', 0x5D3D6F);
+    screenCenter('ResultScreenBG', 'XY');
+    setProperty('ResultScreenBG.offset.y', -5);
+    setProperty('ResultScreenBG.color', 0x6A4280);
+    setProperty('ResultScreenBG.alpha', 1);
 
     makeLuaSprite('ResultBlackUp', "", 0, 0);
     makeGraphic('ResultBlackUp', screenWidth, screenHeight/2, "000000");
     setObjectCamera('ResultBlackUp', "camOther");
     screenCenter('ResultBlackUp', 'XY');
-    setProperty('ResultBlackUp.y', getProperty('ResultBlackUp.y') - screenHeight/2);
+    setProperty('ResultBlackUp.y', getProperty('ResultBlackUp.y') - screenHeight * 0.55);
 
     makeLuaSprite('ResultBlackDown', "", 0, 0);
     makeGraphic('ResultBlackDown', screenWidth, screenHeight/2, "000000");
     setObjectCamera('ResultBlackDown', "camOther");
     screenCenter('ResultBlackDown', 'XY');
-    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + (screenHeight*7)/12);
+    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + screenHeight * 0.55);
 
-    makeLuaSprite('ResultGradientUp', "", getProperty('ResultBlackUp.x'),
-        getProperty('ResultBlackUp.y') + screenHeight * 0.5);
+    makeLuaSprite('ResultGradientUp', "", 0, 0);
+    setObjectCamera('ResultGradientUp', "camOther");
     runHaxeCode([[
         game.modchartSprites.get("ResultGradientUp").pixels = 
-            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.1, [FlxColor.BLACK, 0x0]);
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.BLACK, 0xDB000000,
+             0xA0000000, 0x60000000, 0x22000000, FlxColor.TRANSPARENT]);
     ]]);
     setProperty('ResultGradientUp.scale.x', screenWidth);
-    updateHitbox('ResultGradientUp');
-    setObjectCamera('ResultGradientUp', "camOther");
+    screenCenter('ResultGradientUp', 'XY');
+    setProperty('ResultGradientUp.y', getProperty('ResultGradientUp.y') - screenHeight * 0.15);
 
-    makeLuaSprite('ResultGradientDown', "", getProperty('ResultBlackDown.x'),
-        getProperty('ResultBlackDown.y') - screenHeight * 0.1);
+    makeLuaSprite('ResultGradientDown', "", 0, 0);
+    setObjectCamera('ResultGradientDown', "camOther");
     runHaxeCode([[
         game.modchartSprites.get("ResultGradientDown").pixels = 
-            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.1, [0x0, FlxColor.BLACK]);
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.TRANSPARENT, 0x22000000,
+             0x60000000, 0xA0000000, 0xDB000000, FlxColor.BLACK]);
     ]]);
     setProperty('ResultGradientDown.scale.x', screenWidth);
-    updateHitbox('ResultGradientDown');
-    setObjectCamera('ResultGradientDown', "camOther");
+    screenCenter('ResultGradientDown', 'XY');
+    setProperty('ResultGradientDown.y', getProperty('ResultGradientDown.y') + screenHeight * 0.15);
 
     addLuaSprite('ResultScreenBG');
     addLuaSprite('ResultBlackUp');
@@ -213,32 +199,95 @@ function SetupResultScreenBG()
     BGReady = true;
 end
 
+---Creates all the necessary sprites for the unlocked screen
 function SetupUnlockedScreen()
+    -- If the result screen was active
+    if ResultScreenActive then
+        -- Remove all result screen sprites
+        -- exepct the background ones.
+    end
+    -- if the background sprites
+    -- weren't created, create them
     if not BGReady then
         SetupResultScreenBG();
     end
 
+    -- Setup the background image for the unlocked screen
     setProperty('ResultScreenBG.color', UnlockedColor);
+    scaleObject('ResultScreenBG', 1.125, 1.125, false);
+    setProperty('ResultScreenBG.offset.y', 12);
+    setProperty('ResultScreenBG.offset.x', 37);
+    screenCenter('ResultScreenBG', 'XY');
     setProperty('ResultScreenBG.alpha', 0.00001);
+    -- Calibrate the scroll amount variable,
+    -- so if it starts scrolling again, it'll
+    -- start from the beginning (no that there's
+    -- a reason for that to happen anyway...)
+    BGScrollAmount = 0;
 
+    -- Reset the upper black bar's position.
+    -- (It should start on the upper half of the screen)
     screenCenter('ResultBlackUp', 'XY');
     setProperty('ResultBlackUp.y', getProperty('ResultBlackUp.y') - screenHeight/4);
 
+    -- Reset the lower black bar's position.
+    -- (It should start on the lower half of the screen)
     screenCenter('ResultBlackDown', 'XY');
-    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + screenHeight/3);
+    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + screenHeight/4);
 
-    setProperty('ResultGradientUp.y', getProperty('ResultBlackUp.y') + screenHeight * 0.5);
+    -- Reset the upper gradient and it's position.
+    -- (It should be a smaller and simpler gradient,
+    -- and it should start below the upper black bar)
+    runHaxeCode([[
+        game.modchartSprites.get("ResultGradientUp").pixels = 
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.075, [FlxColor.BLACK, FlxColor.TRANSPARENT]);
+    ]]);
+    setProperty('ResultGradientUp.scale.x', screenWidth);
+    screenCenter('ResultGradientUp', 'XY');
+    setProperty('ResultGradientUp.y', getProperty('ResultGradientUp.y') + screenHeight * 0.0375);
 
-    setProperty('ResultGradientDown.y', getProperty('ResultBlackDown.y') - screenHeight * 0.1);
+    -- Reset the lower gradient and it's position.
+    -- (It should be a smaller and simpler gradient,
+    -- and it should start above the lower black bar)
+    runHaxeCode([[
+        game.modchartSprites.get("ResultGradientDown").pixels = 
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.075, [FlxColor.TRANSPARENT, FlxColor.BLACK]);
+    ]]);
+    setProperty('ResultGradientDown.scale.x', screenWidth);
+    screenCenter('ResultGradientDown', 'XY');
+    setProperty('ResultGradientDown.y', getProperty('ResultGradientDown.y') - screenHeight * 0.0375);
 
+    -- Using the provided sprite tag, we adjust
+    -- the unlocked object's properties to make
+    -- it fit in the unlocked screen.
+    -- (It should start off-screen and later,
+    -- it should move to the center from the
+    -- right and then move back off-screen
+    -- to the left)
+    setObjectCamera(UnlockedObjectName, "camOther");
     screenCenter(UnlockedObjectName, 'XY');
+    -- We save the middle x position of the object
+    -- to know where to move it back later
     MiddleX = getProperty(UnlockedObjectName..'.x');
     setProperty(UnlockedObjectName..'.x', getProperty(UnlockedObjectName..'.x') + screenWidth/2 +
         getProperty(UnlockedObjectName..'.frameWidth') + getProperty(UnlockedObjectName..'.offset.x'));
-    setObjectCamera(UnlockedObjectName, "camOther");
+    setProperty(UnlockedObjectName..'.alpha', 1.0);
+    setProperty(UnlockedObjectName..'.visible', true);
     if UnlockedTitleName == nil then
+        -- If a title sprite wasn't provided
+        -- along side the object sprite,
+        -- It'll start black and will
+        -- later become visible.
         setProperty(UnlockedObjectName..'.color', 0x000000);
     else
+        -- If a title sprite was provided
+        -- along side the object sprite,
+        -- we adjust it's properties to make
+        -- it fit in the unlocked screen.
+        -- (It should start invisible in the
+        -- bottom-right corner and later, it
+        -- should become visible and move
+        -- off-screen to the right)
         setObjectCamera(UnlockedTitleName, "camOther");
         screenCenter(UnlockedTitleName, 'XY');
         setProperty(UnlockedTitleName..'.x', getProperty(UnlockedTitleName..'.x') + screenWidth/4);
@@ -247,9 +296,17 @@ function SetupUnlockedScreen()
         setProperty(UnlockedTitleName..'.visible', true);
     end
 
-    makeLuaSprite('UnlockedText', 'unlocked', 50, -233);
+    -- Create the text sprite for the unlocked screen.
+    -- (Always reads "You have UNLOCKED", starts off-screen
+    -- and later, it should move to the upper-left corner
+    -- of the screen and then move back off-screen)
+    makeLuaSprite('UnlockedText', 'vsresultscreen/unlocked', 50, -233);
     setObjectCamera('UnlockedText', "camOther");
 
+    -- Create a trail efect for
+    -- the unlocked object sprite.
+    -- (Uses FlxTrail from the
+    -- flixel.addons.effects package)
     runHaxeCode([[
         var object:FlxSprite = game.modchartSprites.get("]]..UnlockedObjectName..[[");
         var trail:FlxTrail = new FlxTrail(object, null, 6, ]]..
@@ -258,10 +315,17 @@ function SetupUnlockedScreen()
         setVar("UnlockedTrail", trail);
     ]]);
     setObjectCamera('UnlockedTrail', "camOther");
+    -- If a title sprite wasn't provided
+    -- along side the object sprite,
+    -- It'll start black and will
+    -- later become visible.
     if UnlockedTitleName == nil then
         setProperty('UnlockedTrail.color', 0x000000);
     end
 
+    -- We add all the sprites
+    -- we just created to the
+    -- screen in the right order
     addLuaSprite('UnlockedTrail');
     addLuaSprite(UnlockedObjectName);
     if UnlockedTitleName ~= nil then

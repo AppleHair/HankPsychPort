@@ -15,9 +15,9 @@ add redux preview unlock screen ✔
 
 1.5:
 
+make the vs result screen
 make hank-player
 make maghank-player
-make the vs rating screen
 make the atlas optimization
 make the mod options
 - hank icon select
