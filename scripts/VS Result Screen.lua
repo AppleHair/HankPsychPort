@@ -53,6 +53,7 @@ function onEndSong()
                 PlayState.instance.camOther.alpha = 0.0;
                 FlxG.state.closeSubState();
             };
+            CustomFadeTransition.nextCamera = PlayState.instance.camOther;
         ]]);
         runTimer(tweenTag, 0.65);
         return Function_Stop;
@@ -149,7 +150,14 @@ function onPause()
 end
 
 function SetupResultScreenBG()
-    runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
+    -- -- onlinePlay = true | false
+    -- local runningUMM = onlinePlay ~= nil;
+    -- if runningUMM then
+    if onlinePlay ~= nil then
+        makeLuaSprite('ResultScreenBG', "menuDesat", 0, 0);
+    else
+        runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
+    end
     setObjectCamera('ResultScreenBG', "camOther");
     screenCenter('ResultScreenBG', 'XY');
     setProperty('ResultScreenBG.offset.y', -5);
