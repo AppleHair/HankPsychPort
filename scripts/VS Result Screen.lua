@@ -82,9 +82,9 @@ function onEndSong()
             CustomFadeTransition.nextCamera = PlayState.instance.camOther;
         ]]);
         runTimer(tweenTag, 0.65);
-        setProperty('allowDebugKeys', false);
         setProperty('canPause', false);
         setProperty('canReset', false);
+        setProperty('endingSong', true);
         setProperty('persistentUpdate', true);
         return Function_Stop;
     end
