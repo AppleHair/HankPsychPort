@@ -1,15 +1,40 @@
 
+-- short for linear interpolation
+local function lerp(a, b, ratio)
+    return a + (b - a) * ratio;
+end
+
+--[[
+	takes RGB color values
+	and turns them into
+	HEX #RRGGBB format.
+
+	r - red value
+
+	g - green value
+
+	b - blue value
+--]]
+local function RGBtoHEX(r, g, b)
+	-- string.format explanation: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
+	return string.format("#%02x%02x%02x", r, g, b);
+end
+
 ----------------------
 --    WIP DON'T LOOK
 ----------------------
 
 ResultScreenActive = false;
 UnlockScreenActive = false;
+
 ---@type any
 UnlockedObjectName = nil;
 ---@type any
 UnlockedTitleName = nil;
 UnlockedColor = 0x5D3D6F;
+
+ResultScreenDebug = true;
+
 BGReady = false;
 ResultsShown = false;
 
@@ -19,6 +44,7 @@ function onCreate()
     addHaxeLibrary("FlxGradient", "flixel.util");
     addHaxeLibrary("FlxTrail", "flixel.addons.effects");
     addHaxeLibrary("FlxBackdrop", "flixel.addons.display");
+    addHaxeLibrary("FlxRect", "flixel.math");
 end
 
 function onEvent(name, value1, value2)
@@ -56,13 +82,37 @@ function onEndSong()
             CustomFadeTransition.nextCamera = PlayState.instance.camOther;
         ]]);
         runTimer(tweenTag, 0.65);
+        setProperty('allowDebugKeys', false);
+        setProperty('canPause', false);
+        setProperty('canReset', false);
+        setProperty('persistentUpdate', true);
         return Function_Stop;
     end
     return Function_Continue;
 end
 
+function getStateFromKeyboard()
+    local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 49;
+    return ((key > -1 and key < 8) and key or ResultStateKey);
+end
+
 AllowExitResults = false;
 BGScrollAmount = 0;
+
+ResultStateKey = 0;
+ResultScreenStates = {
+    [0] = {0, "shit", 0x6A4280},-- F
+    [1] = {16, "shit", 0x6A4280},-- E
+    [2] = {32, "bad", 0x6A4280},-- D
+    [3] = {47, "bad", 0x4648AA},-- C
+    [4] = {63, "good", 0x4648AA},-- B
+    [5] = {78, "good", 0xD562E1},-- A
+    [6] = {94, "sick", 0x7EF2BE},-- S
+    [7] = {100, "sick", 0x12FBE2},-- Ss
+};
+ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
+ResultEnterAlphas = {1, 0.64};
+
 function onUpdate(elapsed)
     if not ResultScreenActive then
         return;
@@ -71,7 +121,39 @@ function onUpdate(elapsed)
     BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
     setProperty('ResultScreenBG.offset.x', BGScrollAmount);
 
-    if AllowExitResults and keyPressed("accept") then
+    if ResultScreenDebug then
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+            setProperty('Screenshots.visible', not getProperty('Screenshots.visible'));
+        end
+        local prv = ResultStateKey;
+        ResultStateKey = getStateFromKeyboard();
+        if prv ~= ResultStateKey then
+            debugPrint(tostring(ResultStateKey));
+        end
+        setProperty('Screenshots.animation.frameIndex', ResultStateKey);
+    end
+
+    setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey));
+    setProperty('ResultScreenBG.color', ResultScreenStates[ResultStateKey][3]);
+
+    if not ResultsShown then
+        -- f(x) = (1 - cos((x ∙ π) : 1.5)) : 2
+        --  		       ↓
+        -- 	     local enterLerp = f(x)
+        local enterLerp = (1 - math.cos(os.clock() * math.pi/1.5)) / 2;
+        
+        setProperty('ResultEnter.color', FlxColor(RGBtoHEX(
+            lerp(ResultEnterColors[1].r, ResultEnterColors[2].r, enterLerp),
+            lerp(ResultEnterColors[1].g, ResultEnterColors[2].g, enterLerp),
+            lerp(ResultEnterColors[1].b, ResultEnterColors[2].b, enterLerp)
+        )));
+        setProperty('ResultEnter.alpha', lerp(ResultEnterAlphas[1], ResultEnterAlphas[2], enterLerp));
+    end
+
+    if AllowExitResults and getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
+        setProperty('ResultEnter.color', 0xFFFFFF);
+        setProperty('ResultEnter.alpha', 1.0);
+        playAnim('ResultEnter', 'pressed');
         playSound("confirmMenu", 1);
         AllowExitResults = false;
         ResultsShown = true;
@@ -82,6 +164,7 @@ end
 function onTimerCompleted(tag, loops, loopsLeft)
     if tag == "ResultScreenTransition" then
         SetupResultScreenBG();
+        SetupResultScreen();
         ResultScreenActive = true;
         UnlockScreenActive = false;
         setProperty('camOther.alpha', 1.0);
@@ -150,11 +233,42 @@ function onTweenCompleted(tag)
     end
 end
 
-function onPause()
-    if ResultScreenActive or UnlockScreenActive then
-        return Function_Stop;
+function SetupResultScreen()
+    makeAnimatedLuaSprite('ResultMainRank', 'vsresultscreen/ranks', 0, 0);
+    addAnimationByPrefix('ResultMainRank', 'ranks', 'ranks', 0, false);
+    playAnim('ResultMainRank', 'ranks');
+    setObjectCamera('ResultMainRank', "camOther");
+    screenCenter('ResultMainRank', 'XY');
+    setProperty('ResultMainRank.y', getProperty('ResultMainRank.y') + 21);
+    setProperty('ResultMainRank.x', getProperty('ResultMainRank.x') + 275);
+
+    makeAnimatedLuaSprite('ResultEnter', 'titleEnter', 0, 0);
+    addAnimationByPrefix('ResultEnter', 'idle', 'ENTER IDLE', 0, false);
+    addAnimationByPrefix('ResultEnter', 'pressed', 'ENTER PRESSED', 12, true);
+    playAnim('ResultEnter', 'idle');
+    runHaxeCode('game.modchartSprites.get("ResultEnter").clipRect = new FlxRect(0,0,592,271);');
+    setObjectCamera('ResultEnter', "camOther");
+    scaleObject('ResultEnter', 0.84, 0.84, false);
+    screenCenter('ResultEnter', 'XY');
+    setProperty('ResultEnter.y', getProperty('ResultEnter.y') + screenHeight/2 - 59);
+    setProperty('ResultEnter.x', getProperty('ResultEnter.x') - screenWidth/2 + 655);
+    setProperty('ResultEnter.color', 0x33FFFF);
+    
+    addLuaSprite('ResultMainRank');
+    addLuaSprite('ResultEnter');
+
+    if not ResultScreenDebug then
+        return;
     end
-    return Function_Continue;
+
+    makeAnimatedLuaSprite('Screenshots', 'vsresultscreen/screenshots', 0, 0);
+    addAnimationByPrefix('Screenshots', 'screenshots', 'screens', 0, false);
+    playAnim('Screenshots', 'screenshots');
+    setObjectCamera('Screenshots', "camOther");
+    screenCenter('Screenshots', 'XY');
+    setProperty('Screenshots.alpha', 0.3);
+
+    addLuaSprite('Screenshots');
 end
 
 function SetupResultScreenBG()
@@ -221,6 +335,11 @@ function SetupUnlockedScreen()
     if ResultScreenActive then
         -- Remove all result screen sprites
         -- exepct the background ones.
+        removeLuaSprite('ResultEnter');
+        removeLuaSprite('ResultMainRank');
+        if ResultScreenDebug then
+            removeLuaSprite('Screenshots');
+        end
     end
     -- if the background sprites
     -- weren't created, create them
