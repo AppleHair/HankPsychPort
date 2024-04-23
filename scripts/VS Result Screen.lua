@@ -84,7 +84,14 @@ function onTimerCompleted(tag, loops, loopsLeft)
         SetupResultScreenBG();
         ResultScreenActive = true;
         UnlockScreenActive = false;
-        doTweenAlpha('ResultScreenEnter', 'camOther', 1.0, 1, "linear");
+        setProperty('camOther.alpha', 1.0);
+        
+        makeLuaSprite('ResultFadeTransition', "", 0, 0);
+        makeGraphic('ResultFadeTransition', screenWidth, screenHeight, "000000");
+        setObjectCamera('ResultFadeTransition', "camOther");
+        screenCenter('ResultFadeTransition', 'XY');
+        addLuaSprite('ResultFadeTransition');
+        doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 1, "linear");
     elseif tag == "UnlockScreenTransition" then
         SetupUnlockedScreen();
         UnlockScreenActive = true;
@@ -122,6 +129,7 @@ end
 
 function onTweenCompleted(tag)
     if tag == "ResultScreenEnter" then
+        removeLuaSprite('ResultFadeTransition');
         AllowExitResults = true;
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
