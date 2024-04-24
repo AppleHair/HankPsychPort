@@ -194,7 +194,11 @@ function triggerRankAnimation()
         return;
     end
     playSound("confirmMenu", 1, "RankUp");
-    setSoundPitch("RankUp", 1 + ResultScreenStates[ResultStateKey][4]);
+    runHaxeCode([[
+        game.modchartSounds["RankUp"].pitch = ]]..1 + ResultScreenStates[ResultStateKey][4]..[[;
+        // to prevent memory leaks
+        SScript.global.clear();
+    ]]);
     if ResultStateKey ~= 7 then
         scaleObject('ResultMainRank', 1.15, 1.15, false);
         ResultFlashTable["ResultMainRank"] = 1;
@@ -238,6 +242,7 @@ function applyResultScreenFlash()
                 sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
                 sprite.colorTransform.concat(new ColorTransform(]]..1-v..[[, ]]..1-v..[[, ]]..1-v..[[));
                 sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
+                // to prevent memory leaks
                 SScript.global.clear();
             ]]);
         end
