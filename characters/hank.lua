@@ -1,20 +1,14 @@
 
---[[
-    Checks if a string starts with a curtain
-    sequence of characters
-
-    start - A string value of the sequence of characters
-            that needs to be checked from the start
---]]
--- this function is being added to the string library/module
+--- Checks if a string starts with a curtain
+--- sequence of characters
+---@param self string The string that needs to be checked
+---@param start string A string value of the sequence of characters that needs to be checked from the start
 function string:startswith(start)
     -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
     -- # - the length of an table(array) / string
-
---"type 'string|number' doesn't match type 'string'" what an idiot...
----@diagnostic disable-next-line: param-type-mismatch 
     return self:sub(1, #start) == start;
 end
+-- this function is being added to the string library/module
 
 -- stores the x and y offsets of the shot ray
 local shotRayPos = {300, 425};

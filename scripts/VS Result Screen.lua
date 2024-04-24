@@ -4,21 +4,27 @@ local function lerp(a, b, ratio)
     return a + (b - a) * ratio;
 end
 
---[[
-	takes RGB color values
-	and turns them into
-	HEX #RRGGBB format.
-
-	r - red value
-
-	g - green value
-
-	b - blue value
---]]
+--- takes RGB color values
+--- and turns them into
+--- HEX #RRGGBB format.
+---@param r number The red value
+---@param g number The green value
+---@param b number The blue value
 local function RGBtoHEX(r, g, b)
 	-- string.format explanation: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
 	return string.format("#%02x%02x%02x", r, g, b);
 end
+
+--- Checks if a string ends with a curtain
+--- sequence of characters
+---@param self string The string that needs to be checked
+---@param ends string A string value of the sequence of characters that needs to be checked from the end
+function string:endswith(ends)
+    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
+    -- # - the length of an table(array) / string
+    return self:sub(-#ends) == ends;
+end
+-- this function is being added to the string library/module
 
 ----------------------
 --    WIP DON'T LOOK
@@ -45,6 +51,8 @@ function onCreate()
     addHaxeLibrary("FlxTrail", "flixel.addons.effects");
     addHaxeLibrary("FlxBackdrop", "flixel.addons.display");
     addHaxeLibrary("FlxRect", "flixel.math");
+    addHaxeLibrary("ColorTransform", "openfl.geom");
+    addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
 end
 
 function onEvent(name, value1, value2)
@@ -113,6 +121,18 @@ ResultScreenStates = {
 ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ResultEnterAlphas = {1, 0.64};
 
+ResultEaseTable = {
+    {"ResultMainRank.scale.x", 1, 120},
+    {"ResultMainRank.scale.y", 1, 120},
+    {"ResultMainRank.flash", 0, 60},
+    {"ResultScreenBG.flash", 0, 30},
+};
+
+ResultFlashTable = {
+    ["ResultMainRank"] = 0,
+    ["ResultScreenBG"] = 0,
+};
+
 function onUpdate(elapsed)
     if not ResultScreenActive then
         return;
@@ -122,42 +142,101 @@ function onUpdate(elapsed)
     setProperty('ResultScreenBG.offset.x', BGScrollAmount);
 
     if ResultScreenDebug then
-        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.NINE') then
             setProperty('Screenshots.visible', not getProperty('Screenshots.visible'));
+        end
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+            triggerRankAnimation();
         end
         local prv = ResultStateKey;
         ResultStateKey = getStateFromKeyboard();
         if prv ~= ResultStateKey then
-            debugPrint(tostring(ResultStateKey));
+            triggerRankAnimation();
         end
         setProperty('Screenshots.animation.frameIndex', ResultStateKey);
     end
 
+    applyResultScreenFlash();
+    easeResultScreenPropertys(elapsed);
+
     setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey));
     setProperty('ResultScreenBG.color', ResultScreenStates[ResultStateKey][3]);
+    setProperty('ResultSmallS.alpha', (ResultStateKey == 7 and 1.0 or 0.00001));
 
-    if not ResultsShown then
+    if AllowExitResults then
         -- f(x) = (1 - cos((x ∙ π) : 1.5)) : 2
         --  		       ↓
         -- 	     local enterLerp = f(x)
         local enterLerp = (1 - math.cos(os.clock() * math.pi/1.5)) / 2;
-        
+
         setProperty('ResultEnter.color', FlxColor(RGBtoHEX(
             lerp(ResultEnterColors[1].r, ResultEnterColors[2].r, enterLerp),
             lerp(ResultEnterColors[1].g, ResultEnterColors[2].g, enterLerp),
             lerp(ResultEnterColors[1].b, ResultEnterColors[2].b, enterLerp)
         )));
         setProperty('ResultEnter.alpha', lerp(ResultEnterAlphas[1], ResultEnterAlphas[2], enterLerp));
-    end
 
-    if AllowExitResults and getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
-        setProperty('ResultEnter.color', 0xFFFFFF);
-        setProperty('ResultEnter.alpha', 1.0);
-        playAnim('ResultEnter', 'pressed');
-        playSound("confirmMenu", 1);
-        AllowExitResults = false;
-        ResultsShown = true;
-        endSong();
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
+            setProperty('ResultEnter.color', 0xFFFFFF);
+            setProperty('ResultEnter.alpha', 1.0);
+            playAnim('ResultEnter', 'pressed');
+            playSound("confirmMenu", 1);
+            AllowExitResults = false;
+            ResultsShown = true;
+            endSong();
+        end
+    end
+end
+
+function triggerRankAnimation()
+    if ResultStateKey == 0 then
+        return;
+    end
+    if ResultStateKey ~= 7 then
+        scaleObject('ResultMainRank', 1.15, 1.15, false);
+        ResultFlashTable["ResultMainRank"] = 1;
+    end
+    if tonumber(getProperty('ResultScreenBG.color')) ~= ResultScreenStates[ResultStateKey][3] then
+        ResultFlashTable["ResultScreenBG"] = 1;
+    end
+    if ResultStateKey < 6 then
+        return;
+    end
+    cameraFlash("camOther", "FFFFFF", 0.2, true);
+end
+
+function easeResultScreenPropertys(elapsed)
+    for i, v in ipairs(ResultEaseTable) do
+        if v[1]:endswith(".flash") then
+            local name = v[1]:sub(1,-7);
+            if ResultFlashTable[name] ~= v[2] then
+                ResultFlashTable[name] = lerp(ResultFlashTable[name], v[2], elapsed * v[3] /
+                    (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
+                );
+            end
+        else
+            if getProperty(v[1]) ~= v[2] then
+                setProperty(v[1], lerp(getProperty(v[1]), v[2], elapsed * v[3] /
+                    (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
+                ));
+            end
+        end
+    end
+end
+
+function applyResultScreenFlash()
+    for i, v in pairs(ResultFlashTable) do
+        if v ~= 0 then
+            runHaxeCode([[
+                var sprite:FlxSprite = game.getLuaObject("]]..i..[[");
+                sprite.color = 0xFFFFFF;
+                sprite.updateColorTransform();
+                FlxColorTransformUtil.setOffsets(sprite.colorTransform, 0, 0, 0, 0);
+                sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
+                sprite.colorTransform.concat(new ColorTransform(]]..1-v..[[, ]]..1-v..[[, ]]..1-v..[[));
+                sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
+            ]]);
+        end
     end
 end
 
@@ -175,6 +254,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
         screenCenter('ResultFadeTransition', 'XY');
         addLuaSprite('ResultFadeTransition');
         doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 1, "linear");
+        if ResultScreenDebug then
+            AllowExitResults = true;
+        end
     elseif tag == "UnlockScreenTransition" then
         SetupUnlockedScreen();
         UnlockScreenActive = true;
@@ -213,7 +295,6 @@ end
 function onTweenCompleted(tag)
     if tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
-        AllowExitResults = true;
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
         cameraShake("camOther", 0.002, 0.2);
@@ -242,6 +323,13 @@ function SetupResultScreen()
     setProperty('ResultMainRank.y', getProperty('ResultMainRank.y') + 21);
     setProperty('ResultMainRank.x', getProperty('ResultMainRank.x') + 275);
 
+    makeLuaSprite('ResultSmallS', 'vsresultscreen/smallS', 0, 0);
+    setObjectCamera('ResultSmallS', "camOther");
+    screenCenter('ResultSmallS', 'XY');
+    setProperty('ResultSmallS.y', getProperty('ResultSmallS.y') + 118);
+    setProperty('ResultSmallS.x', getProperty('ResultSmallS.x') + 530);
+    setProperty('ResultSmallS.alpha', 0.00001);
+
     makeAnimatedLuaSprite('ResultEnter', 'titleEnter', 0, 0);
     addAnimationByPrefix('ResultEnter', 'idle', 'ENTER IDLE', 0, false);
     addAnimationByPrefix('ResultEnter', 'pressed', 'ENTER PRESSED', 12, true);
@@ -253,7 +341,9 @@ function SetupResultScreen()
     setProperty('ResultEnter.y', getProperty('ResultEnter.y') + screenHeight/2 - 59);
     setProperty('ResultEnter.x', getProperty('ResultEnter.x') - screenWidth/2 + 655);
     setProperty('ResultEnter.color', 0x33FFFF);
+    setProperty('ResultEnter.alpha', 0.00001);
     
+    addLuaSprite('ResultSmallS');
     addLuaSprite('ResultMainRank');
     addLuaSprite('ResultEnter');
 
@@ -267,6 +357,7 @@ function SetupResultScreen()
     setObjectCamera('Screenshots', "camOther");
     screenCenter('Screenshots', 'XY');
     setProperty('Screenshots.alpha', 0.3);
+    setProperty('Screenshots.visible', false);
 
     addLuaSprite('Screenshots');
 end
@@ -337,6 +428,7 @@ function SetupUnlockedScreen()
         -- exepct the background ones.
         removeLuaSprite('ResultEnter');
         removeLuaSprite('ResultMainRank');
+        removeLuaSprite('ResultSmallS');
         if ResultScreenDebug then
             removeLuaSprite('Screenshots');
         end
