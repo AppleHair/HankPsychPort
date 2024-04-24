@@ -53,6 +53,7 @@ function onCreate()
     addHaxeLibrary("FlxRect", "flixel.math");
     addHaxeLibrary("ColorTransform", "openfl.geom");
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
+    addHaxeLibrary("SScript", "tea");
 end
 
 function onEvent(name, value1, value2)
@@ -235,6 +236,7 @@ function applyResultScreenFlash()
                 sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
                 sprite.colorTransform.concat(new ColorTransform(]]..1-v..[[, ]]..1-v..[[, ]]..1-v..[[));
                 sprite.colorTransform.concat(new ColorTransform(-1, -1, -1, 1, 255, 255, 255));
+                SScript.global.clear();
             ]]);
         end
     end
