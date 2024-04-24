@@ -110,14 +110,14 @@ BGScrollAmount = 0;
 
 ResultStateKey = 0;
 ResultScreenStates = {
-    [0] = {0, "shit", 0x6A4280},-- F
-    [1] = {16, "shit", 0x6A4280},-- E
-    [2] = {32, "bad", 0x6A4280},-- D
-    [3] = {47, "bad", 0x4648AA},-- C
-    [4] = {63, "good", 0x4648AA},-- B
-    [5] = {78, "good", 0xD562E1},-- A
-    [6] = {94, "sick", 0x7EF2BE},-- S
-    [7] = {100, "sick", 0x12FBE2},-- Ss
+    [0] = {0, "shit", 0x6A4280, -0.35},-- F
+    [1] = {16, "shit", 0x6A4280, -0.35},-- E
+    [2] = {32, "bad", 0x6A4280, -0.225},-- D
+    [3] = {47, "bad", 0x4648AA, -0.1},-- C
+    [4] = {63, "good", 0x4648AA, 0.0},-- B
+    [5] = {78, "good", 0xD562E1, 0.15},-- A
+    [6] = {94, "sick", 0x7EF2BE, 0.25},-- S
+    [7] = {100, "sick", 0x12FBE2, 0.3},-- Ss
 };
 ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ResultEnterAlphas = {1, 0.64};
@@ -193,6 +193,8 @@ function triggerRankAnimation()
     if ResultStateKey == 0 then
         return;
     end
+    playSound("confirmMenu", 1, "RankUp");
+    setSoundPitch("RankUp", 1 + ResultScreenStates[ResultStateKey][4]);
     if ResultStateKey ~= 7 then
         scaleObject('ResultMainRank', 1.15, 1.15, false);
         ResultFlashTable["ResultMainRank"] = 1;

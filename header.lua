@@ -1374,6 +1374,15 @@ function stringSplit(string, delimeter) end
 ---@param string string
 function stringTrim(string) end
 
+---Sets the `pitch` of the sound `tag`
+---@param tag string Sound tag name
+---@param pitch number The pitch to set the sound to
+function setSoundPitch(tag, pitch) end
+---Returns the `pitch` of the sound `tag`
+---@param tag string Sound tag name
+---@return number 
+function getSoundPitch(tag) end
+
 --[[ DEPRECATED STUFF ]]--
 ---@deprecated
 ---Plays an object's animation\
