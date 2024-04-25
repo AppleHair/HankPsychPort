@@ -250,8 +250,8 @@ function generateStars()
             setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
             setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
             setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
-            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.3, "sineinout");
-            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.3, "sineinout");
+            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.35, "sineinout");
+            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
         else
             makeLuaSprite("Star"..i, "vsresultscreen/star", 0, 0);
             setObjectCamera("Star"..i, "camOther");
