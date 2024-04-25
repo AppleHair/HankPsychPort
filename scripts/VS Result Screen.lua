@@ -26,6 +26,18 @@ function string:endswith(ends)
 end
 -- this function is being added to the string library/module
 
+--- Checks if a string starts with a curtain
+--- sequence of characters
+---@param self string The string that needs to be checked
+---@param start string A string value of the sequence of characters that needs to be checked from the start
+---@diagnostic disable-next-line: duplicate-set-field
+function string:startswith(start)
+    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
+    -- # - the length of an table(array) / string
+    return self:sub(1, #start) == start;
+end
+-- this function is being added to the string library/module
+
 ----------------------
 --    WIP DON'T LOOK
 ----------------------
@@ -123,10 +135,10 @@ ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ResultEnterAlphas = {1, 0.64};
 
 ResultEaseTable = {
-    {"ResultMainRank.scale.x", 1, 120},
-    {"ResultMainRank.scale.y", 1, 120},
-    {"ResultMainRank.flash", 0, 60},
-    {"ResultScreenBG.flash", 0, 30},
+    {"ResultMainRank", ".scale.x", 1, 120},
+    {"ResultMainRank", ".scale.y", 1, 120},
+    {"ResultMainRank", ".flash", 0, 60},
+    {"ResultScreenBG", ".flash", 0, 30},
 };
 
 ResultFlashTable = {
@@ -202,6 +214,7 @@ function triggerRankAnimation()
     if ResultStateKey ~= 7 then
         scaleObject('ResultMainRank', 1.15, 1.15, false);
         ResultFlashTable["ResultMainRank"] = 1;
+        generateStars();
     end
     if tonumber(getProperty('ResultScreenBG.color')) ~= ResultScreenStates[ResultStateKey][3] then
         ResultFlashTable["ResultScreenBG"] = 1;
@@ -212,21 +225,76 @@ function triggerRankAnimation()
     cameraFlash("camOther", "FFFFFF", 0.2, true);
 end
 
+StarAcceleration = -250;
+StarInitVelocity = 500;
+
+function generateStars()
+    for i = 1, ResultStateKey * 3 + math.floor(ResultStateKey / 2) * 3 do
+        if luaSpriteExists("Star"..i) then
+            scaleObject("Star"..i, 1, 1, false);
+            math.randomseed(os.clock() * i);
+            local angle = math.random(0, 360);
+            setProperty("Star"..i..".angle", angle);
+            setProperty("Star"..i..".x", math.random(
+                getProperty("ResultMainRank.x") + getProperty("Star"..i..".frameWidth"),
+                getProperty("ResultMainRank.x") + getProperty("ResultMainRank.frameWidth")
+                - getProperty("Star"..i..".frameWidth")
+            ));
+            setProperty("Star"..i..".y", math.random(
+                getProperty("ResultMainRank.y") + getProperty("Star"..i..".frameHeight"),
+                getProperty("ResultMainRank.y") + getProperty("ResultMainRank.frameHeight")
+                - getProperty("Star"..i..".frameHeight")
+            ));
+            setProperty("Star"..i..".moves", true);
+            setProperty("Star"..i..".acceleration.x", math.cos(math.rad(angle)) * StarAcceleration);
+            setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
+            setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+            setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.3, "sineinout");
+            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.3, "sineinout");
+        else
+            makeLuaSprite("Star"..i, "vsresultscreen/star", 0, 0);
+            setObjectCamera("Star"..i, "camOther");
+            setProperty("Star"..i..".alpha", 0.5);
+            addLuaSprite("Star"..i);
+
+            scaleObject("Star"..i, 1, 1, false);
+            math.randomseed(os.clock() * i);
+            local angle = math.random(0, 360);
+            setProperty("Star"..i..".angle", angle);
+            setProperty("Star"..i..".x", math.random(
+                getProperty("ResultMainRank.x") + getProperty("Star"..i..".frameWidth"),
+                getProperty("ResultMainRank.x") + getProperty("ResultMainRank.frameWidth")
+                - getProperty("Star"..i..".frameWidth")
+            ));
+            setProperty("Star"..i..".y", math.random(
+                getProperty("ResultMainRank.y") + getProperty("Star"..i..".frameHeight"),
+                getProperty("ResultMainRank.y") + getProperty("ResultMainRank.frameHeight")
+                - getProperty("Star"..i..".frameHeight")
+            ));
+            setProperty("Star"..i..".moves", true);
+            setProperty("Star"..i..".acceleration.x", math.cos(math.rad(angle)) * StarAcceleration);
+            setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
+            setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+            setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.35, "sineinout");
+            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
+        end
+    end
+end
+
 function easeResultScreenPropertys(elapsed)
     for i, v in ipairs(ResultEaseTable) do
-        if v[1]:endswith(".flash") then
-            local name = v[1]:sub(1,-7);
-            if ResultFlashTable[name] ~= v[2] then
-                ResultFlashTable[name] = lerp(ResultFlashTable[name], v[2], elapsed * v[3] /
+        if v[2]:endswith(".flash") then
+            if ResultFlashTable[v[1]] ~= v[3] then
+                ResultFlashTable[v[1]] = lerp(ResultFlashTable[v[1]], v[3], elapsed * v[4] /
                     (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
                 );
             end
-        else
-            if getProperty(v[1]) ~= v[2] then
-                setProperty(v[1], lerp(getProperty(v[1]), v[2], elapsed * v[3] /
-                    (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
-                ));
-            end
+        elseif getProperty(v[1]..v[2]) ~= v[3] then
+            setProperty(v[1]..v[2], lerp(getProperty(v[1]..v[2]), v[3], elapsed * v[4] /
+                (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
+            ));
         end
     end
 end
@@ -302,7 +370,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 end
 
 function onTweenCompleted(tag)
-    if tag == "ResultScreenEnter" then
+    if tag:startswith("Star") then
+        setProperty(tag:sub(1,-2)..".moves", false);
+    elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
