@@ -185,6 +185,8 @@ function triggerRankAnimation()
         scaleObject('ResultMainRank', 1.15, 1.15, false);
         ResultFlashTable["ResultMainRank"] = 1;
         generateStars();
+    else
+        playSound("confirmMenu", 1);
     end
     if tonumber(getProperty('ResultScreenBG.color')) ~= ResultScreenStates[ResultStateKey][3] then
         ResultFlashTable["ResultScreenBG"] = 1;
