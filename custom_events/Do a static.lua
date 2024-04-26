@@ -22,12 +22,12 @@ function onCreate()
 	
 	makeLuaText('TrickyText', 'ABab.!?[];', 1280, 0, 0);
 	setTextSize('TrickyText', 100);
-	setTextBorder('TrickyText', 0, 0);
+	setTextBorder('TrickyText', 0, "000000");
 	setTextFont('TrickyText', 'impact.ttf');
 	setTextColor('TrickyText', '0xff0000');
 	setTextAlignment('TrickyText', 'center');
 	setObjectCamera('TrickyText','camHUD');
-	setProperty('TrickyText.textField.multiline', false);
+	setProperty('TrickyText.wordWrap', false);
 	-- setProperty('TrickyText.visible', false);
 	setProperty('TrickyText.alpha', 0.00001);
 	addLuaText('TrickyText');

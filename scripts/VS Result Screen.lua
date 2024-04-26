@@ -112,24 +112,40 @@ function onEndSong()
     return Function_Continue;
 end
 
-function getStateFromKeyboard()
-    local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 49;
-    return ((key > -1 and key < 8) and key or ResultStateKey);
+function getStateFromKeyboard(toAccuracy)
+    local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 48;
+    if toAccuracy then
+        return  ((key > 0 and key < 9) and ResultScreenStates[key][1] or AccuracyCounter);
+    end
+    return ((key > 0 and key < 9) and key or ResultStateKey);
+end
+
+function getStateFromAccuracyCounter()
+    local result = 1;
+    for i, v in ipairs(ResultScreenStates) do
+        if AccuracyCounter >= v[1] then
+            result = i;
+        else
+            break;
+        end
+    end
+    return result;
 end
 
 AllowExitResults = false;
 BGScrollAmount = 0;
 
 ResultStateKey = 0;
+AccuracyCounter = 0;
 ResultScreenStates = {
-    [0] = {0, "shit", 0x6A4280, -0.35},-- F
-    [1] = {16, "shit", 0x6A4280, -0.35},-- E
-    [2] = {32, "bad", 0x6A4280, -0.225},-- D
-    [3] = {47, "bad", 0x4648AA, -0.1},-- C
-    [4] = {63, "good", 0x4648AA, 0.0},-- B
-    [5] = {78, "good", 0xD562E1, 0.15},-- A
-    [6] = {94, "sick", 0x7EF2BE, 0.25},-- S
-    [7] = {100, "sick", 0x12FBE2, 0.3},-- Ss
+    {0, "shit", 0x6A4280, -0.35},-- F
+    {16, "shit", 0x6A4280, -0.35},-- E
+    {32, "bad", 0x6A4280, -0.225},-- D
+    {47, "bad", 0x4648AA, -0.1},-- C
+    {63, "good", 0x4648AA, 0.0},-- B
+    {78, "good", 0xD562E1, 0.15},-- A
+    {94, "sick", 0x7EF2BE, 0.25},-- S
+    {100, "sick", 0x12E2E2, 0.3},-- Ss
 };
 ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ResultEnterAlphas = {1, 0.64};
@@ -161,20 +177,34 @@ function onUpdate(elapsed)
         if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
             triggerRankAnimation();
         end
-        local prv = ResultStateKey;
-        ResultStateKey = getStateFromKeyboard();
-        if prv ~= ResultStateKey then
-            triggerRankAnimation();
+        if getPropertyFromClass('flixel.FlxG', 'keys.pressed.RIGHT') then
+            AccuracyCounter = AccuracyCounter + elapsed * 15;
         end
-        setProperty('Screenshots.animation.frameIndex', ResultStateKey);
+        if getPropertyFromClass('flixel.FlxG', 'keys.pressed.LEFT') then
+            AccuracyCounter = AccuracyCounter - elapsed * 15;
+        end
+        AccuracyCounter = getStateFromKeyboard(true);
+    end
+
+    updateAccuracyCounterText();
+
+    local prvState = ResultStateKey;
+    ResultStateKey = getStateFromAccuracyCounter();
+    if prvState ~= ResultStateKey then
+        
+        triggerRankAnimation();
+    end
+
+    if ResultScreenDebug then
+        setProperty('Screenshots.animation.frameIndex', ResultStateKey-1);
     end
 
     applyResultScreenFlash();
     easeResultScreenPropertys(elapsed);
 
-    setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey));
+    setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey-1));
     setProperty('ResultScreenBG.color', ResultScreenStates[ResultStateKey][3]);
-    setProperty('ResultSmallS.alpha', (ResultStateKey == 7 and 1.0 or 0.00001));
+    setProperty('ResultSmallS.alpha', (ResultStateKey == 8 and 1.0 or 0.00001));
 
     if AllowExitResults then
         -- f(x) = (1 - cos((x ∙ π) : 1.5)) : 2
@@ -201,8 +231,20 @@ function onUpdate(elapsed)
     end
 end
 
+function updateAccuracyCounterText()
+    local prvStr = getNumberTextString('ResultAccCounter');
+    local prvAcc = (prvStr == "" and 0 or tonumber(prvStr));
+    if math.max(0,math.floor(AccuracyCounter)) == prvAcc then
+        return;
+    end
+    playSound("scrollMenu", 1);
+    setNumberTextString('ResultAccCounter',
+        (math.floor(AccuracyCounter) <= 0 and "" or tostring(math.floor(AccuracyCounter)))
+    );
+end
+
 function triggerRankAnimation()
-    if ResultStateKey == 0 then
+    if ResultStateKey == 1 then
         return;
     end
     playSound("confirmMenu", 1, "RankUp");
@@ -211,7 +253,7 @@ function triggerRankAnimation()
         // to prevent memory leaks
         SScript.global.clear();
     ]]);
-    if ResultStateKey ~= 7 then
+    if ResultStateKey ~= 8 then
         scaleObject('ResultMainRank', 1.15, 1.15, false);
         ResultFlashTable["ResultMainRank"] = 1;
         generateStars();
@@ -219,7 +261,7 @@ function triggerRankAnimation()
     if tonumber(getProperty('ResultScreenBG.color')) ~= ResultScreenStates[ResultStateKey][3] then
         ResultFlashTable["ResultScreenBG"] = 1;
     end
-    if ResultStateKey < 6 then
+    if ResultStateKey < 7 then
         return;
     end
     cameraFlash("camOther", "FFFFFF", 0.2, true);
@@ -229,7 +271,7 @@ StarAcceleration = -250;
 StarInitVelocity = 500;
 
 function generateStars()
-    for i = 1, ResultStateKey * 3 + math.floor(ResultStateKey / 2) * 3 do
+    for i = 1, (ResultStateKey-1) * 3 + math.floor((ResultStateKey-1) / 2) * 3 do
         if luaSpriteExists("Star"..i) then
             scaleObject("Star"..i, 1, 1, false);
             math.randomseed(os.clock() * i);
@@ -402,6 +444,14 @@ function SetupResultScreen()
     setProperty('ResultMainRank.y', getProperty('ResultMainRank.y') + 21);
     setProperty('ResultMainRank.x', getProperty('ResultMainRank.x') + 275);
 
+    makeNumberText('ResultAccCounter', 150,
+        getProperty('ResultMainRank.x') + 145,
+        getProperty('ResultMainRank.y') - 45,
+        false
+    );
+
+    setProperty('ResultAccCounterFill.alpha', 0.6);
+
     makeLuaSprite('ResultSmallS', 'vsresultscreen/smallS', 0, 0);
     setObjectCamera('ResultSmallS', "camOther");
     screenCenter('ResultSmallS', 'XY');
@@ -421,10 +471,13 @@ function SetupResultScreen()
     setProperty('ResultEnter.x', getProperty('ResultEnter.x') - screenWidth/2 + 655);
     setProperty('ResultEnter.color', 0x33FFFF);
     setProperty('ResultEnter.alpha', 0.00001);
-    
+
+    addNumberText('ResultAccCounter');
     addLuaSprite('ResultSmallS');
     addLuaSprite('ResultMainRank');
     addLuaSprite('ResultEnter');
+
+    setNumberTextOrder('ResultAccCounter', getObjectOrder('ResultMainRank'));
 
     if not ResultScreenDebug then
         return;
@@ -505,6 +558,7 @@ function SetupUnlockedScreen()
     if ResultScreenActive then
         -- Remove all result screen sprites
         -- exepct the background ones.
+        removeNumberText('ResultAccCounter');
         removeLuaSprite('ResultEnter');
         removeLuaSprite('ResultMainRank');
         removeLuaSprite('ResultSmallS');
@@ -638,4 +692,72 @@ function SetupUnlockedScreen()
         addLuaSprite(UnlockedTitleName);
     end
     addLuaSprite('UnlockedText');
+end
+
+
+------------------------------------------------------------------------------
+-- Number Text Functions
+------------------------------------------------------------------------------
+
+
+function makeNumberText(tag, width, x, y, center)
+    makeLuaText(tag..'Line', "", width, 0, 0);
+    setObjectCamera(tag..'Line', "camOther");
+    setTextFont(tag..'Line', 'vsresultscreen/fnf-num-line.ttf');
+    setTextAlignment(tag..'Line', 'right');
+    setProperty(tag..'Line.wordWrap', false);
+    setTextSize(tag..'Line', 65);
+    setBlendMode(tag..'Line', 'MULTIPLY');
+    setTextBorder(tag..'Line', 0, '000000');
+    setTextColor(tag..'Line', '000000');
+    if center then
+        screenCenter(tag..'Line', 'XY');
+        setProperty(tag..'.y', getProperty(tag..'Line.y') + y);
+        setProperty(tag..'.x', getProperty(tag..'Line.x') + x);
+    else
+        setProperty(tag..'Line.y', y);
+        setProperty(tag..'Line.x', x);
+    end
+    --setProperty('ResultAccCounterText.y', getProperty('ResultMainRank.y') - 45);
+    --setProperty('ResultAccCounterText.x', getProperty('ResultMainRank.x') + 145);
+
+    makeLuaText(tag..'Fill', "", width, 0, 0);
+    setObjectCamera(tag..'Fill', "camOther");
+    setTextFont(tag..'Fill', 'vsresultscreen/fnf-num-fill.ttf');
+    setTextAlignment(tag..'Fill', 'right');
+    setProperty(tag..'Fill.wordWrap', false);
+    setTextSize(tag..'Fill', 65);
+    setTextBorder(tag..'Fill', 0, '000000');
+    setTextColor(tag..'Fill', 'FFFFFF');
+    screenCenter(tag..'Fill', 'XY');
+    setProperty(tag..'Fill.y', getProperty(tag..'Line.y'));
+    setProperty(tag..'Fill.x', getProperty(tag..'Line.x'));
+end
+
+function addNumberText(tag)
+    addLuaText(tag..'Line');
+    addLuaText(tag..'Fill');
+end
+
+function removeNumberText(tag)
+    removeLuaText(tag..'Line');
+    removeLuaText(tag..'Fill');
+end
+
+function setNumberTextOrder(tag, index)
+    setObjectOrder(tag..'Line', index);
+    setObjectOrder(tag..'Fill', getObjectOrder(tag..'Line'));
+end
+
+function getNumberTextOrder(tag)
+    return getObjectOrder(tag..'Fill');
+end
+
+function setNumberTextString(tag, str)
+    setTextString(tag..'Line', str);
+    setTextString(tag..'Fill', str);
+end
+
+function getNumberTextString(tag)
+    return getTextString(tag..'Line');
 end

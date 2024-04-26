@@ -1234,8 +1234,9 @@ function setTextColor(tag, color) end
 ---Sets the border of the ModchartText `tag`
 ---@param tag string Text object name
 ---@param size number New border size
----@param color number New border color
-function setTextBorder(tag, size, color) end
+---@param color string | common_colors New border color
+---@param style? "outline" | "outline_fast" | "shadow" | "none" New border style
+function setTextBorder(tag, size, color, style) end
 ---Sets the `italic` field of the ModchartText `tag`
 ---@param tag string Text object name
 ---@param italic boolean Italicise the text field
