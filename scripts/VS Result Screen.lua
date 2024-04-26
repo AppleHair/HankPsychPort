@@ -1,60 +1,9 @@
 
--- short for linear interpolation
-local function lerp(a, b, ratio)
-    return a + (b - a) * ratio;
-end
 
---- takes RGB color values
---- and turns them into
---- HEX #RRGGBB format.
----@param r number The red value
----@param g number The green value
----@param b number The blue value
-local function RGBtoHEX(r, g, b)
-	-- string.format explanation: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
-	return string.format("#%02x%02x%02x", r, g, b);
-end
-
---- Checks if a string ends with a curtain
---- sequence of characters
----@param self string The string that needs to be checked
----@param ends string A string value of the sequence of characters that needs to be checked from the end
-function string:endswith(ends)
-    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
-    -- # - the length of an table(array) / string
-    return self:sub(-#ends) == ends;
-end
--- this function is being added to the string library/module
-
---- Checks if a string starts with a curtain
---- sequence of characters
----@param self string The string that needs to be checked
----@param start string A string value of the sequence of characters that needs to be checked from the start
----@diagnostic disable-next-line: duplicate-set-field
-function string:startswith(start)
-    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
-    -- # - the length of an table(array) / string
-    return self:sub(1, #start) == start;
-end
--- this function is being added to the string library/module
-
-----------------------
---    WIP DON'T LOOK
-----------------------
-
-ResultScreenActive = false;
-UnlockScreenActive = false;
-
----@type any
-UnlockedObjectName = nil;
----@type any
-UnlockedTitleName = nil;
-UnlockedColor = 0x5D3D6F;
-
+---@type boolean
 ResultScreenDebug = true;
 
-BGReady = false;
-ResultsShown = false;
+
 
 function onCreate()
     addHaxeLibrary("CoolUtil", "backend");
@@ -67,6 +16,13 @@ function onCreate()
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
     addHaxeLibrary("SScript", "tea");
 end
+
+---@type any
+UnlockedObjectName = nil;
+---@type any
+UnlockedTitleName = nil;
+---@type integer
+UnlockedColor = 0x5D3D6F;
 
 function onEvent(name, value1, value2)
     if name == "Signal-Add Unlocked Screen" then
@@ -84,14 +40,22 @@ function onEvent(name, value1, value2)
     end
 end
 
+---@type boolean
+ResultScreenActive = false;
+---@type boolean
+UnlockScreenActive = false;
+
+---@type boolean
+ResultsShown = false;
+
 function onEndSong()
-    local tweenTag = "";
+    local timerTag = "";
     if not ResultsShown then
-        tweenTag = "ResultScreenTransition";
+        timerTag = "ResultScreenTransition";
     elseif UnlockedObjectName ~= nil then
-        tweenTag = "UnlockScreenTransition";
+        timerTag = "UnlockScreenTransition";
     end
-    if tweenTag ~= "" then
+    if timerTag ~= "" then
         runHaxeCode([[
             FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
             CustomFadeTransition.finishCallback = function() {
@@ -102,7 +66,7 @@ function onEndSong()
             };
             CustomFadeTransition.nextCamera = PlayState.instance.camOther;
         ]]);
-        runTimer(tweenTag, 0.65);
+        runTimer(timerTag, 0.65);
         setProperty('canPause', false);
         setProperty('canReset', false);
         setProperty('endingSong', true);
@@ -112,31 +76,16 @@ function onEndSong()
     return Function_Continue;
 end
 
-function getStateFromKeyboard(toAccuracy)
-    local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 48;
-    if toAccuracy then
-        return  ((key > 0 and key < 9) and ResultScreenStates[key][1] or AccuracyCounter);
-    end
-    return ((key > 0 and key < 9) and key or ResultStateKey);
-end
-
-function getStateFromAccuracyCounter()
-    local result = 1;
-    for i, v in ipairs(ResultScreenStates) do
-        if AccuracyCounter >= v[1] then
-            result = i;
-        else
-            break;
-        end
-    end
-    return result;
-end
-
+---@type boolean
 AllowExitResults = false;
+---@type number
 BGScrollAmount = 0;
 
+---@type integer
 ResultStateKey = 0;
+---@type number
 AccuracyCounter = 0;
+---@type table
 ResultScreenStates = {
     {0, "shit", 0x6A4280, -0.35},-- F
     {16, "shit", 0x6A4280, -0.35},-- E
@@ -147,20 +96,11 @@ ResultScreenStates = {
     {94, "sick", 0x7EF2BE, 0.25},-- S
     {100, "sick", 0x12E2E2, 0.3},-- Ss
 };
+
+---@type table
 ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
+---@type table
 ResultEnterAlphas = {1, 0.64};
-
-ResultEaseTable = {
-    {"ResultMainRank", ".scale.x", 1, 120},
-    {"ResultMainRank", ".scale.y", 1, 120},
-    {"ResultMainRank", ".flash", 0, 60},
-    {"ResultScreenBG", ".flash", 0, 30},
-};
-
-ResultFlashTable = {
-    ["ResultMainRank"] = 0,
-    ["ResultScreenBG"] = 0,
-};
 
 function onUpdate(elapsed)
     if not ResultScreenActive then
@@ -231,18 +171,6 @@ function onUpdate(elapsed)
     end
 end
 
-function updateAccuracyCounterText()
-    local prvStr = getNumberTextString('ResultAccCounter');
-    local prvAcc = (prvStr == "" and 0 or tonumber(prvStr));
-    if math.max(0,math.floor(AccuracyCounter)) == prvAcc then
-        return;
-    end
-    playSound("scrollMenu", 1);
-    setNumberTextString('ResultAccCounter',
-        (math.floor(AccuracyCounter) <= 0 and "" or tostring(math.floor(AccuracyCounter)))
-    );
-end
-
 function triggerRankAnimation()
     if ResultStateKey == 1 then
         return;
@@ -267,79 +195,11 @@ function triggerRankAnimation()
     cameraFlash("camOther", "FFFFFF", 0.2, true);
 end
 
-StarAcceleration = -250;
-StarInitVelocity = 500;
-
-function generateStars()
-    for i = 1, (ResultStateKey-1) * 3 + math.floor((ResultStateKey-1) / 2) * 3 do
-        if luaSpriteExists("Star"..i) then
-            scaleObject("Star"..i, 1, 1, false);
-            math.randomseed(os.clock() * i);
-            local angle = math.random(0, 360);
-            setProperty("Star"..i..".angle", angle);
-            setProperty("Star"..i..".x", math.random(
-                getProperty("ResultMainRank.x") + getProperty("Star"..i..".frameWidth"),
-                getProperty("ResultMainRank.x") + getProperty("ResultMainRank.frameWidth")
-                - getProperty("Star"..i..".frameWidth")
-            ));
-            setProperty("Star"..i..".y", math.random(
-                getProperty("ResultMainRank.y") + getProperty("Star"..i..".frameHeight"),
-                getProperty("ResultMainRank.y") + getProperty("ResultMainRank.frameHeight")
-                - getProperty("Star"..i..".frameHeight")
-            ));
-            setProperty("Star"..i..".moves", true);
-            setProperty("Star"..i..".acceleration.x", math.cos(math.rad(angle)) * StarAcceleration);
-            setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
-            setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
-            setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
-            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.35, "sineinout");
-            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
-        else
-            makeLuaSprite("Star"..i, "vsresultscreen/star", 0, 0);
-            setObjectCamera("Star"..i, "camOther");
-            setProperty("Star"..i..".alpha", 0.5);
-            addLuaSprite("Star"..i);
-
-            scaleObject("Star"..i, 1, 1, false);
-            math.randomseed(os.clock() * i);
-            local angle = math.random(0, 360);
-            setProperty("Star"..i..".angle", angle);
-            setProperty("Star"..i..".x", math.random(
-                getProperty("ResultMainRank.x") + getProperty("Star"..i..".frameWidth"),
-                getProperty("ResultMainRank.x") + getProperty("ResultMainRank.frameWidth")
-                - getProperty("Star"..i..".frameWidth")
-            ));
-            setProperty("Star"..i..".y", math.random(
-                getProperty("ResultMainRank.y") + getProperty("Star"..i..".frameHeight"),
-                getProperty("ResultMainRank.y") + getProperty("ResultMainRank.frameHeight")
-                - getProperty("Star"..i..".frameHeight")
-            ));
-            setProperty("Star"..i..".moves", true);
-            setProperty("Star"..i..".acceleration.x", math.cos(math.rad(angle)) * StarAcceleration);
-            setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
-            setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
-            setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
-            doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.35, "sineinout");
-            doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
-        end
-    end
-end
-
-function easeResultScreenPropertys(elapsed)
-    for i, v in ipairs(ResultEaseTable) do
-        if v[2]:endswith(".flash") then
-            if ResultFlashTable[v[1]] ~= v[3] then
-                ResultFlashTable[v[1]] = lerp(ResultFlashTable[v[1]], v[3], elapsed * v[4] /
-                    (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
-                );
-            end
-        elseif getProperty(v[1]..v[2]) ~= v[3] then
-            setProperty(v[1]..v[2], lerp(getProperty(v[1]..v[2]), v[3], elapsed * v[4] /
-                (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
-            ));
-        end
-    end
-end
+---@type table
+ResultFlashTable = {
+    ["ResultMainRank"] = 0,
+    ["ResultScreenBG"] = 0,
+};
 
 function applyResultScreenFlash()
     for i, v in pairs(ResultFlashTable) do
@@ -359,7 +219,112 @@ function applyResultScreenFlash()
     end
 end
 
+---@type table
+ResultEaseTable = {
+    {"ResultMainRank", ".scale.x", 1, 120},
+    {"ResultMainRank", ".scale.y", 1, 120},
+    {"ResultMainRank", ".flash", 0, 60},
+    {"ResultScreenBG", ".flash", 0, 30},
+};
+
+function easeResultScreenPropertys(elapsed)
+    for i, v in ipairs(ResultEaseTable) do
+        if v[2]:endswith(".flash") then
+            if ResultFlashTable[v[1]] ~= v[3] then
+                ResultFlashTable[v[1]] = lerp(ResultFlashTable[v[1]], v[3], elapsed * v[4] /
+                    (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
+                );
+            end
+        elseif getProperty(v[1]..v[2]) ~= v[3] then
+            setProperty(v[1]..v[2], lerp(getProperty(v[1]..v[2]), v[3], elapsed * v[4] /
+                (getPropertyFromClass('flixel.FlxG', 'updateFramerate') / 60)
+            ));
+        end
+    end
+end
+
+function generateStars()
+    for i = 1, (ResultStateKey-1) * 3 + math.floor((ResultStateKey-1) / 2) * 3 do
+        if luaSpriteExists("Star"..i) then
+            calibrateStar(i);
+        else
+            makeLuaSprite("Star"..i, "vsresultscreen/star", 0, 0);
+            setObjectCamera("Star"..i, "camOther");
+            setProperty("Star"..i..".alpha", 0.5);
+            addLuaSprite("Star"..i);
+
+            calibrateStar(i);
+        end
+    end
+end
+
+---@type number
+StarAcceleration = -250;
+---@type number
+StarInitVelocity = 500;
+
+function calibrateStar(i)
+    scaleObject("Star"..i, 1, 1, false);
+    math.randomseed(os.clock() * i);
+    local angle = math.random(0, 360);
+    setProperty("Star"..i..".angle", angle);
+    setProperty("Star"..i..".x", math.random(
+        getProperty("ResultMainRank.x") + getProperty("Star"..i..".frameWidth"),
+        getProperty("ResultMainRank.x") + getProperty("ResultMainRank.frameWidth")
+        - getProperty("Star"..i..".frameWidth")
+    ));
+    setProperty("Star"..i..".y", math.random(
+        getProperty("ResultMainRank.y") + getProperty("Star"..i..".frameHeight"),
+        getProperty("ResultMainRank.y") + getProperty("ResultMainRank.frameHeight")
+        - getProperty("Star"..i..".frameHeight")
+    ));
+    setProperty("Star"..i..".moves", true);
+    setProperty("Star"..i..".acceleration.x", math.cos(math.rad(angle)) * StarAcceleration);
+    setProperty("Star"..i..".acceleration.y", math.sin(math.rad(angle)) * StarAcceleration);
+    setProperty("Star"..i..".velocity.x", math.cos(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+    setProperty("Star"..i..".velocity.y", math.sin(math.rad(angle)) * StarInitVelocity * (0.5 + math.random()/2));
+    doTweenX("Star"..i.."X", "Star"..i..".scale", 0, 0.35, "sineinout");
+    doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
+end
+
+function getStateFromKeyboard(toAccuracy)
+    local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 48;
+    if toAccuracy then
+        return  ((key > 0 and key < 9) and ResultScreenStates[key][1] or AccuracyCounter);
+    end
+    return ((key > 0 and key < 9) and key or ResultStateKey);
+end
+
+function getStateFromAccuracyCounter()
+    local result = 1;
+    for i, v in ipairs(ResultScreenStates) do
+        if AccuracyCounter >= v[1] then
+            result = i;
+        else
+            break;
+        end
+    end
+    return result;
+end
+
+function updateAccuracyCounterText()
+    local prvStr = getNumberTextString('ResultAccCounter');
+    local prvAcc = (prvStr == "" and 0 or tonumber(prvStr));
+    if math.max(0,math.floor(AccuracyCounter)) == prvAcc then
+        return;
+    end
+    playSound("scrollMenu", 1);
+    setNumberTextString('ResultAccCounter',
+        (math.floor(AccuracyCounter) <= 0 and "" or tostring(math.floor(AccuracyCounter)))
+    );
+end
+
 function onTimerCompleted(tag, loops, loopsLeft)
+
+--------------------------------------------------------
+-- Result Screen Timers
+--------------------------------------------------------
+
     if tag == "ResultScreenTransition" then
         SetupResultScreenBG();
         SetupResultScreen();
@@ -376,6 +341,11 @@ function onTimerCompleted(tag, loops, loopsLeft)
         if ResultScreenDebug then
             AllowExitResults = true;
         end
+
+--------------------------------------------------------
+-- Unlocked Screen Timers
+--------------------------------------------------------
+
     elseif tag == "UnlockScreenTransition" then
         SetupUnlockedScreen();
         UnlockScreenActive = true;
@@ -412,10 +382,20 @@ function onTimerCompleted(tag, loops, loopsLeft)
 end
 
 function onTweenCompleted(tag)
+
+--------------------------------------------------------
+-- Result Screen Tweens
+--------------------------------------------------------
+
     if tag:startswith("Star") then
         setProperty(tag:sub(1,-2)..".moves", false);
     elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
+
+--------------------------------------------------------
+-- Unlocked Screen Tweens
+--------------------------------------------------------
+
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
         cameraShake("camOther", 0.002, 0.2);
@@ -433,6 +413,67 @@ function onTweenCompleted(tag)
         UnlockedObjectName = nil;
         endSong();
     end
+end
+
+---@type boolean
+BGReady = false;
+
+function SetupResultScreenBG()
+    -- -- onlinePlay = true | false
+    -- local runningUMM = onlinePlay ~= nil;
+    -- if runningUMM then
+    if onlinePlay ~= nil then
+        makeLuaSprite('ResultScreenBG', "menuDesat", 0, 0);
+    else
+        runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
+    end
+    setObjectCamera('ResultScreenBG', "camOther");
+    screenCenter('ResultScreenBG', 'XY');
+    setProperty('ResultScreenBG.offset.y', -5);
+    setProperty('ResultScreenBG.color', 0x6A4280);
+    setProperty('ResultScreenBG.alpha', 1);
+
+    makeLuaSprite('ResultBlackUp', "", 0, 0);
+    makeGraphic('ResultBlackUp', screenWidth, screenHeight/2, "000000");
+    setObjectCamera('ResultBlackUp', "camOther");
+    screenCenter('ResultBlackUp', 'XY');
+    setProperty('ResultBlackUp.y', getProperty('ResultBlackUp.y') - screenHeight * 0.55);
+
+    makeLuaSprite('ResultBlackDown', "", 0, 0);
+    makeGraphic('ResultBlackDown', screenWidth, screenHeight/2, "000000");
+    setObjectCamera('ResultBlackDown', "camOther");
+    screenCenter('ResultBlackDown', 'XY');
+    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + screenHeight * 0.55);
+
+    makeLuaSprite('ResultGradientUp', "", 0, 0);
+    setObjectCamera('ResultGradientUp', "camOther");
+    runHaxeCode([[
+        game.modchartSprites.get("ResultGradientUp").pixels = 
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.BLACK, 0xDB000000,
+             0xA0000000, 0x60000000, 0x22000000, FlxColor.TRANSPARENT]);
+    ]]);
+    setProperty('ResultGradientUp.scale.x', screenWidth);
+    screenCenter('ResultGradientUp', 'XY');
+    setProperty('ResultGradientUp.y', getProperty('ResultGradientUp.y') - screenHeight * 0.15);
+
+    makeLuaSprite('ResultGradientDown', "", 0, 0);
+    setObjectCamera('ResultGradientDown', "camOther");
+    runHaxeCode([[
+        game.modchartSprites.get("ResultGradientDown").pixels = 
+            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.TRANSPARENT, 0x22000000,
+             0x60000000, 0xA0000000, 0xDB000000, FlxColor.BLACK]);
+    ]]);
+    setProperty('ResultGradientDown.scale.x', screenWidth);
+    screenCenter('ResultGradientDown', 'XY');
+    setProperty('ResultGradientDown.y', getProperty('ResultGradientDown.y') + screenHeight * 0.15);
+
+    addLuaSprite('ResultScreenBG');
+    addLuaSprite('ResultBlackUp');
+    addLuaSprite('ResultBlackDown');
+    addLuaSprite('ResultGradientUp');
+    addLuaSprite('ResultGradientDown');
+
+    BGReady = true;
 end
 
 function SetupResultScreen()
@@ -492,64 +533,6 @@ function SetupResultScreen()
     setProperty('Screenshots.visible', false);
 
     addLuaSprite('Screenshots');
-end
-
-function SetupResultScreenBG()
-    -- -- onlinePlay = true | false
-    -- local runningUMM = onlinePlay ~= nil;
-    -- if runningUMM then
-    if onlinePlay ~= nil then
-        makeLuaSprite('ResultScreenBG', "menuDesat", 0, 0);
-    else
-        runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
-    end
-    setObjectCamera('ResultScreenBG', "camOther");
-    screenCenter('ResultScreenBG', 'XY');
-    setProperty('ResultScreenBG.offset.y', -5);
-    setProperty('ResultScreenBG.color', 0x6A4280);
-    setProperty('ResultScreenBG.alpha', 1);
-
-    makeLuaSprite('ResultBlackUp', "", 0, 0);
-    makeGraphic('ResultBlackUp', screenWidth, screenHeight/2, "000000");
-    setObjectCamera('ResultBlackUp', "camOther");
-    screenCenter('ResultBlackUp', 'XY');
-    setProperty('ResultBlackUp.y', getProperty('ResultBlackUp.y') - screenHeight * 0.55);
-
-    makeLuaSprite('ResultBlackDown', "", 0, 0);
-    makeGraphic('ResultBlackDown', screenWidth, screenHeight/2, "000000");
-    setObjectCamera('ResultBlackDown', "camOther");
-    screenCenter('ResultBlackDown', 'XY');
-    setProperty('ResultBlackDown.y', getProperty('ResultBlackDown.y') + screenHeight * 0.55);
-
-    makeLuaSprite('ResultGradientUp', "", 0, 0);
-    setObjectCamera('ResultGradientUp', "camOther");
-    runHaxeCode([[
-        game.modchartSprites.get("ResultGradientUp").pixels = 
-            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.BLACK, 0xDB000000,
-             0xA0000000, 0x60000000, 0x22000000, FlxColor.TRANSPARENT]);
-    ]]);
-    setProperty('ResultGradientUp.scale.x', screenWidth);
-    screenCenter('ResultGradientUp', 'XY');
-    setProperty('ResultGradientUp.y', getProperty('ResultGradientUp.y') - screenHeight * 0.15);
-
-    makeLuaSprite('ResultGradientDown', "", 0, 0);
-    setObjectCamera('ResultGradientDown', "camOther");
-    runHaxeCode([[
-        game.modchartSprites.get("ResultGradientDown").pixels = 
-            FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.TRANSPARENT, 0x22000000,
-             0x60000000, 0xA0000000, 0xDB000000, FlxColor.BLACK]);
-    ]]);
-    setProperty('ResultGradientDown.scale.x', screenWidth);
-    screenCenter('ResultGradientDown', 'XY');
-    setProperty('ResultGradientDown.y', getProperty('ResultGradientDown.y') + screenHeight * 0.15);
-
-    addLuaSprite('ResultScreenBG');
-    addLuaSprite('ResultBlackUp');
-    addLuaSprite('ResultBlackDown');
-    addLuaSprite('ResultGradientUp');
-    addLuaSprite('ResultGradientDown');
-
-    BGReady = true;
 end
 
 ---Creates all the necessary sprites for the unlocked screen
@@ -761,3 +744,43 @@ end
 function getNumberTextString(tag)
     return getTextString(tag..'Line');
 end
+
+
+-- short for linear interpolation
+function lerp(a, b, ratio)
+    return a + (b - a) * ratio;
+end
+
+--- takes RGB color values
+--- and turns them into
+--- HEX #RRGGBB format.
+---@param r number The red value
+---@param g number The green value
+---@param b number The blue value
+function RGBtoHEX(r, g, b)
+	-- string.format explanation: https://www.lua.org/pil/20.html#:~:text=The%20function-,string.format,-is%20a%20powerful
+	return string.format("#%02x%02x%02x", r, g, b);
+end
+
+--- Checks if a string ends with a curtain
+--- sequence of characters
+---@param self string The string that needs to be checked
+---@param ends string A string value of the sequence of characters that needs to be checked from the end
+function string:endswith(ends)
+    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
+    -- # - the length of an table(array) / string
+    return self:sub(-#ends) == ends;
+end
+-- this function is being added to the string library/module
+
+--- Checks if a string starts with a curtain
+--- sequence of characters
+---@param self string The string that needs to be checked
+---@param start string A string value of the sequence of characters that needs to be checked from the start
+---@diagnostic disable-next-line: duplicate-set-field
+function string:startswith(start)
+    -- string.sub() explanation: https://www.lua.org/pil/20.html#:~:text=The%20call-,string.sub,-(s%2Ci%2Cj
+    -- # - the length of an table(array) / string
+    return self:sub(1, #start) == start;
+end
+-- this function is being added to the string library/module
