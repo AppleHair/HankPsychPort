@@ -15,7 +15,6 @@ function onCreate()
     addHaxeLibrary("ColorTransform", "openfl.geom");
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
     addHaxeLibrary("SScript", "tea");
-    setVar("EnterOpacity", 0);
 end
 
 ---@type any
@@ -112,15 +111,6 @@ function onUpdate(elapsed)
         return;
     end
 
-    BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
-    setProperty('ResultScreenBG.offset.x', BGScrollAmount);
-
-    if ResultScreenDebug then
-        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.NINE') then
-            setProperty('Screenshots.visible', not getProperty('Screenshots.visible'));
-        end
-    end
-
     if Counting then
         if ResultScreenDebug then
             if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
@@ -167,6 +157,26 @@ function onUpdate(elapsed)
     updateHitbox('ResultRating');
     setProperty('ResultRating.offset.x', ResultScreenStates[ResultStateKey][6] + getProperty('ResultRating.offset.x') * 0.1);
     setProperty('ResultRating.offset.y', ResultScreenStates[ResultStateKey][7] + getProperty('ResultRating.offset.y') * 0.1);
+    screenCenter('ResultWhiteGradient', 'XY');
+    setProperty('ResultWhiteGradient.x', getProperty('ResultWhiteGradient.x') +
+        getProperty('ResultWhiteGradient.frameWidth') - getVar('ResultWhiteRevealed') - 162);
+    runHaxeCode([[
+        game.modchartSprites.get("ResultWhiteGradient").clipRect = new FlxRect(0,0,]]..
+            getVar('ResultWhiteRevealed')
+        ..[[,60);
+        // to prevent memory leaks
+        SScript.global.clear();
+    ]]);
+
+
+    BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
+    setProperty('ResultScreenBG.offset.x', BGScrollAmount);
+
+    if ResultScreenDebug then
+        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.NINE') then
+            setProperty('Screenshots.visible', not getProperty('Screenshots.visible'));
+        end
+    end
 
     if AllowExitResults then
         -- f(x) = (1 - cos((x ∙ π) : 1.5)) : 2
@@ -436,6 +446,9 @@ function onTweenCompleted(tag)
     elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
         Counting = true;
+    elseif tag == "CounterExit" then
+        table.insert(ResultEaseTable,{"ResultWhiteRevealed", "",
+        getProperty('ResultWhiteGradient.frameWidth'), 30});
     elseif tag == "ResultRatingScaleX" then
         playSound("confirmMenu", 1);
         cameraFlash("camOther", "#88FFFFFF", 0.1, true);
@@ -526,6 +539,23 @@ function SetupResultScreenBG()
 end
 
 function SetupResultScreen()
+    makeLuaSprite('ResultWhiteGradient', "", 0, 0);
+    setObjectCamera('ResultWhiteGradient', "camOther");
+    runHaxeCode([[
+        game.modchartSprites.get("ResultWhiteGradient").pixels = 
+            FlxGradient.createGradientBitmapData(956, 1, [FlxColor.WHITE, 0xDDFFFFFF,
+            0xAAFFFFFF, 0x77FFFFFF, 0x33FFFFFF, 0x00FFFFFF], 1, 180);
+    ]]);
+    setProperty('ResultWhiteGradient.scale.y', 60);
+    updateHitbox('ResultWhiteGradient');
+    screenCenter('ResultWhiteGradient', 'XY');
+    setVar('ResultWhiteRevealed', 0);
+    setProperty('ResultWhiteGradient.x', getProperty('ResultWhiteGradient.x') +
+        getProperty('ResultWhiteGradient.frameWidth') - getVar('ResultWhiteRevealed') - 162);
+    runHaxeCode('game.modchartSprites.get("ResultWhiteGradient").clipRect = new FlxRect(0,0,'..
+        getVar('ResultWhiteRevealed')
+    ..',60);');
+
     makeAnimatedLuaSprite('ResultMainRank', 'vsresultscreen/ranks', 0, 0);
     addAnimationByPrefix('ResultMainRank', 'ranks', 'ranks', 0, false);
     playAnim('ResultMainRank', 'ranks');
@@ -569,6 +599,7 @@ function SetupResultScreen()
     setProperty('ResultEnter.x', getProperty('ResultEnter.x') - screenWidth/2 + 655);
     setProperty('ResultEnter.color', 0x33FFFF);
     setProperty('ResultEnter.alpha', 0.00001);
+    setVar("EnterOpacity", 0);
 
     makeLuaSprite('ResultMainPercent', 'vsresultscreen/percent', 0, 0);
     setObjectCamera('ResultMainPercent', "camOther");
@@ -590,6 +621,7 @@ function SetupResultScreen()
 
     addNumberText('ResultAccCounter');
     addNumberText('ResultMainAcc');
+    addLuaSprite('ResultWhiteGradient');
     addLuaSprite('ResultSmallS');
     addLuaSprite('ResultMainRank');
     addLuaSprite('ResultMainCrown');
@@ -621,6 +653,7 @@ function SetupUnlockedScreen()
     if ResultScreenActive then
         -- Remove all result screen sprites
         -- exepct the background ones.
+        removeLuaSprite('ResultWhiteGradient');
         removeNumberText('ResultAccCounter');
         removeNumberText('ResultMainAcc');
         removeLuaSprite('ResultEnter');
