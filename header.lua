@@ -714,6 +714,14 @@ function getGlobalFromScript(luaFile, global) end
 ---@param global string The variable to set
 ---@param value any What to set `global` to
 function setGlobalFromScript(luaFile, global, value) end
+--- Gets the value of a variable from the current State
+---@param name string The `name` of the variable to get
+---@return any value
+function getVar(name) end
+---Adds and sets a variable to the current State
+---@param name string The `name` to set variable to
+---@param value any What `value` it should have
+function setVar(name, value) end
 ---Gets a variable from source code using `Reflect`. Will cause a break at the current line if the variable can't be found
 ---@param property string Path to the variable. Local to `PlayState.instance`
 ---@return any value
@@ -1092,8 +1100,8 @@ function setGraphicSize(tag, x, y, updateHitbox) end
 ---Loads a graphic image to `tag`
 ---@param tag string Sprite tag name
 ---@param path string Path to image. Image must be in either `<currentModDirectory>/images` or `assets/images`
----@param width number
----@param height number
+---@param width? number
+---@param height? number
 function loadGraphic(tag, path, width, height) end
 ---Moves a Sprite's drawn layer to `camera`
 ---@param tag string Sprite tag name

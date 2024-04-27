@@ -1,7 +1,7 @@
 
 
 ---@type boolean
-ResultScreenDebug = true;
+ResultScreenDebug = false;
 
 
 
@@ -15,6 +15,7 @@ function onCreate()
     addHaxeLibrary("ColorTransform", "openfl.geom");
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
     addHaxeLibrary("SScript", "tea");
+    setVar("EnterOpacity", 0);
 end
 
 ---@type any
@@ -78,24 +79,28 @@ end
 
 ---@type boolean
 AllowExitResults = false;
+---@type boolean
+Counting = ResultScreenDebug;
 ---@type number
 BGScrollAmount = 0;
 
 ---@type integer
 ResultStateKey = 0;
 ---@type number
-AccuracyCounter = 0;
+AccuracyCounter = (ResultScreenDebug and 0 or -10);
 ---@type table
 ResultScreenStates = {
-    {0, "shit", 0x6A4280, -0.35},-- F
-    {16, "shit", 0x6A4280, -0.35},-- E
-    {32, "bad", 0x6A4280, -0.225},-- D
-    {47, "bad", 0x4648AA, -0.1},-- C
-    {63, "good", 0x4648AA, 0.0},-- B
-    {78, "good", 0xD562E1, 0.15},-- A
-    {94, "sick", 0x7EF2BE, 0.25},-- S
-    {100, "sick", 0x12E2E2, 0.3},-- Ss
+-- accuracy, rating, BGcolor, pitch, ratingAngle, ratingOffsetX, ratingOffsetY
+    {0, "shit", 0x6A4280, -0.35, 8, 3, -3},-- F
+    {16, "shit", 0x6A4280, -0.35, 0, 0, 0},-- E
+    {32, "bad", 0x6A4280, -0.225, 6, -4, -6},-- D
+    {47, "bad", 0x4648AA, -0.1, -4, -3, -4},-- C
+    {63, "good", 0x4648AA, 0.0, 3, 31, -6},-- B
+    {78, "good", 0xD562E1, 0.15, -7, 31, -6},-- A
+    {94, "sick", 0x7EF2BE, 0.25, 9, 58, 3},-- S
+    {100, "sick", 0x12E2E2, 0.3, 11, 58, 2},-- Ss
 };
+SickGoldColor = 0xfEffA4;
 
 ---@type table
 ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
@@ -114,29 +119,41 @@ function onUpdate(elapsed)
         if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.NINE') then
             setProperty('Screenshots.visible', not getProperty('Screenshots.visible'));
         end
-        if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+    end
+
+    if Counting then
+        if ResultScreenDebug then
+            if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
+                triggerRankAnimation();
+            end
+            if getPropertyFromClass('flixel.FlxG', 'keys.pressed.RIGHT') then
+                AccuracyCounter = AccuracyCounter + elapsed * 15;
+            end
+            if getPropertyFromClass('flixel.FlxG', 'keys.pressed.LEFT') then
+                AccuracyCounter = AccuracyCounter - elapsed * 15;
+            end
+            AccuracyCounter = getStateFromKeyboard(true);
+        elseif AccuracyCounter < rating * 100 then
+            AccuracyCounter = math.min(rating * 100, AccuracyCounter + elapsed * 15);
+        end
+
+        updateAccuracyCounterText();
+
+        local prvState = ResultStateKey;
+        ResultStateKey = getStateFromAccuracyCounter();
+        if prvState ~= ResultStateKey then
+            loadGraphic('ResultRating', ResultScreenStates[ResultStateKey][2]);
             triggerRankAnimation();
         end
-        if getPropertyFromClass('flixel.FlxG', 'keys.pressed.RIGHT') then
-            AccuracyCounter = AccuracyCounter + elapsed * 15;
+
+        if ResultScreenDebug then
+            setProperty('Screenshots.animation.frameIndex', ResultStateKey-1);
+            if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
+                finishCounting();
+            end
+        elseif AccuracyCounter == rating * 100 then
+            finishCounting();
         end
-        if getPropertyFromClass('flixel.FlxG', 'keys.pressed.LEFT') then
-            AccuracyCounter = AccuracyCounter - elapsed * 15;
-        end
-        AccuracyCounter = getStateFromKeyboard(true);
-    end
-
-    updateAccuracyCounterText();
-
-    local prvState = ResultStateKey;
-    ResultStateKey = getStateFromAccuracyCounter();
-    if prvState ~= ResultStateKey then
-        
-        triggerRankAnimation();
-    end
-
-    if ResultScreenDebug then
-        setProperty('Screenshots.animation.frameIndex', ResultStateKey-1);
     end
 
     applyResultScreenFlash();
@@ -145,6 +162,11 @@ function onUpdate(elapsed)
     setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey-1));
     setProperty('ResultScreenBG.color', ResultScreenStates[ResultStateKey][3]);
     setProperty('ResultSmallS.alpha', (ResultStateKey == 8 and 1.0 or 0.00001));
+    setProperty('ResultRating.color', (ResultStateKey == 8 and SickGoldColor or 0xFFFFFF));
+    setProperty('ResultRating.angle', ResultScreenStates[ResultStateKey][5]);
+    updateHitbox('ResultRating');
+    setProperty('ResultRating.offset.x', ResultScreenStates[ResultStateKey][6] + getProperty('ResultRating.offset.x') * 0.1);
+    setProperty('ResultRating.offset.y', ResultScreenStates[ResultStateKey][7] + getProperty('ResultRating.offset.y') * 0.1);
 
     if AllowExitResults then
         -- f(x) = (1 - cos((x ∙ π) : 1.5)) : 2
@@ -157,7 +179,7 @@ function onUpdate(elapsed)
             lerp(ResultEnterColors[1].g, ResultEnterColors[2].g, enterLerp),
             lerp(ResultEnterColors[1].b, ResultEnterColors[2].b, enterLerp)
         )));
-        setProperty('ResultEnter.alpha', lerp(ResultEnterAlphas[1], ResultEnterAlphas[2], enterLerp));
+        setProperty('ResultEnter.alpha', lerp(ResultEnterAlphas[1], ResultEnterAlphas[2], enterLerp) * getVar("EnterOpacity"));
 
         if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
             setProperty('ResultEnter.color', 0xFFFFFF);
@@ -169,6 +191,20 @@ function onUpdate(elapsed)
             endSong();
         end
     end
+end
+
+function finishCounting()
+    Counting = false;
+    doTweenAlpha('CounterExit', 'ResultAccCounterFill', 0, 0.25, "linear");
+    local accStr = getNumberTextString('ResultAccCounter');
+    if accStr == "" then accStr = "0"; end
+    setNumberTextString('ResultMainAcc', accStr);
+    local accPosX = 36 + (screenWidth - getProperty('ResultMainPercent.frameWidth'))/2;
+    doTweenX('MainPercentEnter', 'ResultMainPercent', accPosX, 0.5, "quadout");
+    doTweenX('MainAccLineEnter', 'ResultMainAccLine', accPosX, 0.5, "quadout");
+    doTweenX('MainAccFillEnter', 'ResultMainAccFill', accPosX, 0.5, "quadout");
+    runTimer("ResultRatingEnter", 0.375);
+    playSound("cancelMenu", 1);
 end
 
 function triggerRankAnimation()
@@ -339,10 +375,16 @@ function onTimerCompleted(tag, loops, loopsLeft)
         setObjectCamera('ResultFadeTransition', "camOther");
         screenCenter('ResultFadeTransition', 'XY');
         addLuaSprite('ResultFadeTransition');
-        doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 1, "linear");
-        if ResultScreenDebug then
-            AllowExitResults = true;
-        end
+        doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 0.5, "linear");
+    elseif tag == "ResultRatingEnter" then
+        setProperty('ResultRating.alpha', 1.0);
+        scaleObject('ResultRating', 9, 9, false);
+        doTweenX('ResultRatingScaleX', 'ResultRating.scale', 1, 0.125, "cubein");
+        doTweenY('ResultRatingScaleY', 'ResultRating.scale', 1, 0.125, "cubein");
+    elseif tag == "ResultShowMore" then
+        AllowExitResults = true;
+        table.insert(ResultEaseTable,{"EnterOpacity", "", 1, 10});
+        playSound("cancelMenu", 1);
 
 --------------------------------------------------------
 -- Unlocked Screen Timers
@@ -393,14 +435,19 @@ function onTweenCompleted(tag)
         setProperty(tag:sub(1,-2)..".moves", false);
     elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
-
+        Counting = true;
+    elseif tag == "ResultRatingScaleX" then
+        playSound("confirmMenu", 1);
+        cameraFlash("camOther", "#88FFFFFF", 0.1, true);
+        cameraShake("camOther", 0.01, 0.3);
+        runTimer("ResultShowMore", 1);
 --------------------------------------------------------
 -- Unlocked Screen Tweens
 --------------------------------------------------------
 
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
-        cameraShake("camOther", 0.002, 0.2);
+        cameraShake("camOther", 0.005, 0.3);
         playSound("unlocksound", 1);
 
         if UnlockedTitleName == nil then
@@ -495,6 +542,14 @@ function SetupResultScreen()
 
     setProperty('ResultAccCounterFill.alpha', 0.6);
 
+    makeLuaSprite('ResultMainCrown', 'vsresultscreen/crown', 0, 0);
+    setObjectCamera('ResultMainCrown', "camOther");
+    screenCenter('ResultMainCrown', 'XY');
+    setProperty('ResultMainCrown.y', getProperty('ResultMainRank.y') + 27.5);
+    setProperty('ResultMainCrown.x', getProperty('ResultMainRank.x') + 112.5);
+    setProperty('ResultMainCrown.angle', -20);
+    setProperty('ResultMainCrown.alpha', 0.00001);
+
     makeLuaSprite('ResultSmallS', 'vsresultscreen/smallS', 0, 0);
     setObjectCamera('ResultSmallS', "camOther");
     screenCenter('ResultSmallS', 'XY');
@@ -515,12 +570,35 @@ function SetupResultScreen()
     setProperty('ResultEnter.color', 0x33FFFF);
     setProperty('ResultEnter.alpha', 0.00001);
 
+    makeLuaSprite('ResultMainPercent', 'vsresultscreen/percent', 0, 0);
+    setObjectCamera('ResultMainPercent', "camOther");
+    screenCenter('ResultMainPercent', 'Y');
+    setProperty('ResultMainPercent.y', getProperty('ResultMainPercent.y') - 2);
+    setProperty('ResultMainPercent.x', -getProperty('ResultMainPercent.frameWidth'));
+
+    makeNumberText('ResultMainAcc', 150, getProperty('ResultMainPercent.x'), getProperty('ResultMainPercent.y'), false);
+    setProperty('ResultMainAccFill.offset.x', 155);
+    setProperty('ResultMainAccLine.offset.x', 155);
+
+    makeLuaSprite('ResultRating', 'shit', 0, 0);
+    setObjectCamera('ResultRating', "camOther");
+    screenCenter('ResultRating', 'XY');
+    setProperty('ResultRating.y', getProperty('ResultRating.y') - 113);
+    setProperty('ResultRating.x', getProperty('ResultRating.x') - 115);
+    setProperty('ResultRating.alpha', 0.00001);
+    --scaleObject('ResultRating', 9, 9, false);
+
     addNumberText('ResultAccCounter');
+    addNumberText('ResultMainAcc');
     addLuaSprite('ResultSmallS');
     addLuaSprite('ResultMainRank');
+    addLuaSprite('ResultMainCrown');
+    addLuaSprite('ResultMainPercent');
     addLuaSprite('ResultEnter');
+    addLuaSprite('ResultRating');
 
     setNumberTextOrder('ResultAccCounter', getObjectOrder('ResultMainRank'));
+    setNumberTextOrder('ResultMainAcc', getObjectOrder('ResultMainPercent'));
 
     if not ResultScreenDebug then
         return;
@@ -544,9 +622,13 @@ function SetupUnlockedScreen()
         -- Remove all result screen sprites
         -- exepct the background ones.
         removeNumberText('ResultAccCounter');
+        removeNumberText('ResultMainAcc');
         removeLuaSprite('ResultEnter');
         removeLuaSprite('ResultMainRank');
+        removeLuaSprite('ResultMainCrown');
+        removeLuaSprite('ResultMainPercent');
         removeLuaSprite('ResultSmallS');
+        removeLuaSprite('ResultRating');
         if ResultScreenDebug then
             removeLuaSprite('Screenshots');
         end
@@ -697,14 +779,12 @@ function makeNumberText(tag, width, x, y, center)
     setTextColor(tag..'Line', '000000');
     if center then
         screenCenter(tag..'Line', 'XY');
-        setProperty(tag..'.y', getProperty(tag..'Line.y') + y);
-        setProperty(tag..'.x', getProperty(tag..'Line.x') + x);
+        setProperty(tag..'Line.y', getProperty(tag..'Line.y') + y);
+        setProperty(tag..'Line.x', getProperty(tag..'Line.x') + x);
     else
         setProperty(tag..'Line.y', y);
         setProperty(tag..'Line.x', x);
     end
-    --setProperty('ResultAccCounterText.y', getProperty('ResultMainRank.y') - 45);
-    --setProperty('ResultAccCounterText.x', getProperty('ResultMainRank.x') + 145);
 
     makeLuaText(tag..'Fill', "", width, 0, 0);
     setObjectCamera(tag..'Fill', "camOther");
