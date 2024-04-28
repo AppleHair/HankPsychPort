@@ -149,6 +149,9 @@ function onUpdate(elapsed)
     applyResultScreenFlash();
     easeResultScreenPropertys(elapsed);
 
+    BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
+    setProperty('ResultScreenBG.offset.x', BGScrollAmount);
+
     setProperty('ResultMainRank.animation.frameIndex', math.min(6, ResultStateKey-1));
     setProperty('ResultScreenBG.color', ResultScreenStates[ResultStateKey][3]);
     setProperty('ResultSmallS.alpha', (ResultStateKey == 8 and 1.0 or 0.00001));
@@ -169,9 +172,6 @@ function onUpdate(elapsed)
             SScript.global.clear();
         ]]);
     end
-
-    BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
-    setProperty('ResultScreenBG.offset.x', BGScrollAmount);
 
     countStats(elapsed);
 
