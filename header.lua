@@ -330,6 +330,9 @@ misses = 0
 --- The total notes hit. Alternative to `getHits()`
 ---@type number
 hits = 0
+--- The current combo length.
+---@type number
+combo = 0
 --- The current rating percentage (from 0 to 1)
 ---@type number
 rating = 0

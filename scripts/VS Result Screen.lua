@@ -66,7 +66,7 @@ function onEndSong()
             };
             CustomFadeTransition.nextCamera = PlayState.instance.camOther;
         ]]);
-        runTimer(timerTag, 0.65);
+        runTimer(timerTag, 0.8);
         setProperty('canPause', false);
         setProperty('canReset', false);
         setProperty('endingSong', true);
@@ -160,17 +160,20 @@ function onUpdate(elapsed)
     screenCenter('ResultWhiteGradient', 'XY');
     setProperty('ResultWhiteGradient.x', getProperty('ResultWhiteGradient.x') +
         getProperty('ResultWhiteGradient.frameWidth') - getVar('ResultWhiteRevealed') - 162);
-    runHaxeCode([[
-        game.modchartSprites.get("ResultWhiteGradient").clipRect = new FlxRect(0,0,]]..
-            getVar('ResultWhiteRevealed')
-        ..[[,60);
-        // to prevent memory leaks
-        SScript.global.clear();
-    ]]);
-
+    if getVar('ResultWhiteRevealed') ~= getProperty('ResultWhiteGradient.clipRect.width') then
+        runHaxeCode([[
+            game.modchartSprites.get("ResultWhiteGradient").clipRect = new FlxRect(0,0,]]..
+                getVar('ResultWhiteRevealed')
+            ..[[,60);
+            // to prevent memory leaks
+            SScript.global.clear();
+        ]]);
+    end
 
     BGScrollAmount = (BGScrollAmount + 60 * elapsed) % getProperty('ResultScreenBG.pixels.width');
     setProperty('ResultScreenBG.offset.x', BGScrollAmount);
+
+    countStats(elapsed);
 
     if ResultScreenDebug then
         if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.NINE') then
@@ -335,6 +338,75 @@ function calibrateStar(i)
     doTweenY("Star"..i.."Y", "Star"..i..".scale", 0, 0.35, "sineinout");
 end
 
+---@type boolean
+CountingStats = false;
+
+---@type number
+Topcombo = 0;
+function onRecalculateRating()
+    Topcombo = math.max(Topcombo, combo);
+end
+
+---@type number
+ScoreCountSpeed = 2500;
+---@type number
+TopComboCountSpeed = 10;
+---@type number
+MissesCountSpeed = 10;
+
+---@type boolean
+UseDummy = false;
+---@type number
+ScoreDummy = 1000000;
+---@type number
+TopComboDummy = 1000;
+---@type number
+MissesDummy = 1000;
+
+function countStats(elapsed)
+    if not CountingStats then
+        return;
+    end
+
+    math.randomseed(os.clock());
+
+    local score = (UseDummy and ScoreDummy or score);
+    local Topcombo = (UseDummy and TopComboDummy or Topcombo);
+    local misses = (UseDummy and MissesDummy or misses);
+
+    local curScoreStr = getNumberTextString('ResultScoreText');
+    curScoreStr = (curScoreStr == "" and "0" or curScoreStr);
+    local curTopComboStr = getNumberTextString('ResultTopComboText');
+    curTopComboStr = (curTopComboStr == "" and "0" or curTopComboStr);
+    local curMissesStr = getNumberTextString('ResultMissesText');
+    curMissesStr = (curMissesStr == "" and "0" or curMissesStr);
+
+    local nextScoreCount = math.min(score, tonumber(curScoreStr) +
+        ScoreCountSpeed * math.random() * 60 * elapsed);
+    local nextTopComboCount =  math.min(Topcombo, tonumber(curTopComboStr) +
+        TopComboCountSpeed * math.random() * 60 * elapsed);
+    local nextMissesCount = math.min(misses, tonumber(curMissesStr) +
+        MissesCountSpeed * math.random() * 60 * elapsed);
+    
+    setNumberTextString('ResultScoreText', tostring(math.floor(nextScoreCount)));
+    setNumberTextString('ResultTopComboText', tostring(math.floor(nextTopComboCount)));
+    setNumberTextString('ResultMissesText', tostring(math.floor(nextMissesCount)));
+
+    setNumberTextWidth('ResultScoreText', #getNumberTextString('ResultScoreText') * 70);
+    setProperty('ResultScoreTextLine.offset.x', getNumberTextWidth('ResultScoreText') - 150);
+    setProperty('ResultScoreTextFill.offset.x', getNumberTextWidth('ResultScoreText') - 150);
+    setNumberTextWidth('ResultTopComboText', #getNumberTextString('ResultTopComboText') * 70);
+    setProperty('ResultTopComboTextLine.offset.x', getNumberTextWidth('ResultTopComboText') - 150);
+    setProperty('ResultTopComboTextFill.offset.x', getNumberTextWidth('ResultTopComboText') - 150);
+    setNumberTextWidth('ResultMissesText', #getNumberTextString('ResultMissesText') * 70);
+    setProperty('ResultMissesTextLine.offset.x', getNumberTextWidth('ResultMissesText') - 150);
+    setProperty('ResultMissesTextFill.offset.x', getNumberTextWidth('ResultMissesText') - 150);
+
+    if nextScoreCount >= score and nextTopComboCount >= Topcombo and nextMissesCount >= misses then
+        CountingStats = false;
+    end
+end
+
 function getStateFromKeyboard(toAccuracy)
     local key = runHaxeCode('return FlxG.keys.firstJustPressed();') - 48;
     if toAccuracy then
@@ -395,7 +467,12 @@ function onTimerCompleted(tag, loops, loopsLeft)
         AllowExitResults = true;
         table.insert(ResultEaseTable,{"EnterOpacity", "", 1, 10});
         playSound("cancelMenu", 1);
-
+        doTweenX('EnterScore', 'ResultScore',
+            (screenWidth - getProperty('ResultScore.width'))/2 - 108, 0.5, 'quadout');
+        doTweenX('EnterTopCombo', 'ResultTopCombo',
+            (screenWidth - getProperty('ResultTopCombo.width'))/2 - 47, 0.5, 'quadout');
+        doTweenX('EnterMisses', 'ResultMisses',
+            (screenWidth - getProperty('ResultMisses.width'))/2 - 369, 0.5, 'quadout');
 --------------------------------------------------------
 -- Unlocked Screen Timers
 --------------------------------------------------------
@@ -454,13 +531,15 @@ function onTweenCompleted(tag)
         cameraFlash("camOther", "#88FFFFFF", 0.1, true);
         cameraShake("camOther", 0.01, 0.3);
         runTimer("ResultShowMore", 1);
+    elseif tag == "EnterScore" then
+        CountingStats = true;
 --------------------------------------------------------
 -- Unlocked Screen Tweens
 --------------------------------------------------------
 
     elseif tag == "RevealText" then
         cameraFlash("camOther", "FFFFFF", 0.2, false);
-        cameraShake("camOther", 0.005, 0.3);
+        cameraShake("camOther", 0.003, 0.3);
         playSound("unlocksound", 1);
 
         if UnlockedTitleName == nil then
@@ -556,6 +635,13 @@ function SetupResultScreen()
         getVar('ResultWhiteRevealed')
     ..',60);');
 
+    makeLuaSprite('ResultSmallS', 'vsresultscreen/smallS', 0, 0);
+    setObjectCamera('ResultSmallS', "camOther");
+    screenCenter('ResultSmallS', 'XY');
+    setProperty('ResultSmallS.y', getProperty('ResultSmallS.y') + 118);
+    setProperty('ResultSmallS.x', getProperty('ResultSmallS.x') + 530);
+    setProperty('ResultSmallS.alpha', 0.00001);
+
     makeAnimatedLuaSprite('ResultMainRank', 'vsresultscreen/ranks', 0, 0);
     addAnimationByPrefix('ResultMainRank', 'ranks', 'ranks', 0, false);
     playAnim('ResultMainRank', 'ranks');
@@ -580,12 +666,49 @@ function SetupResultScreen()
     setProperty('ResultMainCrown.angle', -20);
     setProperty('ResultMainCrown.alpha', 0.00001);
 
-    makeLuaSprite('ResultSmallS', 'vsresultscreen/smallS', 0, 0);
-    setObjectCamera('ResultSmallS', "camOther");
-    screenCenter('ResultSmallS', 'XY');
-    setProperty('ResultSmallS.y', getProperty('ResultSmallS.y') + 118);
-    setProperty('ResultSmallS.x', getProperty('ResultSmallS.x') + 530);
-    setProperty('ResultSmallS.alpha', 0.00001);
+    makeLuaSprite('ResultMainPercent', 'vsresultscreen/percent', 0, 0);
+    setObjectCamera('ResultMainPercent', "camOther");
+    screenCenter('ResultMainPercent', 'Y');
+    setProperty('ResultMainPercent.y', getProperty('ResultMainPercent.y') - 2);
+    setProperty('ResultMainPercent.x', -getProperty('ResultMainPercent.frameWidth'));
+
+    makeNumberText('ResultMainAcc', 150, getProperty('ResultMainPercent.x'), getProperty('ResultMainPercent.y'), false);
+    setProperty('ResultMainAccFill.offset.x', 155);
+    setProperty('ResultMainAccLine.offset.x', 155);
+
+    makeAnimatedLuaSprite('ResultScore', 'vsresultscreen/stats', 0, 0);
+    addAnimationByPrefix('ResultScore', 'score', 'Score', 24, true);
+    setObjectCamera('ResultScore', "camOther");
+    screenCenter('ResultScore', 'Y');
+    setProperty('ResultScore.y', getProperty('ResultScore.y') + 72);
+    setProperty('ResultScore.x', -getProperty('ResultScore.frameWidth'));
+
+    makeNumberText('ResultScoreText', 150, -278, 72, true);
+
+    makeAnimatedLuaSprite('ResultTopCombo', 'vsresultscreen/stats', 0, 0);
+    addAnimationByPrefix('ResultTopCombo', 'topcombo', 'TopCombo', 24, true);
+    setObjectCamera('ResultTopCombo', "camOther");
+    screenCenter('ResultTopCombo', 'Y');
+    setProperty('ResultTopCombo.y', getProperty('ResultTopCombo.y') + 166);
+    setProperty('ResultTopCombo.x', -getProperty('ResultTopCombo.frameWidth'));
+
+    makeNumberText('ResultTopComboText', 150, -217, 166, true);
+
+    makeAnimatedLuaSprite('ResultMisses', 'vsresultscreen/stats', 0, 0);
+    addAnimationByPrefix('ResultMisses', 'misses', 'Misses', 24, true);
+    setObjectCamera('ResultMisses', "camOther");
+    screenCenter('ResultMisses', 'Y');
+    setProperty('ResultMisses.y', getProperty('ResultMisses.y') + 164);
+    setProperty('ResultMisses.x', -getProperty('ResultMisses.frameWidth'));
+
+    makeNumberText('ResultMissesText', 150, -539, 164, true);
+
+    makeLuaSprite('ResultRating', 'shit', 0, 0);
+    setObjectCamera('ResultRating', "camOther");
+    screenCenter('ResultRating', 'XY');
+    setProperty('ResultRating.y', getProperty('ResultRating.y') - 113);
+    setProperty('ResultRating.x', getProperty('ResultRating.x') - 115);
+    setProperty('ResultRating.alpha', 0.00001);
 
     makeAnimatedLuaSprite('ResultEnter', 'titleEnter', 0, 0);
     addAnimationByPrefix('ResultEnter', 'idle', 'ENTER IDLE', 0, false);
@@ -601,36 +724,27 @@ function SetupResultScreen()
     setProperty('ResultEnter.alpha', 0.00001);
     setVar("EnterOpacity", 0);
 
-    makeLuaSprite('ResultMainPercent', 'vsresultscreen/percent', 0, 0);
-    setObjectCamera('ResultMainPercent', "camOther");
-    screenCenter('ResultMainPercent', 'Y');
-    setProperty('ResultMainPercent.y', getProperty('ResultMainPercent.y') - 2);
-    setProperty('ResultMainPercent.x', -getProperty('ResultMainPercent.frameWidth'));
-
-    makeNumberText('ResultMainAcc', 150, getProperty('ResultMainPercent.x'), getProperty('ResultMainPercent.y'), false);
-    setProperty('ResultMainAccFill.offset.x', 155);
-    setProperty('ResultMainAccLine.offset.x', 155);
-
-    makeLuaSprite('ResultRating', 'shit', 0, 0);
-    setObjectCamera('ResultRating', "camOther");
-    screenCenter('ResultRating', 'XY');
-    setProperty('ResultRating.y', getProperty('ResultRating.y') - 113);
-    setProperty('ResultRating.x', getProperty('ResultRating.x') - 115);
-    setProperty('ResultRating.alpha', 0.00001);
-    --scaleObject('ResultRating', 9, 9, false);
-
     addNumberText('ResultAccCounter');
     addNumberText('ResultMainAcc');
+    addNumberText('ResultScoreText');
+    addNumberText('ResultTopComboText');
+    addNumberText('ResultMissesText');
     addLuaSprite('ResultWhiteGradient');
     addLuaSprite('ResultSmallS');
     addLuaSprite('ResultMainRank');
     addLuaSprite('ResultMainCrown');
     addLuaSprite('ResultMainPercent');
+    addLuaSprite('ResultScore');
+    addLuaSprite('ResultTopCombo');
+    addLuaSprite('ResultMisses');
     addLuaSprite('ResultEnter');
     addLuaSprite('ResultRating');
 
     setNumberTextOrder('ResultAccCounter', getObjectOrder('ResultMainRank'));
     setNumberTextOrder('ResultMainAcc', getObjectOrder('ResultMainPercent'));
+    setNumberTextOrder('ResultScoreText', getObjectOrder('ResultScore'))
+    setNumberTextOrder('ResultTopComboText', getObjectOrder('ResultTopCombo'))
+    setNumberTextOrder('ResultMissesText', getObjectOrder('ResultMisses'));
 
     if not ResultScreenDebug then
         return;
@@ -653,18 +767,24 @@ function SetupUnlockedScreen()
     if ResultScreenActive then
         -- Remove all result screen sprites
         -- exepct the background ones.
-        removeLuaSprite('ResultWhiteGradient');
-        removeNumberText('ResultAccCounter');
-        removeNumberText('ResultMainAcc');
-        removeLuaSprite('ResultEnter');
-        removeLuaSprite('ResultMainRank');
-        removeLuaSprite('ResultMainCrown');
-        removeLuaSprite('ResultMainPercent');
-        removeLuaSprite('ResultSmallS');
-        removeLuaSprite('ResultRating');
         if ResultScreenDebug then
             removeLuaSprite('Screenshots');
         end
+        removeLuaSprite('ResultRating');
+        removeLuaSprite('ResultEnter');
+        removeLuaSprite('ResultMisses');
+        removeNumberText('ResultMissesText');
+        removeLuaSprite('ResultTopCombo');
+        removeNumberText('ResultTopComboText');
+        removeLuaSprite('ResultScore');
+        removeNumberText('ResultScoreText');
+        removeLuaSprite('ResultMainPercent');
+        removeNumberText('ResultMainAcc');
+        removeLuaSprite('ResultMainCrown');
+        removeLuaSprite('ResultMainRank');
+        removeNumberText('ResultAccCounter');
+        removeLuaSprite('ResultSmallS');
+        removeLuaSprite('ResultWhiteGradient');
     end
     -- if the background sprites
     -- weren't created, create them
@@ -835,6 +955,15 @@ end
 function addNumberText(tag)
     addLuaText(tag..'Line');
     addLuaText(tag..'Fill');
+end
+
+function setNumberTextWidth(tag, width)
+    setTextWidth(tag..'Line', width);
+    setTextWidth(tag..'Fill', width);
+end
+
+function getNumberTextWidth(tag)
+    return getTextWidth(tag..'Line');
 end
 
 function removeNumberText(tag)
