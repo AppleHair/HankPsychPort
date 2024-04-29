@@ -79,9 +79,11 @@ end
 ---@type boolean
 AllowExitResults = false;
 ---@type boolean
-Counting = ResultScreenDebug;
+CountingAcc = ResultScreenDebug;
 ---@type number
 BGScrollAmount = 0;
+---@type number
+NumScrollSpeed = 1;
 
 ---@type integer
 ResultStateKey = 0;
@@ -111,7 +113,7 @@ function onUpdate(elapsed)
         return;
     end
 
-    if Counting then
+    if CountingAcc then
         if ResultScreenDebug then
             if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.SPACE') then
                 triggerRankAnimation();
@@ -124,7 +126,7 @@ function onUpdate(elapsed)
             end
             AccuracyCounter = getStateFromKeyboard(true);
         elseif AccuracyCounter < rating * 100 then
-            AccuracyCounter = math.min(rating * 100, AccuracyCounter + elapsed * 15);
+            AccuracyCounter = math.min(rating * 100, AccuracyCounter + elapsed * 15 * NumScrollSpeed);
         end
 
         updateAccuracyCounterText();
@@ -139,10 +141,10 @@ function onUpdate(elapsed)
         if ResultScreenDebug then
             setProperty('Screenshots.animation.frameIndex', ResultStateKey-1);
             if getPropertyFromClass('flixel.FlxG', 'keys.justPressed.ENTER') then
-                finishCounting();
+                finishCountingAcc();
             end
         elseif AccuracyCounter == rating * 100 then
-            finishCounting();
+            finishCountingAcc();
         end
     end
 
@@ -158,8 +160,10 @@ function onUpdate(elapsed)
     setProperty('ResultRating.color', (ResultStateKey == 8 and SickGoldColor or 0xFFFFFF));
     setProperty('ResultRating.angle', ResultScreenStates[ResultStateKey][5]);
     updateHitbox('ResultRating');
-    setProperty('ResultRating.offset.x', ResultScreenStates[ResultStateKey][6] + getProperty('ResultRating.offset.x') * 0.1);
-    setProperty('ResultRating.offset.y', ResultScreenStates[ResultStateKey][7] + getProperty('ResultRating.offset.y') * 0.1);
+    setProperty('ResultRating.offset.x', ResultScreenStates[ResultStateKey][6] +
+        getProperty('ResultRating.offset.x') * 0.1);
+    setProperty('ResultRating.offset.y', ResultScreenStates[ResultStateKey][7] +
+        getProperty('ResultRating.offset.y') * 0.1);
     screenCenter('ResultWhiteGradient', 'XY');
     setProperty('ResultWhiteGradient.x', getProperty('ResultWhiteGradient.x') +
         getProperty('ResultWhiteGradient.frameWidth') - getVar('ResultWhiteRevealed') - 162);
@@ -204,10 +208,18 @@ function onUpdate(elapsed)
             endSong();
         end
     end
+
+    if (not ResultScreenDebug) and (not ResultsShown) and
+    (keyPressed('accept') or keyPressed('left') or keyPressed('down') or
+    keyPressed('up') or keyPressed('right')) then
+        NumScrollSpeed = NumScrollSpeed + 2 * elapsed;
+    else
+        NumScrollSpeed = 1;
+    end
 end
 
-function finishCounting()
-    Counting = false;
+function finishCountingAcc()
+    CountingAcc = false;
     doTweenAlpha('CounterExit', 'ResultAccCounterFill', 0, 0.25, "linear");
     local accStr = getNumberTextString('ResultAccCounter');
     if accStr == "" then accStr = "0"; end
@@ -382,11 +394,11 @@ function countStats(elapsed)
     curMissesStr = (curMissesStr == "" and "0" or curMissesStr);
 
     local nextScoreCount = math.min(score, tonumber(curScoreStr) +
-        ScoreCountSpeed * math.random() * 60 * elapsed);
+        ScoreCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
     local nextTopComboCount =  math.min(Topcombo, tonumber(curTopComboStr) +
-        TopComboCountSpeed * math.random() * 60 * elapsed);
+        TopComboCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
     local nextMissesCount = math.min(misses, tonumber(curMissesStr) +
-        MissesCountSpeed * math.random() * 60 * elapsed);
+        MissesCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
     
     setNumberTextString('ResultScoreText', tostring(math.floor(nextScoreCount)));
     setNumberTextString('ResultTopComboText', tostring(math.floor(nextTopComboCount)));
@@ -433,7 +445,7 @@ function updateAccuracyCounterText()
     if math.max(0,math.floor(AccuracyCounter)) == prvAcc then
         return;
     end
-    playSound("scrollMenu", 1);
+    playSound("scrollMenu", 1/NumScrollSpeed);
     setNumberTextString('ResultAccCounter',
         (math.floor(AccuracyCounter) <= 0 and "" or tostring(math.floor(AccuracyCounter)))
     );
@@ -522,7 +534,7 @@ function onTweenCompleted(tag)
         setProperty(tag:sub(1,-2)..".moves", false);
     elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
-        Counting = true;
+        CountingAcc = true;
     elseif tag == "CounterExit" then
         table.insert(ResultEaseTable,{"ResultWhiteRevealed", "",
         getProperty('ResultWhiteGradient.frameWidth'), 30});
