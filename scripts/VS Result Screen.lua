@@ -367,11 +367,11 @@ TopComboCountSpeed = 10;
 MissesCountSpeed = 10;
 
 ---@type number
-ScoreBound = 10;
+ScoreBound = 9;
 ---@type number
 TopComboBound = 3;
 ---@type number
-MissesBound = 4;
+MissesBound = 3;
 ---@type number
 CharWidth = 88;
 
