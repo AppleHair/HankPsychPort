@@ -209,7 +209,7 @@ function onUpdate(elapsed)
         end
     end
 
-    if (not ResultScreenDebug) and (not ResultsShown) and
+    if (not ResultsShown) and
     (keyPressed('accept') or keyPressed('left') or keyPressed('down') or
     keyPressed('up') or keyPressed('right')) then
         NumScrollSpeed = NumScrollSpeed + 2 * elapsed;
@@ -366,14 +366,23 @@ TopComboCountSpeed = 10;
 ---@type number
 MissesCountSpeed = 10;
 
+---@type number
+ScoreBound = 10;
+---@type number
+TopComboBound = 3;
+---@type number
+MissesBound = 4;
+---@type number
+CharWidth = 88;
+
 ---@type boolean
 UseDummy = false;
 ---@type number
-ScoreDummy = 1000000;
+ScoreDummy = 1000000000000000000;
 ---@type number
-TopComboDummy = 1000;
+TopComboDummy = 1000000;
 ---@type number
-MissesDummy = 1000;
+MissesDummy = 1000000;
 
 function countStats(elapsed)
     if not CountingStats then
@@ -394,25 +403,41 @@ function countStats(elapsed)
     curMissesStr = (curMissesStr == "" and "0" or curMissesStr);
 
     local nextScoreCount = math.min(score, tonumber(curScoreStr) +
-        ScoreCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
+        (ScoreCountSpeed^(NumScrollSpeed)) * math.random() * 60 * elapsed);
     local nextTopComboCount =  math.min(Topcombo, tonumber(curTopComboStr) +
-        TopComboCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
+        (TopComboCountSpeed^(NumScrollSpeed)) * math.random() * 60 * elapsed);
     local nextMissesCount = math.min(misses, tonumber(curMissesStr) +
-        MissesCountSpeed * math.random() * 60 * elapsed * NumScrollSpeed);
+        (MissesCountSpeed^(NumScrollSpeed)) * math.random() * 60 * elapsed);
     
-    setNumberTextString('ResultScoreText', tostring(math.floor(nextScoreCount)));
-    setNumberTextString('ResultTopComboText', tostring(math.floor(nextTopComboCount)));
-    setNumberTextString('ResultMissesText', tostring(math.floor(nextMissesCount)));
+    setNumberTextString('ResultScoreText', string.format("%d", math.floor(nextScoreCount)));
+    setNumberTextString('ResultTopComboText', string.format("%d", math.floor(nextTopComboCount)));
+    setNumberTextString('ResultMissesText', string.format("%d", math.floor(nextMissesCount)));
 
-    setNumberTextWidth('ResultScoreText', #getNumberTextString('ResultScoreText') * 70);
-    setProperty('ResultScoreTextLine.offset.x', getNumberTextWidth('ResultScoreText') - 150);
-    setProperty('ResultScoreTextFill.offset.x', getNumberTextWidth('ResultScoreText') - 150);
-    setNumberTextWidth('ResultTopComboText', #getNumberTextString('ResultTopComboText') * 70);
-    setProperty('ResultTopComboTextLine.offset.x', getNumberTextWidth('ResultTopComboText') - 150);
-    setProperty('ResultTopComboTextFill.offset.x', getNumberTextWidth('ResultTopComboText') - 150);
-    setNumberTextWidth('ResultMissesText', #getNumberTextString('ResultMissesText') * 70);
-    setProperty('ResultMissesTextLine.offset.x', getNumberTextWidth('ResultMissesText') - 150);
-    setProperty('ResultMissesTextFill.offset.x', getNumberTextWidth('ResultMissesText') - 150);
+    curScoreStr = getNumberTextString('ResultScoreText');
+    curTopComboStr = getNumberTextString('ResultTopComboText');
+    curMissesStr = getNumberTextString('ResultMissesText');
+
+    setNumberTextWidth('ResultScoreText', #curScoreStr * CharWidth);
+    setProperty('ResultScore.offset.x', math.min(0, ScoreBound - #curScoreStr) * CharWidth/2);
+    setProperty('ResultScoreTextLine.offset.x', (math.min(ScoreBound , #curScoreStr) -
+        math.min(0, ScoreBound - #curScoreStr)/2) * CharWidth);
+    setProperty('ResultScoreTextFill.offset.x', (math.min(ScoreBound , #curScoreStr) -
+        math.min(0, ScoreBound - #curScoreStr)/2) * CharWidth);
+
+    setNumberTextWidth('ResultMissesText', #curMissesStr * CharWidth);
+    setProperty('ResultMisses.offset.x', math.min(0, MissesBound - #curMissesStr) * CharWidth/2);
+    setProperty('ResultMissesTextLine.offset.x', (math.min(MissesBound , #curMissesStr) -
+        math.min(0, MissesBound - #curMissesStr)/2) * CharWidth);
+    setProperty('ResultMissesTextFill.offset.x', (math.min(MissesBound , #curMissesStr) -
+        math.min(0, MissesBound - #curMissesStr)/2) * CharWidth);
+
+    setNumberTextWidth('ResultTopComboText', #curTopComboStr * CharWidth);
+    setProperty('ResultTopCombo.offset.x', math.min(0, TopComboBound - #curTopComboStr +
+        math.min(0, MissesBound - #curMissesStr)) * CharWidth/2);
+    setProperty('ResultTopComboTextLine.offset.x', (math.min(TopComboBound + math.min(0, MissesBound - #curMissesStr), #curTopComboStr) -
+        math.min(0, TopComboBound - #curTopComboStr + math.min(0, MissesBound - #curMissesStr))/2) * CharWidth);
+    setProperty('ResultTopComboTextFill.offset.x', (math.min(TopComboBound + math.min(0, MissesBound - #curMissesStr), #curTopComboStr) -
+        math.min(0, TopComboBound - #curTopComboStr + math.min(0, MissesBound - #curMissesStr))/2) * CharWidth);
 
     if nextScoreCount >= score and nextTopComboCount >= Topcombo and nextMissesCount >= misses then
         CountingStats = false;
@@ -534,7 +559,9 @@ function onTweenCompleted(tag)
         setProperty(tag:sub(1,-2)..".moves", false);
     elseif tag == "ResultScreenEnter" then
         removeLuaSprite('ResultFadeTransition');
-        CountingAcc = true;
+        if not ResultScreenDebug then
+            CountingAcc = true;
+        end
     elseif tag == "CounterExit" then
         table.insert(ResultEaseTable,{"ResultWhiteRevealed", "",
         getProperty('ResultWhiteGradient.frameWidth'), 30});
@@ -695,7 +722,7 @@ function SetupResultScreen()
     setProperty('ResultScore.y', getProperty('ResultScore.y') + 72);
     setProperty('ResultScore.x', -getProperty('ResultScore.frameWidth'));
 
-    makeNumberText('ResultScoreText', 150, -278, 72, true);
+    makeNumberText('ResultScoreText', 150, -128, 72, true);
 
     makeAnimatedLuaSprite('ResultTopCombo', 'vsresultscreen/stats', 0, 0);
     addAnimationByPrefix('ResultTopCombo', 'topcombo', 'TopCombo', 24, true);
@@ -704,7 +731,7 @@ function SetupResultScreen()
     setProperty('ResultTopCombo.y', getProperty('ResultTopCombo.y') + 166);
     setProperty('ResultTopCombo.x', -getProperty('ResultTopCombo.frameWidth'));
 
-    makeNumberText('ResultTopComboText', 150, -217, 166, true);
+    makeNumberText('ResultTopComboText', 150, -67, 166, true);
 
     makeAnimatedLuaSprite('ResultMisses', 'vsresultscreen/stats', 0, 0);
     addAnimationByPrefix('ResultMisses', 'misses', 'Misses', 24, true);
@@ -713,7 +740,7 @@ function SetupResultScreen()
     setProperty('ResultMisses.y', getProperty('ResultMisses.y') + 164);
     setProperty('ResultMisses.x', -getProperty('ResultMisses.frameWidth'));
 
-    makeNumberText('ResultMissesText', 150, -539, 164, true);
+    makeNumberText('ResultMissesText', 150, -389, 164, true);
 
     makeLuaSprite('ResultRating', 'shit', 0, 0);
     setObjectCamera('ResultRating', "camOther");
