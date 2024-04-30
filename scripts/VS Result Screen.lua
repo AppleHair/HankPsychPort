@@ -109,6 +109,15 @@ ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ResultEnterAlphas = {1, 0.64};
 
 function onUpdate(elapsed)
+    if (not ResultScreenActive) and (not UnlockScreenActive) then
+        return;
+    end
+
+    -- DON'T FUCKING DIE IN THE MIDDLE OF THE RESULT SCREEN    
+    setProperty('health', 1);
+    -- ...what? why it isn't a substate? well...I don't know.
+    -- I really need to make this a substate....
+
     if not ResultScreenActive then
         return;
     end
