@@ -14,6 +14,7 @@ function onCreate()
     addHaxeLibrary("FlxRect", "flixel.math");
     addHaxeLibrary("ColorTransform", "openfl.geom");
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
+    addHaxeLibrary("LuaUtils", "psychlua");
     addHaxeLibrary("SScript", "tea");
 end
 
@@ -41,39 +42,69 @@ function onEvent(name, value1, value2)
 end
 
 ---@type boolean
-ResultScreenActive = false;
----@type boolean
-UnlockScreenActive = false;
-
----@type boolean
 ResultsShown = false;
 
 function onEndSong()
-    local timerTag = "";
+    local substateName = "";
     if not ResultsShown then
-        timerTag = "ResultScreenTransition";
+        substateName = "ResultScreen";
     elseif UnlockedObjectName ~= nil then
-        timerTag = "UnlockScreenTransition";
+        substateName = "UnlockScreen";
     end
-    if timerTag ~= "" then
+    if substateName ~= "" then
         runHaxeCode([[
-            FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
-            CustomFadeTransition.finishCallback = function() {
-                PlayState.instance.camGame.alpha = 0.0;
-                PlayState.instance.camHUD.alpha = 0.0;
-                PlayState.instance.camOther.alpha = 0.0;
-                FlxG.state.closeSubState();
-            };
-            CustomFadeTransition.nextCamera = PlayState.instance.camOther;
+            if (CustomSubstate.name != "ResultScreen" && CustomSubstate.name != "UnlockScreen") {
+                if (CustomSubstate.instance != null) {
+                    CustomSubstate.closeCustomSubstate();
+                    PlayState.instance.resetSubState();
+                }
+                FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
+                CustomFadeTransition.finishCallback = function() {
+                    PlayState.instance.camGame.alpha = 0.0;
+                    PlayState.instance.camHUD.alpha = 0.0;
+                    PlayState.instance.camOther.alpha = 1.0;
+                    PlayState.instance.persistentUpdate = false;
+                    CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
+                };
+                CustomFadeTransition.nextCamera = PlayState.instance.camOther;
+                PlayState.instance.persistentUpdate = true;
+            } else {
+                CustomSubstate.closeCustomSubstate();
+                PlayState.instance.resetSubState();
+                CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
+            }
         ]]);
-        runTimer(timerTag, 0.8);
         setProperty('canPause', false);
         setProperty('canReset', false);
         setProperty('endingSong', true);
-        setProperty('persistentUpdate', true);
         return Function_Stop;
     end
     return Function_Continue;
+end
+
+function onCustomSubstateCreate(name)
+    if name == "ResultScreen" then
+        SetupResultScreen();
+
+        makeLuaSprite('ResultFadeTransition', "", 0, 0);
+        makeGraphic('ResultFadeTransition', screenWidth, screenHeight, "000000");
+        setObjectCamera('ResultFadeTransition', "camOther");
+        screenCenter('ResultFadeTransition', 'XY');
+        insertToCustomSubstate('ResultFadeTransition');
+        doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 0.5, "linear");
+    elseif name == "UnlockScreen" then
+        SetupUnlockedScreen();
+
+        playSound("woosh", 1);
+
+        doTweenAlpha('BGEnter', 'ResultScreenBG', 1.0, 2, "cubeout");
+        doTweenY('RevealUp', 'ResultBlackUp', getProperty('ResultBlackUp.y') - screenHeight/4, 2, "cubeout");
+        doTweenY('GRevealUp', 'ResultGradientUp', getProperty('ResultGradientUp.y') - screenHeight/4, 2, "cubeout");
+        doTweenY('RevealDown', 'ResultBlackDown', getProperty('ResultBlackDown.y') + screenHeight/4, 2, "cubeout");
+        doTweenY('GRevealDown', 'ResultGradientDown', getProperty('ResultGradientDown.y') + screenHeight/4, 2, "cubeout");
+        doTweenX('RevealObject', UnlockedObjectName, MiddleX, 2, "cubeout");
+        runTimer("WaitText", 1);
+    end
 end
 
 ---@type boolean
@@ -108,17 +139,8 @@ ResultEnterColors = {{r=51,g=255,b=255}, {r=51,g=51,b=204}};
 ---@type table
 ResultEnterAlphas = {1, 0.64};
 
-function onUpdate(elapsed)
-    if (not ResultScreenActive) and (not UnlockScreenActive) then
-        return;
-    end
-
-    -- DON'T FUCKING DIE IN THE MIDDLE OF THE RESULT SCREEN    
-    setProperty('health', 1);
-    -- ...what? why it isn't a substate? well...I don't know.
-    -- I really need to make this a substate....
-
-    if not ResultScreenActive then
+function onCustomSubstateUpdate(name, elapsed)
+    if name ~= "ResultScreen" then
         return;
     end
 
@@ -214,7 +236,14 @@ function onUpdate(elapsed)
             playSound("confirmMenu", 1);
             AllowExitResults = false;
             ResultsShown = true;
-            endSong();
+            runHaxeCode([[
+                CustomSubstate.instance.openSubState(new CustomFadeTransition(0.6, false));
+                CustomFadeTransition.finishCallback = function() {
+                    PlayState.instance.endSong();
+                };
+                CustomFadeTransition.nextCamera = PlayState.instance.camOther;
+                CustomSubstate.instance.persistentUpdate = true;
+            ]]);
         end
     end
 
@@ -323,7 +352,7 @@ function generateStars()
             makeLuaSprite("Star"..i, "vsresultscreen/star", 0, 0);
             setObjectCamera("Star"..i, "camOther");
             setProperty("Star"..i..".alpha", 0.5);
-            addLuaSprite("Star"..i);
+            insertToCustomSubstate("Star"..i);
 
             calibrateStar(i);
         end
@@ -490,21 +519,7 @@ function onTimerCompleted(tag, loops, loopsLeft)
 --------------------------------------------------------
 -- Result Screen Timers
 --------------------------------------------------------
-
-    if tag == "ResultScreenTransition" then
-        SetupResultScreenBG();
-        SetupResultScreen();
-        ResultScreenActive = true;
-        UnlockScreenActive = false;
-        setProperty('camOther.alpha', 1.0);
-        
-        makeLuaSprite('ResultFadeTransition', "", 0, 0);
-        makeGraphic('ResultFadeTransition', screenWidth, screenHeight, "000000");
-        setObjectCamera('ResultFadeTransition', "camOther");
-        screenCenter('ResultFadeTransition', 'XY');
-        addLuaSprite('ResultFadeTransition');
-        doTweenAlpha('ResultScreenEnter', 'ResultFadeTransition', 0.0, 0.5, "linear");
-    elseif tag == "ResultRatingEnter" then
+    if tag == "ResultRatingEnter" then
         setProperty('ResultRating.alpha', 1.0);
         scaleObject('ResultRating', 9, 9, false);
         doTweenX('ResultRatingScaleX', 'ResultRating.scale', 1, 0.125, "cubein");
@@ -523,21 +538,6 @@ function onTimerCompleted(tag, loops, loopsLeft)
 -- Unlocked Screen Timers
 --------------------------------------------------------
 
-    elseif tag == "UnlockScreenTransition" then
-        SetupUnlockedScreen();
-        UnlockScreenActive = true;
-        ResultScreenActive = false;
-        setProperty('camOther.alpha', 1.0);
-
-        playSound("woosh", 1);
-
-        doTweenAlpha('BGEnter', 'ResultScreenBG', 1.0, 2, "cubeout");
-        doTweenY('RevealUp', 'ResultBlackUp', getProperty('ResultBlackUp.y') - screenHeight/4, 2, "cubeout");
-        doTweenY('GRevealUp', 'ResultGradientUp', getProperty('ResultGradientUp.y') - screenHeight/4, 2, "cubeout");
-        doTweenY('RevealDown', 'ResultBlackDown', getProperty('ResultBlackDown.y') + screenHeight/4, 2, "cubeout");
-        doTweenY('GRevealDown', 'ResultGradientDown', getProperty('ResultGradientDown.y') + screenHeight/4, 2, "cubeout");
-        doTweenX('RevealObject', UnlockedObjectName, MiddleX, 2, "cubeout");
-        runTimer("WaitText", 1);
     elseif tag == "WaitText" then
         doTweenY('RevealText', 'UnlockedText', 20, 0.5, "quadout");
         runTimer("HideText", 1.5);
@@ -567,7 +567,6 @@ function onTweenCompleted(tag)
     if tag:startswith("Star") then
         setProperty(tag:sub(1,-2)..".moves", false);
     elseif tag == "ResultScreenEnter" then
-        removeLuaSprite('ResultFadeTransition');
         if not ResultScreenDebug then
             CountingAcc = true;
         end
@@ -604,9 +603,6 @@ function onTweenCompleted(tag)
     end
 end
 
----@type boolean
-BGReady = false;
-
 function SetupResultScreenBG()
     -- -- onlinePlay = true | false
     -- local runningUMM = onlinePlay ~= nil;
@@ -639,7 +635,7 @@ function SetupResultScreenBG()
     runHaxeCode([[
         game.modchartSprites.get("ResultGradientUp").pixels = 
             FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.BLACK, 0xDB000000,
-             0xA0000000, 0x60000000, 0x22000000, FlxColor.TRANSPARENT]);
+            0xA0000000, 0x60000000, 0x22000000, FlxColor.TRANSPARENT]);
     ]]);
     setProperty('ResultGradientUp.scale.x', screenWidth);
     screenCenter('ResultGradientUp', 'XY');
@@ -650,22 +646,22 @@ function SetupResultScreenBG()
     runHaxeCode([[
         game.modchartSprites.get("ResultGradientDown").pixels = 
             FlxGradient.createGradientBitmapData(1, FlxG.height * 0.3, [FlxColor.TRANSPARENT, 0x22000000,
-             0x60000000, 0xA0000000, 0xDB000000, FlxColor.BLACK]);
+            0x60000000, 0xA0000000, 0xDB000000, FlxColor.BLACK]);
     ]]);
     setProperty('ResultGradientDown.scale.x', screenWidth);
     screenCenter('ResultGradientDown', 'XY');
     setProperty('ResultGradientDown.y', getProperty('ResultGradientDown.y') + screenHeight * 0.15);
 
-    addLuaSprite('ResultScreenBG');
-    addLuaSprite('ResultBlackUp');
-    addLuaSprite('ResultBlackDown');
-    addLuaSprite('ResultGradientUp');
-    addLuaSprite('ResultGradientDown');
-
-    BGReady = true;
+    insertToCustomSubstate('ResultScreenBG');
+    insertToCustomSubstate('ResultBlackUp');
+    insertToCustomSubstate('ResultBlackDown');
+    insertToCustomSubstate('ResultGradientUp');
+    insertToCustomSubstate('ResultGradientDown');
 end
 
 function SetupResultScreen()
+    SetupResultScreenBG();
+
     makeLuaSprite('ResultWhiteGradient', "", 0, 0);
     setObjectCamera('ResultWhiteGradient', "camOther");
     runHaxeCode([[
@@ -772,27 +768,21 @@ function SetupResultScreen()
     setProperty('ResultEnter.alpha', 0.00001);
     setVar("EnterOpacity", 0);
 
-    addNumberText('ResultAccCounter');
-    addNumberText('ResultMainAcc');
-    addNumberText('ResultScoreText');
-    addNumberText('ResultTopComboText');
-    addNumberText('ResultMissesText');
-    addLuaSprite('ResultWhiteGradient');
-    addLuaSprite('ResultSmallS');
-    addLuaSprite('ResultMainRank');
-    addLuaSprite('ResultMainCrown');
-    addLuaSprite('ResultMainPercent');
-    addLuaSprite('ResultScore');
-    addLuaSprite('ResultTopCombo');
-    addLuaSprite('ResultMisses');
-    addLuaSprite('ResultEnter');
-    addLuaSprite('ResultRating');
-
-    setNumberTextOrder('ResultAccCounter', getObjectOrder('ResultMainRank'));
-    setNumberTextOrder('ResultMainAcc', getObjectOrder('ResultMainPercent'));
-    setNumberTextOrder('ResultScoreText', getObjectOrder('ResultScore'))
-    setNumberTextOrder('ResultTopComboText', getObjectOrder('ResultTopCombo'))
-    setNumberTextOrder('ResultMissesText', getObjectOrder('ResultMisses'));
+    insertToCustomSubstate('ResultWhiteGradient');
+    insertToCustomSubstate('ResultSmallS');
+    insertNumberTextToCustomSubstate('ResultAccCounter');
+    insertToCustomSubstate('ResultMainRank');
+    insertToCustomSubstate('ResultMainCrown');
+    insertNumberTextToCustomSubstate('ResultMainAcc');
+    insertToCustomSubstate('ResultMainPercent');
+    insertNumberTextToCustomSubstate('ResultScoreText');
+    insertToCustomSubstate('ResultScore');
+    insertNumberTextToCustomSubstate('ResultTopComboText');
+    insertToCustomSubstate('ResultTopCombo');
+    insertNumberTextToCustomSubstate('ResultMissesText');
+    insertToCustomSubstate('ResultMisses');
+    insertToCustomSubstate('ResultEnter');
+    insertToCustomSubstate('ResultRating');
 
     if not ResultScreenDebug then
         return;
@@ -806,40 +796,15 @@ function SetupResultScreen()
     setProperty('Screenshots.alpha', 0.3);
     setProperty('Screenshots.visible', false);
 
-    addLuaSprite('Screenshots');
+    insertToCustomSubstate('Screenshots');
 end
 
 ---Creates all the necessary sprites for the unlocked screen
 function SetupUnlockedScreen()
-    -- If the result screen was active
-    if ResultScreenActive then
-        -- Remove all result screen sprites
-        -- exepct the background ones.
-        if ResultScreenDebug then
-            removeLuaSprite('Screenshots');
-        end
-        removeLuaSprite('ResultRating');
-        removeLuaSprite('ResultEnter');
-        removeLuaSprite('ResultMisses');
-        removeNumberText('ResultMissesText');
-        removeLuaSprite('ResultTopCombo');
-        removeNumberText('ResultTopComboText');
-        removeLuaSprite('ResultScore');
-        removeNumberText('ResultScoreText');
-        removeLuaSprite('ResultMainPercent');
-        removeNumberText('ResultMainAcc');
-        removeLuaSprite('ResultMainCrown');
-        removeLuaSprite('ResultMainRank');
-        removeNumberText('ResultAccCounter');
-        removeLuaSprite('ResultSmallS');
-        removeLuaSprite('ResultWhiteGradient');
-    end
-    -- if the background sprites
-    -- weren't created, create them
-    if not BGReady then
-        SetupResultScreenBG();
-    end
-
+    -- create the background sprites
+    -- and add them to the substate
+    SetupResultScreenBG();
+    
     -- Setup the background image for the unlocked screen
     setProperty('ResultScreenBG.color', UnlockedColor);
     scaleObject('ResultScreenBG', 1.125, 1.125, false);
@@ -954,12 +919,12 @@ function SetupUnlockedScreen()
     -- We add all the sprites
     -- we just created to the
     -- screen in the right order
-    addLuaSprite('UnlockedTrail');
-    addLuaSprite(UnlockedObjectName);
+    insertToCustomSubstate('UnlockedTrail');
+    insertToCustomSubstate(UnlockedObjectName);
     if UnlockedTitleName ~= nil then
-        addLuaSprite(UnlockedTitleName);
+        insertToCustomSubstate(UnlockedTitleName);
     end
-    addLuaSprite('UnlockedText');
+    insertToCustomSubstate('UnlockedText');
 end
 
 
@@ -1000,9 +965,17 @@ function makeNumberText(tag, width, x, y, center)
     setProperty(tag..'Fill.x', getProperty(tag..'Line.x'));
 end
 
-function addNumberText(tag)
-    addLuaText(tag..'Line');
-    addLuaText(tag..'Fill');
+function insertNumberTextToCustomSubstate(tag, pos)
+    insertLuaTextToCustomSubstate(tag..'Fill', pos);
+    insertLuaTextToCustomSubstate(tag..'Line', pos);
+end
+
+function insertLuaTextToCustomSubstate(tag, pos)
+    runHaxeCode([[
+        setVar("TempTextLua", LuaUtils.getTextObject("]]..tag..[["));
+    ]]);
+    insertToCustomSubstate('TempTextLua', pos);
+    setVar("TempTextLua", nil);
 end
 
 function setNumberTextWidth(tag, width)
@@ -1012,20 +985,6 @@ end
 
 function getNumberTextWidth(tag)
     return getTextWidth(tag..'Line');
-end
-
-function removeNumberText(tag)
-    removeLuaText(tag..'Line');
-    removeLuaText(tag..'Fill');
-end
-
-function setNumberTextOrder(tag, index)
-    setObjectOrder(tag..'Line', index);
-    setObjectOrder(tag..'Fill', getObjectOrder(tag..'Line'));
-end
-
-function getNumberTextOrder(tag)
-    return getObjectOrder(tag..'Fill');
 end
 
 function setNumberTextString(tag, str)

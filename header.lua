@@ -303,6 +303,9 @@ Function_StopLua = "##PSYCHLUA_FUNCTIONSTOPLUA"
 ---Stops the game. Must be returned
 ---@type any
 Function_Stop = "##PSYCHLUA_FUNCTIONSTOP"
+---Stops the game and all other Lua and Hscript scripts. Alternative to `Function_Stop`
+---@type any
+Function_StopAll = "##PSYCHLUA_FUNCTIONSTOPALL"
 ---Continues the game. Must be returned
 ---@type any
 Function_Continue = "##PSYCHLUA_FUNCTIONCONTINUE"
@@ -1385,7 +1388,6 @@ function stringSplit(string, delimeter) end
 ---Returns a string of `string` with leading and trailing space characters
 ---@param string string
 function stringTrim(string) end
-
 ---Sets the `pitch` of the sound `tag`
 ---@param tag string Sound tag name
 ---@param pitch number The pitch to set the sound to
@@ -1394,6 +1396,12 @@ function setSoundPitch(tag, pitch) end
 ---@param tag string Sound tag name
 ---@return number 
 function getSoundPitch(tag) end
+---Inserts an lua object to the current custom substate
+---@param tag string
+---@param pos? integer
+function insertToCustomSubstate(tag, pos) end
+---Closes the current custom substate
+function closeCustomSubstate() end
 
 --[[ DEPRECATED STUFF ]]--
 ---@deprecated
