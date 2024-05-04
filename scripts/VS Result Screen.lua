@@ -44,6 +44,9 @@ end
 ---@type boolean
 ResultsShown = false;
 
+---@type boolean
+ClosedSubstate = false;
+
 function onEndSong()
     local substateName = "";
     if not ResultsShown then
@@ -74,9 +77,22 @@ function onEndSong()
                 CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
             }
         ]]);
-        setProperty('canPause', false);
-        setProperty('canReset', false);
-        setProperty('endingSong', true);
+        return Function_Stop;
+    end
+    if not ClosedSubstate then
+        runHaxeCode([[
+            CustomSubstate.closeCustomSubstate();
+            PlayState.instance.resetSubState();
+            // this seems to be the only way
+            // to prevent the softlock. Opening
+            // another substate gives the substate
+            // a fresh restart using a completely
+            // new instance. I suspect the substate
+            // nesting bothers the switchTo function
+            // somehow, but I couldn't figure out why.
+            CustomSubstate.openCustomSubstate("ThisSucks", true);
+        ]]);
+        ClosedSubstate = true;
         return Function_Stop;
     end
     return Function_Continue;
@@ -104,6 +120,15 @@ function onCustomSubstateCreate(name)
         doTweenY('GRevealDown', 'ResultGradientDown', getProperty('ResultGradientDown.y') + screenHeight/4, 2, "cubeout");
         doTweenX('RevealObject', UnlockedObjectName, MiddleX, 2, "cubeout");
         runTimer("WaitText", 1);
+    elseif name == "ThisSucks" then
+        -- this seems to be the only way
+        -- to prevent the softlock. Opening
+        -- another substate gives the substate
+        -- a fresh restart using a completely
+        -- new instance. I suspect the substate
+        -- nesting bothers the switchTo function
+        -- somehow, but I couldn't figure out why.
+        endSong();
     end
 end
 
@@ -239,6 +264,7 @@ function onCustomSubstateUpdate(name, elapsed)
             runHaxeCode([[
                 CustomSubstate.instance.openSubState(new CustomFadeTransition(0.6, false));
                 CustomFadeTransition.finishCallback = function() {
+                    CustomSubstate.instance.persistentUpdate = false;
                     PlayState.instance.endSong();
                 };
                 CustomFadeTransition.nextCamera = PlayState.instance.camOther;
