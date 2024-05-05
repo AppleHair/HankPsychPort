@@ -1399,6 +1399,7 @@ function getSoundPitch(tag) end
 ---Inserts an lua object to the current custom substate
 ---@param tag string
 ---@param pos? integer
+---@return boolean success If the object was inserted
 function insertToCustomSubstate(tag, pos) end
 ---Closes the current custom substate
 function closeCustomSubstate() end

@@ -17,6 +17,8 @@ function onCreate()
     addHaxeLibrary("LuaUtils", "psychlua");
     addHaxeLibrary("FlxSubState", "flixel");
     addHaxeLibrary("SScript", "tea");
+    -- onlinePlay = true | false
+    RunningUMM = onlinePlay ~= nil;
 end
 
 ---@type any
@@ -46,6 +48,9 @@ end
 ResultsShown = false;
 
 function onEndSong()
+    if RunningUMM then
+        return Function_Continue;
+    end
     local substateName = "";
     if not ResultsShown then
         substateName = "ResultScreen";
@@ -65,8 +70,6 @@ function onEndSong()
                     PlayState.instance.camHUD.alpha = 0.0;
                     PlayState.instance.camOther.alpha = 1.0;
                     FlxG.state.persistentUpdate = false;
-                    FlxG.state.closeSubState();
-                    FlxG.state.resetSubState();
                     CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
                 };
                 CustomFadeTransition.nextCamera = PlayState.instance.camOther;
@@ -620,14 +623,8 @@ function onTweenCompleted(tag)
 end
 
 function SetupResultScreenBG()
-    -- -- onlinePlay = true | false
-    -- local runningUMM = onlinePlay ~= nil;
-    -- if runningUMM then
-    if onlinePlay ~= nil then
-        makeLuaSprite('ResultScreenBG', "menuDesat", 0, 0);
-    else
-        runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
-    end
+
+    runHaxeCode('setVar("ResultScreenBG", new FlxBackdrop(Paths.image("menuDesat")));');
     setObjectCamera('ResultScreenBG', "camOther");
     screenCenter('ResultScreenBG', 'XY');
     setProperty('ResultScreenBG.offset.y', -5);
@@ -718,13 +715,13 @@ function SetupResultScreen()
 
     setProperty('ResultAccCounterFill.alpha', 0.6);
 
-    makeLuaSprite('ResultMainCrown', 'vsresultscreen/crown', 0, 0);
-    setObjectCamera('ResultMainCrown', "camOther");
-    screenCenter('ResultMainCrown', 'XY');
-    setProperty('ResultMainCrown.y', getProperty('ResultMainRank.y') + 27.5);
-    setProperty('ResultMainCrown.x', getProperty('ResultMainRank.x') + 112.5);
-    setProperty('ResultMainCrown.angle', -20);
-    setProperty('ResultMainCrown.alpha', 0.00001);
+    -- makeLuaSprite('ResultMainCrown', 'vsresultscreen/crown', 0, 0);
+    -- setObjectCamera('ResultMainCrown', "camOther");
+    -- screenCenter('ResultMainCrown', 'XY');
+    -- setProperty('ResultMainCrown.y', getProperty('ResultMainRank.y') + 27.5);
+    -- setProperty('ResultMainCrown.x', getProperty('ResultMainRank.x') + 112.5);
+    -- setProperty('ResultMainCrown.angle', -20);
+    -- setProperty('ResultMainCrown.alpha', 0.00001);
 
     makeLuaSprite('ResultMainPercent', 'vsresultscreen/percent', 0, 0);
     setObjectCamera('ResultMainPercent', "camOther");
@@ -788,7 +785,7 @@ function SetupResultScreen()
     insertToCustomSubstate('ResultSmallS');
     insertNumberTextToCustomSubstate('ResultAccCounter');
     insertToCustomSubstate('ResultMainRank');
-    insertToCustomSubstate('ResultMainCrown');
+    -- insertToCustomSubstate('ResultMainCrown');
     insertNumberTextToCustomSubstate('ResultMainAcc');
     insertToCustomSubstate('ResultMainPercent');
     insertNumberTextToCustomSubstate('ResultScoreText');
