@@ -15,6 +15,7 @@ function onCreate()
     addHaxeLibrary("ColorTransform", "openfl.geom");
     addHaxeLibrary("FlxColorTransformUtil", "flixel.util");
     addHaxeLibrary("LuaUtils", "psychlua");
+    addHaxeLibrary("FlxSubState", "flixel");
     addHaxeLibrary("SScript", "tea");
 end
 
@@ -59,40 +60,35 @@ function onEndSong()
             if (CustomSubstate.name != "ResultScreen" && CustomSubstate.name != "UnlockScreen") {
                 if (CustomSubstate.instance != null) {
                     CustomSubstate.closeCustomSubstate();
-                    PlayState.instance.resetSubState();
+                    FlxG.state.resetSubState();
                 }
                 FlxG.state.openSubState(new CustomFadeTransition(0.6, false));
                 CustomFadeTransition.finishCallback = function() {
                     PlayState.instance.camGame.alpha = 0.0;
                     PlayState.instance.camHUD.alpha = 0.0;
                     PlayState.instance.camOther.alpha = 1.0;
-                    PlayState.instance.persistentUpdate = false;
+                    FlxG.state.persistentUpdate = false;
+                    FlxG.state.closeSubState();
+                    FlxG.state.resetSubState();
                     CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
                 };
                 CustomFadeTransition.nextCamera = PlayState.instance.camOther;
-                PlayState.instance.persistentUpdate = true;
+                FlxG.state.persistentUpdate = true;
             } else {
+                CustomSubstate.instance.closeCallback = function() {
+                    // If it wasn't for that FUCKING "name = 'unnamed';"
+                    // on CustomSubstate's "destroy()" (Why the hell is
+                    // it not just on "closeCustomSubstate()"???) I wouldn't
+                    // have needed this temp substate.
+                    var TempSubstate:FlxSubState = new FlxSubState();
+                    TempSubstate.openCallback = function() {
+                        CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
+                    };
+                    FlxG.state.openSubState(TempSubstate);
+                };
                 CustomSubstate.closeCustomSubstate();
-                PlayState.instance.resetSubState();
-                CustomSubstate.openCustomSubstate("]]..substateName..[[", true);
             }
         ]]);
-        return Function_Stop;
-    end
-    if not ClosedSubstate then
-        runHaxeCode([[
-            CustomSubstate.closeCustomSubstate();
-            PlayState.instance.resetSubState();
-            // this seems to be the only way
-            // to prevent the softlock. Opening
-            // another substate gives the substate
-            // a fresh restart using a completely
-            // new instance. I suspect the substate
-            // nesting bothers the switchTo function
-            // somehow, but I couldn't figure out why.
-            CustomSubstate.openCustomSubstate("ThisSucks", true);
-        ]]);
-        ClosedSubstate = true;
         return Function_Stop;
     end
     return Function_Continue;
@@ -120,15 +116,6 @@ function onCustomSubstateCreate(name)
         doTweenY('GRevealDown', 'ResultGradientDown', getProperty('ResultGradientDown.y') + screenHeight/4, 2, "cubeout");
         doTweenX('RevealObject', UnlockedObjectName, MiddleX, 2, "cubeout");
         runTimer("WaitText", 1);
-    elseif name == "ThisSucks" then
-        -- this seems to be the only way
-        -- to prevent the softlock. Opening
-        -- another substate gives the substate
-        -- a fresh restart using a completely
-        -- new instance. I suspect the substate
-        -- nesting bothers the switchTo function
-        -- somehow, but I couldn't figure out why.
-        endSong();
     end
 end
 
@@ -262,13 +249,19 @@ function onCustomSubstateUpdate(name, elapsed)
             AllowExitResults = false;
             ResultsShown = true;
             runHaxeCode([[
-                CustomSubstate.instance.openSubState(new CustomFadeTransition(0.6, false));
-                CustomFadeTransition.finishCallback = function() {
-                    CustomSubstate.instance.persistentUpdate = false;
+                var TransSubstate:CustomFadeTransition = new CustomFadeTransition(0.6, false);
+                // to prevent a softlock where CustomFadeTransition.finishCallbback
+                // resets itself (frees itself from memory) and causes itself to stop executing.
+                TransSubstate.closeCallback = function() {
                     PlayState.instance.endSong();
                 };
+                FlxG.state.subState.openSubState(TransSubstate);
+                CustomFadeTransition.finishCallback = function() {
+                    FlxG.state.subState.persistentUpdate = false;
+                    FlxG.state.subState.closeSubState();
+                };
                 CustomFadeTransition.nextCamera = PlayState.instance.camOther;
-                CustomSubstate.instance.persistentUpdate = true;
+                FlxG.state.subState.persistentUpdate = true;
             ]]);
         end
     end
