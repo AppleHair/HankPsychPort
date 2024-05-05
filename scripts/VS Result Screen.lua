@@ -45,9 +45,6 @@ end
 ---@type boolean
 ResultsShown = false;
 
----@type boolean
-ClosedSubstate = false;
-
 function onEndSong()
     local substateName = "";
     if not ResultsShown then
