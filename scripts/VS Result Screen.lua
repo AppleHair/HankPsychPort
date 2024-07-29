@@ -19,6 +19,16 @@ function onCreate()
     addHaxeLibrary("SScript", "tea");
     -- onlinePlay = true | false
     RunningUMM = onlinePlay ~= nil;
+
+    runHaxeCode([[
+        var prvEndCallback = game.endCallback;
+        game.endCallback = function() {
+            prvEndCallback();
+            if (game.inCutscene && CustomSubstate.name == "ResultScreen") {
+                CustomSubstate.closeCustomSubstate();
+            }
+        };
+    ]]);
 end
 
 ---@type any
@@ -48,7 +58,7 @@ end
 ResultsShown = false;
 
 function onEndSong()
-    if RunningUMM then
+    if RunningUMM or (isStoryMode and getPropertyFromClass("states.PlayState", "storyPlaylist.length") > 1) then
         return Function_Continue;
     end
     local substateName = "";
@@ -91,6 +101,7 @@ function onEndSong()
         ]]);
         return Function_Stop;
     end
+    closeCustomSubstate();
     return Function_Continue;
 end
 
@@ -448,9 +459,9 @@ function countStats(elapsed)
 
     math.randomseed(os.clock());
 
-    local score = (UseDummy and ScoreDummy or score);
+    local score = (UseDummy and ScoreDummy or (isStoryMode and getProperty("campaignScore") or score));
     local Topcombo = (UseDummy and TopComboDummy or Topcombo);
-    local misses = (UseDummy and MissesDummy or misses);
+    local misses = (UseDummy and MissesDummy or (isStoryMode and getProperty("campaignMisses") or misses));
 
     local curScoreStr = getNumberTextString('ResultScoreText');
     curScoreStr = (curScoreStr == "" and "0" or curScoreStr);
