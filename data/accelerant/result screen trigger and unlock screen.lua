@@ -1,6 +1,7 @@
 function onCreate()
+    close();
+    triggerEvent("Signal-Trigger OVS Results");
     if not isStoryMode then
-        close();
         return;
     end
     makeAnimatedLuaSprite("ReduxUnlock", "menucharacters/AccelerantRedux", 0, 0);
