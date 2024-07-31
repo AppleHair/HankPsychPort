@@ -13,14 +13,13 @@ add extra art ✔
 - story mode art for redux preview ✔
 add redux preview unlock screen ✔
 
-1.5:
+1.0.3:
 
-make the vs result screen
+make the vs result screen ✔ 
+re-write README to reflect that the redux mod is canceled
+re-write GameBanana description to say the same thing
+
+Maybe in the future:
+
 make hank-player
 make maghank-player
-make the atlas optimization
-make the mod options
-- hank icon select
-- hud select
-
-NOTE: the final version of accelerant redux will be a separate mod!
