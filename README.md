@@ -15,7 +15,9 @@ As a person who worked on a serious project (this one) with psych engine and saw
 
 ## Tips For Porters (2022)
 
-> [!NOTE] 2024 Note
+> [!NOTE]
+> 2024 Note:
+> 
 > I wrote this a long time ago, but the tips are very general and they don't involve any API-specific suggestions, so they're still relevant today.
 > 
 > I do think that in retrospective it was a bit irrelevant and kind of cringe to have these tips here, but they're good tips I guess, so I'll keep them here. Why not.
