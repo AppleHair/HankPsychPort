@@ -17,7 +17,7 @@ add redux preview unlock screen ✔
 
 make the vs result screen ✔
 re-write README to reflect that the redux mod is canceled ✔
-re-write GameBanana description to say the same thing
+re-write GameBanana description to say the same thing ✔
 
 Maybe in the future:
 
