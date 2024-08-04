@@ -66,3 +66,12 @@ function characterRezise(character, size) end
 ---use of left and right .json files)
 ---@param character "boyfriend" | "dad" The character to flip
 function characterFlip(character) end
+---Gets the path to `character`'s .json file\
+---only if a custom character is being used.
+---@param character "boyfriend" | "dad" The character to get the path to
+---@return string path The path to the character's .json file
+function getCharPath(character) return '' end
+
+---Gets the path to the stage's .lua file.
+---@return string path The path to the stage's .lua file
+function getStagePath() return '' end
