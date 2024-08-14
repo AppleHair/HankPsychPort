@@ -19,6 +19,10 @@ make the vs result screen ✔
 re-write README to reflect that the redux mod is canceled ✔
 re-write GameBanana description to say the same thing ✔
 
+1.0.4:
+
+fix all charts for psych 1.0
+
 Maybe in the future:
 
 make hank-player

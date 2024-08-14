@@ -317,6 +317,20 @@ function onMoveCamera(focus)
 	end
 end
 
+-- To restore the original onMoveCamera behavior from before 1.0
+
+function onSongStart()
+	setProperty("lastCharFocus", "");
+end
+
+function onSectionHit()
+	setProperty("lastCharFocus", "");
+end
+
+function onCountdownStarted()
+	setProperty("lastCharFocus", "");
+end
+
 ----------------------------------------------------------------------------------------------------------------------
     	-- Events --
 ----------------------------------------------------------------------------------------------------------------------
