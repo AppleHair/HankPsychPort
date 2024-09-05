@@ -79,35 +79,37 @@ function eventIsCalled(name)
 end
 
 --[[
--------------------------------------------------------------------
-			onCreatePost - Table of contents
--------------------------------------------------------------------
-	-- Static Lua Sprites - line 113
-	-----------------------------------
-		HotdogStation - line 115
-		Rock - line 119
-		Ground - line 123
-		RightCliff - line 126
-		LeftCliff - line 130
-		Sky - line 134
+___________________________________________________________________
+		onCreatePost - Table of contents
+___________________________________________________________________
+	___________________________________
+	- Event Related Checks - line 115
+	___________________________________
+	- Static Lua Sprites - line 121
 
-	-- Animated Lua Sprites - line 138
-	-----------------------------------
-		helicopter - line 140
-		Deimos & Sanford - line 145
-		Lazer - line 163
-		gf-hot - line 169
-		Climbers - line 176
-		Hellclown - line 197
-
-	-- Tips on sprites in Psych Engine Lua - Line 210
-	-----------------------------------
-	-- Offsets - line 220
-	-----------------------------------
-	-- Adding to PlayState - line 235
-	-----------------------------------
-	-- Precaches - line 257
-	-----------------------------------
+		HotdogStation - line 123
+		Rock - line 127
+		Ground - line 131
+		RightCliff - line 134
+		LeftCliff - line 138
+		Sky - line 142
+	___________________________________
+	- Animated Lua Sprites - line 146
+	
+		helicopter - line 148
+		Deimos & Sanford - line 153
+		Lazer - line 169
+		gf-hot - line 175
+		Climbers - line 182
+		Hellclown - line 203
+	___________________________________
+	- Tips on sprites in Psych Engine Lua - Line 215
+	___________________________________
+	- Offsets - line 224
+	___________________________________
+	- Adding to PlayState - line 237
+	___________________________________
+	- Precaches - line 260
 ]]--
 function onCreatePost()
 			-- Event Related Checks --
@@ -150,11 +152,9 @@ function onCreatePost()
 	
 	makeAnimatedLuaSprite('Deimos','Deimos', -423, -224);
 	makeAnimatedLuaSprite('Sanford','Sanford', 1210, -215);
-
 	local thing = {};
 	thing[1] = 'Deimos';
 	thing[2] = 'Sanford';
-
 	for i=1,2 do
 		setScrollFactor(thing[i], 0.5, 0.5);
 		addAnimationByPrefix(thing[i], 'Boop', thing[i] .. ' Boop', 24, false);
@@ -185,12 +185,10 @@ function onCreatePost()
 		makeAnimatedLuaSprite('climber3','Climbers', 1170, 208);
 		setProperty('climber3.angle', 5);
 		setProperty('climber2.angle', -3.5);
-
 		local thing = {};
 		thing[1] = 'grunt';
 		thing[2] = 'agent';
 		thing[3] = 'eng';
-
 		for i=1,3 do
 			for j=1,3 do
 				addAnimationByIndices('climber' .. i, 'Climb' .. j, thing[j] .. 'climbanddie', '0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15', 24);
@@ -214,7 +212,6 @@ function onCreatePost()
 		setProperty('HellClownLeftHand.flipX', true);
 	end
 
-
 	-- I set the alpha to 0.00001 (not 0 and not .visible = false), 
 	-- and because of that the game engine thinks it needs to load the
 	-- sprites into the stage, although you can't actually see
@@ -224,24 +221,20 @@ function onCreatePost()
 	-- code. Make the sprites smaller before loading them, and like that
 	-- you won't have to load bigger sprites than you actually need to.
 
-
 			-- Offsets --
 	-- Deimos
 	addOffset('Deimos', 'Appear', 89, 488);
 	addOffset('Deimos', 'Shoot', 5, 0);
 	addOffset('Deimos', 'Boop', 0, 0);
-
 	-- Sanford
 	addOffset('Sanford', 'Appear', -3, 420);
 	addOffset('Sanford', 'Shoot', 218, 10);
 	addOffset('Sanford', 'Boop', 0, 0);
-
 	-- Lazer
 	addOffset('Lazer', 'Flash', 0, -20);
 	addOffset('Lazer', 'Boop', 0, 0);
 
 	  -- Adding to PlayState --
-	
 	addLuaSprite('Sky',false);
 	addLuaSprite('helicopter',false);
 	addLuaSprite('LeftCliff',false);
@@ -265,9 +258,7 @@ function onCreatePost()
 	addLuaSprite('Lazer',true);
 
 			-- Precaches --
-
 	precacheSound('death sound');
-
 	if Climbers_appear then
 		precacheImage('Climbers');
 	end
@@ -298,9 +289,9 @@ end
 
 
 
-----------------------------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------------
 		-- Camera Shit --
-----------------------------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------------
 DadCamPos = {419.5, 398.5};
 BfCamPos = {705.5, 398.5};
 
@@ -317,23 +308,9 @@ function onMoveCamera(focus)
 	end
 end
 
--- To restore the original onMoveCamera behavior from before 1.0
-
-function onSongStart()
-	setProperty("lastCharFocus", "");
-end
-
-function onSectionHit()
-	setProperty("lastCharFocus", "");
-end
-
-function onCountdownStarted()
-	setProperty("lastCharFocus", "");
-end
-
-----------------------------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------------
     	-- Events --
-----------------------------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------------------------
 
 -- used to make Deimos stop his idle animation
 StopDeimos = true;
@@ -494,9 +471,9 @@ end
 local climbDelay = -1;
 
 function onStepHit()
----------------------------------------------------
+-- -------------------------------------------------
         --Climbers handler--
----------------------------------------------------
+-- -------------------------------------------------
 	if (not climb) or ((curStep-climbDelay) % 16 ~= 0) then 
 		return;
 	end
@@ -525,9 +502,9 @@ function onStepHit()
 	end
 end
 
---------------------------------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------------------------------
 		--Timer Completions--
---------------------------------------------------------------------------------------------------------------------
+-- ------------------------------------------------------------------------------------------------------------------
 function onTimerCompleted(tag, loops, loopsLeft)
 	if tag == 'ShootTimer' then
 		-- play death sound
@@ -569,9 +546,9 @@ function onTimerCompleted(tag, loops, loopsLeft)
 	end 
 end
 
----------------------------------------------------
+-- -------------------------------------------------
 		--Lazer Visibility--       Sequel - line 347
----------------------------------------------------
+-- -------------------------------------------------
 function opponentNoteHit(id, direction, noteType, isSustainNote)
 	if not gfName == 'tricky' then
 		return;
@@ -587,9 +564,9 @@ end
 local hotdogGFDanceDir = false;
 
 function onBeatHit()
------------         -----------
+-- ---------         -----------
   --Lazer Visibility Sequel--
------------  		-----------
+-- ---------  		-----------
 	-- when tricky is back to his idle animation, we make the lazer visible again
 	if ((getProperty('gf.animation.curAnim.name') == 'danceLeft' or 
 		getProperty('gf.animation.curAnim.name') == 'danceRight') and gfName == 'tricky' and
@@ -600,9 +577,9 @@ function onBeatHit()
 	-- it's on beat hit, because tricky, sanford and deimos play their idle animations every beat, so
 	-- we don't need to check this on update
 
----------------------------------------------------
+-- -------------------------------------------------
         --Boop handler--
----------------------------------------------------
+-- -------------------------------------------------
 	-- you know what this does
 	if not StopDeimos then
 		playAnim('Deimos', 'Boop', true);
@@ -638,9 +615,9 @@ function onBeatHit()
 	end
 end
 
----------------------------------------------------
+-- -------------------------------------------------
 	--Sprite and Animation Controls--
----------------------------------------------------
+-- -------------------------------------------------
 
 -- true if tricky is behind the ground
 local trickyBehindGround = false;
@@ -652,9 +629,10 @@ local HotDogGFStoppedWalking = false;
 local helicopterRemoved = false;
 
 function onUpdate(elapsed)
-	
+
 	-- Idle Animation Release handler
-	-----------------------------------------------
+	-- ---------------------------------------------
+
 	-- if the sprite is completely visible and the current animation is finished
 	-- then let the sprite play it's idle animation 
 	if getProperty('Deimos.alpha') == 1 and getProperty('Deimos.visible') and 
@@ -670,9 +648,8 @@ function onUpdate(elapsed)
 		stopLazer = false;
 	end
 
-	
 	-- Tricky Fall handler
-	-----------------------------------------------
+	-- ---------------------------------------------
 	if getProperty('gf.y') <= -500 and not trickyBehindGround then
 		-- he goes behind the ground
 		setObjectOrder('gfGroup', getObjectOrder('Ground'));
@@ -686,9 +663,8 @@ function onUpdate(elapsed)
 		trickyIsGone = true;
 	end
 
-	
 	-- Girlfriend Hotdog handler
-	-----------------------------------------------
+	-- ---------------------------------------------
 
 	if getProperty('gf-hot.x') <= 1180 and not HotDogGFStoppedWalking then
 		setProperty('gf-hot.velocity.x', 0);
@@ -704,9 +680,8 @@ function onUpdate(elapsed)
 		playAnim('gf-hot', 'Boop-right', true);
 	end
 
-	
 	-- The Helicopter Destroyer
-	-----------------------------------------------
+	-- ---------------------------------------------
 
 	-- we make sure that if the helicopter goes off-screen, it gets removed
 	if not helicopterRemoved then
@@ -720,7 +695,7 @@ function onUpdate(elapsed)
 	end
 
 	-- Hellclown Offset & Glow Fade Handler
-	-----------------------------------------------
+	-- ---------------------------------------------
 	if Summon_hellclown then
 		-- if the fade value is greater than 0
 		if HellclownGlowFade > 0 then
@@ -744,7 +719,7 @@ function onUpdate(elapsed)
 	end
 
 	-- Climbers Visibility handler
-	-----------------------------------------------
+	-- ---------------------------------------------
 	if Climbers_appear then
 		for i=1,3 do
 			-- if the current animation is a shot animation and it's
