@@ -49,17 +49,17 @@ function onGameOverStart()
     -- adds bullet shot visual
     -- effects if needed
     if hanked then
-        makeLuaSprite('bulletHole', 'hole', getProperty('boyfriend.x') + 409, getProperty('boyfriend.y') + 52);
+        makeLuaSprite('bulletHole', 'hole', getProperty('boyfriend.x') + 193, getProperty('boyfriend.y') + 88);
 		addLuaSprite('bulletHole', true);
-
-		makeAnimatedLuaSprite('blood', 'blood', getProperty('boyfriend.x') + 46, getProperty('boyfriend.y') - 236);
+		
+		makeAnimatedLuaSprite('blood', 'blood', getProperty('boyfriend.x') - 170, getProperty('boyfriend.y') - 200);
 		setProperty('blood.flipX', true);
 	    addAnimationByPrefix('blood', 'splat', 'blood 1', 24, false);
         setProperty('blood.alpha', 1);
 		playAnim('blood', 'splat', true);
         addLuaSprite('blood', true);
-
-		makeLuaSprite('bulletRay', 'shotRay', getProperty('boyfriend.x') + 136, getProperty('boyfriend.y') + 83);
+		
+		makeLuaSprite('bulletRay', 'shotRay', getProperty('boyfriend.x') - 80, getProperty('boyfriend.y') + 109);
         setProperty('bulletRay.alpha', 1);
 		addLuaSprite('bulletRay', false);
 		doTweenAlpha('rayFade', 'bulletRay', 0, 0.2);
