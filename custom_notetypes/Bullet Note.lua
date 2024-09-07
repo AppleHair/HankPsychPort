@@ -145,6 +145,9 @@ local bulletSoundAllowed = true;
 local shootAgainNextFrame = false;
 
 function onUpdatePost(elapsed)
+	if inGameOver then
+		return;
+	end
 	-- the health Drain itself
 	if healthDrain > 0 then
 		-- we decrease healthDrain and PlayState.instance.health by 0.3 every second

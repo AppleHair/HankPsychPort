@@ -29,6 +29,9 @@ function onCreate()
     setProperty('lever.origin.y', getProperty('lever.frameHeight'));
     setObjectCamera('lever', "camHUD");
     addLuaSprite('lever', false);
+    -- To prevent the health drain from triggering
+    -- instantly, we'll play the pull-loop animation first.
+    playAnim('lever', 'pull-loop');
 end
 
 -- tells if the health bar
