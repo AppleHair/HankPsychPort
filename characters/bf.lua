@@ -48,18 +48,20 @@ end
 function onGameOverStart()
     -- adds bullet shot visual
     -- effects if needed
+    local bfX = getPropertyFromClass('substates.GameOverSubstate', 'instance.boyfriend.x');
+    local bfY = getPropertyFromClass('substates.GameOverSubstate', 'instance.boyfriend.y');
     if hanked then
-        makeLuaSprite('bulletHole', 'hole', getProperty('boyfriend.x') + 193, getProperty('boyfriend.y') + 88);
+        makeLuaSprite('bulletHole', 'hole', bfX + 193, bfY + 88);
 		addLuaSprite('bulletHole', true);
 		
-		makeAnimatedLuaSprite('blood', 'blood', getProperty('boyfriend.x') - 170, getProperty('boyfriend.y') - 200);
+		makeAnimatedLuaSprite('blood', 'blood', bfX - 170, bfY - 200);
 		setProperty('blood.flipX', true);
 	    addAnimationByPrefix('blood', 'splat', 'blood 1', 24, false);
         setProperty('blood.alpha', 1);
 		playAnim('blood', 'splat', true);
         addLuaSprite('blood', true);
 		
-		makeLuaSprite('bulletRay', 'shotRay', getProperty('boyfriend.x') - 80, getProperty('boyfriend.y') + 109);
+		makeLuaSprite('bulletRay', 'shotRay', bfX - 80, bfY + 109);
         setProperty('bulletRay.alpha', 1);
 		addLuaSprite('bulletRay', false);
 		doTweenAlpha('rayFade', 'bulletRay', 0, 0.2);
