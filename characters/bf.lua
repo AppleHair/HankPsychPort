@@ -48,8 +48,13 @@ end
 function onGameOverStart()
     -- adds bullet shot visual
     -- effects if needed
+
+    -- There's a bug with getProperty not
+    -- working consistently for GameOverSubstate,
+    -- so we have to use getPropertyFromClass
     local bfX = getPropertyFromClass('substates.GameOverSubstate', 'instance.boyfriend.x');
     local bfY = getPropertyFromClass('substates.GameOverSubstate', 'instance.boyfriend.y');
+
     if hanked then
         makeLuaSprite('bulletHole', 'hole', bfX + 193, bfY + 88);
 		addLuaSprite('bulletHole', true);
