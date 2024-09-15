@@ -21,7 +21,7 @@ re-write GameBanana description to say the same thing ✔
 
 1.0.4:
 
-fix all charts for psych 1.0
+fix all charts for psych 1.0 ✔
 
 Maybe in the future:
 
