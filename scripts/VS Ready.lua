@@ -18,19 +18,6 @@ local allowCountdown = false;
 local wasReady = false;
 
 function onCreate()
-	makeLuaSprite('ready', 'ready', 0, 0);
-	makeLuaSprite('readyCL', 'readyCL', 0, 0);
-	scaleObject('ready', 0.64, 0.64, true);
-	scaleObject('readyCL', 0.64, 0.64, true);
-	screenCenter('ready', 'XY');
-	screenCenter('readyCL', 'XY');
-	addLuaSprite('ready', true);
-	addLuaSprite('readyCL', true);
-	setObjectCamera('ready', 'hud');
-	setObjectCamera('readyCL', 'hud');
-	setProperty('ready.visible', true);
-	setProperty('readyCL.visible', false);
-
 	-- onlinePlay = true | false
 	runningUMM = onlinePlay ~= nil;
 
@@ -39,19 +26,32 @@ function onCreate()
 
 	-- this is the function we'll need to call when we want
 	-- to check if the player pressed the ready button
-	readyCondition = function() return (not allowCountdown) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or 
+	readyCondition = function() return (not allowCountdown) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.SPACE') or
 		getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or (getPropertyFromClass('flixel.FlxG', 'mouse.justReleased') and MouseOnReady)); end
-		
+
 	-- because UMM's online play has it's own way of checking
 	-- if all players are ready, we should adapt to it.
 	if runningUMM and onlinePlay then
-		readyCondition = function() return (not wasReady) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or 
+		readyCondition = function() return (not wasReady) and (getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ENTER') or
 			getPropertyFromClass('flixel.FlxG', 'keys.justReleased.ESCAPE')); end
 		return;
 	end
 
 	-- we make the mouse visible
 	setPropertyFromClass('flixel.FlxG', 'mouse.visible', true);
+
+	makeLuaSprite('ready', 'ready', 0, 0);
+	makeLuaSprite('readyCL', 'readyCL', 0, 0);
+	setObjectCamera('ready', 'hud');
+	setObjectCamera('readyCL', 'hud');
+	addLuaSprite('ready', true);
+	addLuaSprite('readyCL', true);
+	scaleObject('ready', 0.64, 0.64, true);
+	scaleObject('readyCL', 0.64, 0.64, true);
+	screenCenter('ready', 'XY');
+	screenCenter('readyCL', 'XY');
+	setProperty('ready.visible', true);
+	setProperty('readyCL.visible', false);
 end
 
 function onCreatePost()
@@ -69,6 +69,12 @@ function onStartCountdown()
 		runHaxeCode([[
 			game.generateStaticArrows(0);
 			game.generateStaticArrows(1);
+
+			function clearStaticArrows():Void {
+				game.playerStrums.clear();
+				game.opponentStrums.clear();
+				game.strumLineNotes.clear();
+			}
 		]]);
 		if runningUMM and onlinePlay then
 			-- If we play online with UMM,
@@ -86,11 +92,7 @@ function onStartCountdown()
 	end
 	-- we clear everything we did with the arrows
 	-- before the game does it again
-	runHaxeCode([[
-		game.playerStrums.clear();
-		game.opponentStrums.clear();
-		game.strumLineNotes.clear();
-	]]);
+	runHaxeFunction("clearStaticArrows");
 	if runningUMM and onlinePlay then
 		-- In order to adapt to UMM's online play,
 		-- we return noting and let UMM do its thing.

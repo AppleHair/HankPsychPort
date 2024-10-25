@@ -790,6 +790,10 @@ function callMethodFromClass(className, funcToRun, args) end
 ---```
 ---Types are non-strict and are not required for variable declaration
 function runHaxeCode(script) end
+--- Calls a function inside a code ran previously with `runHaxeCode`.
+---@param funcToRun string Function to run
+---@param funcArgs? table Table with arguments for the function
+function runHaxeFunction(funcToRun, funcArgs) end
 ---Adds support for calling a specific Library Package from any source implemented haxelibs or native Haxe libraries
 ---@param class string The class name, such as `FlxMath`
 ---@param package? string The path to the class name, such as `flixel.math`

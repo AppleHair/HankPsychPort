@@ -17,6 +17,9 @@ function onGameOverStart()
         FlxG.camera.follow(follow);
     ]]);
 
+    -- we make the camera zoom smaller to make the game over screen more accurate to FNF ONLINE VS.
+    setPropertyFromClass('flixel.FlxG', 'camera.zoom', 0.65);
+
     -- check if we're in version 0.7.1h
     inPsych071h = version:find('^v?0%.7%.1') ~= nil;
 
@@ -25,13 +28,10 @@ function onGameOverStart()
         setProperty('isFollowingAlready', true);
         setProperty('updateCamera', false);
         setPropertyFromClass('flixel.FlxG', 'camera.followLerp', 0);
-    else
-        setProperty('moveCamera', true);
-        setPropertyFromClass('flixel.FlxG', 'camera.followLerp', 3);
+        return;
     end
 
-    -- we make the camera zoom smaller to make the game over screen more accurate to FNF ONLINE VS.
-    setPropertyFromClass('flixel.FlxG', 'camera.zoom', 0.65);
+    setPropertyFromClass('flixel.FlxG', 'camera.followLerp', 0.06);
 end
 
 function onUpdatePost(elapsed)
