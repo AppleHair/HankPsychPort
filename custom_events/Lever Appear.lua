@@ -17,15 +17,15 @@ function onCreate()
     end
     -- if we don't need balance,
     -- we'll create the lever.
-    makeAnimatedLuaSprite('lever', 'Lever', getProperty('healthBar.bg.x') + 53, getProperty('healthBar.bg.y') - 270);
+    makeAnimatedLuaSprite('lever', 'Lever', getProperty('healthBar.bg.x') + 53, getProperty('healthBar.bg.y') - 280);
     addAnimationByPrefix('lever', 'appear', 'Appear', 24, false);
     addAnimationByPrefix('lever', 'pull', 'Pull', 24, false);
     addAnimationByIndicesLoop('lever', 'pull-loop', 'Pull', "11,12,13,14,15", 24);
     scaleObject('lever', 0.7, 0.7 * (downscroll and -1 or 1), false);
     setProperty('lever.alpha', 0.00001);
-    addOffset('lever', 'appear', 0, -13 * (downscroll and -1 or 1));
-    addOffset('lever', 'pull', 0, 0);
-    addOffset('lever', 'pull-loop', 0, 0);
+    addOffset('lever', 'appear', 0, -18 * (downscroll and -1 or 1));
+    addOffset('lever', 'pull', 0, -5 * (downscroll and -1 or 1));
+    addOffset('lever', 'pull-loop', 0, -5 * (downscroll and -1 or 1));
     setProperty('lever.origin.y', getProperty('lever.frameHeight'));
     setObjectCamera('lever', "camHUD");
     addLuaSprite('lever', false);
