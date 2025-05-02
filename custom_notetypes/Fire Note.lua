@@ -15,7 +15,7 @@ function onCreatePost()
 	-- toggles halo note if in the
 	-- fucked difficulty. can be toggled earlier
 	-- to prevent halo note on fucked difficulty
-	if difficultyPath == "fucked" or difficultyPath == "unfair" then
+	if difficultyPath == "-fucked" or difficultyPath == "-unfair" then
 		triggerEvent("Signal-Toggle Halo Note");
 	end
 

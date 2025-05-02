@@ -37,7 +37,7 @@ function onCreatePost()
     -- getTextFromFile doesn't work properly on the other end,
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
-    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
+    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath..difficultyPath..".json"):
     find("\"stage\": \""..curStage.."\"") == nil;
 
     -- if it's true and we are in onlinePlay

@@ -9,7 +9,7 @@ local function iNeedToWriteThisTwiceForOnlinePlay()
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Tween Zoom" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Camera Follow Pos" and inCustomStage) or
           (getPropertyFromGroup('eventNotes', i, 'event') == "Alt Idle Animation" and (not hankScriptRunning)) or
-          (difficultyPath == "fucked" and getPropertyFromGroup('eventNotes', i, 'strumTime') >= 87530.487804878 and inCustomStage) then
+          (difficultyPath == "-fucked" and getPropertyFromGroup('eventNotes', i, 'strumTime') >= 87530.487804878 and inCustomStage) then
             removeFromGroup('eventNotes', i);
 		end
 	end
@@ -37,7 +37,7 @@ function onCreatePost()
     -- getTextFromFile doesn't work properly on the other end,
     -- so now I need to write my code in this weird kind of
     -- structure, that makes it look funny.
-    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath.."-"..difficultyPath..".json"):
+    inCustomStage = getTextFromFile("data/"..songPath.."/"..songPath..difficultyPath..".json"):
     find("\"stage\": \""..curStage.."\"") == nil;
 
     -- if it's true and we are in onlinePlay

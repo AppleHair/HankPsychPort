@@ -65,7 +65,7 @@ function onCreatePost()
 	-- toggles bullet instakill if in the
 	-- fucked difficulty. can be toggled earlier
 	-- to prevent the instakill on fucked difficulty
-	if difficultyPath == "fucked" then
+	if difficultyPath == "-fucked" then
 		triggerEvent("Signal-Toggle Bullet Instakill");
 	end
 
