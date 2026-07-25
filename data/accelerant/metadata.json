@@ -3,8 +3,9 @@
 	"albumId": "onlinevs",
 	"freeplayCharacter": "",
 	"freeplaySongLength": 125.854,
+	"freeplayPrevStart": 0,
 	"freeplayPrevEnd": 20,
 	"altInstrumentalSongs": "",
 	"allowErectVariants": false,
-	"freeplayPrevStart": 0
+  "freeplayWeekName": "ONLINE VS"
 }
